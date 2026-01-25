@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online micro tools for developers, writers, and content creators. Convert text, generate passwords, clean data, and more with our browser-based utilities.">
+    <meta name="keywords" content="online tools, text converter, password generator, developer tools, free utilities">
+    <meta property="og:title" content="MicroTools - Free Online Utilities for Developers & Writers">
+    <meta property="og:description" content="Collection of free, no-login required browser tools for text manipulation, data cleaning, and content creation.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>MicroTools - Free Online Utilities for Developers & Writers</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/homepage.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MicroTools",
+        "description": "Free online micro tools for developers and content creators",
+        "url": "https://microtools.example.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://microtools.example.com/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>MicroTools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/" class="active">Home</a></li>
+                        <li><a href="#text-tools">Text Tools</a></li>
+                        <li><a href="#random-tools">Random Tools</a></li>
+                        <li><a href="#security-tools">Security Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="homepage-main">
+        <section class="hero">
+            <div class="container">
+                <h2>Free Online Micro Tools</h2>
+                <p class="hero-subtitle">No login required • 100% browser-based • Instant results</p>
+                
+                <div class="search-box">
+                    <input type="text" 
+                           id="toolSearch" 
+                           placeholder="Search tools (e.g., 'text converter', 'password')"
+                           aria-label="Search for tools">
+                    <button type="button" id="searchBtn" aria-label="Search">🔍</button>
+                </div>
+                
+                <div class="quick-stats">
+                    <div class="stat">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">Tools Available</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Free</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">0s</span>
+                        <span class="stat-label">Load Time</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tools-section" id="text-tools">
+            <div class="container">
+                <h3>Text Manipulation Tools</h3>
+                <div class="tools-grid">
+                    <!-- Text Uppercase -->
+                    <a href="/tools/text-uppercase/" class="tool-card">
+                        <div class="tool-icon">T↑</div>
+                        <h4>Text Uppercase Converter</h4>
+                        <p>Convert any text to uppercase instantly. Perfect for headings and emphasis.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Text Lowercase -->
+                    <a href="/tools/text-lowercase/" class="tool-card">
+                        <div class="tool-icon">T↓</div>
+                        <h4>Text Lowercase Converter</h4>
+                        <p>Convert text to lowercase. Useful for formatting and standardization.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Remove Extra Spaces -->
+                    <a href="/tools/remove-extra-spaces/" class="tool-card">
+                        <div class="tool-icon">␣</div>
+                        <h4>Remove Extra Spaces</h4>
+                        <p>Clean up text by removing extra spaces, tabs, and line breaks.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="tools-section" id="random-tools">
+            <div class="container">
+                <h3>Random & Game Tools</h3>
+                <div class="tools-grid">
+                    <!-- Charades Generator -->
+                    <a href="/tools/charades-random/" class="tool-card">
+                        <div class="tool-icon">🎭</div>
+                        <h4>Random Charades Generator</h4>
+                        <p>Generate random charades words for parties and game nights.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Games</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="tools-section" id="security-tools">
+            <div class="container">
+                <h3>Security & Password Tools</h3>
+                <div class="tools-grid">
+                    <!-- Password Generator -->
+                    <a href="/tools/password-generator/" class="tool-card">
+                        <div class="tool-icon">🔒</div>
+                        <h4>Password Generator</h4>
+                        <p>Create strong, secure passwords with customizable length and character types.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Security</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ad Placeholder (Future Monetization) -->
+        <section class="ad-section" aria-label="Advertisement">
+            <div class="container">
+                <div class="ad-placeholder" data-ad-format="leaderboard">
+                    <span>Advertisement</span>
+                    <p>Leaderboard Ad (728x90)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="container">
+                <h3>Why Choose MicroTools?</h3>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Instant Results</h4>
+                        <p>All tools work instantly in your browser. No waiting, no processing delays.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔒</div>
+                        <h4>Privacy First</h4>
+                        <p>No data sent to servers. Everything processes locally in your browser.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📱</div>
+                        <h4>Mobile Friendly</h4>
+                        <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <h4>No Login Required</h4>
+                        <p>Use all tools immediately without any registration or login.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MicroTools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/text-lowercase/">Lowercase Converter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> MicroTools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Analytics Placeholder -->
+    <script>
+        // Placeholder for analytics (GDPR-friendly)
+        window.addEventListener('load', function() {
+            // Your analytics code here (e.g., Google Analytics, Plausible, etc.)
+            console.log('Analytics ready - implement your tracking here');
+        });
+    </script>
+
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/homepage.js"></script>
+</body>
+</html>
