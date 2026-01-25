@@ -1,0 +1,1 @@
+// Charades Random Tool JavaScript
