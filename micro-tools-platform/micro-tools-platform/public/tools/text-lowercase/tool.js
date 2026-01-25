@@ -1,0 +1,1 @@
+// Text Lowercase Tool JavaScript
