@@ -4,7 +4,7 @@ Disallow: /assets/
 Disallow: /*.css$
 Disallow: /*.js$
 
-Sitemap: https://microtools.example.com/sitemap.xml
+Sitemap: https://micro-tools-43a.pages.dev/sitemap.xml
 
 # Crawl-delay: 1
 # Uncomment above if you experience heavy traffic

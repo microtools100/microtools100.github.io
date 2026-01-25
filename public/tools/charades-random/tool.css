@@ -1,1 +1,338 @@
-/* Charades Random Tool CSS */
+/* Charades Generator Specific Styles */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.option-group label {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.option-group select,
+.option-group input[type="range"] {
+    width: 100%;
+}
+
+.range-value {
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-align: center;
+    margin-top: 0.25rem;
+}
+
+.advanced-options {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.advanced-content {
+    margin-top: 1rem;
+}
+
+.advanced-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-option input {
+    width: auto;
+}
+
+.checkbox-option label {
+    font-weight: normal;
+    cursor: pointer;
+}
+
+/* Charades Container */
+.charades-container {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state h4 {
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.charades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.charade-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.charade-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.charade-card.used {
+    opacity: 0.6;
+    background: #f1f5f9;
+}
+
+.charade-card.active {
+    border-color: var(--primary-color);
+    background: #e0f2fe;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.charade-word {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+}
+
+.charade-category {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    background: #e0f2fe;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    display: inline-block;
+}
+
+.charade-hint {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.charade-card .status {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+}
+
+.charade-card.used .status {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.charade-card.active .status {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Game Tips */
+.game-tips {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.tip {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.tip-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.tip h5 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.tip p {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+
+/* Sidebar Styles */
+.game-variations {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.game-variations h4 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.game-variations ul {
+    list-style: none;
+}
+
+.game-variations li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.875rem;
+}
+
+.game-variations li::before {
+    content: '🎯';
+    position: absolute;
+    left: 0;
+}
+
+.quick-categories {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.quick-categories h4 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.category-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.category-btn {
+    padding: 0.75rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-color);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.category-btn:hover {
+    background: #e2e8f0;
+    border-color: var(--primary-color);
+}
+
+/* Timer Display */
+.timer-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.timer-display.warning {
+    color: var(--warning-color);
+}
+
+.timer-display.danger {
+    color: var(--error-color);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Game Controls */
+.game-controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.game-controls button {
+    padding: 0.5rem 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991px) {
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .charades-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .charades-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .advanced-grid {
+        grid-template-columns: 1fr;
+    }
+}

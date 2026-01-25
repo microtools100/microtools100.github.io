@@ -1,1 +1,254 @@
-/* Remove Extra Spaces Tool CSS */
+/* Remove Extra Spaces Tool Specific Styles */
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.output-header label {
+    margin-bottom: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+/* Tool options */
+.tool-options {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.tool-options h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.option-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.75rem;
+}
+
+.option-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.option-row:last-child {
+    border-bottom: none;
+}
+
+.option-row label {
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    flex: 1;
+}
+
+.option-row input[type="checkbox"] {
+    width: auto;
+    margin: 0 0 0 1rem;
+    cursor: pointer;
+}
+
+/* Use cases */
+.use-cases {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.use-case {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.use-case-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.use-case h5 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.use-case p {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+
+/* Preview */
+.preview {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.preview h4 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.preview-example {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    font-size: 0.875rem;
+}
+
+.preview-before, .preview-after {
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+}
+
+.preview-before {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+}
+
+.preview-after {
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+}
+
+.preview-before h5, .preview-after h5 {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.preview-before pre, .preview-after pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 0;
+    font-family: monospace;
+    font-size: 0.75rem;
+}
+
+/* Character counter */
+.char-counter {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    background: white;
+    padding: 0.125rem 0.5rem;
+    border-radius: 1rem;
+}
+
+.input-area, .output-area {
+    position: relative;
+}
+
+/* Related tools */
+.related-tools, .tool-tips {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.related-tools h4, .tool-tips h4 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.related-tools ul, .tool-tips ul {
+    list-style: none;
+}
+
+.related-tools li, .tool-tips li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.related-tools li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+}
+
+.tool-tips li::before {
+    content: '💡';
+    position: absolute;
+    left: 0;
+}
+
+.related-tools a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.related-tools a:hover {
+    color: var(--primary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .output-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .stats-display {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .use-case-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .preview-example {
+        grid-template-columns: 1fr;
+    }
+    
+    .option-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-display {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .stat-item {
+        flex: 1 0 calc(50% - 1rem);
+        text-align: center;
+    }
+    
+    .option-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .option-row input[type="checkbox"] {
+        margin: 0;
+        align-self: flex-end;
+    }
+}

@@ -3,8 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Lowercase Tool</title>
+    <meta name="description" content="Free online text to lowercase converter. Convert any text to lowercase instantly. No login required, 100% browser-based.">
+    <meta name="keywords" content="lowercase converter, text to lowercase, lowercase letters, text converter, online text tool">
+    <meta property="og:title" content="Text Lowercase Converter - Free Online Tool">
+    <meta property="og:description" content="Convert any text to lowercase instantly. Perfect for formatting, standardization, and readability. No registration needed.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Text Lowercase Converter - Free Online Tool | MicroTools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Text Lowercase Converter",
+        "description": "Free online tool to convert text to lowercase letters",
+        "url": "https://micro-tools-43a.pages.dev/tools/text-lowercase/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 <body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>MicroTools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/tools/text-uppercase/">Uppercase Tool</a></li>
+                        <li><a href="/tools/remove-extra-spaces/">Remove Spaces</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Text Lowercase Converter</h1>
+                <p class="tool-description">
+                    Instantly convert any text to lowercase letters. Perfect for formatting, standardization, and improving readability.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <section class="tool-section">
+                            <div class="input-group">
+                                <label for="inputText">Enter your text:</label>
+                                <div class="input-area">
+                                    <textarea 
+                                        id="inputText" 
+                                        placeholder="Type or paste your text here..."
+                                        rows="6"
+                                        autofocus
+                                    ></textarea>
+                                </div>
+                                <div class="hint">
+                                    Enter any text you want to convert to lowercase. Maximum 10,000 characters.
+                                </div>
+                            </div>
+
+                            <div class="tool-actions">
+                                <button class="action-btn primary" id="convertBtn">
+                                    <span>Convert to Lowercase</span>
+                                    <span>↓</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear All</span>
+                                    <span>×</span>
+                                </button>
+                                <button class="action-btn" id="exampleBtn">
+                                    <span>Load Example</span>
+                                    <span>↻</span>
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="tool-section">
+                            <div class="output-group">
+                                <div class="output-header">
+                                    <label for="outputText">Lowercase Text:</label>
+                                    <div class="stats-display">
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="charCount">0</span>
+                                            <span class="stat-label">Characters</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="wordCount">0</span>
+                                            <span class="stat-label">Words</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="lowercaseCount">0%</span>
+                                            <span class="stat-label">Already Lowercase</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="output-area">
+                                    <textarea 
+                                        id="outputText" 
+                                        placeholder="Your lowercase text will appear here..."
+                                        rows="6"
+                                        readonly
+                                    ></textarea>
+                                </div>
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn" data-copy="outputText">
+                                        <span>Copy to Clipboard</span>
+                                        <span>📋</span>
+                                    </button>
+                                    <button class="action-btn" id="downloadBtn">
+                                        <span>Download as .txt</span>
+                                        <span>⤓</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="instructions">
+                        <h4>How to use this lowercase converter:</h4>
+                        <ol>
+                            <li>Type or paste your text into the input field</li>
+                            <li>Click "Convert to Lowercase" to transform your text</li>
+                            <li>Copy the result using the "Copy to Clipboard" button</li>
+                            <li>Use "Download as .txt" to save the result to your device</li>
+                        </ol>
+                        <p><strong>Tip:</strong> You can also press Ctrl+Enter (Cmd+Enter on Mac) to convert instantly.</p>
+                    </div>
+
+                    <!-- In-content ad placeholder -->
+                    <div class="ad-section">
+                        <div class="ad-placeholder" data-ad-format="rectangle">
+                            <span>Advertisement</span>
+                            <p>Rectangle Ad (300x250)</p>
+                        </div>
+                    </div>
+
+                    <div class="use-cases">
+                        <h4>Common Use Cases:</h4>
+                        <div class="use-case-grid">
+                            <div class="use-case">
+                                <div class="use-case-icon">📧</div>
+                                <h5>Email Addresses</h5>
+                                <p>Standardize email addresses (most email systems are case-insensitive)</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">🔤</div>
+                                <h5>Programming</h5>
+                                <p>Convert variable names or string literals to lowercase</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">📝</div>
+                                <h5>Content Formatting</h5>
+                                <p>Standardize text for consistent formatting across documents</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="sidebar-ad">
+                        <div class="ad-square">
+                            <span>Advertisement</span>
+                            <p>Square Ad (250x250)</p>
+                        </div>
+                    </div>
+
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/text-uppercase/">Text Uppercase Converter</a></li>
+                            <li><a href="/tools/remove-extra-spaces/">Remove Extra Spaces</a></li>
+                            <li><a href="/">All Text Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Lowercase Best Practices</h4>
+                        <ul>
+                            <li>Use lowercase for most body text</li>
+                            <li>Email addresses should be lowercase</li>
+                            <li>URLs are case-sensitive - be careful!</li>
+                            <li>Programming languages often use specific casing conventions</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MicroTools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Text Tools</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/text-lowercase/">Lowercase Converter</a></li>
+                        <li><a href="/tools/remove-extra-spaces/">Remove Spaces</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> MicroTools. All tools are free to use.</p>
+                <p class="footer-note">This tool processes text locally in your browser. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
 </body>
 </html>
