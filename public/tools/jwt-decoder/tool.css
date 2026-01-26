@@ -1,0 +1,172 @@
+.tool-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tool-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.tool-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.tool-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-section label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.tool-textarea {
+    width: 100%;
+    height: 150px;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    resize: vertical;
+    transition: border-color 0.3s;
+    word-break: break-all;
+}
+
+.tool-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.jwt-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.jwt-part {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.jwt-part h4 {
+    margin: 0 0 1rem 0;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.jwt-part pre {
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    overflow-x: auto;
+    margin: 0 0 1rem 0;
+    flex: 1;
+    max-height: 300px;
+    overflow-y: auto;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+.copy-small-btn {
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.copy-small-btn:hover {
+    background: var(--secondary-color);
+}
+
+.info-box {
+    background: var(--bg-secondary);
+    border-left: 4px solid var(--primary-color);
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+
+.info-box h4 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.info-box p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+}
+
+.info-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-box li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+.info-box li:last-child {
+    border-bottom: none;
+}
+
+.alert-info {
+    padding: 1rem;
+    border-radius: 4px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.alert-info p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .tool-container {
+        padding: 1rem;
+    }
+
+    .tool-textarea {
+        height: 120px;
+    }
+
+    .jwt-sections {
+        grid-template-columns: 1fr;
+    }
+
+    .jwt-part pre {
+        max-height: 200px;
+    }
+}

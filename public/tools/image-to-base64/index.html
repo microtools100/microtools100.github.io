@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Base64 Converter - Micro Tools</title>
+    <meta name="description" content="Convert images to Base64 data URLs. Embed images directly in HTML/CSS without external files.">
+    <meta property="og:title" content="Image to Base64 Converter - Micro Tools">
+    <meta property="og:description" content="Convert images to Base64 format">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1>Image to Base64 Converter</h1>
+            <p>Convert images to Base64 data URLs for embedding in HTML/CSS</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="upload-section">
+                <label for="imageInput">Select Image:</label>
+                <input 
+                    type="file" 
+                    id="imageInput" 
+                    accept="image/*"
+                    class="file-input">
+                <p class="upload-hint">JPG, PNG, GIF, WebP, SVG (max 5MB)</p>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-box">
+                    <img id="preview" src="" alt="Preview" style="display: none;">
+                    <p id="noPreview" style="color: #999;">Image preview will appear here</p>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-item">
+                    <span class="label">File Size:</span>
+                    <span id="fileSize">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Image Dimensions:</span>
+                    <span id="dimensions">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Base64 Size:</span>
+                    <span id="base64Size">-</span>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <label for="base64Output">Base64 Output:</label>
+                <textarea 
+                    id="base64Output" 
+                    class="tool-textarea output-area"
+                    placeholder="data:image/png;base64,..."
+                    readonly
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="format-options">
+                <label>Output Format:</label>
+                <div class="options-row">
+                    <label>
+                        <input type="radio" name="format" value="dataurl" checked> Data URL
+                    </label>
+                    <label>
+                        <input type="radio" name="format" value="base64only"> Base64 Only
+                    </label>
+                    <label>
+                        <input type="radio" name="format" value="htmlimg"> HTML img tag
+                    </label>
+                    <label>
+                        <input type="radio" name="format" value="cssbg"> CSS background
+                    </label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="tool-btn" id="copyBtn">📋 Copy Base64</button>
+                <button class="tool-btn" id="downloadBtn">⬇️ Download HTML</button>
+                <button class="tool-btn" id="clearBtn">🗑️ Clear</button>
+            </div>
+
+            <div class="info-box">
+                <h4>📈 Image to Base64 Usage:</h4>
+                <ul>
+                    <li><strong>Data URL:</strong> Embed directly in HTML/CSS without extra requests</li>
+                    <li><strong>Pros:</strong> Reduces HTTP requests, works offline</li>
+                    <li><strong>Cons:</strong> Larger HTML/CSS file size, no browser caching</li>
+                    <li><strong>Best for:</strong> Small images, icons, favicons</li>
+                    <li><strong>Avoid for:</strong> Large images (will bloat HTML)</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,155 @@
+.tool-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tool-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.tool-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.tool-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-section label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.tool-textarea {
+    width: 100%;
+    height: 150px;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+    transition: border-color 0.3s;
+}
+
+.tool-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.hash-results {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.hash-item {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.hash-item label {
+    display: block;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.hash-output {
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    word-break: break-all;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.copy-small-btn {
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.copy-small-btn:hover {
+    background: var(--secondary-color);
+}
+
+.info-box {
+    background: var(--bg-secondary);
+    border-left: 4px solid var(--primary-color);
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+
+.info-box h4 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.info-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-box li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+.info-box li:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .tool-container {
+        padding: 1rem;
+    }
+
+    .tool-textarea {
+        height: 120px;
+    }
+
+    .hash-results {
+        gap: 1rem;
+    }
+
+    .hash-item {
+        padding: 1rem;
+    }
+
+    .copy-small-btn {
+        width: 100%;
+    }
+}

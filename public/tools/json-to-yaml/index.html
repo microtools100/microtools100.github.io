@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON to YAML Converter - MicroTools</title>
+    <meta name="description" content="Convert JSON to YAML format instantly. Perfect for configuration files and DevOps workflows.">
+    <meta property="og:title" content="JSON to YAML Converter - MicroTools">
+    <meta property="og:description" content="Convert JSON to YAML format online">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <div class="tool-container dual-panel">
+        <div class="tool-header">
+            <h1>JSON to YAML Converter</h1>
+            <p>Convert JSON to YAML format for configuration files and DevOps</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="panel-left">
+                <label for="jsonInput">JSON Input:</label>
+                <textarea 
+                    id="jsonInput" 
+                    class="tool-textarea"
+                    placeholder='{"name": "John", "age": 30, "city": "New York"}'
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="panel-right">
+                <label for="yamlOutput">YAML Output:</label>
+                <textarea 
+                    id="yamlOutput" 
+                    class="tool-textarea output-area"
+                    placeholder="name: John\nage: 30\ncity: New York"
+                    readonly
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="tool-btn" id="convertBtn">↻ Convert</button>
+                <button class="tool-btn" id="copyBtn">📋 Copy YAML</button>
+                <button class="tool-btn" id="swapBtn">⇅ Swap</button>
+                <button class="tool-btn" id="clearBtn">🗑️ Clear</button>
+            </div>
+
+            <div class="info-box">
+                <h4>📖 About YAML Format:</h4>
+                <ul>
+                    <li><strong>YAML</strong> stands for "YAML Ain't Markup Language"</li>
+                    <li>Uses indentation to denote structure (unlike JSON's braces)</li>
+                    <li>More human-readable than JSON</li>
+                    <li>Commonly used in configuration files (.yml, .yaml)</li>
+                    <li>Supports comments with the # symbol</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online CSV to JSON converter. Convert CSV data to JSON format instantly. Perfect for data transformation and API integration.">
+    <meta name="keywords" content="CSV to JSON, CSV converter, JSON converter, data conversion, data transformation, API data">
+    <meta property="og:title" content="CSV to JSON Converter - Free Online Tool">
+    <meta property="og:description" content="Convert CSV data to JSON format instantly with formatting options.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>CSV to JSON Converter - Convert CSV to JSON Online</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#games-tools">Games Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <h1>CSV to JSON Converter</h1>
+            <p class="tool-subtitle">Convert CSV data to JSON format instantly. Perfect for data transformation, API integration, and data migration.</p>
+
+            <div class="error-msg"></div>
+
+            <div class="tool-options">
+                <h3 class="section-title">Options</h3>
+                <div class="option-group">
+                    <label for="delimiter">Delimiter:</label>
+                    <select id="delimiter">
+                        <option value=",">Comma (,)</option>
+                        <option value=";">Semicolon (;)</option>
+                        <option value="|">Pipe (|)</option>
+                        <option value="	">Tab</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="formatOutput">
+                        <input type="checkbox" id="formatOutput" checked>
+                        Pretty print JSON (formatted)
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-output-grid">
+                <div class="input-group">
+                    <label for="inputText">CSV Input</label>
+                    <textarea id="inputText" placeholder='Paste CSV here&#10;&#10;Example:&#10;name,age,city&#10;John,30,New York&#10;Jane,25,Boston'></textarea>
+                </div>
+                <div class="output-group">
+                    <label for="outputText">JSON Output</label>
+                    <textarea id="outputText" readonly placeholder="Result will appear here..."></textarea>
+                    <button class="copy-btn" data-copy="outputText">📋 Copy</button>
+                </div>
+            </div>
+
+            <section class="use-cases">
+                <h2>Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💾</span>
+                        <h4>Data Migration</h4>
+                        <p>Convert spreadsheet data to API-friendly JSON format</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔗</span>
+                        <h4>API Integration</h4>
+                        <p>Transform CSV exports to JSON for API requests</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📊</span>
+                        <h4>Database Import</h4>
+                        <p>Prepare data for NoSQL and document databases</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🛠️</span>
+                        <h4>Data Processing</h4>
+                        <p>Transform data in ETL pipelines and workflows</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="formatting-guide">
+                <h2>How It Works</h2>
+                <ul>
+                    <li><strong>Header Row:</strong> The first row is treated as column headers</li>
+                    <li><strong>Data Rows:</strong> Each subsequent row becomes a JSON object</li>
+                    <li><strong>Delimiters:</strong> Choose the separator used in your CSV file</li>
+                    <li><strong>Pretty Print:</strong> Formats JSON with indentation for readability</li>
+                    <li><strong>Quotes:</strong> Automatically handles quoted fields with embedded delimiters</li>
+                    <li><strong>Output:</strong> Returns an array of objects, each representing a CSV row</li>
+                </ul>
+                <h3 style="margin-top: 1.5rem; color: var(--primary-color);">Example:</h3>
+                <div class="code-example">
+Input CSV:<br>
+name,age,city<br>
+John,30,New York<br>
+Jane,25,Boston<br><br>
+Output JSON:<br>
+[<br>
+&nbsp;&nbsp;{"name": "John", "age": "30", "city": "New York"},<br>
+&nbsp;&nbsp;{"name": "Jane", "age": "25", "city": "Boston"}<br>
+]
+                </div>
+            </section>
+
+            <section class="related-tools">
+                <h2>Related Tools</h2>
+                <ul>
+                    <li><a href="/tools/json-to-csv/">JSON to CSV Converter</a></li>
+                    <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                    <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="/privacy.html">Privacy</a></li>
+                <li><a href="/terms.html">Terms</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

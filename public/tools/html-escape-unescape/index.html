@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online HTML escape and unescape tool. Escape HTML entities and decode HTML special characters instantly.">
+    <meta name="keywords" content="HTML escape, HTML unescape, HTML entities, escape characters, HTML special characters, text escape">
+    <meta property="og:title" content="HTML Escape/Unescape - Free Online Tool">
+    <meta property="og:description" content="Escape and unescape HTML entities. Convert special characters and HTML entities instantly.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>HTML Escape/Unescape - Encode HTML Entities Online</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#games-tools">Games Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <h1>HTML Escape/Unescape</h1>
+            <p class="tool-subtitle">Escape HTML entities and decode HTML special characters. Perfect for developers working with HTML content.</p>
+
+            <div class="button-group">
+                <button id="escapeBtn" class="action-btn">🔐 Escape HTML</button>
+                <button id="unescapeBtn" class="action-btn">🔓 Unescape HTML</button>
+            </div>
+
+            <div class="input-output-grid">
+                <div class="input-group">
+                    <label for="inputText">Input Text</label>
+                    <textarea id="inputText" placeholder="Enter HTML or text to escape/unescape&#10;&#10;Example:&#10;&lt;div&gt;Hello &amp; Welcome&lt;&#x2F;div&gt;"></textarea>
+                </div>
+                <div class="output-group">
+                    <label for="outputText">Output Text</label>
+                    <textarea id="outputText" readonly placeholder="Result will appear here..."></textarea>
+                    <button class="copy-btn" data-copy="outputText">📋 Copy</button>
+                </div>
+            </div>
+
+            <section class="use-cases">
+                <h2>Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔒</span>
+                        <h4>Web Development</h4>
+                        <p>Safely display HTML code on web pages</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📝</span>
+                        <h4>Content Management</h4>
+                        <p>Prepare content for storage in databases</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔍</span>
+                        <h4>Code Display</h4>
+                        <p>Display source code in documentation</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📊</span>
+                        <h4>Data Processing</h4>
+                        <p>Process HTML entities in data pipelines</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="formatting-guide">
+                <h2>Common HTML Entities</h2>
+                <table class="entity-table">
+                    <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>Entity Name</th>
+                            <th>Entity Number</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&amp;</td>
+                            <td>&amp;amp;</td>
+                            <td>&amp;#38;</td>
+                            <td>Ampersand</td>
+                        </tr>
+                        <tr>
+                            <td>&lt;</td>
+                            <td>&amp;lt;</td>
+                            <td>&amp;#60;</td>
+                            <td>Less than</td>
+                        </tr>
+                        <tr>
+                            <td>&gt;</td>
+                            <td>&amp;gt;</td>
+                            <td>&amp;#62;</td>
+                            <td>Greater than</td>
+                        </tr>
+                        <tr>
+                            <td>&quot;</td>
+                            <td>&amp;quot;</td>
+                            <td>&amp;#34;</td>
+                            <td>Double quote</td>
+                        </tr>
+                        <tr>
+                            <td>'</td>
+                            <td>&amp;apos;</td>
+                            <td>&amp;#39;</td>
+                            <td>Single quote</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&amp;nbsp;</td>
+                            <td>&amp;#160;</td>
+                            <td>Non-breaking space</td>
+                        </tr>
+                        <tr>
+                            <td>©</td>
+                            <td>&amp;copy;</td>
+                            <td>&amp;#169;</td>
+                            <td>Copyright</td>
+                        </tr>
+                        <tr>
+                            <td>®</td>
+                            <td>&amp;reg;</td>
+                            <td>&amp;#174;</td>
+                            <td>Registered</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="related-tools">
+                <h2>Related Tools</h2>
+                <ul>
+                    <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                    <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="/privacy.html">Privacy</a></li>
+                <li><a href="/terms.html">Terms</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

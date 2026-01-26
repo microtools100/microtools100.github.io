@@ -2,102 +2,62 @@
 class HomepageManager {
     constructor() {
         this.tools = [
-            {
-                id: 'text-uppercase',
-                name: 'Text Uppercase Converter',
-                description: 'Convert any text to uppercase instantly. Perfect for headings and emphasis.',
-                category: 'text',
-                icon: 'T↑',
-                url: '/tools/text-uppercase/'
-            },
-            {
-                id: 'text-lowercase',
-                name: 'Text Lowercase Converter',
-                description: 'Convert text to lowercase. Useful for formatting and standardization.',
-                category: 'text',
-                icon: 'T↓',
-                url: '/tools/text-lowercase/'
-            },
-            {
-                id: 'remove-extra-spaces',
-                name: 'Remove Extra Spaces',
-                description: 'Clean up text by removing extra spaces, tabs, and line breaks.',
-                category: 'text',
-                icon: '␣',
-                url: '/tools/remove-extra-spaces/'
-            },
-            {
-                id: 'excel-column-to-comma-list',
-                name: 'Excel Column to Comma List',
-                description: 'Convert Excel column data to comma-separated values with custom formatting options.',
-                category: 'data',
-                icon: '📊',
-                url: '/tools/excel-column-to-comma-list/'
-            },
-            {
-                id: 'quote-comma-formatter',
-                name: 'Quote & Comma Formatter',
-                description: 'Add quotes and delimiters to column values. Perfect for SQL queries and data formatting.',
-                category: 'data',
-                icon: '"\'',
-                url: '/tools/quote-comma-formatter/'
-            },
-            {
-                id: 'json-formatter',
-                name: 'JSON Formatter & Validator',
-                description: 'Format, validate, minify and beautify JSON with syntax highlighting.',
-                category: 'data',
-                icon: '{}',
-                url: '/tools/json-formatter/'
-            },
-            {
-                id: 'url-encoder-decoder',
-                name: 'URL Encoder/Decoder',
-                description: 'Encode and decode URLs, query parameters, and special characters.',
-                category: 'data',
-                icon: '🔗',
-                url: '/tools/url-encoder-decoder/'
-            },
-            {
-                id: 'excel-column-to-sql-in',
-                name: 'Excel Column to SQL IN List',
-                description: 'Convert Excel column data to SQL IN statement format.',
-                category: 'data',
-                icon: '⬚',
-                url: '/tools/excel-column-to-sql-in/'
-            },
-            {
-                id: 'comma-to-newline',
-                name: 'Comma to Newline',
-                description: 'Convert comma-separated values to newline-separated format.',
-                category: 'data',
-                icon: '⮎',
-                url: '/tools/comma-to-newline/'
-            },
-            {
-                id: 'newline-to-comma',
-                name: 'Newline to Comma',
-                description: 'Convert newline-separated values to comma-separated format.',
-                category: 'data',
-                icon: '⮏',
-                url: '/tools/newline-to-comma/'
-            },
-            {
-                id: 'charades-random',
-                name: 'Random Charades Generator',
-                description: 'Generate random charades words for parties and game nights.',
-                category: 'games',
-                icon: '🎭',
-                url: '/tools/charades-random/'
-            },
-            {
-                id: 'password-generator',
-                name: 'Password Generator',
-                description: 'Create strong, secure passwords with customizable length and character types.',
-                category: 'security',
-                icon: '🔒',
-                url: '/tools/password-generator/'
-            }
+            // Text Case Tools
+            { id: 'text-uppercase', name: 'Text Uppercase Converter', category: 'text', url: '/tools/text-uppercase/' },
+            { id: 'text-lowercase', name: 'Text Lowercase Converter', category: 'text', url: '/tools/text-lowercase/' },
+            { id: 'title-case-converter', name: 'Title Case Converter', category: 'text', url: '/tools/title-case-converter/' },
+            { id: 'sentence-case-converter', name: 'Sentence Case Converter', category: 'text', url: '/tools/sentence-case-converter/' },
+            
+            // Text Formatting Tools
+            { id: 'remove-extra-spaces', name: 'Remove Extra Spaces', category: 'text', url: '/tools/remove-extra-spaces/' },
+            { id: 'text-compare-diff', name: 'Text Compare & Diff', category: 'text', url: '/tools/text-compare-diff/' },
+            { id: 'duplicate-line-remover', name: 'Duplicate Line Remover', category: 'text', url: '/tools/duplicate-line-remover/' },
+            
+            // Text Analysis Tools
+            { id: 'word-character-counter', name: 'Word & Character Counter', category: 'text', url: '/tools/word-character-counter/' },
+            { id: 'reading-time-calculator', name: 'Reading Time Calculator', category: 'text', url: '/tools/reading-time-calculator/' },
+            
+            // Data Format Converters
+            { id: 'json-to-csv', name: 'JSON to CSV Converter', category: 'data', url: '/tools/json-to-csv/' },
+            { id: 'csv-to-json', name: 'CSV to JSON Converter', category: 'data', url: '/tools/csv-to-json/' },
+            { id: 'json-to-yaml', name: 'JSON to YAML Converter', category: 'data', url: '/tools/json-to-yaml/' },
+            { id: 'json-to-xml', name: 'JSON to XML Converter', category: 'data', url: '/tools/json-to-xml/' },
+            { id: 'xml-to-json', name: 'XML to JSON Converter', category: 'data', url: '/tools/xml-to-json/' },
+            
+            // Data Tools
+            { id: 'excel-column-to-comma-list', name: 'Excel Column to Comma List', category: 'data', url: '/tools/excel-column-to-comma-list/' },
+            { id: 'quote-comma-formatter', name: 'Quote & Comma Formatter', category: 'data', url: '/tools/quote-comma-formatter/' },
+            { id: 'json-formatter', name: 'JSON Formatter & Validator', category: 'data', url: '/tools/json-formatter/' },
+            { id: 'url-encoder-decoder', name: 'URL Encoder/Decoder', category: 'data', url: '/tools/url-encoder-decoder/' },
+            { id: 'base64-encoder-decoder', name: 'Base64 Encoder/Decoder', category: 'data', url: '/tools/base64-encoder-decoder/' },
+            { id: 'html-escape-unescape', name: 'HTML Escape/Unescape', category: 'data', url: '/tools/html-escape-unescape/' },
+            { id: 'excel-column-to-sql-in', name: 'Excel Column to SQL IN List', category: 'data', url: '/tools/excel-column-to-sql-in/' },
+            { id: 'comma-to-newline', name: 'Comma to Newline', category: 'data', url: '/tools/comma-to-newline/' },
+            { id: 'newline-to-comma', name: 'Newline to Comma', category: 'data', url: '/tools/newline-to-comma/' },
+            
+            // Conversion & Generator Tools
+            { id: 'unit-converter', name: 'Unit Converter', category: 'data', url: '/tools/unit-converter/' },
+            { id: 'qr-code-generator', name: 'QR Code Generator', category: 'data', url: '/tools/qr-code-generator/' },
+            { id: 'text-to-binary', name: 'Text to Binary Converter', category: 'data', url: '/tools/text-to-binary/' },
+            { id: 'image-to-base64', name: 'Image to Base64 Converter', category: 'data', url: '/tools/image-to-base64/' },
+            
+            // Security & Password Tools
+            { id: 'password-generator', name: 'Password Generator', category: 'security', url: '/tools/password-generator/' },
+            { id: 'password-strength-checker', name: 'Password Strength Checker', category: 'security', url: '/tools/password-strength-checker/' },
+            { id: 'md5-sha-generator', name: 'MD5 & SHA Hash Generator', category: 'security', url: '/tools/md5-sha-generator/' },
+            { id: 'jwt-decoder', name: 'JWT Decoder', category: 'security', url: '/tools/jwt-decoder/' },
+            { id: 'uuid-generator', name: 'UUID Generator', category: 'security', url: '/tools/uuid-generator/' },
+            
+            // Testing Tools
+            { id: 'fake-data-generator', name: 'Fake Data Generator', category: 'security', url: '/tools/fake-data-generator/' },
+            { id: 'regex-tester', name: 'Regex Tester', category: 'data', url: '/tools/regex-tester/' },
+            { id: 'sql-formatter', name: 'SQL Formatter', category: 'data', url: '/tools/sql-formatter/' },
+            
+            // Random & Games Tools
+            { id: 'charades-random', name: 'Random Charades Generator', category: 'games', url: '/tools/charades-random/' },
+            { id: 'random-team-generator', name: 'Random Team Generator', category: 'games', url: '/tools/random-team-generator/' },
+            { id: 'decision-maker', name: 'Decision Maker', category: 'games', url: '/tools/decision-maker/' },
+            { id: 'countdown-timer', name: 'Countdown Timer', category: 'games', url: '/tools/countdown-timer/' }
         ];
 
         this.categories = {
@@ -140,6 +100,8 @@ class HomepageManager {
     performSearch(query = '') {
         const searchTerm = query.toLowerCase().trim();
         const toolCards = document.querySelectorAll('.tool-card');
+        let hasResults = false;
+        let firstVisibleSection = null;
         
         toolCards.forEach(card => {
             const title = card.querySelector('h4').textContent.toLowerCase();
@@ -147,6 +109,7 @@ class HomepageManager {
             
             if (searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm)) {
                 card.style.display = 'block';
+                hasResults = true;
             } else {
                 card.style.display = 'none';
             }
@@ -155,8 +118,25 @@ class HomepageManager {
         // Update sections visibility
         document.querySelectorAll('.tools-section').forEach(section => {
             const visibleCards = section.querySelectorAll('.tool-card:not([style*="display: none"])');
-            section.style.display = visibleCards.length > 0 ? 'block' : 'none';
+            if (visibleCards.length > 0) {
+                section.style.display = 'block';
+                if (!firstVisibleSection) {
+                    firstVisibleSection = section;
+                }
+            } else {
+                section.style.display = 'none';
+            }
         });
+        
+        // Auto-scroll to results on mobile when search has results
+        if (searchTerm !== '' && hasResults && firstVisibleSection) {
+            // Check if on mobile or if search has query
+            if (window.innerWidth <= 991) {
+                setTimeout(() => {
+                    firstVisibleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
     }
 
     initCategoryFilter() {
@@ -221,4 +201,9 @@ class HomepageManager {
 document.addEventListener('DOMContentLoaded', () => {
     window.MicroTools = window.MicroTools || {};
     window.MicroTools.homepage = new HomepageManager();
+    
+    // Initialize performance monitoring
+    if (window.PerformanceMonitor) {
+        window.MicroTools.performanceMonitor = new PerformanceMonitor();
+    }
 });

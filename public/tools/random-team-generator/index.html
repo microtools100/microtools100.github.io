@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online random team generator. Divide people into random teams instantly. Perfect for sports, events, projects, and groups.">
+    <meta name="keywords" content="team generator, random teams, team builder, divide teams, random assignment, group generator, team divider">
+    <meta property="og:title" content="Random Team Generator - Free Online Tool">
+    <meta property="og:description" content="Generate random teams from a list of names or items instantly.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>Random Team Generator - Create Teams Instantly</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#games-tools">Games Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <h1>Random Team Generator</h1>
+            <p class="tool-subtitle">Divide people or items into random teams instantly. Perfect for sports leagues, class projects, and group activities.</p>
+
+            <div class="tool-options">
+                <h3 class="section-title">Options</h3>
+                <div class="option-group">
+                    <label>
+                        <input type="radio" name="allocationMode" id="teamAllocationMode" value="by-count" checked>
+                        Divide into teams by team count
+                    </label>
+                </div>
+                <div class="option-group">
+                    <label for="teamCountInput">Number of Teams:</label>
+                    <input type="number" id="teamCountInput" min="2" max="20" value="2">
+                </div>
+                <div class="option-group">
+                    <label>
+                        <input type="radio" name="allocationMode" value="by-size">
+                        Divide into teams by team size
+                    </label>
+                </div>
+                <div class="option-group">
+                    <label for="teamSizeInput">Team Size:</label>
+                    <input type="number" id="teamSizeInput" min="1" max="10" value="2">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="inputText">Enter Names or Items (one per line)</label>
+                <textarea id="inputText" placeholder="Enter names or items&#10;&#10;Example:&#10;John&#10;Jane&#10;Bob&#10;Alice&#10;Charlie&#10;Diana"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button id="shuffleBtn" class="shuffle-btn">🔀 Generate Teams</button>
+            </div>
+
+            <div class="teams-output"></div>
+
+            <section class="use-cases">
+                <h2>Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">⚽</span>
+                        <h4>Sports Events</h4>
+                        <p>Create fair teams for sports tournaments and games</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🎓</span>
+                        <h4>Class Projects</h4>
+                        <p>Randomly divide students into project groups</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🎮</span>
+                        <h4>Gaming Sessions</h4>
+                        <p>Balance teams for multiplayer games and activities</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🤝</span>
+                        <h4>Team Building</h4>
+                        <p>Organize team activities and group exercises</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="formatting-guide">
+                <h2>How to Use</h2>
+                <ul>
+                    <li><strong>Enter Names:</strong> List all participants, one per line</li>
+                    <li><strong>Choose Mode:</strong> Divide by team count or by team size</li>
+                    <li><strong>Generate:</strong> Click the button to create random teams</li>
+                    <li><strong>Fair Distribution:</strong> Uses random shuffling for fair team allocation</li>
+                    <li><strong>Multiple Runs:</strong> Click Generate again to create different team combinations</li>
+                    <li><strong>Flexible Input:</strong> Works with names, numbers, items - any text</li>
+                </ul>
+                <h3 style="margin-top: 1.5rem; color: var(--primary-color);">Tips:</h3>
+                <ul style="margin-top: 1rem;">
+                    <li>Divide by count to ensure equal team distribution</li>
+                    <li>Divide by size for specific team requirements</li>
+                    <li>Last team may have fewer members when dividing by size</li>
+                    <li>Run multiple times to find the best team combination</li>
+                </ul>
+            </section>
+
+            <section class="related-tools">
+                <h2>Related Tools</h2>
+                <ul>
+                    <li><a href="/tools/decision-maker/">Decision Maker</a></li>
+                    <li><a href="/tools/password-generator/">Password Generator</a></li>
+                    <li><a href="/tools/fake-data-generator/">Fake Data Generator</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="/privacy.html">Privacy</a></li>
+                <li><a href="/terms.html">Terms</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

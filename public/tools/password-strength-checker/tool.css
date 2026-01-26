@@ -1,0 +1,372 @@
+/* Password Strength Checker - Tool Specific Styles */
+
+:root {
+    --very-weak-color: #ef4444;
+    --weak-color: #f97316;
+    --fair-color: #f59e0b;
+    --good-color: #3b82f6;
+    --strong-color: #10b981;
+    --very-strong-color: #059669;
+}
+
+.password-input-group {
+    margin-bottom: 2rem;
+}
+
+.password-input-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.password-input-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.5rem;
+}
+
+#passwordInput {
+    flex: 1;
+    border: none;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    background: transparent;
+    color: var(--text-color);
+}
+
+#passwordInput::placeholder {
+    color: #999;
+}
+
+.toggle-visibility-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.2s;
+}
+
+.toggle-visibility-btn:hover {
+    background: var(--surface-color);
+    border-radius: var(--radius-sm);
+}
+
+.strength-meter-container {
+    margin-bottom: 2rem;
+}
+
+.strength-meter {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    background: #e5e7eb;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.strength-bar.very-weak {
+    width: 20%;
+    background: var(--very-weak-color);
+}
+
+.strength-bar.weak {
+    width: 40%;
+    background: var(--weak-color);
+}
+
+.strength-bar.fair {
+    width: 60%;
+    background: var(--fair-color);
+}
+
+.strength-bar.good {
+    width: 80%;
+    background: var(--good-color);
+}
+
+.strength-bar.strong {
+    width: 90%;
+    background: var(--strong-color);
+}
+
+.strength-bar.very-strong {
+    width: 100%;
+    background: var(--very-strong-color);
+}
+
+.strength-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.strength-label.very-weak {
+    color: var(--very-weak-color);
+}
+
+.strength-label.weak {
+    color: var(--weak-color);
+}
+
+.strength-label.fair {
+    color: var(--fair-color);
+}
+
+.strength-label.good {
+    color: var(--good-color);
+}
+
+.strength-label.strong {
+    color: var(--strong-color);
+}
+
+.strength-label.very-strong {
+    color: var(--very-strong-color);
+}
+
+.password-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-item {
+    background: var(--surface-color);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.criteria-checklist {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+}
+
+.criteria-checklist h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.criteria-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.criterion {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.criterion-icon {
+    font-size: 1.5rem;
+    min-width: 24px;
+    text-align: center;
+    color: #d1d5db;
+}
+
+.criterion-icon.met {
+    color: var(--strong-color);
+}
+
+.criterion label {
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.criterion-icon.met::after {
+    content: '✓';
+}
+
+.recommendations {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.recommendations h3 {
+    color: var(--strong-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.recommendations ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recommendations li {
+    padding: 0.5rem 0;
+    color: #166534;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.recommendations li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--strong-color);
+    font-weight: bold;
+}
+
+.use-cases {
+    margin: 3rem 0;
+}
+
+.use-cases h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.use-case-item {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.use-case-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.use-case-item h4 {
+    color: var(--primary-color);
+    margin: 0.5rem 0;
+}
+
+.use-case-item p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.formatting-guide {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    margin: 3rem 0;
+}
+
+.formatting-guide h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.formatting-guide ul {
+    list-style: none;
+    padding: 0;
+}
+
+.formatting-guide li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.formatting-guide li:last-child {
+    border-bottom: none;
+}
+
+.related-tools {
+    margin: 3rem 0;
+}
+
+.related-tools h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.related-tools ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.related-tools li {
+    background: var(--surface-color);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.related-tools a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.related-tools a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .password-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .criteria-items {
+        grid-template-columns: 1fr;
+    }
+
+    .use-case-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

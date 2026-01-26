@@ -119,9 +119,10 @@ class MicroToolsUtils {
                 display: flex;
                 align-items: center;
                 gap: 1rem;
-                z-index: 1000;
+                z-index: 10000;
                 animation: slideIn 0.3s ease;
                 max-width: 400px;
+                pointer-events: auto;
             }
             .notification-success { border-color: var(--success-color); }
             .notification-error { border-color: var(--error-color); }
@@ -137,6 +138,15 @@ class MicroToolsUtils {
             @keyframes slideIn {
                 from { transform: translateX(100%); opacity: 0; }
                 to { transform: translateX(0); opacity: 1; }
+            }
+            @media (max-width: 768px) {
+                .notification {
+                    top: auto;
+                    bottom: calc(env(safe-area-inset-bottom) + 1rem);
+                    right: 0.5rem;
+                    left: 0.5rem;
+                    max-width: none;
+                }
             }
         `;
 

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UUID Generator - Micro Tools</title>
+    <meta name="description" content="Generate random UUIDs (v4). Create multiple UUIDs for databases, APIs, and unique identifiers.">
+    <meta property="og:title" content="UUID Generator - Micro Tools">
+    <meta property="og:description" content="Generate random UUIDs online">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1>UUID Generator</h1>
+            <p>Generate random UUIDs for databases, APIs, and unique identifiers</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="input-section">
+                <label for="count">Generate how many UUIDs:</label>
+                <div class="input-row">
+                    <input type="number" id="count" value="1" min="1" max="100">
+                    <button class="tool-btn" id="generateBtn">🔄 Generate</button>
+                </div>
+            </div>
+
+            <div class="format-section">
+                <label>Format:</label>
+                <div class="format-options">
+                    <label>
+                        <input type="radio" name="format" value="standard" checked> Standard (with hyphens)
+                    </label>
+                    <label>
+                        <input type="radio" name="format" value="uppercase"> Uppercase
+                    </label>
+                    <label>
+                        <input type="radio" name="format" value="nohyphens"> No hyphens
+                    </label>
+                    <label>
+                        <input type="radio" name="format" value="braces"> With braces {uuid}
+                    </label>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <label>Generated UUIDs:</label>
+                <textarea 
+                    id="output" 
+                    class="tool-textarea output-area"
+                    readonly
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="tool-btn" id="copyBtn">📋 Copy All</button>
+                <button class="tool-btn" id="clearBtn">🗑️ Clear</button>
+            </div>
+
+            <div class="info-box">
+                <h4>🆔 About UUIDs:</h4>
+                <ul>
+                    <li><strong>UUID v4:</strong> Randomly generated, ideal for most use cases</li>
+                    <li><strong>Format:</strong> 8-4-4-4-12 hexadecimal digits</li>
+                    <li><strong>Use cases:</strong> Database keys, API request IDs, session tokens</li>
+                    <li><strong>Uniqueness:</strong> Extremely low collision probability</li>
+                    <li><strong>Standard:</strong> RFC 4122 compliant</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+

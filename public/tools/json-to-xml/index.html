@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON to XML Converter - Micro Tools</title>
+    <meta name="description" content="Convert JSON to XML format instantly. Perfect for API integration and data interchange.">
+    <meta property="og:title" content="JSON to XML Converter - Micro Tools">
+    <meta property="og:description" content="Convert JSON to XML format">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <div class="tool-container dual-panel">
+                <label for="jsonInput">JSON Input:</label>
+                <textarea 
+                    id="jsonInput" 
+                    class="tool-textarea"
+                    placeholder='{"root": {"item": "value"}}'
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="panel-right">
+                <label for="xmlOutput">XML Output:</label>
+                <textarea 
+                    id="xmlOutput" 
+                    class="tool-textarea output-area"
+                    placeholder="<?xml version=\"1.0\"?>\n<root>\n  <item>value</item>\n</root>"
+                    readonly
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="tool-btn" id="convertBtn">↻ Convert</button>
+                <button class="tool-btn" id="copyBtn">📋 Copy XML</button>
+                <button class="tool-btn" id="clearBtn">🗑️ Clear</button>
+            </div>
+
+            <div class="info-box">
+                <h4>📝 About JSON to XML:</h4>
+                <ul>
+                    <li>JSON objects become XML elements</li>
+                    <li>JSON arrays create multiple elements with the same name</li>
+                    <li>Includes XML declaration with UTF-8 encoding</li>
+                    <li>Properly formatted with indentation</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+

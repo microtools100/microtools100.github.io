@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+*.min.js
+*.min.css
+
+# Testing
+coverage/
+.nyc_output/
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS files
+Thumbs.db
+.env.local
+.env.*.local
+
+# Temporary and setup files
+*.txt
+install_tools.py
+run-local.py
+docs/
+scripts/
+*.html (Google verification files)
+
+# Logs
+npm-debug.log
+yarn-error.log

@@ -1,0 +1,246 @@
+/* QR Code Generator - Tool Specific Styles */
+
+:root {
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
+}
+
+.tool-options {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+}
+
+.tool-options .section-title {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.option-group:last-child {
+    margin-bottom: 0;
+}
+
+.option-group label {
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.option-group input[type="number"],
+.option-group select {
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    background: white;
+    cursor: pointer;
+}
+
+.option-group input[type="number"],
+.option-group select {
+    width: 100%;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.input-group textarea {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    resize: vertical;
+    background: white;
+    color: var(--text-color);
+    min-height: 150px;
+}
+
+.error-msg {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+    display: none;
+}
+
+.qr-output {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    margin: 2rem 0;
+}
+
+#qrCanvas {
+    display: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    max-width: 100%;
+}
+
+#qrCodeContainer {
+    display: none;
+}
+
+#qrCodeContainer canvas {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    max-width: 100%;
+}
+
+.download-btn {
+    padding: 0.8rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.download-btn:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.download-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.use-cases {
+    margin: 3rem 0;
+}
+
+.use-cases h2,
+.formatting-guide h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.use-case-item {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.use-case-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.use-case-item h4 {
+    color: var(--primary-color);
+    margin: 0.5rem 0;
+}
+
+.use-case-item p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.formatting-guide {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    margin: 3rem 0;
+}
+
+.formatting-guide ul {
+    list-style: none;
+    padding: 0;
+}
+
+.formatting-guide li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.formatting-guide li:last-child {
+    border-bottom: none;
+}
+
+.related-tools {
+    margin: 3rem 0;
+}
+
+.related-tools h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.related-tools ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.related-tools li {
+    background: var(--surface-color);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.related-tools a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.related-tools a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .use-case-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #qrCanvas {
+        max-width: 250px;
+    }
+}

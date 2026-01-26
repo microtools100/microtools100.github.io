@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Decoder - Micro Tools</title>
+    <meta name="description" content="Decode and verify JWT tokens. View header, payload, and signature information.">
+    <meta property="og:title" content="JWT Decoder - Micro Tools">
+    <meta property="og:description" content="Decode JWT tokens online">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1>JWT Decoder</h1>
+            <p>Decode JWT tokens and view their components</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="input-section">
+                <label for="jwtInput">JWT Token:</label>
+                <textarea 
+                    id="jwtInput" 
+                    class="tool-textarea"
+                    placeholder="Paste your JWT token here..."
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="jwt-sections">
+                <div class="jwt-part">
+                    <h4>Header</h4>
+                    <pre id="headerOutput">-</pre>
+                    <button class="copy-small-btn" onclick="copySection('headerOutput')">Copy</button>
+                </div>
+                <div class="jwt-part">
+                    <h4>Payload</h4>
+                    <pre id="payloadOutput">-</pre>
+                    <button class="copy-small-btn" onclick="copySection('payloadOutput')">Copy</button>
+                </div>
+                <div class="jwt-part">
+                    <h4>Signature</h4>
+                    <pre id="signatureOutput">-</pre>
+                    <button class="copy-small-btn" onclick="copySection('signatureOutput')">Copy</button>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>ℹ️ JWT Structure:</h4>
+                <p>A JWT consists of three parts separated by dots (.)</p>
+                <ul>
+                    <li><strong>Header:</strong> Contains token type and hashing algorithm</li>
+                    <li><strong>Payload:</strong> Contains claims and user data</li>
+                    <li><strong>Signature:</strong> Used to verify the token hasn't been tampered with</li>
+                </ul>
+            </div>
+
+            <div class="alert-info" id="alert"></div>
+        </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Binary Converter - Micro Tools</title>
+    <meta name="description" content="Convert text to binary and binary to text. See the ASCII binary representation of any character.">
+    <meta property="og:title" content="Text to Binary Converter - Micro Tools">
+    <meta property="og:description" content="Convert text to binary format">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+
+    <div class="tool-container dual-panel">
+        <div class="tool-header">
+            <h1>Text to Binary Converter</h1>
+            <p>Convert text to binary and binary to text with ASCII codes</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="panel-left">
+                <label for="textInput">Text Input:</label>
+                <textarea 
+                    id="textInput" 
+                    class="tool-textarea"
+                    placeholder="Enter text here..."
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="panel-right">
+                <label for="binaryOutput">Binary Output:</label>
+                <textarea 
+                    id="binaryOutput" 
+                    class="tool-textarea output-area"
+                    placeholder="Binary representation..."
+                    readonly
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="tool-btn" id="convertBtn">↻ Convert</button>
+                <button class="tool-btn" id="reverseBtn">⇅ Reverse</button>
+                <button class="tool-btn" id="copyBtn">📋 Copy Binary</button>
+                <button class="tool-btn" id="clearBtn">🗑️ Clear</button>
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox" id="separatorToggle" checked>
+                    Separate bytes with spaces
+                </label>
+                <label>
+                    <input type="checkbox" id="asciiToggle">
+                    Show ASCII codes
+                </label>
+            </div>
+
+            <div class="info-box">
+                <h4>📚 Binary Conversion:</h4>
+                <ul>
+                    <li><strong>ASCII:</strong> Each character is 8 bits (1 byte)</li>
+                    <li><strong>Binary:</strong> Base-2 number system (only 0s and 1s)</li>
+                    <li><strong>Example:</strong> 'A' = 01000001 (decimal 65)</li>
+                    <li><strong>Space:</strong> 00100000 (decimal 32)</li>
+                    <li><strong>Max ASCII:</strong> 127 for standard characters</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+

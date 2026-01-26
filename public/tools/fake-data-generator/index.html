@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free fake data generator. Generate dummy names, emails, phone numbers, addresses, and more for testing purposes.">
+    <meta name="keywords" content="fake data generator, dummy data, test data, random names, random emails, mock data, data generator">
+    <meta property="og:title" content="Fake Data Generator - Free Online Tool">
+    <meta property="og:description" content="Generate fake names, emails, phone numbers, addresses and more for testing.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>Fake Data Generator - Generate Dummy Data Online</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#games-tools">Games Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <h1>Fake Data Generator</h1>
+            <p class="tool-subtitle">Generate fake names, emails, phone numbers, and addresses for testing. Perfect for development and quality assurance.</p>
+
+            <div class="tool-options">
+                <h3 class="section-title">Settings</h3>
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label for="typeSelect">Data Type:</label>
+                        <select id="typeSelect">
+                            <option value="names">Full Names</option>
+                            <option value="emails">Email Addresses</option>
+                            <option value="phones">Phone Numbers</option>
+                            <option value="addresses">Street Addresses</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="countInput">Quantity:</label>
+                        <input type="number" id="countInput" min="1" max="100" value="10">
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button id="generateBtn" class="generate-btn">🔄 Generate Data</button>
+                <button id="copyBtn" class="copy-btn" disabled>📋 Copy All</button>
+            </div>
+
+            <div class="output-group">
+                <label for="outputText">Generated Data</label>
+                <textarea id="outputText" readonly placeholder="Generated data will appear here..."></textarea>
+            </div>
+
+            <section class="use-cases">
+                <h2>Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💻</span>
+                        <h4>Software Testing</h4>
+                        <p>Generate test data for development and QA</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📝</span>
+                        <h4>Database Seeding</h4>
+                        <p>Populate databases with realistic dummy data</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🧪</span>
+                        <h4>Load Testing</h4>
+                        <p>Create large datasets for performance testing</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🎨</span>
+                        <h4>UI Mockups</h4>
+                        <p>Fill forms and templates with realistic data</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="formatting-guide">
+                <h2>Data Types Available</h2>
+                <ul>
+                    <li><strong>Full Names:</strong> Realistic first and last name combinations</li>
+                    <li><strong>Email Addresses:</strong> Valid email format with various domains</li>
+                    <li><strong>Phone Numbers:</strong> US format (XXX) XXX-XXXX</li>
+                    <li><strong>Street Addresses:</strong> Complete addresses with street, city, state, and ZIP</li>
+                    <li><strong>Usernames:</strong> Realistic username variations</li>
+                    <li><strong>Birth Dates:</strong> Random dates in YYYY-MM-DD format</li>
+                </ul>
+                <h3 style="margin-top: 1.5rem; color: var(--primary-color);">Quantity Limits:</h3>
+                <ul style="margin-top: 1rem;">
+                    <li>Maximum 1000 records per generation</li>
+                    <li>Completely random generation each time</li>
+                    <li>No external API calls - all generated locally</li>
+                    <li>Privacy assured - no data is stored or sent</li>
+                </ul>
+            </section>
+
+            <section class="related-tools">
+                <h2>Related Tools</h2>
+                <ul>
+                    <li><a href="/tools/password-generator/">Password Generator</a></li>
+                    <li><a href="/tools/random-team-generator/">Random Team Generator</a></li>
+                    <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="/privacy.html">Privacy</a></li>
+                <li><a href="/terms.html">Terms</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

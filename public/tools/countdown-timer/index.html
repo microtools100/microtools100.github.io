@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer - Micro Tools</title>
+    <meta name="description" content="Simple and elegant countdown timer. Set hours, minutes, and seconds with audio notification.">
+    <meta property="og:title" content="Countdown Timer - Micro Tools">
+    <meta property="og:description" content="Online countdown timer with notifications">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1>Countdown Timer</h1>
+            <p>Set a countdown timer with hours, minutes, and seconds</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="timer-display">
+                <div class="timer-text" id="timerDisplay">00:00:00</div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="hours">Hours</label>
+                    <input type="number" id="hours" value="0" min="0" max="23">
+                </div>
+                <div class="input-field">
+                    <label for="minutes">Minutes</label>
+                    <input type="number" id="minutes" value="1" min="0" max="59">
+                </div>
+                <div class="input-field">
+                    <label for="seconds">Seconds</label>
+                    <input type="number" id="seconds" value="0" min="0" max="59">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="timer-btn" id="startBtn">▶️ Start</button>
+                <button class="timer-btn pause" id="pauseBtn" disabled>⏸️ Pause</button>
+                <button class="timer-btn" id="resetBtn">🔄 Reset</button>
+            </div>
+
+            <div class="preset-buttons">
+                <button class="preset-btn" onclick="setPreset(1, 0, 0)">1 min</button>
+                <button class="preset-btn" onclick="setPreset(5, 0, 0)">5 min</button>
+                <button class="preset-btn" onclick="setPreset(10, 0, 0)">10 min</button>
+                <button class="preset-btn" onclick="setPreset(30, 0, 0)">30 min</button>
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox" id="soundToggle" checked>
+                    Sound notification when timer ends
+                </label>
+            </div>
+
+            <div class="info-box">
+                <h4>⏱️ Timer Features:</h4>
+                <ul>
+                    <li>Set up to 23 hours, 59 minutes, 59 seconds</li>
+                    <li>Pause and resume at any time</li>
+                    <li>Quick preset buttons for common durations</li>
+                    <li>Optional sound notification</li>
+                    <li>Page title updates during countdown</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+

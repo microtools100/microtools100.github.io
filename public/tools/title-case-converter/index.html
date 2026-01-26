@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online title case converter. Convert text to title case instantly. Perfect for headlines, titles, and professional formatting.">
+    <meta name="keywords" content="title case converter, text to title case, capitalize words, heading formatter, free online tool">
+    <meta property="og:title" content="Title Case Converter - Free Online Tool">
+    <meta property="og:description" content="Convert any text to title case format instantly. Perfect for headlines and professional documents.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>Title Case Converter - Format Text to Title Case Online</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#games-tools">Games Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <h1>Title Case Converter</h1>
+            <p class="tool-subtitle">Convert text to title case format instantly. Perfect for headlines, titles, and professional documents.</p>
+
+            <div class="tool-options">
+                <h3 class="section-title">Options</h3>
+                <div class="option-group">
+                    <label for="titleStyle">Title Style:</label>
+                    <select id="titleStyle">
+                        <option value="standard">Standard Title Case</option>
+                        <option value="all-caps">ALL CAPS</option>
+                        <option value="first-letter">First Letter Only</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="preserveCase">
+                        <input type="checkbox" id="preserveCase" checked>
+                        Preserve acronyms (e.g., USA, API)
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-output-grid">
+                <div class="input-group">
+                    <label for="inputText">Input Text</label>
+                    <textarea id="inputText" placeholder="enter text here&#10;&#10;Example:&#10;this is a sample heading&#10;&#10;Result:&#10;This Is A Sample Heading" rows="10"></textarea>
+                </div>
+                <div class="output-group">
+                    <label for="outputText">Output Text</label>
+                    <textarea id="outputText" readonly placeholder="Result will appear here..." rows="10"></textarea>
+                    <button class="copy-btn" data-copy="outputText">📋 Copy</button>
+                </div>
+            </div>
+
+            <section class="use-cases">
+                <h2>Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📰</span>
+                        <h4>Blog Titles</h4>
+                        <p>Format blog post titles with proper capitalization</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📑</span>
+                        <h4>Document Headers</h4>
+                        <p>Create professional document headings</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🎬</span>
+                        <h4>Video Titles</h4>
+                        <p>Format titles for YouTube and social media</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📧</span>
+                        <h4>Email Subject Lines</h4>
+                        <p>Create professional email subject lines</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="formatting-guide">
+                <h2>Title Case Rules</h2>
+                <ul>
+                    <li><strong>Capitalize:</strong> First and last words, all nouns, verbs, adjectives, and adverbs</li>
+                    <li><strong>Don't capitalize:</strong> Articles (a, an, the), conjunctions, and prepositions</li>
+                    <li><strong>Exceptions:</strong> Capitalize prepositions and conjunctions if they're the first or last word</li>
+                    <li><strong>Acronyms:</strong> When preserved, acronyms stay in ALL CAPS (API, USA, HTML)</li>
+                </ul>
+            </section>
+
+            <section class="related-tools">
+                <h2>Related Tools</h2>
+                <ul>
+                    <li><a href="/tools/text-uppercase/">Text Uppercase Converter</a></li>
+                    <li><a href="/tools/text-lowercase/">Text Lowercase Converter</a></li>
+                    <li><a href="/tools/sentence-case-converter/">Sentence Case Converter</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="/privacy.html">Privacy</a></li>
+                <li><a href="/terms.html">Terms</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

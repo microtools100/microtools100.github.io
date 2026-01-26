@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML to JSON Converter - Micro Tools</title>
+    <meta name="description" content="Convert XML to JSON format instantly. Parse XML and transform to JSON structure.">
+    <meta property="og:title" content="XML to JSON Converter - Micro Tools">
+    <meta property="og:description" content="Convert XML to JSON format">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <div class="tool-container dual-panel">
+        <div class="tool-header">
+            <h1>XML to JSON Converter</h1>
+            <p>Convert XML to JSON format for modern APIs</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="panel-left">
+                <label for="xmlInput">XML Input:</label>
+                <textarea 
+                    id="xmlInput" 
+                    class="tool-textarea"
+                    placeholder='<?xml version="1.0"?>\n<root>\n  <item>value</item>\n</root>'
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="panel-right">
+                <label for="jsonOutput">JSON Output:</label>
+                <textarea 
+                    id="jsonOutput" 
+                    class="tool-textarea output-area"
+                    placeholder='{"root": {"item": "value"}}'
+                    readonly
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="tool-btn" id="convertBtn">↻ Convert</button>
+                <button class="tool-btn" id="copyBtn">📋 Copy JSON</button>
+                <button class="tool-btn" id="clearBtn">🗑️ Clear</button>
+            </div>
+
+            <div class="info-box">
+                <h4>📝 About XML to JSON:</h4>
+                <ul>
+                    <li>XML elements become JSON object properties</li>
+                    <li>Attributes are prefixed with @ symbol</li>
+                    <li>Text content becomes the value</li>
+                    <li>Repeated elements become arrays</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Time Calculator - MicroTools</title>
+    <meta name="description" content="Calculate reading time for your text. Estimates how long it takes to read content based on average reading speed.">
+    <meta property="og:title" content="Reading Time Calculator - MicroTools">
+    <meta property="og:description" content="Calculate how long it takes to read any text content">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="/" class="logo">Micro Tools</a>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1>Reading Time Calculator</h1>
+            <p>Calculate how long it takes to read your text content</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="input-section">
+                <label for="textInput">Paste your text here:</label>
+                <textarea 
+                    id="textInput" 
+                    class="tool-textarea"
+                    placeholder="Enter text to calculate reading time... (minimum 10 words for accurate estimate)"
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="options-section">
+                <label>
+                    Reading Speed (words per minute):
+                    <input type="number" id="readingSpeed" value="200" min="50" max="500" step="10">
+                </label>
+            </div>
+
+            <div class="results-section">
+                <div class="stat-card">
+                    <div class="stat-value" id="readingTime">0 min</div>
+                    <div class="stat-label">Reading Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="wordCount">0</div>
+                    <div class="stat-label">Words</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="charCount">0</div>
+                    <div class="stat-label">Characters</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="sentenceCount">0</div>
+                    <div class="stat-label">Sentences</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📚 Reading Time Estimates:</h4>
+                <ul>
+                    <li><strong>Slow Reader (150 WPM):</strong> <span id="slowTime">-</span></li>
+                    <li><strong>Average Reader (200 WPM):</strong> <span id="avgTime">-</span></li>
+                    <li><strong>Fast Reader (250 WPM):</strong> <span id="fastTime">-</span></li>
+                </ul>
+            </div>
+
+            <button class="tool-btn" id="copyBtn">📋 Copy Results</button>
+        </div>
+    </div>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
