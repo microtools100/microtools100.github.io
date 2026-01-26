@@ -27,6 +27,62 @@ class HomepageManager {
                 url: '/tools/remove-extra-spaces/'
             },
             {
+                id: 'excel-column-to-comma-list',
+                name: 'Excel Column to Comma List',
+                description: 'Convert Excel column data to comma-separated values with custom formatting options.',
+                category: 'data',
+                icon: '📊',
+                url: '/tools/excel-column-to-comma-list/'
+            },
+            {
+                id: 'quote-comma-formatter',
+                name: 'Quote & Comma Formatter',
+                description: 'Add quotes and delimiters to column values. Perfect for SQL queries and data formatting.',
+                category: 'data',
+                icon: '"\'',
+                url: '/tools/quote-comma-formatter/'
+            },
+            {
+                id: 'json-formatter',
+                name: 'JSON Formatter & Validator',
+                description: 'Format, validate, minify and beautify JSON with syntax highlighting.',
+                category: 'data',
+                icon: '{}',
+                url: '/tools/json-formatter/'
+            },
+            {
+                id: 'url-encoder-decoder',
+                name: 'URL Encoder/Decoder',
+                description: 'Encode and decode URLs, query parameters, and special characters.',
+                category: 'data',
+                icon: '🔗',
+                url: '/tools/url-encoder-decoder/'
+            },
+            {
+                id: 'excel-column-to-sql-in',
+                name: 'Excel Column to SQL IN List',
+                description: 'Convert Excel column data to SQL IN statement format.',
+                category: 'data',
+                icon: '⬚',
+                url: '/tools/excel-column-to-sql-in/'
+            },
+            {
+                id: 'comma-to-newline',
+                name: 'Comma to Newline',
+                description: 'Convert comma-separated values to newline-separated format.',
+                category: 'data',
+                icon: '⮎',
+                url: '/tools/comma-to-newline/'
+            },
+            {
+                id: 'newline-to-comma',
+                name: 'Newline to Comma',
+                description: 'Convert newline-separated values to comma-separated format.',
+                category: 'data',
+                icon: '⮏',
+                url: '/tools/newline-to-comma/'
+            },
+            {
                 id: 'charades-random',
                 name: 'Random Charades Generator',
                 description: 'Generate random charades words for parties and game nights.',
@@ -46,6 +102,7 @@ class HomepageManager {
 
         this.categories = {
             'text': 'Text Tools',
+            'data': 'Data Tools',
             'games': 'Game Tools',
             'security': 'Security Tools'
         };
@@ -69,7 +126,7 @@ class HomepageManager {
         const debouncedSearch = window.MicroTools?.utils?.debounce?.(this.performSearch.bind(this), 300) || 
                                this.debounce(this.performSearch.bind(this), 300);
 
-        searchInput.addEventListener('input', debouncedSearch);
+        searchInput.addEventListener('input', (e) => debouncedSearch(e.target.value));
         searchBtn.addEventListener('click', () => this.performSearch(searchInput.value));
         
         // Search on Enter key
@@ -97,7 +154,7 @@ class HomepageManager {
         
         // Update sections visibility
         document.querySelectorAll('.tools-section').forEach(section => {
-            const visibleCards = section.querySelectorAll('.tool-card[style="display: block"]');
+            const visibleCards = section.querySelectorAll('.tool-card:not([style*="display: none"])');
             section.style.display = visibleCards.length > 0 ? 'block' : 'none';
         });
     }
@@ -157,29 +214,11 @@ class HomepageManager {
         };
     }
 
-    // Update stats with random numbers (for demo)
-    updateStats() {
-        const statElements = document.querySelectorAll('.stat-number');
-        if (statElements.length >= 3) {
-            // Simulate tool usage count (in thousands)
-            const usageCount = Math.floor(Math.random() * 9000) + 1000;
-            statElements[1].textContent = `${Math.floor(usageCount / 1000)}k+`;
-            
-            // Simulate uptime percentage
-            statElements[2].textContent = '99.9%';
-        }
-    }
+    // Don't override stats - they are set statically in HTML
 }
 
 // Initialize homepage when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.MicroTools = window.MicroTools || {};
     window.MicroTools.homepage = new HomepageManager();
-    
-    // Update stats every 30 seconds (simulated)
-    setInterval(() => {
-        if (window.MicroTools.homepage) {
-            window.MicroTools.homepage.updateStats();
-        }
-    }, 30000);
 });

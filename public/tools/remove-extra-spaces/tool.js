@@ -140,13 +140,12 @@ class RemoveSpacesTool {
         // Update stats
         this.updateStats();
         
-        // Calculate spaces removed
-        const spacesRemoved = originalLength - cleanedText.length;
-        if (spacesRemoved > 0) {
-            this.showNotification(`Removed ${spacesRemoved} extra characters`, 'success');
-        } else {
-            this.showNotification('Text is already clean', 'info');
-        }
+        // Auto-copy to clipboard with a small delay to ensure DOM is ready
+        setTimeout(() => {
+            this.copyToClipboardSilently(cleanedText);
+            // Show success message
+            this.showNotification('Copied to clipboard', 'success');
+        }, 10);
         
         // Save to history
         this.saveToHistory(inputText, cleanedText);
@@ -181,6 +180,40 @@ class RemoveSpacesTool {
             document.execCommand('copy');
             this.showNotification('Copied to clipboard!', 'success');
         }
+    }
+    
+    copyToClipboardSilently(text) {
+        // Copy without showing notification (used for auto-copy)
+        try {
+            // Try modern Clipboard API first
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).catch(() => {
+                    // Fallback if clipboard API fails
+                    this.fallbackCopy(text);
+                });
+            } else {
+                // Fallback for older browsers
+                this.fallbackCopy(text);
+            }
+        } catch (err) {
+            // Final fallback
+            this.fallbackCopy(text);
+        }
+    }
+    
+    fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+        }
+        document.body.removeChild(textarea);
     }
     
     download() {

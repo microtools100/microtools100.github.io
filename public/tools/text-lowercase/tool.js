@@ -92,9 +92,12 @@ class LowercaseTool {
         // Update stats
         this.updateStats();
         
-        // Show success message
-        const charCount = inputText.length;
-        this.showNotification(`Converted ${charCount} characters to lowercase`, 'success');
+        // Auto-copy to clipboard with a small delay to ensure DOM is ready
+        setTimeout(() => {
+            this.copyToClipboardSilently(lowercaseText);
+            // Show success message
+            this.showNotification('Copied to clipboard', 'success');
+        }, 10);
         
         // Save to recent conversions
         this.saveToHistory(inputText, lowercaseText);
@@ -129,6 +132,40 @@ class LowercaseTool {
             document.execCommand('copy');
             this.showNotification('Copied to clipboard!', 'success');
         }
+    }
+    
+    copyToClipboardSilently(text) {
+        // Copy without showing notification (used for auto-copy)
+        try {
+            // Try modern Clipboard API first
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).catch(() => {
+                    // Fallback if clipboard API fails
+                    this.fallbackCopy(text);
+                });
+            } else {
+                // Fallback for older browsers
+                this.fallbackCopy(text);
+            }
+        } catch (err) {
+            // Final fallback
+            this.fallbackCopy(text);
+        }
+    }
+    
+    fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+        }
+        document.body.removeChild(textarea);
     }
     
     download() {

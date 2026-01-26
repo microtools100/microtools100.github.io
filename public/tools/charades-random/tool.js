@@ -97,9 +97,18 @@ class CharadesGenerator {
             toggleAdvanced: document.getElementById('toggleAdvanced'),
             advancedOptions: document.getElementById('advancedOptions'),
             charadesOutput: document.getElementById('charadesOutput'),
-            totalCount: document.getElementById('totalCount'),
             timerDisplay: document.getElementById('timerDisplay'),
-            currentIndex: document.getElementById('currentIndex')
+            currentIndex: document.getElementById('currentIndex'),
+            nextCardBtn: document.getElementById('nextCardBtn'),
+            prevCardBtn: document.getElementById('prevCardBtn'),
+            team1Score: document.getElementById('team1Score'),
+            team2Score: document.getElementById('team2Score'),
+            team1Add: document.getElementById('team1Add'),
+            team1Remove: document.getElementById('team1Remove'),
+            team2Add: document.getElementById('team2Add'),
+            team2Remove: document.getElementById('team2Remove'),
+            resetScoresBtn: document.getElementById('resetScoresBtn'),
+            toggleHintsBtn: document.getElementById('toggleHintsBtn')
         };
 
         this.gameState = {
@@ -108,7 +117,10 @@ class CharadesGenerator {
             timeLeft: 0,
             currentCharadeIndex: 0,
             usedCharades: new Set(),
-            generatedCharades: []
+            generatedCharades: [],
+            team1Score: 0,
+            team2Score: 0,
+            showHints: true
         };
 
         this.init();
@@ -153,6 +165,20 @@ class CharadesGenerator {
                 this.showCustomLengthInput();
             }
         });
+        
+        // Card navigation
+        this.elements.nextCardBtn.addEventListener('click', () => this.nextCard());
+        this.elements.prevCardBtn.addEventListener('click', () => this.previousCard());
+        
+        // Team score buttons
+        this.elements.team1Add.addEventListener('click', () => this.updateTeamScore(1, 1));
+        this.elements.team1Remove.addEventListener('click', () => this.updateTeamScore(1, -1));
+        this.elements.team2Add.addEventListener('click', () => this.updateTeamScore(2, 1));
+        this.elements.team2Remove.addEventListener('click', () => this.updateTeamScore(2, -1));
+        this.elements.resetScoresBtn.addEventListener('click', () => this.resetScores());
+        
+        // Toggle hints button
+        this.elements.toggleHintsBtn.addEventListener('click', () => this.toggleHints());
     }
 
     setupQuickCategories() {
@@ -282,44 +308,71 @@ class CharadesGenerator {
                     <p>Click "Generate Charades" to create your first set of charades words!</p>
                 </div>
             `;
+            this.elements.nextCardBtn.disabled = true;
+            this.elements.prevCardBtn.disabled = true;
             return;
         }
         
-        const grid = document.createElement('div');
-        grid.className = 'charades-grid';
-        
-        charades.forEach((charade, index) => {
-            const card = document.createElement('div');
-            card.className = 'charade-card';
-            card.dataset.index = index;
-            
-            card.innerHTML = `
-                <div class="status"></div>
-                <div class="charade-word">${this.escapeHtml(charade.text)}</div>
-                <div class="charade-category">${charade.category}</div>
-                ${charade.hint ? `<div class="charade-hint">${this.escapeHtml(charade.hint)}</div>` : ''}
-            `;
-            
-            card.addEventListener('click', () => this.toggleCharadeUsed(index));
-            grid.appendChild(card);
-        });
-        
-        this.elements.charadesOutput.appendChild(grid);
+        // Display the current card only
+        this.displayCurrentCard();
+        this.updateCardNavigation();
     }
 
-    toggleCharadeUsed(index) {
-        const card = this.elements.charadesOutput.querySelector(`[data-index="${index}"]`);
-        const isUsed = card.classList.contains('used');
+    displayCurrentCard() {
+        const charades = this.gameState.generatedCharades;
         
-        if (isUsed) {
-            card.classList.remove('used');
-            this.gameState.usedCharades.delete(index);
-        } else {
-            card.classList.add('used');
-            this.gameState.usedCharades.add(index);
+        if (charades.length === 0 || this.gameState.currentCharadeIndex >= charades.length) {
+            this.elements.charadesOutput.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">🎭</div>
+                    <h4>No more charades</h4>
+                    <p>All charades have been viewed!</p>
+                </div>
+            `;
+            return;
         }
         
+        const charade = charades[this.gameState.currentCharadeIndex];
+        const card = document.createElement('div');
+        card.className = 'charade-card single-card';
+        
+        card.innerHTML = `
+            <div class="charade-word">${this.escapeHtml(charade.text)}</div>
+            <div class="charade-category">${charade.category}</div>
+            ${this.gameState.showHints && charade.hint ? `<div class="charade-hint">${this.escapeHtml(charade.hint)}</div>` : ''}
+        `;
+        
+        this.elements.charadesOutput.innerHTML = '';
+        this.elements.charadesOutput.appendChild(card);
         this.updateStats();
+    }
+
+    updateCardNavigation() {
+        const charades = this.gameState.generatedCharades;
+        const currentIndex = this.gameState.currentCharadeIndex;
+        
+        // Previous button
+        this.elements.prevCardBtn.disabled = currentIndex === 0;
+        
+        // Next button
+        this.elements.nextCardBtn.disabled = currentIndex >= charades.length - 1;
+    }
+
+    nextCard() {
+        const charades = this.gameState.generatedCharades;
+        if (this.gameState.currentCharadeIndex < charades.length - 1) {
+            this.gameState.currentCharadeIndex++;
+            this.displayCurrentCard();
+            this.updateCardNavigation();
+        }
+    }
+
+    previousCard() {
+        if (this.gameState.currentCharadeIndex > 0) {
+            this.gameState.currentCharadeIndex--;
+            this.displayCurrentCard();
+            this.updateCardNavigation();
+        }
     }
 
     toggleGame() {
@@ -455,9 +508,43 @@ class CharadesGenerator {
     }
 
     updateStats() {
-        this.elements.totalCount.textContent = this.gameState.generatedCharades.length;
         this.elements.currentIndex.textContent = 
-            `${this.gameState.currentCharadeIndex}/${this.gameState.generatedCharades.length}`;
+            `${this.gameState.currentCharadeIndex + 1}/${this.gameState.generatedCharades.length}`;
+    }
+
+    updateTeamScore(team, change) {
+        if (team === 1) {
+            this.gameState.team1Score = Math.max(0, this.gameState.team1Score + change);
+            this.elements.team1Score.textContent = this.gameState.team1Score;
+        } else if (team === 2) {
+            this.gameState.team2Score = Math.max(0, this.gameState.team2Score + change);
+            this.elements.team2Score.textContent = this.gameState.team2Score;
+        }
+    }
+
+    resetScores() {
+        this.gameState.team1Score = 0;
+        this.gameState.team2Score = 0;
+        this.elements.team1Score.textContent = '0';
+        this.elements.team2Score.textContent = '0';
+        this.showNotification('Scores reset', 'info');
+    }
+
+    toggleHints() {
+        this.gameState.showHints = !this.gameState.showHints;
+        
+        // Update button text
+        if (this.gameState.showHints) {
+            this.elements.toggleHintsBtn.innerHTML = '<span>Hide Hints</span><span>💡</span>';
+        } else {
+            this.elements.toggleHintsBtn.innerHTML = '<span>Show Hints</span><span>💡</span>';
+        }
+        
+        // Refresh current card display
+        this.displayCurrentCard();
+        
+        const message = this.gameState.showHints ? 'Hints enabled' : 'Hints disabled';
+        this.showNotification(message, 'info');
     }
 
     clear() {

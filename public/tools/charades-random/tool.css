@@ -272,6 +272,249 @@
     border-color: var(--primary-color);
 }
 
+/* Team Scoreboard */
+.team-scoreboard {
+    background: white;
+    border: 2px solid var(--primary-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.team-scoreboard h3 {
+    margin-bottom: 0.75rem;
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.score-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.team-score-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    text-align: center;
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.team-score-card.team-1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.team-score-card.team-2 {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.team-name {
+    font-size: 0.65rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.team-score {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    line-height: 1;
+}
+
+.score-controls {
+    display: flex;
+    gap: 0.25rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.score-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.score-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.score-btn:active {
+    transform: scale(0.95);
+}
+
+#resetScoresBtn {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Game Container - Smartphone View */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #f8f9fa;
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    max-width: 375px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Single Card View */
+.single-card-view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    padding: 1rem;
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+}
+
+.charade-card.single-card {
+    width: 100%;
+    max-width: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 1.5rem 1rem;
+    cursor: default;
+    text-align: center;
+}
+
+.charade-card.single-card:hover {
+    transform: none;
+}
+
+.charade-card.single-card .charade-word {
+    font-size: 1.75rem;
+    color: white;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.charade-card.single-card .charade-category {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.7rem;
+}
+
+.charade-card.single-card .charade-hint {
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0.75rem;
+    font-size: 0.7rem;
+}
+
+/* Card Navigation */
+.card-navigation {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.card-navigation .action-btn {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.card-navigation .action-btn span {
+    display: block;
+}
+
+.card-navigation .action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Output Group - Compact */
+.output-group {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+}
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    gap: 0.5rem;
+}
+
+.output-header label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.stats-display {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.stat-item {
+    background: var(--surface-color);
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.6rem;
+    color: var(--text-light);
+}
+
+/* Compact Action Buttons */
+.tool-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.7rem;
+}
+
+.action-btn span {
+    display: inline;
+}
+
+.action-btn span:last-child {
+    margin-left: 0.25rem;
+}
+
 /* Timer Display */
 .timer-display {
     font-size: 2rem;

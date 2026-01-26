@@ -159,54 +159,89 @@
                                     <span>Start Game Timer</span>
                                     <span>⏱️</span>
                                 </button>
+                                <button class="action-btn" id="toggleHintsBtn">
+                                    <span>Hide Hints</span>
+                                    <span>💡</span>
+                                </button>
                             </div>
                         </section>
 
                         <section class="tool-section">
-                            <div class="output-group">
-                                <div class="output-header">
-                                    <label for="charadesOutput">Generated Charades:</label>
-                                    <div class="stats-display">
-                                        <div class="stat-item">
-                                            <span class="stat-value" id="totalCount">0</span>
-                                            <span class="stat-label">Total</span>
+                            <div class="game-container">
+                                <!-- Team Score Keeper -->
+                                <div class="team-scoreboard">
+                                    <h3>Team Scores</h3>
+                                    <div class="score-grid">
+                                        <div class="team-score-card team-1">
+                                            <div class="team-name">Team 1</div>
+                                            <div class="team-score" id="team1Score">0</div>
+                                            <div class="score-controls">
+                                                <button class="score-btn remove" id="team1Remove" title="Remove point">−</button>
+                                                <button class="score-btn add" id="team1Add" title="Add point">+</button>
+                                            </div>
                                         </div>
-                                        <div class="stat-item">
-                                            <span class="stat-value" id="timerDisplay">--:--</span>
-                                            <span class="stat-label">Timer</span>
-                                        </div>
-                                        <div class="stat-item">
-                                            <span class="stat-value" id="currentIndex">0/0</span>
-                                            <span class="stat-label">Current</span>
+                                        <div class="team-score-card team-2">
+                                            <div class="team-name">Team 2</div>
+                                            <div class="team-score" id="team2Score">0</div>
+                                            <div class="score-controls">
+                                                <button class="score-btn remove" id="team2Remove" title="Remove point">−</button>
+                                                <button class="score-btn add" id="team2Add" title="Add point">+</button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <button class="action-btn" id="resetScoresBtn">Reset</button>
                                 </div>
-                                
-                                <div class="charades-container" id="charadesOutput">
-                                    <!-- Charades will be generated here -->
-                                    <div class="empty-state">
-                                        <div class="empty-icon">🎭</div>
-                                        <h4>No charades generated yet</h4>
-                                        <p>Click "Generate Charades" to create your first set of charades words!</p>
+
+                                <div class="output-group">
+                                    <div class="output-header">
+                                        <label>Current Charade:</label>
+                                        <div class="stats-display">
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="timerDisplay">--:--</span>
+                                                <span class="stat-label">Timer</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="currentIndex">0/0</span>
+                                                <span class="stat-label">Card</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="tool-actions">
-                                    <button class="action-btn success" id="copyBtn">
-                                        <span>Copy to Clipboard</span>
-                                        <span>📋</span>
-                                    </button>
-                                    <button class="action-btn" id="downloadBtn">
-                                        <span>Download as .txt</span>
-                                        <span>⤓</span>
-                                    </button>
-                                    <button class="action-btn" id="printBtn">
-                                        <span>Print Cards</span>
-                                        <span>🖨️</span>
-                                    </button>
+                                    
+                                    <div class="charades-container single-card-view" id="charadesOutput">
+                                        <!-- Single charade card will be displayed here -->
+                                        <div class="empty-state">
+                                            <div class="empty-icon">🎭</div>
+                                            <h4>No charades generated yet</h4>
+                                            <p>Click "Generate" to start!</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-navigation">
+                                        <button class="action-btn" id="prevCardBtn" disabled>
+                                            <span>← Prev</span>
+                                        </button>
+                                        <button class="action-btn primary" id="nextCardBtn" disabled>
+                                            <span>Next →</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </section>
+                    </div>
+
+                    <div class="tool-actions">
+                        <button class="action-btn success" id="copyBtn">
+                            <span>Copy</span>
+                            <span>📋</span>
+                        </button>
+                        <button class="action-btn" id="downloadBtn">
+                            <span>Download</span>
+                            <span>⤓</span>
+                        </button>
+                        <button class="action-btn" id="printBtn">
+                            <span>Print</span>
+                            <span>🖨️</span>
+                        </button>
                     </div>
 
                     <div class="instructions">
@@ -220,14 +255,6 @@
                             <li>Score points for each correct guess</li>
                         </ol>
                         <p><strong>Game Rules:</strong> No talking or mouthing words. Only gestures and acting allowed!</p>
-                    </div>
-
-                    <!-- In-content ad placeholder -->
-                    <div class="ad-section">
-                        <div class="ad-placeholder" data-ad-format="rectangle">
-                            <span>Advertisement</span>
-                            <p>Rectangle Ad (300x250)</p>
-                        </div>
                     </div>
 
                     <div class="game-tips">
@@ -258,13 +285,6 @@
                 </div>
 
                 <aside class="tool-sidebar">
-                    <div class="sidebar-ad">
-                        <div class="ad-square">
-                            <span>Advertisement</span>
-                            <p>Square Ad (250x250)</p>
-                        </div>
-                    </div>
-
                     <div class="related-tools">
                         <h4>Related Tools</h4>
                         <ul>
