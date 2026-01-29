@@ -105,16 +105,6 @@
     max-width: 100%;
 }
 
-#qrCodeContainer {
-    display: none;
-}
-
-#qrCodeContainer canvas {
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    max-width: 100%;
-}
-
 .download-btn {
     padding: 0.8rem 1.5rem;
     background: var(--primary-color);

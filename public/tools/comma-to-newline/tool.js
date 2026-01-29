@@ -1,6 +1,8 @@
 // Comma to Newline Converter
 class CommaToNewlineConverter {
     constructor() {
+        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
+        this.keystrokeDelay = null; // Keystroke delay handler
         this.elements = {
             inputData: document.getElementById('inputData'),
             outputData: document.getElementById('outputData'),
@@ -20,6 +22,11 @@ class CommaToNewlineConverter {
     init() {
         this.setupEventListeners();
         this.updateCharCount();
+        // Initialize keystroke delay handler using global utility
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
+            () => this.executeCopy(),
+            this.autoCopyDelay
+        );
     }
 
     setupEventListeners() {
@@ -27,11 +34,12 @@ class CommaToNewlineConverter {
         this.elements.clearBtn.addEventListener('click', () => this.clear());
         this.elements.downloadBtn.addEventListener('click', () => this.download());
         
-        // Auto-format on input for real-time conversion
+        // Auto-format on input for real-time conversion with keystroke delay for auto-copy
         this.elements.inputData.addEventListener('input', () => {
             this.updateCharCount();
-            if (this.elements.inputData.value.trim().length > 0 && this.elements.inputData.value.length <= 200) {
-                this.format();
+            if (this.elements.inputData.value.trim().length > 0) {
+                this.formatWithoutAutoCopy();
+                this.keystrokeDelay.schedule();
             }
         });
         
@@ -42,7 +50,7 @@ class CommaToNewlineConverter {
         const input = this.elements.inputData.value;
         
         if (!input.trim()) {
-            this.showNotification('Please paste some data', 'warning');
+            SharedUtilities.showNotification('Please paste some data', 'warning');
             return;
         }
 
@@ -64,38 +72,85 @@ class CommaToNewlineConverter {
 
         this.elements.outputData.value = output;
         this.updateCharCount();
-        
-        // Auto-copy to clipboard with a small delay to ensure DOM is ready
-        setTimeout(() => {
-            this.copyToClipboardSilently(output);
-            // Show success message
-            this.showNotification('Copied to clipboard', 'success');
-        }, 10);
+    }
+    
+    executeCopy() {
+        const outputText = this.elements.outputData.value;
+        if (outputText) {
+            this.copyToClipboardSilently(outputText);
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
+        }
     }
 
     clear() {
-        this.elements.inputData.value = '';
-        this.elements.outputData.value = '';
-        this.updateCharCount();
-        this.showNotification('Cleared all data', 'info');
+        SharedUtilities.clearElements(
+            { inputData: this.elements.inputData, outputData: this.elements.outputData },
+            { 
+                message: 'Cleared all data',
+                onClear: () => this.updateCharCount()
+            }
+        );
     }
 
     updateCharCount() {
         this.elements.inputCount.textContent = this.elements.inputData.value.length;
         this.elements.outputCount.textContent = this.elements.outputData.value.length;
     }
+    
+    formatWithoutAutoCopy() {
+        const input = this.elements.inputData.value;
+        
+        if (!input.trim()) {
+            return;
+        }
 
-    copyToClipboardSilently(text) {
+        let separator = this.elements.separator.value;
+        let values = input.split(separator);
+
+        // Remove quotes if enabled
+        if (this.elements.removeQuotes.checked) {
+            values = values.map(val => val.replace(/^['"]|['"]$/g, ''));
+        }
+
+        // Trim whitespace if enabled
+        if (this.elements.trimWhitespace.checked) {
+            values = values.map(val => val.trim());
+        }
+
+        // Join with newlines
+        const output = values.join('\n');
+
+        this.elements.outputData.value = output;
+        this.updateCharCount();
+    }
+    
+    scheduleAutoCopy() {
+        // Clear existing timeout
+        if (this.autoCopyTimeout) {
+            clearTimeout(this.autoCopyTimeout);
+        }
+        
+        // Schedule new auto-copy after delay
+        this.autoCopyTimeout = setTimeout(() => {
+            const outputText = this.elements.outputData.value;
+            if (outputText) {
+                SharedUtilities.copyToClipboardSilently(outputText);
+                SharedUtilities.showNotification('Copied to clipboard', 'success');
+            }
+        }, this.autoCopyDelay);
+    }
+
+    format() {
         try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).catch(() => {
-                    this.fallbackCopy(text);
+                    SharedUtilities.fallbackCopy(text);
                 });
             } else {
-                this.fallbackCopy(text);
+                SharedUtilities.fallbackCopy(text);
             }
         } catch (err) {
-            this.fallbackCopy(text);
+            SharedUtilities.fallbackCopy(text);
         }
     }
     
@@ -119,32 +174,10 @@ class CommaToNewlineConverter {
 
     download() {
         const output = this.elements.outputData.value;
-        
-        if (!output) {
-            this.showNotification('Nothing to download', 'warning');
-            return;
-        }
-
-        const blob = new Blob([output], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'comma-to-newline.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        this.showNotification('File downloaded', 'success');
+        SharedUtilities.downloadAsFile(output, 'comma-to-newline.txt', 'text/plain', {
+            successMessage: 'File downloaded'
+        });
     }
-
-    showNotification(message, type = 'info') {
-        if (window.MicroTools?.utils?.showNotification) {
-            window.MicroTools.utils.showNotification(message, type);
-        } else {
-            console.log(`${type}: ${message}`);
-            alert(message);
-        }
     }
 }
 

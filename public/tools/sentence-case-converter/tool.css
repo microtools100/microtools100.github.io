@@ -54,18 +54,6 @@
     margin-bottom: 2rem;
 }
 
-@media (max-width: 991px) and (min-width: 768px) {
-    .input-output-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 767px) {
-    .input-output-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 .input-group,
 .output-group {
     display: flex;
@@ -270,7 +258,11 @@
 @media (max-width: 768px) {
     .tool-options {
         padding: 1rem;
+    
+    .input-output-grid {
+        grid-template-columns: 1fr;
     }
+}
 
     .input-output-grid {
         gap: 1.5rem;

@@ -50,18 +50,6 @@
     margin-bottom: 2rem;
 }
 
-@media (max-width: 991px) and (min-width: 768px) {
-    .input-output-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 767px) {
-    .input-output-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 .input-group,
 .output-group {
     display: flex;
@@ -229,7 +217,11 @@
 @media (max-width: 768px) {
     .button-group {
         flex-direction: column;
+    
+    .input-output-grid {
+        grid-template-columns: 1fr;
     }
+}
 
     .use-case-grid {
         grid-template-columns: 1fr;

@@ -215,7 +215,7 @@
     text-decoration: underline;
 }
 
-@media (max-width: 991px) and (min-width: 768px) {
+@media (max-width: 991px) {
     .input-output-grid {
         grid-template-columns: 1fr;
     }
@@ -225,7 +225,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .options-grid {
         grid-template-columns: 1fr;
     }

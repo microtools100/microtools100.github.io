@@ -1,6 +1,8 @@
 // CSV Formatter Tool
 class CSVFormatter {
     constructor() {
+        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
+        this.keystrokeDelay = null; // Keystroke delay handler
         this.elements = {
             inputData: document.getElementById('inputData'),
             outputData: document.getElementById('outputData'),
@@ -21,6 +23,11 @@ class CSVFormatter {
     init() {
         this.setupEventListeners();
         this.updateCharCount();
+        // Initialize keystroke delay handler using global utility
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
+            () => this.executeCopy(),
+            this.autoCopyDelay
+        );
     }
 
     setupEventListeners() {
@@ -31,20 +38,62 @@ class CSVFormatter {
         // Auto-format on input for real-time conversion
         this.elements.inputData.addEventListener('input', () => {
             this.updateCharCount();
-            // Auto-format if text is short enough
-            if (this.elements.inputData.value.trim().length > 0 && this.elements.inputData.value.length <= 200) {
-                this.format();
+            // Always format in real-time - no character limit
+            if (this.elements.inputData.value.trim().length > 0) {
+                this.formatWithoutAutoCopy();
+                this.keystrokeDelay.schedule();
             }
         });
         
         this.elements.outputData.addEventListener('input', () => this.updateCharCount());
     }
 
+    formatWithoutAutoCopy() {
+        const input = this.elements.inputData.value;
+        
+        if (!input.trim()) {
+            return;
+        }
+
+        let lines = input.split('\n');
+
+        // Trim whitespace if enabled
+        if (this.elements.trimWhitespace.checked) {
+            lines = lines.map(line => line.trim());
+        }
+
+        // Remove empty lines if enabled
+        if (this.elements.removeEmpty.checked) {
+            lines = lines.filter(line => line.length > 0);
+        }
+
+        // Add quotes if enabled
+        const quoteType = this.elements.addQuotes.value;
+        if (quoteType !== 'none') {
+            const quote = quoteType === 'double' ? '"' : "'";
+            lines = lines.map(line => `${quote}${line}${quote}`);
+        }
+
+        // Join with separator
+        const output = lines.join(this.elements.separator.value);
+
+        this.elements.outputData.value = output;
+        this.updateCharCount();
+    }
+    
+    executeCopy() {
+        const outputText = this.elements.outputData.value;
+        if (outputText) {
+            SharedUtilities.copyToClipboardSilently(outputText);
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
+        }
+    }
+
     format() {
         const input = this.elements.inputData.value;
         
         if (!input.trim()) {
-            this.showNotification('Please paste some data', 'warning');
+            SharedUtilities.showNotification('Please paste some data', 'warning');
             return;
         }
 
@@ -81,17 +130,20 @@ class CSVFormatter {
         
         // Auto-copy to clipboard with a small delay to ensure DOM is ready
         setTimeout(() => {
-            this.copyToClipboardSilently(output);
+            SharedUtilities.copyToClipboardSilently(output);
             // Show success message
-            this.showNotification('Copied to clipboard', 'success');
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
         }, 10);
     }
 
     clear() {
-        this.elements.inputData.value = '';
-        this.elements.outputData.value = '';
-        this.updateCharCount();
-        this.showNotification('Cleared all data', 'info');
+        SharedUtilities.clearElements(
+            { inputData: this.elements.inputData, outputData: this.elements.outputData },
+            { 
+                message: 'Cleared all data',
+                onClear: () => this.updateCharCount()
+            }
+        );
     }
 
     updateCharCount() {
@@ -103,7 +155,7 @@ class CSVFormatter {
         const output = this.elements.outputData.value;
         
         if (!output) {
-            this.showNotification('Nothing to copy', 'warning');
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
             return;
         }
 
@@ -117,72 +169,15 @@ class CSVFormatter {
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            this.showNotification('Copied to clipboard!', 'success');
+            SharedUtilities.showNotification('Copied to clipboard!', 'success');
         }
-    }
-
-    copyToClipboardSilently(text) {
-        // Copy without showing notification (used for auto-copy)
-        try {
-            // Try modern Clipboard API first
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).catch(() => {
-                    // Fallback if clipboard API fails
-                    this.fallbackCopy(text);
-                });
-            } else {
-                // Fallback for older browsers
-                this.fallbackCopy(text);
-            }
-        } catch (err) {
-            // Final fallback
-            this.fallbackCopy(text);
-        }
-    }
-    
-    fallbackCopy(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-            document.execCommand('copy');
-        } catch (err) {
-            console.error('Fallback copy failed:', err);
-        }
-        document.body.removeChild(textarea);
     }
 
     download() {
         const output = this.elements.outputData.value;
-        
-        if (!output) {
-            this.showNotification('Nothing to download', 'warning');
-            return;
-        }
-
-        const blob = new Blob([output], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'formatted-data.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        this.showNotification('File downloaded', 'success');
-    }
-
-    showNotification(message, type = 'info') {
-        if (window.MicroTools?.utils?.showNotification) {
-            window.MicroTools.utils.showNotification(message, type);
-        } else {
-            console.log(`${type}: ${message}`);
-            alert(message);
-        }
+        SharedUtilities.downloadAsFile(output, 'formatted-data.txt', 'text/plain', {
+            successMessage: 'File downloaded'
+        });
     }
 }
 

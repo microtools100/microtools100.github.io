@@ -71,9 +71,10 @@ class UUIDGenerator {
     }
 
     clear() {
-        this.output.value = '';
-        this.countInput.value = 1;
-        window.MicroTools?.utils?.showNotification?.('Cleared!', 'info');
+        SharedUtilities.clearElements(
+            { inputData: this.countInput, outputData: this.output },
+            { message: 'Cleared!' }
+        );
     }
 }
 

@@ -24,21 +24,16 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                <nav class="main-nav">
+                                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
-                        <li><a href="/#games-tools">Games Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
                     </ul>
                 </nav>
-                <div class="all-tools-dropdown">
-                    <button class="all-tools-btn" aria-label="Toggle all tools menu" aria-expanded="false">
-                        <span>All Tools</span>
-                        <span class="dropdown-icon">▼</span>
-                    </button>
-                    <div class="all-tools-menu" id="allToolsMenu"></div>
-                </div>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
@@ -53,17 +48,19 @@
                 <h3 class="section-title">Settings</h3>
                 <div class="options-grid">
                     <div class="option-group">
-                        <label for="typeSelect">Data Type:</label>
-                        <select id="typeSelect">
+                        <label for="dataTypeSelect">Data Type:</label>
+                        <select id="dataTypeSelect">
                             <option value="names">Full Names</option>
                             <option value="emails">Email Addresses</option>
                             <option value="phones">Phone Numbers</option>
                             <option value="addresses">Street Addresses</option>
+                            <option value="usernames">Usernames</option>
+                            <option value="dates">Birth Dates</option>
                         </select>
                     </div>
                     <div class="option-group">
-                        <label for="countInput">Quantity:</label>
-                        <input type="number" id="countInput" min="1" max="100" value="10">
+                        <label for="quantityInput">Quantity:</label>
+                        <input type="number" id="quantityInput" min="1" max="1000" value="10">
                     </div>
                 </div>
             </div>
@@ -132,20 +129,48 @@
                 </ul>
             </section>
         </div>
-    </main>
-
-    <footer class="site-footer">
+    </main>    <footer class="site-footer">
         <div class="container">
-            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="/privacy.html">Privacy</a></li>
-                <li><a href="/terms.html">Terms</a></li>
-                <li><a href="/contact.html">Contact</a></li>
-            </ul>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
         </div>
     </footer>
 
-    <script src="/tools-registry.js"></script>
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
     <script src="/assets/js/accessibility-fixes.js"></script>

@@ -40,20 +40,11 @@ class XMLToJSONConverter {
 
             const json = this.xmlToJSON(doc.documentElement);
             this.jsonOutput.value = JSON.stringify(json, null, 2);
-            this.autoCopy();
+            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
         } catch (error) {
             this.jsonOutput.value = `Error: ${error.message}`;
             window.MicroTools?.utils?.showNotification?.('Conversion error', 'error');
         }
-    }
-
-    autoCopy() {
-        if (!this.jsonOutput.value) return;
-        navigator.clipboard.writeText(this.jsonOutput.value).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-        });
     }
 
     xmlToJSON(element) {
@@ -117,8 +108,10 @@ class XMLToJSONConverter {
     }
 
     clear() {
-        this.xmlInput.value = '';
-        this.jsonOutput.value = '';
+        SharedUtilities.clearElements(
+            { inputData: this.xmlInput, outputData: this.jsonOutput },
+            { message: 'Cleared all data' }
+        );
     }
 }
 

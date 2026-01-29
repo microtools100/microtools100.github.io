@@ -23,6 +23,63 @@ class SharedUtilities {
     }
 
     /**
+     * Copy text to clipboard silently (no notification)
+     * Uses modern clipboard API with fallback to execCommand
+     * @param {string} text - Text to copy
+     * @param {Function} onSuccess - Optional callback on success
+     * @param {Function} onError - Optional callback on error
+     */
+    static copyToClipboardSilently(text, onSuccess = null, onError = null) {
+        try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        onSuccess?.(text);
+                    })
+                    .catch(() => {
+                        this.fallbackCopy(text);
+                        onError?.();
+                    });
+            } else {
+                this.fallbackCopy(text);
+                onError?.();
+            }
+        } catch (err) {
+            this.fallbackCopy(text);
+            onError?.();
+        }
+    }
+
+    /**
+     * Fallback copy method using execCommand
+     * Used when modern clipboard API is not available
+     * @param {string} text - Text to copy
+     */
+    static fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.cssText = `
+            position: fixed;
+            left: -9999px;
+            top: -9999px;
+            opacity: 0;
+            width: 2em;
+            height: 2em;
+            padding: 0;
+            border: none;
+        `;
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.setSelectionRange(0, textarea.value.length);
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+        }
+        document.body.removeChild(textarea);
+    }
+
+    /**
      * Show notification to user
      * @param {string} message - Notification message
      * @param {string} type - Type: 'success', 'error', 'warning', 'info'
@@ -383,6 +440,195 @@ class SharedUtilities {
             rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
             rect.right <= (window.innerWidth || document.documentElement.clientWidth)
         );
+    }
+
+    /**
+     * Create a keystroke delay handler for debounced auto-copy
+     * Clears existing timeout and schedules new copy after delay
+     * @param {Function} callback - Function to execute after delay
+     * @param {number} delayMs - Delay in milliseconds (default 500ms)
+     * @returns {Object} Object with schedule method and timeout reference
+     */
+    static createKeystrokeDelay(callback, delayMs = 500) {
+        let timeout = null;
+
+        return {
+            schedule: function() {
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+                timeout = setTimeout(callback, delayMs);
+            },
+            cancel: function() {
+                if (timeout) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                }
+            },
+            reset: function() {
+                this.cancel();
+            }
+        };
+    }
+
+    /**
+     * Schedule auto-copy to clipboard with keystroke delay
+     * @param {HTMLElement} outputElement - Element containing text to copy
+     * @param {number} delayMs - Delay in milliseconds (default 500ms)
+     * @returns {Function} Function to call on keystroke to schedule copy
+     */
+    static createAutoCopyScheduler(outputElement, delayMs = 500) {
+        let timeout = null;
+
+        return function scheduleAutoCopy() {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(() => {
+                const text = outputElement.value || outputElement.textContent;
+                if (text) {
+                    navigator.clipboard.writeText(text)
+                        .then(() => {
+                            SharedUtilities.showNotification('Copied to clipboard', 'success');
+                        })
+                        .catch(() => {
+                            SharedUtilities.showNotification('Failed to copy', 'error');
+                        });
+                }
+            }, delayMs);
+        };
+    }
+
+    /**
+     * Clear multiple input/output elements and show notification
+     * @param {Object} elements - Object with input/output element references
+     * @param {Object} options - Configuration options
+     * @param {string} options.message - Notification message (default: 'Cleared')
+     * @param {Function} options.onClear - Optional callback after clearing
+     */
+    static clearElements(elements = {}, options = {}) {
+        const {
+            message = 'Cleared',
+            onClear = null
+        } = options;
+
+        // Clear all provided elements
+        Object.values(elements).forEach(elem => {
+            if (elem && (elem.tagName === 'TEXTAREA' || elem.tagName === 'INPUT')) {
+                elem.value = '';
+            }
+        });
+
+        // Show notification
+        this.showNotification(message, 'info');
+
+        // Call optional callback
+        onClear?.();
+    }
+
+    /**
+     * Download content as a file
+     * @param {string} content - Content to download
+     * @param {string} filename - Filename for the download
+     * @param {string} mimeType - MIME type (default: 'text/plain')
+     * @param {Object} options - Additional options
+     * @param {boolean} options.showNotification - Show notification after download (default: true)
+     * @param {string} options.successMessage - Custom success message
+     */
+    static downloadAsFile(content, filename, mimeType = 'text/plain', options = {}) {
+        const {
+            showNotification: shouldNotify = true,
+            successMessage = 'File downloaded successfully'
+        } = options;
+
+        if (!content) {
+            this.showNotification('Nothing to download', 'warning');
+            return false;
+        }
+
+        try {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            if (shouldNotify) {
+                this.showNotification(successMessage, 'success');
+            }
+            return true;
+        } catch (err) {
+            console.error('Download failed:', err);
+            this.showNotification('Download failed', 'error');
+            return false;
+        }
+    }
+
+    /**
+     * Update character count display elements
+     * @param {HTMLElement} inputElement - Input element to count from
+     * @param {Object} displayElements - Object with display element references
+     * @param {Object} options - Additional options
+     * @param {boolean} options.countWords - Also count words (default: false)
+     */
+    static updateCharacterCount(inputElement, displayElements = {}, options = {}) {
+        const {
+            countWords = false
+        } = options;
+
+        if (!inputElement) return;
+
+        const text = inputElement.value || '';
+        const charCount = text.length;
+        const wordCount = this.countWords(text);
+
+        // Update character count display
+        if (displayElements.charCount) {
+            displayElements.charCount.textContent = charCount;
+        }
+
+        // Update word count display if requested
+        if (countWords && displayElements.wordCount) {
+            displayElements.wordCount.textContent = wordCount;
+        }
+    }
+
+    /**
+     * Setup keyboard shortcuts for a tool
+     * @param {Object} shortcuts - Keyboard shortcuts configuration
+     * @example
+     * SharedUtilities.setupKeyboardShortcuts({
+     *   'Ctrl+Enter': () => this.convert(),
+     *   'Escape': () => this.clear(),
+     *   'Ctrl+E': () => this.loadExample()
+     * });
+     */
+    static setupKeyboardShortcuts(shortcuts = {}) {
+        document.addEventListener('keydown', (e) => {
+            // Determine key combination
+            const parts = [];
+            if (e.ctrlKey || e.metaKey) parts.push('Ctrl');
+            if (e.shiftKey) parts.push('Shift');
+            if (e.altKey) parts.push('Alt');
+            
+            // Handle single keys
+            let key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+            if (key === 'Enter') parts.push('Enter');
+            else if (key === 'Escape') parts.push('Escape');
+            else if (key === 'e' || key === 'E') parts.push('E');
+            
+            const combination = parts.join('+');
+
+            // Check for matching shortcut
+            if (shortcuts[combination]) {
+                e.preventDefault();
+                shortcuts[combination](e);
+            }
+        });
     }
 }
 

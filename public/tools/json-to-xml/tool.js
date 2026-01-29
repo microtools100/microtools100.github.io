@@ -32,20 +32,11 @@ class JSONToXMLConverter {
             const parsed = JSON.parse(json);
             const xml = this.jsonToXML(parsed);
             this.xmlOutput.value = '<?xml version="1.0" encoding="UTF-8"?>\n' + xml;
-            this.autoCopy();
+            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
         } catch (error) {
             this.xmlOutput.value = `Error: ${error.message}`;
             window.MicroTools?.utils?.showNotification?.('Invalid JSON', 'error');
         }
-    }
-
-    autoCopy() {
-        if (!this.xmlOutput.value) return;
-        navigator.clipboard.writeText(this.xmlOutput.value).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-        });
     }
 
     jsonToXML(obj, indent = '') {
@@ -114,8 +105,10 @@ class JSONToXMLConverter {
     }
 
     clear() {
-        this.jsonInput.value = '';
-        this.xmlOutput.value = '';
+        SharedUtilities.clearElements(
+            { inputData: this.jsonInput, outputData: this.xmlOutput },
+            { message: 'Cleared all data' }
+        );
     }
 }
 

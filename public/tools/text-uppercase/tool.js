@@ -2,6 +2,8 @@
 class UppercaseTool {
     constructor() {
         this.maxChars = 10000;
+        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
+        this.keystrokeDelay = null; // Keystroke delay handler
         this.exampleText = "Hello! Welcome to the Uppercase Converter.\nThis tool will convert all your text to uppercase letters.\nTry it out with your own text!";
         
         this.elements = {
@@ -23,6 +25,11 @@ class UppercaseTool {
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
         this.updateStats();
+        // Initialize keystroke delay handler using global utility
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
+            () => this.executeCopy(),
+            this.autoCopyDelay
+        );
     }
     
     setupEventListeners() {
@@ -41,13 +48,13 @@ class UppercaseTool {
         // Download button
         this.elements.downloadBtn.addEventListener('click', () => this.download());
         
-        // Real-time conversion on input
+        // Real-time conversion on input with keystroke delay for auto-copy
         this.elements.input.addEventListener('input', () => {
             this.updateStats();
-            // Auto-convert if text is short
-            if (this.elements.input.value.length <= 100) {
-                this.convert();
-            }
+            // Always convert in real-time
+            this.convertWithoutAutoCopy();
+            // Schedule auto-copy after keystroke delay
+            this.keystrokeDelay.schedule();
         });
         
         // Character limit warning
@@ -55,31 +62,42 @@ class UppercaseTool {
     }
     
     setupKeyboardShortcuts() {
-        document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + Enter to convert
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                e.preventDefault();
-                this.convert();
-            }
-            
-            // Escape to clear
-            if (e.key === 'Escape') {
-                this.clear();
-            }
-            
-            // Ctrl/Cmd + E for example
-            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
-                e.preventDefault();
-                this.loadExample();
-            }
+        SharedUtilities.setupKeyboardShortcuts({
+            'Ctrl+Enter': () => this.convert(),
+            'Escape': () => this.clear(),
+            'Ctrl+E': () => this.loadExample()
         });
     }
     
+    convertWithoutAutoCopy() {
+        const inputText = this.elements.input.value.trim();
+        
+        if (!inputText) {
+            this.elements.output.value = '';
+            return;
+        }
+        
+        // Convert to uppercase
+        const uppercaseText = inputText.toUpperCase();
+        this.elements.output.value = uppercaseText;
+        
+        // Update stats
+        this.updateStats();
+    }
+    
+    executeCopy() {
+        const outputText = this.elements.output.value;
+        if (outputText) {
+            SharedUtilities.copyToClipboardSilently(outputText);
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
+        }
+    }
+
     convert() {
         const inputText = this.elements.input.value.trim();
         
         if (!inputText) {
-            this.showNotification('Please enter some text first', 'warning');
+            SharedUtilities.showNotification('Please enter some text first', 'warning');
             this.elements.output.value = '';
             return;
         }
@@ -92,11 +110,11 @@ class UppercaseTool {
         this.updateStats();
         
         // Show success notification first
-        this.showNotification('Copied to clipboard', 'success');
+        SharedUtilities.showNotification('Copied to clipboard', 'success');
         
         // Auto-copy to clipboard with a small delay to ensure DOM is ready
         setTimeout(() => {
-            this.copyToClipboardSilently(uppercaseText);
+            SharedUtilities.copyToClipboardSilently(uppercaseText);
         }, 50);
         
         // Save to recent conversions
@@ -104,23 +122,28 @@ class UppercaseTool {
     }
     
     clear() {
-        this.elements.input.value = '';
-        this.elements.output.value = '';
-        this.updateStats();
-        this.elements.input.focus();
-        this.showNotification('Text cleared', 'info');
+        SharedUtilities.clearElements(
+            { input: this.elements.input, output: this.elements.output },
+            { 
+                message: 'Text cleared',
+                onClear: () => {
+                    this.updateStats();
+                    this.elements.input.focus();
+                }
+            }
+        );
     }
     
     loadExample() {
         this.elements.input.value = this.exampleText;
         this.convert();
-        this.showNotification('Example loaded. Edit the text and click convert.', 'info');
+        SharedUtilities.showNotification('Example loaded. Edit the text and click convert.', 'info');
     }
     
     async copyToClipboard() {
         const text = this.elements.output.value;
         if (!text) {
-            this.showNotification('No text to copy', 'warning');
+            SharedUtilities.showNotification('No text to copy', 'warning');
             return;
         }
         
@@ -130,86 +153,17 @@ class UppercaseTool {
             // Fallback copy method
             this.elements.output.select();
             document.execCommand('copy');
-            this.showNotification('Copied to clipboard!', 'success');
+            SharedUtilities.showNotification('Copied to clipboard!', 'success');
         }
     }
     
-    copyToClipboardSilently(text) {
-        // Copy without showing notification (used for auto-copy)
-        console.log('copyToClipboardSilently called with text:', text.substring(0, 20) + '...');
-        try {
-            // Try modern Clipboard API first
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                console.log('Using Clipboard API');
-                navigator.clipboard.writeText(text).catch(() => {
-                    // Fallback if clipboard API fails
-                    console.log('Clipboard API failed, using fallback');
-                    this.fallbackCopy(text);
-                });
-            } else {
-                // Fallback for older browsers
-                console.log('Clipboard API not available, using fallback');
-                this.fallbackCopy(text);
-            }
-        } catch (err) {
-            // Final fallback
-            console.error('Exception in copyToClipboardSilently:', err);
-            this.fallbackCopy(text);
-        }
-    }
-    
-    fallbackCopy(text) {
-        console.log('fallbackCopy called');
-        try {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            textarea.style.top = '-9999px';
-            textarea.style.opacity = '0';
-            textarea.style.width = '2em';
-            textarea.style.height = '2em';
-            textarea.style.padding = '0';
-            textarea.style.border = 'none';
-            document.body.appendChild(textarea);
-            
-            // Focus and select
-            textarea.focus();
-            textarea.setSelectionRange(0, textarea.value.length);
-            console.log('Textarea created and focused');
-            
-            // Execute copy
-            const successful = document.execCommand('copy');
-            console.log('execCommand copy result:', successful);
-            if (!successful) {
-                console.error('Copy command was unsuccessful');
-            }
-            
-            document.body.removeChild(textarea);
-            console.log('Copy operation completed');
-        } catch (err) {
-            console.error('Fallback copy failed:', err);
-        }
-    }
+
     
     download() {
         const text = this.elements.output.value;
-        if (!text) {
-            this.showNotification('No text to download', 'warning');
-            return;
-        }
-        
-        const blob = new Blob([text], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'uppercase-text.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        this.showNotification('Text downloaded as uppercase-text.txt', 'success');
+        SharedUtilities.downloadAsFile(text, 'uppercase-text.txt', 'text/plain', {
+            successMessage: 'Text downloaded as uppercase-text.txt'
+        });
     }
     
     updateStats() {
@@ -254,7 +208,7 @@ class UppercaseTool {
     checkCharacterLimit() {
         const count = this.elements.input.value.length;
         if (count > this.maxChars) {
-            this.showNotification(`Character limit exceeded (${this.maxChars} max). Text will be truncated.`, 'warning');
+            SharedUtilities.showNotification(`Character limit exceeded (${this.maxChars} max). Text will be truncated.`, 'warning');
             this.elements.input.value = this.elements.input.value.substring(0, this.maxChars);
         }
     }
@@ -282,14 +236,6 @@ class UppercaseTool {
     
     formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-    
-    showNotification(message, type = 'info') {
-        if (window.MicroTools?.utils?.showNotification) {
-            window.MicroTools.utils.showNotification(message, type);
-        } else {
-            console.log(`${type}: ${message}`);
-        }
     }
 }
 

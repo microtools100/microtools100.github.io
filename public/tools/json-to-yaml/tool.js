@@ -34,20 +34,11 @@ class JSONToYAMLConverter {
             const parsed = JSON.parse(json);
             const yaml = this.jsonToYAML(parsed, 0);
             this.yamlOutput.value = yaml;
-            this.autoCopy();
+            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
         } catch (error) {
             this.yamlOutput.value = `Error: ${error.message}`;
             window.MicroTools?.utils?.showNotification?.('Invalid JSON format', 'error');
         }
-    }
-
-    autoCopy() {
-        if (!this.yamlOutput.value) return;
-        navigator.clipboard.writeText(this.yamlOutput.value).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-        });
     }
 
     jsonToYAML(obj, indent = 0) {
@@ -105,9 +96,10 @@ class JSONToYAMLConverter {
     }
 
     clear() {
-        this.jsonInput.value = '';
-        this.yamlOutput.value = '';
-        window.MicroTools?.utils?.showNotification?.('Cleared!', 'info');
+        SharedUtilities.clearElements(
+            { inputData: this.jsonInput, outputData: this.yamlOutput },
+            { message: 'Cleared!' }
+        );
     }
 }
 

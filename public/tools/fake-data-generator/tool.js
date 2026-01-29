@@ -6,7 +6,7 @@ class FakeDataGenerator {
         this.countInput = document.getElementById('countInput');
         this.generateBtn = document.getElementById('generateBtn');
         this.copyBtn = document.querySelector('.copy-btn');
-        this.output = document.getElementById('outputText');
+        this.output = document.getElementById('output');
         this.errorMsg = document.querySelector('.error-msg');
 
         this.firstNames = ['John', 'Jane', 'Michael', 'Emily', 'David', 'Sarah', 'James', 'Jessica', 'Robert', 'Linda', 'William', 'Karen', 'Richard', 'Patricia', 'Joseph', 'Barbara', 'Thomas', 'Susan', 'Charles', 'Lisa'];
@@ -43,7 +43,6 @@ class FakeDataGenerator {
 
             this.output.value = data.join('\n');
             this.clearError();
-            if (this.copyBtn) this.copyBtn.disabled = false;
             window.MicroTools?.utils?.showNotification?.(`Generated ${count} ${type}!`, 'success');
             this.copyToClipboard();
         } catch (error) {

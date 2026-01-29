@@ -1,6 +1,8 @@
 // Excel Column to SQL IN List
 class ExcelColumnToSqlIn {
     constructor() {
+        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
+        this.keystrokeDelay = null; // Keystroke delay handler
         this.elements = {
             inputData: document.getElementById('inputData'),
             outputData: document.getElementById('outputData'),
@@ -20,6 +22,11 @@ class ExcelColumnToSqlIn {
     init() {
         this.setupEventListeners();
         this.updateCharCount();
+        // Initialize keystroke delay handler using global utility
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
+            () => this.executeCopy(),
+            this.autoCopyDelay
+        );
     }
 
     setupEventListeners() {
@@ -29,19 +36,62 @@ class ExcelColumnToSqlIn {
         
         this.elements.inputData.addEventListener('input', () => {
             this.updateCharCount();
-            if (this.elements.inputData.value.trim().length > 0 && this.elements.inputData.value.length <= 200) {
-                this.format();
+            // Always format in real-time - no character limit
+            if (this.elements.inputData.value.trim().length > 0) {
+                this.formatWithoutAutoCopy();
+                this.keystrokeDelay.schedule();
             }
         });
         
         this.elements.outputData.addEventListener('input', () => this.updateCharCount());
     }
 
+    formatWithoutAutoCopy() {
+        const input = this.elements.inputData.value;
+        
+        if (!input.trim()) {
+            return;
+        }
+
+        let lines = input.split('\n');
+
+        // Trim whitespace if enabled
+        if (this.elements.trimWhitespace.checked) {
+            lines = lines.map(line => line.trim());
+        }
+
+        // Remove empty lines if enabled
+        if (this.elements.removeEmpty.checked) {
+            lines = lines.filter(line => line.length > 0);
+        }
+
+        // Add quotes based on type
+        const quoteType = this.elements.quoteType.value;
+        if (quoteType !== 'none') {
+            const quote = quoteType === 'double' ? '"' : "'";
+            lines = lines.map(line => `${quote}${line}${quote}`);
+        }
+
+        // Join with IN clause
+        const output = lines.length > 0 ? `(${lines.join(', ')})` : '';
+
+        this.elements.outputData.value = output;
+        this.updateCharCount();
+    }
+    
+    executeCopy() {
+        const outputText = this.elements.outputData.value;
+        if (outputText) {
+            SharedUtilities.copyToClipboardSilently(outputText);
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
+        }
+    }
+
     format() {
         const input = this.elements.inputData.value;
         
         if (!input.trim()) {
-            this.showNotification('Please paste some data', 'warning');
+            SharedUtilities.showNotification('Please paste some data', 'warning');
             return;
         }
 
@@ -72,17 +122,20 @@ class ExcelColumnToSqlIn {
         
         // Auto-copy to clipboard with a small delay to ensure DOM is ready
         setTimeout(() => {
-            this.copyToClipboardSilently(output);
+            SharedUtilities.copyToClipboardSilently(output);
             // Show success message
-            this.showNotification('Copied to clipboard', 'success');
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
         }, 10);
     }
 
     clear() {
-        this.elements.inputData.value = '';
-        this.elements.outputData.value = '';
-        this.updateCharCount();
-        this.showNotification('Cleared all data', 'info');
+        SharedUtilities.clearElements(
+            { inputData: this.elements.inputData, outputData: this.elements.outputData },
+            { 
+                message: 'Cleared all data',
+                onClear: () => this.updateCharCount()
+            }
+        );
     }
 
     updateCharCount() {
@@ -90,66 +143,11 @@ class ExcelColumnToSqlIn {
         this.elements.outputCount.textContent = this.elements.outputData.value.length;
     }
 
-    copyToClipboardSilently(text) {
-        try {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).catch(() => {
-                    this.fallbackCopy(text);
-                });
-            } else {
-                this.fallbackCopy(text);
-            }
-        } catch (err) {
-            this.fallbackCopy(text);
-        }
-    }
-    
-    fallbackCopy(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.left = '-9999px';
-        textarea.style.top = '-9999px';
-        textarea.style.opacity = '0';
-        textarea.style.width = '2em';
-        textarea.style.height = '2em';
-        textarea.style.padding = '0';
-        textarea.style.border = 'none';
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.setSelectionRange(0, textarea.value.length);
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-    }
-
     download() {
         const output = this.elements.outputData.value;
-        
-        if (!output) {
-            this.showNotification('Nothing to download', 'warning');
-            return;
-        }
-
-        const blob = new Blob([output], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'sql-in-list.sql';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        this.showNotification('File downloaded', 'success');
-    }
-
-    showNotification(message, type = 'info') {
-        if (window.MicroTools?.utils?.showNotification) {
-            window.MicroTools.utils.showNotification(message, type);
-        } else {
-            console.log(`${type}: ${message}`);
-            alert(message);
-        }
+        SharedUtilities.downloadAsFile(output, 'sql-in-list.sql', 'text/plain', {
+            successMessage: 'File downloaded'
+        });
     }
 }
 

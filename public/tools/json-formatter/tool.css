@@ -89,18 +89,6 @@
     margin: 1.5rem 0;
 }
 
-@media (max-width: 991px) and (min-width: 768px) {
-    .input-output-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 767px) {
-    .input-output-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 .input-group,
 .output-group {
     display: flex;
@@ -253,10 +241,11 @@
     text-decoration: underline;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1024px) {
     .input-output-grid {
         grid-template-columns: 1fr;
     }
+}
 
     .use-case-grid {
         grid-template-columns: 1fr;

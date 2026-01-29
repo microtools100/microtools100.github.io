@@ -1,4 +1,4 @@
-// Complete Tools Registry for Micro Tools Platform
+// Complete Tools Registry for MicroTools Platform
 // This file defines all 25 tools with their configuration, categories, and metadata
 
 const TOOLS_REGISTRY = {

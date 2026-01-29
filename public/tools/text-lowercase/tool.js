@@ -2,6 +2,8 @@
 class LowercaseTool {
     constructor() {
         this.maxChars = 10000;
+        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
+        this.keystrokeDelay = null; // Keystroke delay handler
         this.exampleText = "HELLO! WELCOME TO THE LOWERCASE CONVERTER.\nTHIS TOOL WILL CONVERT ALL YOUR TEXT TO LOWERCASE LETTERS.\nTRY IT OUT WITH YOUR OWN TEXT!";
         
         this.elements = {
@@ -24,6 +26,11 @@ class LowercaseTool {
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
         this.updateStats();
+        // Initialize keystroke delay handler using global utility
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
+            () => this.executeCopy(),
+            this.autoCopyDelay
+        );
     }
     
     setupEventListeners() {
@@ -42,13 +49,13 @@ class LowercaseTool {
         // Download button
         this.elements.downloadBtn.addEventListener('click', () => this.download());
         
-        // Real-time conversion on input
+        // Real-time conversion on input with keystroke delay for auto-copy
         this.elements.input.addEventListener('input', () => {
             this.updateStats();
-            // Auto-convert if text is short
-            if (this.elements.input.value.length <= 100) {
-                this.convert();
-            }
+            // Always convert in real-time
+            this.convertWithoutAutoCopy();
+            // Schedule auto-copy after keystroke delay
+            this.keystrokeDelay.schedule();
         });
         
         // Character limit warning
@@ -56,31 +63,42 @@ class LowercaseTool {
     }
     
     setupKeyboardShortcuts() {
-        document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + Enter to convert
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                e.preventDefault();
-                this.convert();
-            }
-            
-            // Escape to clear
-            if (e.key === 'Escape') {
-                this.clear();
-            }
-            
-            // Ctrl/Cmd + E for example
-            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
-                e.preventDefault();
-                this.loadExample();
-            }
+        SharedUtilities.setupKeyboardShortcuts({
+            'Ctrl+Enter': () => this.convert(),
+            'Escape': () => this.clear(),
+            'Ctrl+E': () => this.loadExample()
         });
     }
     
+    convertWithoutAutoCopy() {
+        const inputText = this.elements.input.value.trim();
+        
+        if (!inputText) {
+            this.elements.output.value = '';
+            return;
+        }
+        
+        // Convert to lowercase
+        const lowercaseText = inputText.toLowerCase();
+        this.elements.output.value = lowercaseText;
+        
+        // Update stats
+        this.updateStats();
+    }
+    
+    executeCopy() {
+        const outputText = this.elements.output.value;
+        if (outputText) {
+            SharedUtilities.copyToClipboardSilently(outputText);
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
+        }
+    }
+
     convert() {
         const inputText = this.elements.input.value.trim();
         
         if (!inputText) {
-            this.showNotification('Please enter some text first', 'warning');
+            SharedUtilities.showNotification('Please enter some text first', 'warning');
             this.elements.output.value = '';
             return;
         }
@@ -94,9 +112,9 @@ class LowercaseTool {
         
         // Auto-copy to clipboard with a small delay to ensure DOM is ready
         setTimeout(() => {
-            this.copyToClipboardSilently(lowercaseText);
+            SharedUtilities.copyToClipboardSilently(lowercaseText);
             // Show success message
-            this.showNotification('Copied to clipboard', 'success');
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
         }, 10);
         
         // Save to recent conversions
@@ -104,23 +122,28 @@ class LowercaseTool {
     }
     
     clear() {
-        this.elements.input.value = '';
-        this.elements.output.value = '';
-        this.updateStats();
-        this.elements.input.focus();
-        this.showNotification('Text cleared', 'info');
+        SharedUtilities.clearElements(
+            { input: this.elements.input, output: this.elements.output },
+            { 
+                message: 'Text cleared',
+                onClear: () => {
+                    this.updateStats();
+                    this.elements.input.focus();
+                }
+            }
+        );
     }
     
     loadExample() {
         this.elements.input.value = this.exampleText;
         this.convert();
-        this.showNotification('Example loaded. Edit the text and click convert.', 'info');
+        SharedUtilities.showNotification('Example loaded. Edit the text and click convert.', 'info');
     }
     
     async copyToClipboard() {
         const text = this.elements.output.value;
         if (!text) {
-            this.showNotification('No text to copy', 'warning');
+            SharedUtilities.showNotification('No text to copy', 'warning');
             return;
         }
         
@@ -130,62 +153,15 @@ class LowercaseTool {
             // Fallback copy method
             this.elements.output.select();
             document.execCommand('copy');
-            this.showNotification('Copied to clipboard!', 'success');
+            SharedUtilities.showNotification('Copied to clipboard!', 'success');
         }
-    }
-    
-    copyToClipboardSilently(text) {
-        // Copy without showing notification (used for auto-copy)
-        try {
-            // Try modern Clipboard API first
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).catch(() => {
-                    // Fallback if clipboard API fails
-                    this.fallbackCopy(text);
-                });
-            } else {
-                // Fallback for older browsers
-                this.fallbackCopy(text);
-            }
-        } catch (err) {
-            // Final fallback
-            this.fallbackCopy(text);
-        }
-    }
-    
-    fallbackCopy(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-            document.execCommand('copy');
-        } catch (err) {
-            console.error('Fallback copy failed:', err);
-        }
-        document.body.removeChild(textarea);
     }
     
     download() {
         const text = this.elements.output.value;
-        if (!text) {
-            this.showNotification('No text to download', 'warning');
-            return;
-        }
-        
-        const blob = new Blob([text], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'lowercase-text.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        this.showNotification('Text downloaded as lowercase-text.txt', 'success');
+        SharedUtilities.downloadAsFile(text, 'lowercase-text.txt', 'text/plain', {
+            successMessage: 'Text downloaded as lowercase-text.txt'
+        });
     }
     
     updateStats() {
@@ -246,7 +222,7 @@ class LowercaseTool {
     checkCharacterLimit() {
         const count = this.elements.input.value.length;
         if (count > this.maxChars) {
-            this.showNotification(`Character limit exceeded (${this.maxChars} max). Text will be truncated.`, 'warning');
+            SharedUtilities.showNotification(`Character limit exceeded (${this.maxChars} max). Text will be truncated.`, 'warning');
             this.elements.input.value = this.elements.input.value.substring(0, this.maxChars);
         }
     }
@@ -274,14 +250,6 @@ class LowercaseTool {
     
     formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-    
-    showNotification(message, type = 'info') {
-        if (window.MicroTools?.utils?.showNotification) {
-            window.MicroTools.utils.showNotification(message, type);
-        } else {
-            console.log(`${type}: ${message}`);
-        }
     }
 }
 

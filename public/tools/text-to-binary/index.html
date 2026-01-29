@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="tool.css">
 </head>
 <body>
-    <header class="site-header">
+        <header class="site-header">
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">
@@ -22,53 +22,117 @@
                 <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
                     </ul>
                 </nav>
-                <div class="all-tools-dropdown">
-                    <button class="all-tools-btn" aria-label="Toggle all tools menu" aria-expanded="false">
-                        <span>All Tools</span>
-                        <span class="dropdown-icon">▼</span>
-                    </button>
-                    <div class="all-tools-menu" id="allToolsMenu"></div>
-                </div>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
     </header>
 
-    <main class="tool-main">
+    <main class="tool-page">
         <div class="container">
+            <header class="tool-header">
+                <h1>Text to Binary Converter</h1>
+                <p class="tool-description">Convert text to binary representation and binary to text with ASCII codes</p>
+            </header>
 
-    <div class="tool-container dual-panel">
-        <div class="tool-header">
-            <h1>Text to Binary Converter</h1>
-            <p>Convert text to binary and binary to text with ASCII codes</p>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="textInput">Text Input:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="textInput" 
+                                            placeholder="Enter text here..."
+                                            rows="12"
+                                            spellcheck="false"></textarea>
+                                    </div>
+                                    <div class="hint">Enter any text to convert. Maximum 10,000 characters.</div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="convertBtn">
+                                        <span>Convert</span>
+                                        <span>✨</span>
+                                    </button>
+                                    <button class="action-btn" id="reverseBtn">
+                                        <span>Reverse</span>
+                                        <span>⇅</span>
+                                    </button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="binaryOutput">Binary Output:</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="binaryOutput" 
+                                            placeholder="Binary representation..."
+                                            rows="12"
+                                            readonly
+                                            spellcheck="false"></textarea>
+                                    </div>
+                                    <div class="hint">Binary conversion will appear here</div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">
+                                        <span>Copy</span>
+                                        <span>📋</span>
+                                    </button>
+                                    <button class="action-btn" id="downloadBtn">
+                                        <span>Download</span>
+                                        <span>⤓</span>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="use-cases">
+                        <h4>About Text to Binary:</h4>
+                        <div class="use-case-grid">
+                            <div class="use-case">
+                                <div class="use-case-icon">🔤</div>
+                                <h5>ASCII Conversion</h5>
+                                <p>Convert text to 8-bit binary using ASCII codes</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">💻</div>
+                                <h5>Encoding</h5>
+                                <p>Perfect for understanding character encoding and binary representation</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">🔄</div>
+                                <h5>Bidirectional</h5>
+                                <p>Convert text to binary or binary back to readable text</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">📚</div>
+                                <h5>Learning</h5>
+                                <p>Great for learning about binary numbers and data representation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="tool-content">
-            <div class="panel-left">
-                <label for="textInput">Text Input:</label>
-                <textarea 
-                    id="textInput" 
-                    class="tool-textarea"
-                    placeholder="Enter text here..."
-                    spellcheck="false"></textarea>
-            </div>
-
-            <div class="panel-right">
-                <label for="binaryOutput">Binary Output:</label>
-                <textarea 
-                    id="binaryOutput" 
-                    class="tool-textarea output-area"
-                    placeholder="Binary representation..."
-                    readonly
-                    spellcheck="false"></textarea>
-            </div>
-
-            <div class="button-group">
-                <button class="tool-btn" id="convertBtn">↻ Convert</button>
-                <button class="tool-btn" id="reverseBtn">⇅ Reverse</button>
+    </main>
                 <button class="tool-btn" id="copyBtn">📋 Copy Binary</button>
                 <button class="tool-btn" id="clearBtn">🗑️ Clear</button>
             </div>
@@ -95,22 +159,56 @@
                 </ul>
             </div>
         </div>
-        </div>
-    </main>
+    </div>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="/tools-registry.js"></script>
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
     <script src="/assets/js/accessibility-fixes.js"></script>
     <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/utils.js"></script>
     <script src="tool.js"></script>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
 

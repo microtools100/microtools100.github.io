@@ -41,7 +41,8 @@ class CSVToJSON {
             const json = this.csvToJSON(csvText, hasHeader);
             this.jsonOutput.value = JSON.stringify(json, null, 2);
             this.clearError();
-            this.autoCopy();
+            this.copyToClipboard();
+            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
         } catch (error) {
             this.showError('Error parsing CSV: ' + error.message);
             this.jsonOutput.value = '';
@@ -117,17 +118,6 @@ class CSVToJSON {
     }
 
     copyToClipboard() {
-        const text = this.jsonOutput.value;
-        if (!text) return;
-
-        navigator.clipboard.writeText(text).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-        });
-    }
-
-    autoCopy() {
         const text = this.jsonOutput.value;
         if (!text) return;
 

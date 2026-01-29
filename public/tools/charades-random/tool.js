@@ -243,7 +243,7 @@ class CharadesGenerator {
         this.displayCharades(charades);
         this.updateStats();
         
-        this.showNotification(`Generated ${charades.length} charades`, 'success');
+        SharedUtilities.showNotification(`Generated ${charades.length} charades`, 'success');
     }
 
     generateSingleCharade(category, difficulty, includePhrases) {
@@ -385,13 +385,13 @@ class CharadesGenerator {
 
     startGame() {
         if (this.gameState.generatedCharades.length === 0) {
-            this.showNotification('Please generate charades first', 'warning');
+            SharedUtilities.showNotification('Please generate charades first', 'warning');
             return;
         }
         
         const timerSeconds = parseInt(this.elements.timer.value);
         if (timerSeconds === 0) {
-            this.showNotification('Please set a timer to start the game', 'warning');
+            SharedUtilities.showNotification('Please set a timer to start the game', 'warning');
             return;
         }
         
@@ -417,7 +417,7 @@ class CharadesGenerator {
             }
         }, 1000);
         
-        this.showNotification('Game started! Get ready to act!', 'success');
+        SharedUtilities.showNotification('Game started! Get ready to act!', 'success');
     }
 
     stopGame() {
@@ -433,7 +433,7 @@ class CharadesGenerator {
             card.classList.remove('active');
         });
         
-        this.showNotification('Game stopped', 'info');
+        SharedUtilities.showNotification('Game stopped', 'info');
     }
 
     endRound() {
@@ -455,7 +455,7 @@ class CharadesGenerator {
         if (this.gameState.currentCharadeIndex >= this.gameState.generatedCharades.length) {
             // End of game
             this.stopGame();
-            this.showNotification('Game finished! All charades completed.', 'success');
+            SharedUtilities.showNotification('Game finished! All charades completed.', 'success');
         } else {
             // Start next round
             this.gameState.timeLeft = parseInt(this.elements.timer.value);
@@ -472,7 +472,7 @@ class CharadesGenerator {
                 }
             }, 1000);
             
-            this.showNotification('Next charade!', 'info');
+            SharedUtilities.showNotification('Next charade!', 'info');
         }
     }
 
@@ -527,7 +527,7 @@ class CharadesGenerator {
         this.gameState.team2Score = 0;
         this.elements.team1Score.textContent = '0';
         this.elements.team2Score.textContent = '0';
-        this.showNotification('Scores reset', 'info');
+        SharedUtilities.showNotification('Scores reset', 'info');
     }
 
     toggleHints() {
@@ -544,7 +544,7 @@ class CharadesGenerator {
         this.displayCurrentCard();
         
         const message = this.gameState.showHints ? 'Hints enabled' : 'Hints disabled';
-        this.showNotification(message, 'info');
+        SharedUtilities.showNotification(message, 'info');
     }
 
     clear() {
@@ -559,12 +559,12 @@ class CharadesGenerator {
             this.stopGame();
         }
         
-        this.showNotification('All charades cleared', 'info');
+        SharedUtilities.showNotification('All charades cleared', 'info');
     }
 
     async copyToClipboard() {
         if (this.gameState.generatedCharades.length === 0) {
-            this.showNotification('No charades to copy', 'warning');
+            SharedUtilities.showNotification('No charades to copy', 'warning');
             return;
         }
         
@@ -582,13 +582,13 @@ class CharadesGenerator {
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            this.showNotification('Copied to clipboard!', 'success');
+            SharedUtilities.showNotification('Copied to clipboard!', 'success');
         }
     }
 
     download() {
         if (this.gameState.generatedCharades.length === 0) {
-            this.showNotification('No charades to download', 'warning');
+            SharedUtilities.showNotification('No charades to download', 'warning');
             return;
         }
         
@@ -606,12 +606,12 @@ class CharadesGenerator {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        this.showNotification('Charades list downloaded', 'success');
+        SharedUtilities.showNotification('Charades list downloaded', 'success');
     }
 
     printCharades() {
         if (this.gameState.generatedCharades.length === 0) {
-            this.showNotification('No charades to print', 'warning');
+            SharedUtilities.showNotification('No charades to print', 'warning');
             return;
         }
         
@@ -672,15 +672,6 @@ class CharadesGenerator {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
-    }
-
-    showNotification(message, type = 'info') {
-        if (window.MicroTools?.utils?.showNotification) {
-            window.MicroTools.utils.showNotification(message, type);
-        } else {
-            console.log(`${type}: ${message}`);
-            alert(message);
-        }
     }
 }
 

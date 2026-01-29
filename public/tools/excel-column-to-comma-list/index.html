@@ -44,21 +44,16 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                <nav class="main-nav">
+                                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
-                        <li><a href="/#random-tools">Game Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
                     </ul>
                 </nav>
-                <div class="all-tools-dropdown">
-                    <button class="all-tools-btn" aria-label="Toggle all tools menu" aria-expanded="false">
-                        <span>All Tools</span>
-                        <span class="dropdown-icon">▼</span>
-                    </button>
-                    <div class="all-tools-menu" id="allToolsMenu"></div>
-                </div>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
@@ -76,80 +71,83 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
-                        <section class="tool-section">
-                            <div class="tool-options">
-                                <h3>Formatting Options</h3>
-                                <div class="options-grid">
-                                    <div class="option-group">
-                                        <label for="separator">Separator:</label>
-                                        <select id="separator">
-                                            <option value=",">Comma (,)</option>
-                                            <option value=";">Semicolon (;)</option>
-                                            <option value="|">Pipe (|)</option>
-                                            <option value="\t">Tab</option>
-                                            <option value=" ">Space</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="option-group">
-                                        <label for="addQuotes">Add Quotes:</label>
-                                        <select id="addQuotes">
-                                            <option value="none">None</option>
-                                            <option value="double">Double Quotes (")</option>
-                                            <option value="single">Single Quotes (')</option>
-                                        </select>
-                                    </div>
+                        <section class="tool-section three-column">
+                            <!-- Options Column -->
+                            <div class="options-column">
+                                <div class="tool-options">
+                                    <h3>Options</h3>
+                                    <div class="options-group">
+                                        <div class="option-item">
+                                            <label for="separator">Separator:</label>
+                                            <select id="separator">
+                                                <option value=",">Comma (,)</option>
+                                                <option value=";">Semicolon (;)</option>
+                                                <option value="|">Pipe (|)</option>
+                                                <option value="\t">Tab</option>
+                                                <option value=" ">Space</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="option-item">
+                                            <label for="addQuotes">Quotes:</label>
+                                            <select id="addQuotes">
+                                                <option value="none">None</option>
+                                                <option value="double">Double (")</option>
+                                                <option value="single">Single (')</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="option-group">
-                                        <label for="trimWhitespace">
-                                            <input type="checkbox" id="trimWhitespace" checked>
-                                            Trim whitespace
-                                        </label>
-                                    </div>
+                                        <div class="option-item checkbox">
+                                            <label for="trimWhitespace">
+                                                <input type="checkbox" id="trimWhitespace" checked>
+                                                <span>Trim whitespace</span>
+                                            </label>
+                                        </div>
 
-                                    <div class="option-group">
-                                        <label for="removeEmpty">
-                                            <input type="checkbox" id="removeEmpty" checked>
-                                            Remove empty lines
-                                        </label>
+                                        <div class="option-item checkbox">
+                                            <label for="removeEmpty">
+                                                <input type="checkbox" id="removeEmpty" checked>
+                                                <span>Remove empty lines</span>
+                                            </label>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="tool-actions-vertical">
+                                    <button class="action-btn primary" id="formatBtn">
+                                        <span>Format</span>
+                                        <span>✨</span>
+                                    </button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
                                 </div>
                             </div>
 
-                            <div class="tool-actions">
-                                <button class="action-btn primary" id="formatBtn">
-                                    <span>Format Data</span>
-                                    <span>✨</span>
-                                </button>
-                                <button class="action-btn" id="clearBtn">
-                                    <span>Clear All</span>
-                                    <span>×</span>
-                                </button>
-                            </div>
-                        </section>
-
-                        <section class="tool-section">
-                            <div class="input-output-grid">
+                            <!-- Input Column -->
+                            <div class="input-column">
                                 <div class="input-group">
-                                    <label for="inputData">Paste Excel Column Data:</label>
-                                    <textarea id="inputData" placeholder="Paste values from Excel column&#10;One value per line&#10;&#10;Example:&#10;John&#10;Jane&#10;Bob" rows="10"></textarea>
+                                    <label for="inputData">Input Data:</label>
+                                    <textarea id="inputData" placeholder="Paste Excel column values&#10;One per line&#10;&#10;Example:&#10;John&#10;Jane&#10;Bob" rows="14"></textarea>
                                     <div class="char-count">
-                                        <span id="inputCount">0</span> characters
-                                    </div>
-                                </div>
-
-                                <div class="output-group">
-                                    <label for="outputData">Comma-Separated List:</label>
-                                    <textarea id="outputData" placeholder="Comma-separated result will appear here...&#10;&#10;Example output:&#10;Apple, Banana, Orange" rows="10" readonly></textarea>
-                                    <div class="char-count">
-                                        <span id="outputCount">0</span> characters
+                                        <span id="inputCount">0</span> chars
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="tool-actions">
+                            <!-- Output Column -->
+                            <div class="output-column">
+                                <div class="output-group">
+                                    <label for="outputData">Formatted Output:</label>
+                                    <textarea id="outputData" placeholder="Result will appear here...&#10;&#10;Example:&#10;John, Jane, Bob" rows="14" readonly></textarea>
+                                    <div class="char-count">
+                                        <span id="outputCount">0</span> chars
+                                    </div>
+                                </div>
+
                                 <button class="action-btn success" id="downloadBtn">
-                                    <span>Download as .txt</span>
+                                    <span>Download</span>
                                     <span>⤓</span>
                                 </button>
                             </div>
@@ -216,9 +214,7 @@
                 </aside>
             </div>
         </div>
-    </main>
-
-    <footer class="site-footer">
+    </main>    <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -226,12 +222,22 @@
                     <p>Free online utilities for developers, writers, and content creators.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Text Tools</h4>
+                    <h4>Categories</h4>
                     <ul>
-                        <li><a href="/tools/text-uppercase/">Text Uppercase</a></li>
-                        <li><a href="/tools/text-lowercase/">Text Lowercase</a></li>
-                        <li><a href="/tools/excel-column-to-comma-list/">CSV Formatter</a></li>
-                        <li><a href="/">All Tools</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -245,12 +251,11 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
-                <p class="footer-note">This tool processes data locally in your browser. No data is sent to any server.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
             </div>
         </div>
     </footer>
 
-    <script src="/tools-registry.js"></script>
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
     <script src="/assets/js/accessibility-fixes.js"></script>

@@ -8,7 +8,6 @@ class MicroToolsUtils {
     init() {
         this.setCurrentYear();
         this.initMobileMenu();
-        this.initAllToolsDropdown();
         this.initCopyButtons();
         this.initTooltips();
     }
@@ -49,101 +48,6 @@ class MicroToolsUtils {
                 }
             });
         }
-    }
-
-    // All Tools dropdown menu
-    initAllToolsDropdown() {
-        const btn = document.querySelector('.all-tools-btn');
-        const menu = document.getElementById('allToolsMenu');
-        
-        if (!btn || !menu) return;
-
-        // Fetch and render tools from registry
-        this.renderAllToolsMenu(menu);
-
-        // Toggle dropdown
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', !isOpen);
-            menu.classList.toggle('active');
-        });
-
-        // Close when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!btn.contains(e.target) && !menu.contains(e.target)) {
-                btn.setAttribute('aria-expanded', 'false');
-                menu.classList.remove('active');
-            }
-        });
-
-        // Close on escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                btn.setAttribute('aria-expanded', 'false');
-                menu.classList.remove('active');
-            }
-        });
-
-        // Close when clicking a link
-        menu.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                btn.setAttribute('aria-expanded', 'false');
-                menu.classList.remove('active');
-            }
-        });
-    }
-
-    // Render all tools menu from registry
-    renderAllToolsMenu(menuElement) {
-        // Import tools registry data
-        if (typeof window.TOOLS_REGISTRY === 'undefined') {
-            console.warn('Tools registry not loaded yet');
-            return;
-        }
-
-        const registry = window.TOOLS_REGISTRY;
-        const categories = new Map();
-
-        // Organize tools by category
-        Object.keys(registry).forEach(phase => {
-            if (Array.isArray(registry[phase])) {
-                registry[phase].forEach(tool => {
-                    if (!categories.has(tool.categoryLabel)) {
-                        categories.set(tool.categoryLabel, []);
-                    }
-                    categories.get(tool.categoryLabel).push(tool);
-                });
-            }
-        });
-
-        // Render categories and tools
-        let html = '';
-        categories.forEach((tools, categoryLabel) => {
-            html += `
-                <div class="tools-category-group">
-                    <div class="tools-category-header">${categoryLabel}</div>
-                    <ul class="tools-list">
-            `;
-            
-            tools.forEach(tool => {
-                html += `
-                    <li>
-                        <a href="${tool.url}" title="${tool.description}">
-                            <span class="tool-icon-dropdown">${tool.icon}</span>
-                            <span class="tool-name-dropdown">${tool.name}</span>
-                        </a>
-                    </li>
-                `;
-            });
-            
-            html += `
-                    </ul>
-                </div>
-            `;
-        });
-
-        menuElement.innerHTML = html;
     }
 
     // Copy text to clipboard

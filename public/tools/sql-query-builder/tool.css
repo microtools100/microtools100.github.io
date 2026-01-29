@@ -1,0 +1,757 @@
+/* SQL Query Builder Tool Styles */
+
+.mode-selector {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.mode-selector h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.125rem;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.mode-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border-color);
+    background: var(--input-bg);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.mode-btn:hover {
+    border-color: var(--primary-color);
+}
+
+.mode-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.mode-content {
+    display: block;
+}
+
+.mode-content.hidden {
+    display: none;
+}
+
+.query-type-section {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.query-type-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.125rem;
+}
+
+.query-type-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.query-type-btn,
+.adv-query-type-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border-color);
+    background: var(--input-bg);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: all 0.2s;
+}
+
+.query-type-btn:hover,
+.adv-query-type-btn:hover {
+    border-color: var(--primary-color);
+}
+
+.query-type-btn.active,
+.adv-query-type-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.config-section {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.config-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.125rem;
+}
+
+.config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.config-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.config-group label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.config-group input,
+.config-group select {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.query-options {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.query-options h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.125rem;
+}
+
+.query-options h3:first-child {
+    margin-top: 0;
+}
+
+.simple-input {
+    margin-bottom: 1.5rem;
+}
+
+.simple-input input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.simple-pairs textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+    resize: vertical;
+}
+
+.columns-section,
+.conditions-section,
+.values-section,
+.set-section,
+.advanced-options {
+    margin-bottom: 1.5rem;
+}
+
+.columns-section > button:first-of-type,
+.conditions-section > button:first-of-type {
+    display: inline-block;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.add-column-btn,
+.select-all-btn,
+.add-condition-btn,
+.add-value-btn,
+.add-set-btn,
+.add-update-condition-btn,
+.add-delete-condition-btn {
+    padding: 0.75rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+    font-size: 0.9rem;
+}
+
+.add-column-btn:hover,
+.select-all-btn:hover,
+.add-condition-btn:hover,
+.add-value-btn:hover,
+.add-set-btn:hover,
+.add-update-condition-btn:hover,
+.add-delete-condition-btn:hover {
+    background: var(--primary-dark);
+}
+
+.columns-list,
+.conditions-list,
+.values-list,
+.set-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.column-item,
+.condition-item,
+.value-item,
+.set-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.column-item input,
+.condition-item input,
+.value-item input,
+.set-item input,
+.condition-item select,
+.value-item select,
+.set-item select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.column-item input,
+.value-item .value-column,
+.value-item .value-input,
+.set-item .set-column,
+.set-item .set-value,
+.condition-item input {
+    flex: 1;
+    min-width: 120px;
+}
+
+.condition-item select,
+.value-item select,
+.set-item select {
+    flex: 0 1 100px;
+}
+
+.remove-btn {
+    padding: 0.5rem 0.75rem;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.remove-btn:hover {
+    background: #c0392b;
+}
+
+.advanced-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.option-group label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.option-group input {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.query-output {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.query-output h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.125rem;
+}
+
+.output-box {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    overflow-x: auto;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.output-box pre {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.tool-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: var(--hover-color);
+    border-color: var(--primary-color);
+}
+
+.action-btn.primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.action-btn.primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .mode-buttons,
+    .query-type-buttons {
+        flex-direction: column;
+    }
+
+    .mode-btn,
+    .query-type-btn,
+    .adv-query-type-btn {
+        flex: 1;
+    }
+
+    .column-item,
+    .condition-item,
+    .value-item,
+    .set-item {
+        flex-direction: column;
+    }
+
+    .column-item input,
+    .condition-item input,
+    .value-item input,
+    .set-item input,
+    .condition-item select,
+    .value-item select,
+    .set-item select {
+        width: 100%;
+    }
+
+    .remove-btn {
+        width: 100%;
+    }
+
+    .tool-actions {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+    }
+
+    .advanced-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+.query-type-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.125rem;
+}
+
+.query-type-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.query-type-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border-color);
+    background: var(--input-bg);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: all 0.2s;
+}
+
+.query-type-btn:hover {
+    border-color: var(--primary-color);
+}
+
+.query-type-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.config-section,
+.query-options {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.config-section h3,
+.query-options h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.125rem;
+}
+
+.config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.config-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.config-group label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.config-group input {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.columns-section,
+.conditions-section,
+.values-section,
+.set-section,
+.advanced-options {
+    margin-bottom: 1.5rem;
+}
+
+.columns-buttons,
+.conditions-section > button:first-of-type {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.add-column-btn,
+.select-all-btn,
+.add-condition-btn,
+.add-value-btn,
+.add-set-btn,
+.add-update-condition-btn,
+.add-delete-condition-btn {
+    padding: 0.75rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.add-column-btn:hover,
+.select-all-btn:hover,
+.add-condition-btn:hover,
+.add-value-btn:hover,
+.add-set-btn:hover,
+.add-update-condition-btn:hover,
+.add-delete-condition-btn:hover {
+    background: var(--primary-dark);
+}
+
+.columns-list,
+.conditions-list,
+.values-list,
+.set-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.column-item,
+.condition-item,
+.value-item,
+.set-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.column-item input,
+.condition-item input,
+.value-item input,
+.set-item input,
+.condition-item select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.column-item input,
+.value-item .value-column,
+.value-item .value-input,
+.set-item .set-column,
+.set-item .set-value,
+.condition-item input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.condition-item select {
+    flex: 0 1 100px;
+}
+
+.remove-btn {
+    padding: 0.5rem 0.75rem;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.remove-btn:hover {
+    background: #c0392b;
+}
+
+.advanced-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.option-group label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.option-group input {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.query-output {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.query-output h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-size: 1.125rem;
+}
+
+.output-box {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.output-box pre {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.tool-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: var(--hover-color);
+    border-color: var(--primary-color);
+}
+
+.action-btn.primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.action-btn.primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .query-type-buttons {
+        flex-direction: column;
+    }
+
+    .query-type-btn {
+        flex: 1;
+    }
+
+    .column-item,
+    .condition-item,
+    .value-item,
+    .set-item {
+        flex-direction: column;
+    }
+
+    .column-item input,
+    .condition-item input,
+    .value-item input,
+    .set-item input,
+    .condition-item select {
+        width: 100%;
+    }
+
+    .remove-btn {
+        width: 100%;
+    }
+
+    .tool-actions {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+    }
+}

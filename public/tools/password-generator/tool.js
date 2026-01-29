@@ -147,7 +147,7 @@ class PasswordGenerator {
         if (!types.some(type => type)) {
             // If no types selected, enable lowercase as default
             this.elements.lowercase.checked = true;
-            this.showNotification('At least one character type must be selected', 'warning');
+            SharedUtilities.showNotification('At least one character type must be selected', 'warning');
         }
     }
 
@@ -202,7 +202,7 @@ class PasswordGenerator {
         this.elements.symbols.checked = settings.symbols;
         
         this.updateLengthValue();
-        this.showNotification(`${preset.charAt(0).toUpperCase() + preset.slice(1)} preset applied`, 'success');
+        SharedUtilities.showNotification(`${preset.charAt(0).toUpperCase() + preset.slice(1)} preset applied`, 'success');
     }
 
     showPresetMenu() {
@@ -322,7 +322,7 @@ class PasswordGenerator {
         this.displayPasswords(passwords);
         this.updateStats(passwords);
         
-        this.showNotification(`Generated ${count} passwords`, 'success');
+        SharedUtilities.showNotification(`Generated ${count} passwords`, 'success');
     }
 
     generateSinglePassword(length) {
@@ -353,7 +353,7 @@ class PasswordGenerator {
         }
         
         if (charset.length === 0) {
-            this.showNotification('No valid characters available. Please select character types.', 'error');
+            SharedUtilities.showNotification('No valid characters available. Please select character types.', 'error');
             return 'ERROR: No charset';
         }
         
@@ -630,13 +630,13 @@ class PasswordGenerator {
                 button.innerHTML = originalText;
             }, 2000);
             
-            this.showNotification('Password copied to clipboard', 'success');
+            SharedUtilities.showNotification('Password copied to clipboard', 'success');
         }
     }
 
     async copyAllPasswords() {
         if (this.generatedPasswords.length === 0) {
-            this.showNotification('No passwords to copy', 'warning');
+            SharedUtilities.showNotification('No passwords to copy', 'warning');
             return;
         }
         
@@ -654,13 +654,13 @@ class PasswordGenerator {
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            this.showNotification('All passwords copied to clipboard', 'success');
+            SharedUtilities.showNotification('All passwords copied to clipboard', 'success');
         }
     }
 
     downloadPasswords() {
         if (this.generatedPasswords.length === 0) {
-            this.showNotification('No passwords to download', 'warning');
+            SharedUtilities.showNotification('No passwords to download', 'warning');
             return;
         }
         
@@ -678,7 +678,7 @@ class PasswordGenerator {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        this.showNotification('Passwords downloaded', 'success');
+        SharedUtilities.showNotification('Passwords downloaded', 'success');
     }
 
     refreshSinglePassword(index) {
@@ -694,33 +694,25 @@ class PasswordGenerator {
         this.displayPasswords(this.generatedPasswords);
         this.updateStats(this.generatedPasswords);
         
-        this.showNotification(`Password ${index + 1} refreshed`, 'info');
+        SharedUtilities.showNotification(`Password ${index + 1} refreshed`, 'info');
     }
 
     refreshAllPasswords() {
         this.generatePasswords();
-        this.showNotification('All passwords refreshed', 'info');
+        SharedUtilities.showNotification('All passwords refreshed', 'info');
     }
 
     clear() {
         this.generatedPasswords = [];
         this.displayPasswords([]);
         this.updateStats([]);
-        this.showNotification('All passwords cleared', 'info');
+        SharedUtilities.showNotification('All passwords cleared', 'info');
     }
 
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
-    }
-
-    showNotification(message, type = 'info') {
-        if (window.MicroTools?.utils?.showNotification) {
-            window.MicroTools.utils.showNotification(message, type);
-        } else {
-            console.log(`${type}: ${message}`);
-        }
     }
 }
 

@@ -97,9 +97,10 @@ class TextToBinaryConverter {
     }
 
     clear() {
-        this.textInput.value = '';
-        this.binaryOutput.value = '';
-        window.MicroTools?.utils?.showNotification?.('Cleared!', 'info');
+        SharedUtilities.clearElements(
+            { inputData: this.textInput, outputData: this.binaryOutput },
+            { message: 'Cleared!' }
+        );
     }
 }
 

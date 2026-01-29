@@ -1,34 +1,43 @@
 /* Remove Extra Spaces Tool Specific Styles */
-.output-header {
+
+/* Three-Column Layout for Desktop */
+.tool-section.three-column {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr 1fr;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.input-column,
+.options-column,
+.output-column {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    flex-direction: column;
 }
 
-.output-header label {
-    margin-bottom: 0;
-    font-size: 1.125rem;
-    font-weight: 600;
+.input-area textarea,
+.output-area textarea {
+    flex: 1;
+    min-height: 300px;
 }
 
-/* Tool options */
 .tool-options {
     background: var(--surface-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
-    margin: 1.5rem 0;
+    margin-bottom: 1rem;
 }
 
 .tool-options h3 {
     margin-bottom: 1rem;
     color: var(--primary-color);
+    font-size: 1.1rem;
 }
 
 .option-group {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .option-row {
@@ -48,6 +57,179 @@
     color: var(--text-color);
     cursor: pointer;
     flex: 1;
+    font-size: 0.95rem;
+}
+
+.option-row input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.tool-actions-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tool-actions-vertical .action-btn {
+    width: 100%;
+}
+
+.output-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.output-actions .action-btn {
+    width: 100%;
+}
+
+/* Output header */
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.output-header label {
+    margin-bottom: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.stats-display {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+    padding: 0.75rem;
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+    .tool-section.three-column {
+        grid-template-columns: 1fr 0.6fr 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    .tool-section.three-column {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .options-column {
+        grid-column: 1 / -1;
+    }
+    
+    .option-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    
+    .option-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        border-bottom: none;
+        padding: 0.5rem;
+        background: white;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+    }
+}
+
+@media (max-width: 768px) {
+    .tool-section.three-column {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .input-area textarea,
+    .output-area textarea {
+        min-height: 200px;
+    }
+    
+    .stats-display {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .stat-item {
+        flex: 1 0 calc(50% - 0.5rem);
+        min-width: auto;
+        padding: 0.5rem;
+    }
+    
+    .stat-value {
+        font-size: 1.25rem;
+    }
+    
+    .output-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .input-area textarea,
+    .output-area textarea {
+        min-height: 150px;
+    }
+    
+    .stats-display {
+        gap: 0.25rem;
+    }
+    
+    .stat-item {
+        flex: 1 0 100%;
+        padding: 0.5rem;
+    }
+    
+    .option-row {
+        padding: 0.4rem;
+    }
+    
+    .option-row label {
+        font-size: 0.9rem;
+    }
+    
+    .stat-value {
+        font-size: 1.1rem;
+    }
+}
+
+/* Remove old styles that are no longer needed */
+
 }
 
 .option-row input[type="checkbox"] {

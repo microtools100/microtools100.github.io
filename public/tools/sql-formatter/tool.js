@@ -105,9 +105,10 @@ class SQLFormatter {
     }
 
     clear() {
-        this.sqlInput.value = '';
-        this.sqlOutput.value = '';
-        window.MicroTools?.utils?.showNotification?.('Cleared!', 'info');
+        SharedUtilities.clearElements(
+            { inputData: this.sqlInput, outputData: this.sqlOutput },
+            { message: 'Cleared!' }
+        );
     }
 }
 

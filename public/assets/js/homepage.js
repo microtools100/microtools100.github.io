@@ -40,6 +40,7 @@ class HomepageManager {
             { id: 'qr-code-generator', name: 'QR Code Generator', category: 'data', url: '/tools/qr-code-generator/' },
             { id: 'text-to-binary', name: 'Text to Binary Converter', category: 'data', url: '/tools/text-to-binary/' },
             { id: 'image-to-base64', name: 'Image to Base64 Converter', category: 'data', url: '/tools/image-to-base64/' },
+            { id: 'color-picker', name: 'Color Picker', category: 'data', url: '/tools/color-picker/' },
             
             // Security & Password Tools
             { id: 'password-generator', name: 'Password Generator', category: 'security', url: '/tools/password-generator/' },
@@ -52,6 +53,7 @@ class HomepageManager {
             { id: 'fake-data-generator', name: 'Fake Data Generator', category: 'security', url: '/tools/fake-data-generator/' },
             { id: 'regex-tester', name: 'Regex Tester', category: 'data', url: '/tools/regex-tester/' },
             { id: 'sql-formatter', name: 'SQL Formatter', category: 'data', url: '/tools/sql-formatter/' },
+            { id: 'sql-query-builder', name: 'SQL Query Builder', category: 'data', url: '/tools/sql-query-builder/' },
             
             // Random & Games Tools
             { id: 'charades-random', name: 'Random Charades Generator', category: 'games', url: '/tools/charades-random/' },
@@ -163,7 +165,7 @@ class HomepageManager {
     }
 
     updateToolCount() {
-        const countElement = document.querySelector('.stat-number');
+        const countElement = document.getElementById('toolCountStat');
         if (countElement) {
             countElement.textContent = this.tools.length;
         }

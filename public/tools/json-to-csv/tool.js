@@ -42,12 +42,12 @@ class JSONToCSV {
             const csv = this.jsonToCSV(jsonData, delimiter);
             this.csvOutput.value = csv;
             this.clearError();
-            this.autoCopy();
+            this.copyToClipboard();
+            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
         } catch (error) {
             this.showError('Invalid JSON: ' + error.message);
             this.csvOutput.value = '';
         }
-    }
     }
 
     jsonToCSV(data, delimiter = ',') {
@@ -122,17 +122,6 @@ class JSONToCSV {
     }
 
     copyToClipboard() {
-        const text = this.csvOutput.value;
-        if (!text) return;
-
-        navigator.clipboard.writeText(text).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-        });
-    }
-
-    autoCopy() {
         const text = this.csvOutput.value;
         if (!text) return;
 

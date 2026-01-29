@@ -24,21 +24,16 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                <nav class="main-nav">
+                                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
-                        <li><a href="/#games-tools">Games Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
                     </ul>
                 </nav>
-                <div class="all-tools-dropdown">
-                    <button class="all-tools-btn" aria-label="Toggle all tools menu" aria-expanded="false">
-                        <span>All Tools</span>
-                        <span class="dropdown-icon">▼</span>
-                    </button>
-                    <div class="all-tools-menu" id="allToolsMenu"></div>
-                </div>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
@@ -67,44 +62,47 @@
 
             <div class="input-output-grid">
                 <div class="input-group">
-                    <label for="textInput">Enter Your Text</label>
-                    <textarea id="textInput" placeholder="Paste your text here&#10;&#10;Example:&#10;The quick brown fox jumps over the lazy dog. This is a sample sentence.&#10;&#10;Statistics will appear below..."></textarea>
-                    <button id="clearBtn" class="tool-btn secondary">Clear Text</button>
+                    <label for="inputText">Enter Your Text</label>
+                    <textarea id="inputText" placeholder="Paste your text here&#10;&#10;Example:&#10;The quick brown fox jumps over the lazy dog. This is a sample sentence.&#10;&#10;Statistics will update automatically..."></textarea>
+                    <button class="action-btn" id="clearBtn">
+                        <span>Clear Text</span>
+                        <span>×</span>
+                    </button>
                 </div>
             </div>
 
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Words</div>
-                    <div class="stat-value" id="words">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Characters (with spaces)</div>
+                <div class="stat-item">
                     <div class="stat-value" id="characters">0</div>
+                    <div class="stat-label">Characters</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Characters (no spaces)</div>
+                <div class="stat-item">
                     <div class="stat-value" id="charactersNoSpaces">0</div>
+                    <div class="stat-label">Without Spaces</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Sentences</div>
+                <div class="stat-item">
+                    <div class="stat-value" id="words">0</div>
+                    <div class="stat-label">Words</div>
+                </div>
+                <div class="stat-item">
                     <div class="stat-value" id="sentences">0</div>
+                    <div class="stat-label">Sentences</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Paragraphs</div>
+                <div class="stat-item">
                     <div class="stat-value" id="paragraphs">0</div>
+                    <div class="stat-label">Paragraphs</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Lines</div>
+                <div class="stat-item">
                     <div class="stat-value" id="lines">0</div>
+                    <div class="stat-label">Lines</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Reading Time</div>
+                <div class="stat-item">
                     <div class="stat-value" id="readingTime">0 min</div>
+                    <div class="stat-label">Reading Time</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Speaking Time</div>
+                <div class="stat-item">
                     <div class="stat-value" id="speakingTime">0 min</div>
+                    <div class="stat-label">Speaking Time</div>
                 </div>
             </div>
 
@@ -159,20 +157,48 @@
                 </ul>
             </section>
         </div>
-    </main>
-
-    <footer class="site-footer">
+    </main>    <footer class="site-footer">
         <div class="container">
-            <p>&copy; <span id="currentYear"></span> Micro Tools. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="/privacy.html">Privacy</a></li>
-                <li><a href="/terms.html">Terms</a></li>
-                <li><a href="/contact.html">Contact</a></li>
-            </ul>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
         </div>
     </footer>
 
-    <script src="/tools-registry.js"></script>
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
     <script src="/assets/js/accessibility-fixes.js"></script>

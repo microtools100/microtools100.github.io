@@ -53,13 +53,6 @@
                         <li><a href="#random-tools">Random Tools</a></li>
                     </ul>
                 </nav>
-                <div class="all-tools-dropdown">
-                    <button class="all-tools-btn" aria-label="Toggle all tools menu" aria-expanded="false">
-                        <span>All Tools</span>
-                        <span class="dropdown-icon">▼</span>
-                    </button>
-                    <div class="all-tools-menu" id="allToolsMenu"></div>
-                </div>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
@@ -81,7 +74,7 @@
                 
                 <div class="quick-stats">
                     <div class="stat">
-                        <span class="stat-number">39</span>
+                        <span class="stat-number" id="toolCountStat">0</span>
                         <span class="stat-label">Tools Available</span>
                     </div>
                     <div class="stat">
@@ -348,6 +341,17 @@
                         </div>
                     </a>
 
+                    <!-- SQL Query Builder -->
+                    <a href="/tools/sql-query-builder/" class="tool-card">
+                        <div class="tool-icon">🛠️</div>
+                        <h4>SQL Query Builder</h4>
+                        <p>Build SQL queries visually. Generate SELECT, INSERT, UPDATE, DELETE queries.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
                     <!-- URL Encoder/Decoder -->
                     <a href="/tools/url-encoder-decoder/" class="tool-card">
                         <div class="tool-icon">🔗</div>
@@ -430,6 +434,17 @@
                         <div class="tool-icon">🖼️</div>
                         <h4>Image to Base64</h4>
                         <p>Convert images to Base64 for embedding in HTML/CSS.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Color Picker -->
+                    <a href="/tools/color-picker/" class="tool-card">
+                        <div class="tool-icon">🎨</div>
+                        <h4>Color Picker</h4>
+                        <p>Pick colors and convert between HEX, RGB, HSL formats. Generate color palettes.</p>
                         <div class="tool-meta">
                             <span class="tool-category">Developer</span>
                             <span class="tool-free">FREE</span>
@@ -602,6 +617,16 @@
                     <p>Free online utilities for developers, writers, and content creators.</p>
                 </div>
                 <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#text-tools">Text Tools</a></li>
+                        <li><a href="#data-tools">Data Tools</a></li>
+                        <li><a href="#developer-tools">Developer Tools</a></li>
+                        <li><a href="#security-tools">Security Tools</a></li>
+                        <li><a href="#random-tools">Random Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
@@ -627,7 +652,6 @@
     </footer>
 
     <!-- Shared Utilities for all tools -->
-    <script src="/tools-registry.js"></script>
     <script src="/assets/js/shared-utilities.js"></script>
     
     <!-- Performance Monitoring -->

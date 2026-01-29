@@ -44,21 +44,16 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                <nav class="main-nav">
+                                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
-                        <li><a href="/tools/text-uppercase/">Uppercase Tool</a></li>
-                        <li><a href="/tools/remove-extra-spaces/">Remove Spaces</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
                     </ul>
                 </nav>
-                <div class="all-tools-dropdown">
-                    <button class="all-tools-btn" aria-label="Toggle all tools menu" aria-expanded="false">
-                        <span>All Tools</span>
-                        <span class="dropdown-icon">▼</span>
-                    </button>
-                    <div class="all-tools-menu" id="allToolsMenu"></div>
-                </div>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
@@ -76,77 +71,82 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
-                        <section class="tool-section">
-                            <div class="input-group">
-                                <label for="inputText">Enter your text:</label>
-                                <div class="input-area">
-                                    <textarea 
-                                        id="inputText" 
-                                        placeholder="Type or paste your text here...&#10;&#10;Example:&#10;HELLO WORLD"
-                                        rows="6"
-                                        autofocus
-                                    ></textarea>
-                                </div>
-                                <div class="hint">
-                                    Enter any text you want to convert to lowercase. Maximum 10,000 characters.
-                                </div>
-                            </div>
-
-                            <div class="tool-actions">
-                                <button class="action-btn primary" id="convertBtn">
-                                    <span>Convert to Lowercase</span>
-                                    <span>↓</span>
-                                </button>
-                                <button class="action-btn" id="clearBtn">
-                                    <span>Clear All</span>
-                                    <span>×</span>
-                                </button>
-                                <button class="action-btn" id="exampleBtn">
-                                    <span>Load Example</span>
-                                    <span>↻</span>
-                                </button>
-                            </div>
-                        </section>
-
-                        <section class="tool-section">
-                            <div class="output-group">
-                                <div class="output-header">
-                                    <label for="outputText">Lowercase Text:</label>
-                                    <div class="stats-display">
-                                        <div class="stat-item">
-                                            <span class="stat-value" id="charCount">0</span>
-                                            <span class="stat-label">Characters</span>
-                                        </div>
-                                        <div class="stat-item">
-                                            <span class="stat-value" id="wordCount">0</span>
-                                            <span class="stat-label">Words</span>
-                                        </div>
-                                        <div class="stat-item">
-                                            <span class="stat-value" id="lowercaseCount">0%</span>
-                                            <span class="stat-label">Already Lowercase</span>
-                                        </div>
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputText">Enter your text:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="inputText" 
+                                            placeholder="Type or paste your text here...&#10;&#10;Example:&#10;HELLO WORLD"
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter any text you want to convert to lowercase. Maximum 10,000 characters.
                                     </div>
                                 </div>
-                                <div class="output-area">
-                                    <textarea 
-                                        id="outputText" 
-                                        placeholder="Your lowercase text will appear here...&#10;&#10;Example output:&#10;hello world"
-                                        rows="6"
-                                        readonly
-                                    ></textarea>
-                                </div>
+
                                 <div class="tool-actions">
-                                    <button class="action-btn success" id="copyBtn" data-copy="outputText">
-                                        <span>Copy to Clipboard</span>
-                                        <span>📋</span>
+                                    <button class="action-btn primary" id="convertBtn">
+                                        <span>Convert</span>
+                                        <span>↓</span>
                                     </button>
-                                    <button class="action-btn" id="downloadBtn">
-                                        <span>Download as .txt</span>
-                                        <span>⤓</span>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                    <button class="action-btn" id="exampleBtn">
+                                        <span>Example</span>
+                                        <span>↻</span>
                                     </button>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <div class="output-header">
+                                        <label for="outputText">Lowercase Text:</label>
+                                        <div class="stats-display">
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="charCount">0</span>
+                                                <span class="stat-label">Characters</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="wordCount">0</span>
+                                                <span class="stat-label">Words</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="lowercaseCount">0%</span>
+                                                <span class="stat-label">Already Lowercase</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputText" 
+                                            placeholder="Your lowercase text will appear here...&#10;&#10;Example output:&#10;hello world"
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                    <div class="tool-actions">
+                                        <button class="action-btn success" id="copyBtn" data-copy="outputText">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
 
                     <div class="instructions">
@@ -204,9 +204,7 @@
                 </aside>
             </div>
         </div>
-    </main>
-
-    <footer class="site-footer">
+    </main>    <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -214,11 +212,22 @@
                     <p>Free online utilities for developers, writers, and content creators.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Text Tools</h4>
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
                     <ul>
                         <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
-                        <li><a href="/tools/text-lowercase/">Lowercase Converter</a></li>
-                        <li><a href="/tools/remove-extra-spaces/">Remove Spaces</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -232,12 +241,11 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
-                <p class="footer-note">This tool processes text locally in your browser. No data is sent to any server.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
             </div>
         </div>
     </footer>
 
-    <script src="/tools-registry.js"></script>
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
     <script src="/assets/js/accessibility-fixes.js"></script>

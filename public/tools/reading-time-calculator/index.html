@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reading Time Calculator - MicroTools</title>
+    <title>Reading Time Calculator - Micro Tools</title>
     <meta name="description" content="Calculate reading time for your text. Estimates how long it takes to read content based on average reading speed.">
-    <meta property="og:title" content="Reading Time Calculator - MicroTools">
+    <meta property="og:title" content="Reading Time Calculator - Micro Tools">
     <meta property="og:description" content="Calculate how long it takes to read any text content">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/assets/css/core.css">
@@ -13,75 +13,155 @@
     <link rel="stylesheet" href="tool.css">
 </head>
 <body>
-    <nav class="top-nav">
-        <div class="nav-container">
-            <a href="/" class="logo">Micro Tools</a>
-            <button class="mobile-menu-toggle">☰</button>
+        <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
         </div>
-    </nav>
+    </header>
 
     <div class="tool-container">
         <div class="tool-header">
             <h1>Reading Time Calculator</h1>
-            <p>Calculate how long it takes to read your text content</p>
+            <p>Calculate estimated reading time for your text</p>
         </div>
 
         <div class="tool-content">
-            <div class="input-section">
-                <label for="textInput">Paste your text here:</label>
-                <textarea 
-                    id="textInput" 
-                    class="tool-textarea"
-                    placeholder="Enter text to calculate reading time... (minimum 10 words for accurate estimate)"
-                    spellcheck="false"></textarea>
-            </div>
-
-            <div class="options-section">
-                <label>
-                    Reading Speed (words per minute):
-                    <input type="number" id="readingSpeed" value="200" min="50" max="500" step="10">
-                </label>
-            </div>
-
-            <div class="results-section">
-                <div class="stat-card">
-                    <div class="stat-value" id="readingTime">0 min</div>
-                    <div class="stat-label">Reading Time</div>
+            <div class="tool-grid">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <div class="section-card">
+                        <h3>Your Text</h3>
+                        <textarea 
+                            id="textInput" 
+                            class="tool-textarea"
+                            placeholder="Paste your text here...&#10;&#10;The tool will automatically calculate reading time based on average reading speed.&#10;&#10;Minimum 10 words for accurate estimate."
+                            spellcheck="false"></textarea>
+                        
+                        <div class="reading-speed-control">
+                            <label for="readingSpeed">Reading Speed:</label>
+                            <div class="speed-input-group">
+                                <input type="number" id="readingSpeed" value="200" min="50" max="500" step="10">
+                                <span class="speed-unit">WPM</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="wordCount">0</div>
-                    <div class="stat-label">Words</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="charCount">0</div>
-                    <div class="stat-label">Characters</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="sentenceCount">0</div>
-                    <div class="stat-label">Sentences</div>
+
+                <!-- Results Section -->
+                <div class="results-section">
+                    <div class="section-card highlight">
+                        <h3>Reading Time Results</h3>
+                        
+                        <div class="primary-stat">
+                            <div class="stat-value-large" id="readingTime">0 min</div>
+                            <div class="stat-label-large">Estimated Reading Time</div>
+                        </div>
+
+                        <div class="stats-grid-mini">
+                            <div class="stat-box">
+                                <div class="stat-value" id="wordCount">0</div>
+                                <div class="stat-label">Words</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value" id="charCount">0</div>
+                                <div class="stat-label">Characters</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value" id="sentenceCount">0</div>
+                                <div class="stat-label">Sentences</div>
+                            </div>
+                        </div>
+
+                        <div class="reading-levels">
+                            <h4>Reading Speed Estimates:</h4>
+                            <div class="speed-estimate">
+                                <div class="speed-label">Slow Reader (150 WPM):</div>
+                                <div class="speed-value" id="slowTime">-</div>
+                            </div>
+                            <div class="speed-estimate">
+                                <div class="speed-label">Average (200 WPM):</div>
+                                <div class="speed-value" id="avgTime">-</div>
+                            </div>
+                            <div class="speed-estimate">
+                                <div class="speed-label">Fast Reader (250 WPM):</div>
+                                <div class="speed-value" id="fastTime">-</div>
+                            </div>
+                        </div>
+
+                        <button class="action-btn success" id="copyBtn">
+                            <span>Copy Results</span>
+                            <span>📋</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-
-            <div class="info-box">
-                <h4>📚 Reading Time Estimates:</h4>
-                <ul>
-                    <li><strong>Slow Reader (150 WPM):</strong> <span id="slowTime">-</span></li>
-                    <li><strong>Average Reader (200 WPM):</strong> <span id="avgTime">-</span></li>
-                    <li><strong>Fast Reader (250 WPM):</strong> <span id="fastTime">-</span></li>
-                </ul>
-            </div>
-
-            <button class="tool-btn" id="copyBtn">📋 Copy Results</button>
         </div>
     </div>
 
-    <script src="/tools-registry.js"></script>
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
     <script src="/assets/js/accessibility-fixes.js"></script>
     <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/utils.js"></script>
     <script src="tool.js"></script>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#random-tools">Random Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
 
