@@ -6,46 +6,51 @@ class HTMLEscapeUnescape {
         this.outputText = document.getElementById('outputText');
         this.escapeBtn = document.getElementById('escapeBtn');
         this.unescapeBtn = document.getElementById('unescapeBtn');
-        
+        this.copyBtn = document.querySelector('.copy-btn');
         this.init();
     }
 
     init() {
-        this.escapeBtn.addEventListener('click', () => this.escape());
-        this.unescapeBtn.addEventListener('click', () => this.unescape());
+        if (this.escapeBtn) {
+            this.escapeBtn.addEventListener('click', () => this.escape());
+        }
+        if (this.unescapeBtn) {
+            this.unescapeBtn.addEventListener('click', () => this.unescape());
+        }
+        if (this.copyBtn) {
+            this.copyBtn.addEventListener('click', () => this.copy());
+        }
     }
 
     escape() {
         const text = this.inputText.value;
-        
-        if (!text) {
+        if (!text || text.trim().length === 0) {
             this.outputText.value = '';
             return;
         }
-
         const escaped = this.escapeHtml(text);
         this.outputText.value = escaped;
-        
-        // Auto-copy
-        navigator.clipboard.writeText(escaped).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Escaped and copied to clipboard!', 'success');
-        });
     }
 
     unescape() {
         const text = this.inputText.value;
-        
-        if (!text) {
+        if (!text || text.trim().length === 0) {
             this.outputText.value = '';
             return;
         }
-
         const unescaped = this.unescapeHtml(text);
         this.outputText.value = unescaped;
-        
-        // Auto-copy
-        navigator.clipboard.writeText(unescaped).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Unescaped and copied to clipboard!', 'success');
+    }
+
+    copy() {
+        const text = this.outputText.value;
+        if (!text) {
+            return;
+        }
+        navigator.clipboard.writeText(text).then(() => {
+            console.log('Copied to clipboard');
+        }).catch(err => {
+            console.error('Failed to copy:', err);
         });
     }
 
@@ -58,7 +63,9 @@ class HTMLEscapeUnescape {
             "'": '&#39;',
             '/': '&#x2F;'
         };
-        return text.replace(/[&<>"'\/]/g, char => map[char]);
+        return text.replace(/[&<>"'\/]/g, function(char) {
+            return map[char];
+        });
     }
 
     unescapeHtml(text) {
@@ -70,6 +77,7 @@ class HTMLEscapeUnescape {
             '&#39;': "'",
             '&#x27;': "'",
             '&#x2F;': '/',
+            '&#47;': '/',
             '&apos;': "'",
             '&nbsp;': '\u00A0',
             '&copy;': '©',
@@ -84,14 +92,14 @@ class HTMLEscapeUnescape {
             '&middot;': '·',
             '&hellip;': '…',
             '&bull;': '•',
-            '&prime;': '′',
-            '&Prime;': '″',
-            '&lsquo;': ''',
-            '&rsquo;': ''',
-            '&ldquo;': '"',
-            '&rdquo;': '"',
-            '&lsaquo;': '‹',
-            '&rsaquo;': '›',
+            '&prime;': '\u2032',
+            '&Prime;': '\u2033',
+            '&lsquo;': '\u2018',
+            '&rsquo;': '\u2019',
+            '&ldquo;': '\u201C',
+            '&rdquo;': '\u201D',
+            '&lsaquo;': '\u2039',
+            '&rsaquo;': '\u203A',
             '&dagger;': '†',
             '&Dagger;': '‡',
             '&times;': '×',
@@ -110,29 +118,34 @@ class HTMLEscapeUnescape {
         };
 
         let result = text;
-        
-        // Replace named entities
-        Object.keys(htmlEntities).forEach(entity => {
-            const regex = new RegExp(entity.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
-            result = result.replace(regex, htmlEntities[entity]);
+        for (const entity in htmlEntities) {
+            if (htmlEntities.hasOwnProperty(entity)) {
+                const regex = new RegExp(entity.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                result = result.replace(regex, htmlEntities[entity]);
+            }
+        }
+
+        result = result.replace(/&#(\d+);/g, function(match, dec) {
+            try {
+                return String.fromCharCode(parseInt(dec, 10));
+            } catch (e) {
+                return match;
+            }
         });
 
-        // Replace numeric entities (&#123; format)
-        result = result.replace(/&#(\d+);/g, (match, dec) => {
-            return String.fromCharCode(parseInt(dec, 10));
-        });
-
-        // Replace hex entities (&#x1F; format)
-        result = result.replace(/&#x([0-9a-fA-F]+);/g, (match, hex) => {
-            return String.fromCharCode(parseInt(hex, 16));
+        result = result.replace(/&#x([0-9a-fA-F]+);/gi, function(match, hex) {
+            try {
+                return String.fromCharCode(parseInt(hex, 16));
+            } catch (e) {
+                return match;
+            }
         });
 
         return result;
     }
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     window.MicroTools = window.MicroTools || {};
     window.MicroTools.htmlEscapeUnescape = new HTMLEscapeUnescape();
 });

@@ -9,6 +9,7 @@ class CSVToJSON {
         this.hasHeaderRow = document.getElementById('hasHeaderRow');
         this.errorMsg = document.querySelector('.error-msg');
         
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => this.autoCopy());
         this.init();
     }
 
@@ -16,15 +17,20 @@ class CSVToJSON {
         if (this.convertBtn) {
             this.convertBtn.addEventListener('click', () => this.convert());
         } else {
-            this.csvInput.addEventListener('input', () => this.convert());
+            this.csvInput.addEventListener('input', () => this.debouncedConvert());
         }
         this.csvInput.addEventListener('input', () => this.clearError());
         if (this.hasHeaderRow) {
-            this.hasHeaderRow.addEventListener('change', () => this.convert());
+            this.hasHeaderRow.addEventListener('change', () => this.debouncedConvert());
         }
         if (this.copyBtn) {
             this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         }
+    }
+
+    debouncedConvert() {
+        this.convert();
+        this.keystrokeDelay.schedule();
     }
 
     convert() {
@@ -41,11 +47,20 @@ class CSVToJSON {
             const json = this.csvToJSON(csvText, hasHeader);
             this.jsonOutput.value = JSON.stringify(json, null, 2);
             this.clearError();
-            this.copyToClipboard();
-            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
         } catch (error) {
             this.showError('Error parsing CSV: ' + error.message);
             this.jsonOutput.value = '';
+        }
+    }
+
+    autoCopy() {
+        const text = this.jsonOutput.value;
+        if (text) {
+            navigator.clipboard.writeText(text).then(() => {
+                SharedUtilities.showNotification('Copied to clipboard!', 'success');
+            }).catch(() => {
+                SharedUtilities.showNotification('Failed to copy', 'error');
+            });
         }
     }
 

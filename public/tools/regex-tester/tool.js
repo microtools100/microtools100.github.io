@@ -15,6 +15,23 @@ class RegexTester {
         this.regexFlags.addEventListener('change', () => this.test());
         this.testInput.addEventListener('input', () => this.test());
         this.copyBtn.addEventListener('click', () => this.copyResults());
+
+        const testBtn = document.getElementById('testBtn');
+        if (testBtn) {
+            testBtn.addEventListener('click', () => this.test());
+        }
+
+        const clearBtn = document.getElementById('clearBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => this.clear());
+        }
+    }
+
+    clear() {
+        this.regexInput.value = '';
+        this.testInput.value = '';
+        this.highlightedText.innerHTML = '<p style="color: #999;">Enter a regex pattern and text to test</p>';
+        this.matchCount.textContent = '0';
     }
 
     test() {

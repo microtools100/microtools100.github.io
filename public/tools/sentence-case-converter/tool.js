@@ -5,13 +5,19 @@ class SentenceCaseConverter {
         this.inputText = document.getElementById('inputText');
         this.outputText = document.getElementById('outputText');
         this.sentenceStyle = document.getElementById('sentenceStyle');
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => this.autoCopy());
         
         this.init();
     }
 
     init() {
-        this.inputText.addEventListener('input', () => this.convertText());
+        this.inputText.addEventListener('input', () => this.debouncedConvertText());
         this.sentenceStyle.addEventListener('change', () => this.convertText());
+    }
+
+    debouncedConvertText() {
+        this.convertText();
+        this.keystrokeDelay.schedule();
     }
 
     convertText() {
@@ -24,11 +30,15 @@ class SentenceCaseConverter {
 
         const result = this.toSentenceCase(text);
         this.outputText.value = result;
-        
-        // Auto-copy and notify
-        navigator.clipboard.writeText(result).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        });
+    }
+
+    autoCopy() {
+        const result = this.outputText.value;
+        if (result) {
+            navigator.clipboard.writeText(result).then(() => {
+                SharedUtilities.showNotification('Copied to clipboard!', 'success');
+            });
+        }
     }
 
     toSentenceCase(text) {

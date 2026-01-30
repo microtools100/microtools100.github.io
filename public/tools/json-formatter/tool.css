@@ -111,7 +111,9 @@
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     line-height: 1.5;
-    resize: vertical;
+    resize: none;
+    height: 300px;
+    overflow-y: auto;
 }
 
 .input-group textarea:focus {
@@ -125,12 +127,16 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 1rem;
+    overflow-y: auto;
     overflow-x: auto;
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     line-height: 1.5;
     color: #333;
     margin: 0;
+    height: 300px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 /* Use cases */

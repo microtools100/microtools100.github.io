@@ -23,11 +23,14 @@ class XMLToJSONConverter {
 
     convert() {
         try {
-            const xml = this.xmlInput.value.trim();
+            let xml = this.xmlInput.value.trim();
             if (!xml) {
                 this.jsonOutput.value = '';
                 return;
             }
+
+            // Remove XML declaration if present
+            xml = xml.replace(/<\?xml[^?]*\?>/g, '').trim();
 
             const parser = new DOMParser();
             const doc = parser.parseFromString(xml, 'text/xml');

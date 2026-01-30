@@ -6,6 +6,7 @@
     <meta name="description" content="Terms of Service for Micro Tools - Please read our terms carefully">
     <title>Terms of Service - Micro Tools</title>
     <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/homepage.css">
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -20,8 +21,11 @@
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
             </div>
@@ -85,13 +89,57 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Micro Tools. All rights reserved.</p>
-            <nav class="footer-nav">
-                <a href="/privacy.html">Privacy Policy</a>
-                <a href="/terms.html">Terms of Service</a>
-                <a href="/contact.html">Contact</a>
-            </nav>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
         </div>
     </footer>
+
+    <!-- Shared Utilities for all tools -->
+    <script src="/assets/js/shared-utilities.js"></script>
+    
+    <!-- Performance Monitoring -->
+    <script src="/assets/js/performance-monitor.js"></script>
+    
+    <!-- Accessibility Audit & Fixes -->
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+
+    <script src="/assets/js/utils.js"></script>
 </body>
 </html>

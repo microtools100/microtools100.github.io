@@ -6,14 +6,20 @@ class TitleCaseConverter {
         this.outputText = document.getElementById('outputText');
         this.titleStyle = document.getElementById('titleStyle');
         this.preserveCase = document.getElementById('preserveCase');
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => this.autoCopy());
         
         this.init();
     }
 
     init() {
-        this.inputText.addEventListener('input', () => this.convertText());
-        this.titleStyle.addEventListener('change', () => this.convertText());
-        this.preserveCase.addEventListener('change', () => this.convertText());
+        this.inputText.addEventListener('input', () => this.debouncedConvertText());
+        this.titleStyle.addEventListener('change', () => this.debouncedConvertText());
+        this.preserveCase.addEventListener('change', () => this.debouncedConvertText());
+    }
+
+    debouncedConvertText() {
+        this.convertText();
+        this.keystrokeDelay.schedule();
     }
 
     convertText() {
@@ -40,11 +46,15 @@ class TitleCaseConverter {
         }
 
         this.outputText.value = result;
-        
-        // Auto-copy and notify
-        navigator.clipboard.writeText(result).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        });
+    }
+
+    autoCopy() {
+        const result = this.outputText.value;
+        if (result) {
+            navigator.clipboard.writeText(result).then(() => {
+                SharedUtilities.showNotification('Copied to clipboard!', 'success');
+            });
+        }
     }
 
     toTitleCase(text, preserveAcronyms = true) {

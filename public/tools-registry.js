@@ -331,7 +331,7 @@ const TOOLS_REGISTRY = {
       status: 'complete'
     },
     {
-      id: 'excel-to-comma-list',
+      id: 'excel-column-to-comma-list',
       name: 'Excel Column to Comma List',
       category: 'data-converters',
       categoryLabel: 'Data Format Converters',
@@ -367,7 +367,7 @@ const TOOLS_REGISTRY = {
       status: 'not-started'
     },
     {
-      id: 'excel-to-sql-in',
+      id: 'excel-column-to-sql-in',
       name: 'Excel Column to SQL IN List',
       category: 'sql-tools',
       categoryLabel: 'SQL Tools',
@@ -424,6 +424,90 @@ const TOOLS_REGISTRY = {
       url: '/tools/charades-random/',
       keywords: 'charades, random charades, charades words, party games',
       priority: 0.80,
+      status: 'complete'
+    },
+    {
+      id: 'uuid-generator',
+      name: 'UUID Generator',
+      category: 'testing-tools',
+      categoryLabel: 'Testing Tools',
+      description: 'Generate unique UUIDs v4 for databases and applications.',
+      icon: '🆔',
+      url: '/tools/uuid-generator/',
+      keywords: 'uuid generator, generate uuid, unique identifier, uuid v4',
+      priority: 0.85,
+      status: 'not-started'
+    },
+    {
+      id: 'text-to-binary',
+      name: 'Text to Binary Converter',
+      category: 'encoding-tools',
+      categoryLabel: 'Encoding Tools',
+      description: 'Convert text to binary representation and vice versa.',
+      icon: '01',
+      url: '/tools/text-to-binary/',
+      keywords: 'text to binary, binary converter, text encoding',
+      priority: 0.80,
+      status: 'not-started'
+    },
+    {
+      id: 'image-to-base64',
+      name: 'Image to Base64',
+      category: 'encoding-tools',
+      categoryLabel: 'Encoding Tools',
+      description: 'Convert images to Base64 for embedding in HTML/CSS.',
+      icon: '🖼️',
+      url: '/tools/image-to-base64/',
+      keywords: 'image to base64, image encoding, base64 image',
+      priority: 0.82,
+      status: 'not-started'
+    },
+    {
+      id: 'regex-tester',
+      name: 'Regex Tester',
+      category: 'testing-tools',
+      categoryLabel: 'Testing Tools',
+      description: 'Test and validate regular expressions with real-time matching.',
+      icon: '🔍',
+      url: '/tools/regex-tester/',
+      keywords: 'regex tester, regular expression, regex validator, pattern matching',
+      priority: 0.83,
+      status: 'not-started'
+    },
+    {
+      id: 'xml-to-json',
+      name: 'XML to JSON',
+      category: 'data-converters',
+      categoryLabel: 'Data Format Converters',
+      description: 'Convert XML data to JSON format for modern API usage.',
+      icon: '♻️',
+      url: '/tools/xml-to-json/',
+      keywords: 'xml to json, xml converter, data conversion',
+      priority: 0.82,
+      status: 'not-started'
+    },
+    {
+      id: 'json-to-xml',
+      name: 'JSON to XML',
+      category: 'data-converters',
+      categoryLabel: 'Data Format Converters',
+      description: 'Convert JSON data to XML format for API integration and data exchange.',
+      icon: '🔄',
+      url: '/tools/json-to-xml/',
+      keywords: 'json to xml, json converter, xml format',
+      priority: 0.82,
+      status: 'not-started'
+    },
+    {
+      id: 'string-case-converter',
+      name: 'String Case Converter',
+      category: 'text-formatting',
+      categoryLabel: 'Text Formatting Tools',
+      description: 'Convert strings between camelCase, snake_case, PascalCase, kebab-case, and more. Perfect for programming and APIs.',
+      icon: '🔤',
+      url: '/tools/string-case-converter/',
+      keywords: 'case converter, camelCase, snake_case, PascalCase, kebab-case, string formatter',
+      priority: 0.84,
       status: 'complete'
     }
   ],

@@ -50,7 +50,8 @@
                         <li><a href="#data-tools">Data Tools</a></li>
                         <li><a href="#developer-tools">Developer Tools</a></li>
                         <li><a href="#security-tools">Security Tools</a></li>
-                        <li><a href="#random-tools">Random Tools</a></li>
+                        <li><a href="#utilities">Utilities</a></li>
+                        <li><a href="#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -187,6 +188,17 @@
                         <div class="tool-icon">🔁</div>
                         <h4>Duplicate Line Remover</h4>
                         <p>Remove duplicate lines from text while preserving order.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- String Case Converter -->
+                    <a href="/tools/string-case-converter/" class="tool-card">
+                        <div class="tool-icon">🔤</div>
+                        <h4>String Case Converter</h4>
+                        <p>Convert between camelCase, snake_case, PascalCase, kebab-case, and more.</p>
                         <div class="tool-meta">
                             <span class="tool-category">Text</span>
                             <span class="tool-free">FREE</span>
@@ -439,25 +451,14 @@
                             <span class="tool-free">FREE</span>
                         </div>
                     </a>
-
-                    <!-- Color Picker -->
-                    <a href="/tools/color-picker/" class="tool-card">
-                        <div class="tool-icon">🎨</div>
-                        <h4>Color Picker</h4>
-                        <p>Pick colors and convert between HEX, RGB, HSL formats. Generate color palettes.</p>
-                        <div class="tool-meta">
-                            <span class="tool-category">Developer</span>
-                            <span class="tool-free">FREE</span>
-                        </div>
-                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- SECURITY & UTILITY TOOLS -->
+        <!-- SECURITY TOOLS -->
         <section class="tools-section" id="security-tools">
             <div class="container">
-                <h3>Security & Utility Tools</h3>
+                <h3>Security Tools</h3>
                 <div class="tools-grid">
                     <!-- Password Generator -->
                     <a href="/tools/password-generator/" class="tool-card">
@@ -491,7 +492,15 @@
                             <span class="tool-free">FREE</span>
                         </div>
                     </a>
+                </div>
+            </div>
+        </section>
 
+        <!-- UTILITIES TOOLS -->
+        <section class="tools-section" id="utilities">
+            <div class="container">
+                <h3>Utilities</h3>
+                <div class="tools-grid">
                     <!-- QR Code Generator -->
                     <a href="/tools/qr-code-generator/" class="tool-card">
                         <div class="tool-icon">📱</div>
@@ -546,14 +555,25 @@
                             <span class="tool-free">FREE</span>
                         </div>
                     </a>
+
+                    <!-- Color Picker -->
+                    <a href="/tools/color-picker/" class="tool-card">
+                        <div class="tool-icon">🎨</div>
+                        <h4>Color Picker</h4>
+                        <p>Pick colors and convert between HEX, RGB, HSL formats. Generate color palettes.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Utility</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- RANDOM & GAME TOOLS -->
-        <section class="tools-section" id="random-tools">
+        <!-- GAMES & GENERATORS -->
+        <section class="tools-section" id="games">
             <div class="container">
-                <h3>Random & Game Tools</h3>
+                <h3>Games & Generators</h3>
                 <div class="tools-grid">
                     <!-- Random Charades Generator -->
                     <a href="/tools/charades-random/" class="tool-card">
@@ -623,7 +643,8 @@
                         <li><a href="#data-tools">Data Tools</a></li>
                         <li><a href="#developer-tools">Developer Tools</a></li>
                         <li><a href="#security-tools">Security Tools</a></li>
-                        <li><a href="#random-tools">Random Tools</a></li>
+                        <li><a href="#utilities">Utilities</a></li>
+                        <li><a href="#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -671,6 +692,10 @@
     </script>
 
     <script src="/assets/js/utils.js"></script>
+    
+    <!-- Tools Registry - Must load before homepage.js -->
+    <script src="/tools-registry.js"></script>
+    
     <script src="/assets/js/homepage.js"></script>
 </body>
 </html>

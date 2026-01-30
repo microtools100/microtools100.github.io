@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadBtn = document.getElementById('downloadBtn');
     const inputCount = document.getElementById('inputCount');
     const outputCount = document.getElementById('outputCount');
+    const keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => autoCopy());
 
     // Update character count for input
     inputData.addEventListener('input', function() {
@@ -36,12 +37,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Download button
     downloadBtn.addEventListener('click', downloadText);
 
-    // Real-time formatting as user types
-    inputData.addEventListener('input', formatData);
+    // Real-time formatting as user types with debounce
+    inputData.addEventListener('input', debouncedFormatData);
     quoteType.addEventListener('change', formatData);
     delimiter.addEventListener('change', formatData);
     trimWhitespace.addEventListener('change', formatData);
     removeEmpty.addEventListener('change', formatData);
+
+    function debouncedFormatData() {
+        formatData();
+        keystrokeDelay.schedule();
+    }
+
+    function autoCopy() {
+        const result = outputData.value;
+        if (result) {
+            navigator.clipboard.writeText(result).then(() => {
+                SharedUtilities.showNotification('Copied to clipboard!', 'success');
+            });
+        }
+    }
 
     function formatData() {
         let lines = inputData.value.split('\n');
@@ -69,17 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         outputData.value = result;
         outputCount.textContent = result.length;
-        
-        // Auto-copy to clipboard with notification
-        if (result && inputData.value.trim()) {
-            navigator.clipboard.writeText(result).then(() => {
-                if (window.MicroTools?.utils?.showNotification) {
-                    window.MicroTools.utils.showNotification('Copied to clipboard!', 'success');
-                }
-            }).catch(err => {
-                console.log('Clipboard write failed:', err);
-            });
-        }
     }
 
     function getQuote() {

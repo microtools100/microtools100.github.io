@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="tool.css">
 </head>
 <body>
-        <header class="site-header">
+    <header class="site-header">
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">
@@ -44,76 +44,73 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
-                        <div class="tool-content-columns">
-                            <!-- Input Column -->
-                            <section class="tool-section input-column">
-                                <div class="input-group">
-                                    <label for="regexInput">Regular Expression:</label>
-                                    <div class="regex-input-wrapper">
-                                        <span class="regex-prefix">/</span>
-                                        <input type="text" id="regexInput" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
-                                        <span class="regex-prefix">/</span>
-                                        <select id="regexFlags">
-                                            <option value="">No flags</option>
-                                            <option value="g">g - Global</option>
-                                            <option value="i">i - Case insensitive</option>
-                                            <option value="m">m - Multiline</option>
-                                            <option value="gi">gi - Global + Case insensitive</option>
-                                            <option value="gm">gm - Global + Multiline</option>
-                                            <option value="im">im - Case insensitive + Multiline</option>
-                                            <option value="gim">gim - All flags</option>
-                                        </select>
-                                    </div>
-                                    <div class="hint">Enter your regex pattern and select flags</div>
+                        <section class="tool-section">
+                            <div class="input-section">
+                                <label for="regexInput">Regular Expression:</label>
+                                <div class="regex-input-wrapper">
+                                    <span class="regex-prefix">/</span>
+                                    <input type="text" id="regexInput" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                                    <span class="regex-prefix">/</span>
+                                    <select id="regexFlags">
+                                        <option value="">No flags</option>
+                                        <option value="g">g - Global</option>
+                                        <option value="i">i - Case insensitive</option>
+                                        <option value="m">m - Multiline</option>
+                                        <option value="gi">gi - Global + Case insensitive</option>
+                                        <option value="gm">gm - Global + Multiline</option>
+                                        <option value="im">im - Case insensitive + Multiline</option>
+                                        <option value="gim">gim - All flags</option>
+                                    </select>
                                 </div>
+                            </div>
 
-                                <div class="input-group" style="margin-top: 1.5rem;">
-                                    <label for="testInput">Test Text:</label>
-                                    <div class="input-area">
-                                        <textarea 
-                                            id="testInput" 
-                                            placeholder="Enter text to test..."
-                                            rows="12"
-                                            spellcheck="false"></textarea>
-                                    </div>
-                                    <div class="hint">Enter text to test against your regex pattern</div>
-                                </div>
+                            <div class="input-section">
+                                <label for="testInput">Test Text:</label>
+                                <textarea 
+                                    id="testInput" 
+                                    class="input-textarea"
+                                    placeholder="Enter text to test..."
+                                    spellcheck="false"></textarea>
+                            </div>
 
-                                <div class="tool-actions">
-                                    <button class="action-btn primary" id="testBtn">
-                                        <span>Test</span>
-                                        <span>✨</span>
-                                    </button>
-                                    <button class="action-btn" id="clearBtn">
-                                        <span>Clear</span>
-                                        <span>×</span>
-                                    </button>
-                                </div>
-                            </section>
+                            <div class="tool-actions">
+                                <button class="action-btn primary" id="testBtn">
+                                    <span>Test</span>
+                                    <span>✨</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
 
-                            <!-- Output Column -->
-                            <section class="tool-section output-column">
-                                <div class="output-group">
-                                    <label for="resultOutput">Results:</label>
-                                    <div class="output-area">
-                                        <textarea 
-                                            id="resultOutput" 
-                                            placeholder="Matches will appear here..."
-                                            rows="12"
-                                            readonly
-                                            spellcheck="false"></textarea>
-                                    </div>
-                                    <div class="hint">Matching results will be displayed here</div>
-                                </div>
-
-                                <div class="tool-actions">
-                                    <button class="action-btn success" id="copyBtn">
-                                        <span>Copy</span>
-                                        <span>📋</span>
-                                    </button>
-                                </div>
-                            </section>
+                    <div class="results-section">
+                        <h3>Results:</h3>
+                        <div class="results-panel">
+                            <div id="highlightedText" class="highlighted-text"></div>
                         </div>
+                        <div class="stats">
+                            <span>Matches: <strong id="matchCount">0</strong></span>
+                        </div>
+                        <div class="tool-actions">
+                            <button class="action-btn success" id="copyBtn">
+                                <span>Copy</span>
+                                <span>📋</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="instructions">
+                        <h4>Common Regex Patterns:</h4>
+                        <ul>
+                            <li><code>[a-z]+</code> - One or more lowercase letters</li>
+                            <li><code>\d{3}-\d{3}-\d{4}</code> - Phone number format</li>
+                            <li><code>\S+@\S+\.\S+</code> - Email pattern</li>
+                            <li><code>^[A-Z]</code> - Starts with uppercase letter</li>
+                            <li><code>\b\w{4}\b</code> - Exactly 4-letter words</li>
+                        </ul>
                     </div>
 
                     <div class="use-cases">
@@ -142,40 +139,27 @@
                         </div>
                     </div>
                 </div>
+
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>About This Tool</h3>
+                        <p>The Regex Tester helps you validate regular expressions with real-time matching. Enter a pattern and test text to see all matches highlighted instantly. Supports all standard regex flags.</p>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Tips</h3>
+                        <ul>
+                            <li>Patterns are tested in real-time as you type</li>
+                            <li>Use the flags dropdown to modify pattern behavior</li>
+                            <li>Matched text is highlighted in the results</li>
+                            <li>Copy results for use in your code</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
         </div>
     </main>
 
-            <div class="panel-full">
-                <label>Results:</label>
-                <div class="results-panel">
-                    <div id="highlightedText" class="highlighted-text"></div>
-                </div>
-                <div class="stats">
-                    <span>Matches: <strong id="matchCount">0</strong></span>
-                    <button class="tool-btn copy-btn" id="copyBtn">📋 Copy Results</button>
-                </div>
-            </div>
-
-            <div class="info-box">
-                <h4>📖 Common Regex Patterns:</h4>
-                <ul>
-                    <li><code>[a-z]+</code> - One or more lowercase letters</li>
-                    <li><code>\d{3}-\d{3}-\d{4}</code> - Phone number format</li>
-                    <li><code>\S+@\S+\.\S+</code> - Email pattern</li>
-                    <li><code>^[A-Z]</code> - Starts with uppercase letter</li>
-                    <li><code>\b\w{4}\b</code> - Exactly 4-letter words</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script src="/assets/js/shared-utilities.js"></script>
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="tool.js"></script>
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
@@ -218,6 +202,12 @@
         </div>
     </footer>
 
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
 </body>
 </html>
 

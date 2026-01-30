@@ -1,7 +1,19 @@
 // Homepage specific functionality
 class HomepageManager {
     constructor() {
-        this.tools = [
+        // Get tools dynamically from TOOLS_REGISTRY if available, otherwise use fallback
+        if (typeof TOOLS_REGISTRY !== 'undefined' && TOOLS_REGISTRY.phase1 && TOOLS_REGISTRY.phase2) {
+            this.allTools = [...TOOLS_REGISTRY.phase1, ...TOOLS_REGISTRY.phase2];
+        } else {
+            // Fallback to hardcoded list if registry not loaded
+            this.allTools = this.getFallbackTools();
+        }
+
+        this.init();
+    }
+
+    getFallbackTools() {
+        return [
             // Text Case Tools
             { id: 'text-uppercase', name: 'Text Uppercase Converter', category: 'text', url: '/tools/text-uppercase/' },
             { id: 'text-lowercase', name: 'Text Lowercase Converter', category: 'text', url: '/tools/text-lowercase/' },
@@ -12,6 +24,7 @@ class HomepageManager {
             { id: 'remove-extra-spaces', name: 'Remove Extra Spaces', category: 'text', url: '/tools/remove-extra-spaces/' },
             { id: 'text-compare-diff', name: 'Text Compare & Diff', category: 'text', url: '/tools/text-compare-diff/' },
             { id: 'duplicate-line-remover', name: 'Duplicate Line Remover', category: 'text', url: '/tools/duplicate-line-remover/' },
+            { id: 'string-case-converter', name: 'String Case Converter', category: 'text', url: '/tools/string-case-converter/' },
             
             // Text Analysis Tools
             { id: 'word-character-counter', name: 'Word & Character Counter', category: 'text', url: '/tools/word-character-counter/' },
@@ -61,15 +74,26 @@ class HomepageManager {
             { id: 'decision-maker', name: 'Decision Maker', category: 'games', url: '/tools/decision-maker/' },
             { id: 'countdown-timer', name: 'Countdown Timer', category: 'games', url: '/tools/countdown-timer/' }
         ];
+    }
 
-        this.categories = {
+    // Create searchable tools list from allTools
+    get tools() {
+        return this.allTools.map(tool => ({
+            id: tool.id,
+            name: tool.name,
+            url: tool.url,
+            keywords: tool.keywords || '',
+            description: tool.description || ''
+        }));
+    }
+
+    get categories() {
+        return {
             'text': 'Text Tools',
             'data': 'Data Tools',
             'games': 'Game Tools',
             'security': 'Security Tools'
         };
-
-        this.init();
     }
 
     init() {

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadBtn = document.getElementById('downloadBtn');
     const inputLabel = document.getElementById('inputLabel');
     const outputLabel = document.getElementById('outputLabel');
+    const keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => autoCopy());
 
     // Update button text and labels when mode changes
     encodeMode.addEventListener('change', updateMode);
@@ -31,10 +32,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Download button
     downloadBtn.addEventListener('click', downloadText);
 
-    // Real-time encoding/decoding on input
-    inputURL.addEventListener('input', process);
+    // Real-time encoding/decoding on input with debounce
+    inputURL.addEventListener('input', debouncedProcess);
     encodeMode.addEventListener('change', process);
     decodeMode.addEventListener('change', process);
+
+    function debouncedProcess() {
+        process();
+        keystrokeDelay.schedule();
+    }
 
     function updateMode() {
         const isEncode = encodeMode.checked;
@@ -58,19 +64,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 result = decodeURIComponent(input);
             }
             outputURL.value = result;
-            
-            // Auto-copy to clipboard with notification
-            if (result) {
-                navigator.clipboard.writeText(result).then(() => {
-                    if (window.MicroTools?.utils?.showNotification) {
-                        window.MicroTools.utils.showNotification('Copied to clipboard!', 'success');
-                    }
-                }).catch(err => {
-                    console.log('Clipboard write failed:', err);
-                });
-            }
         } catch (error) {
             outputURL.value = 'Error: ' + error.message;
+        }
+    }
+
+    function autoCopy() {
+        const result = outputURL.value;
+        if (result && !result.startsWith('Error:')) {
+            navigator.clipboard.writeText(result).then(() => {
+                SharedUtilities.showNotification('Copied to clipboard!', 'success');
+            });
         }
     }
 

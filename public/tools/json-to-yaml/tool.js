@@ -4,8 +4,8 @@ class JSONToYAMLConverter {
         this.yamlOutput = document.getElementById('yamlOutput');
         this.convertBtn = document.getElementById('convertBtn');
         this.copyBtn = document.getElementById('copyBtn');
-        this.swapBtn = document.getElementById('swapBtn');
         this.clearBtn = document.getElementById('clearBtn');
+        this.downloadBtn = document.getElementById('downloadBtn');
 
         this.init();
     }
@@ -13,8 +13,10 @@ class JSONToYAMLConverter {
     init() {
         this.convertBtn.addEventListener('click', () => this.convert());
         this.copyBtn.addEventListener('click', () => this.copy());
-        this.swapBtn.addEventListener('click', () => this.swap());
         this.clearBtn.addEventListener('click', () => this.clear());
+        if (this.downloadBtn) {
+            this.downloadBtn.addEventListener('click', () => this.download());
+        }
         this.jsonInput.addEventListener('input', () => this.autoConvert());
     }
 
@@ -96,10 +98,28 @@ class JSONToYAMLConverter {
     }
 
     clear() {
-        SharedUtilities.clearElements(
-            { inputData: this.jsonInput, outputData: this.yamlOutput },
-            { message: 'Cleared!' }
-        );
+        this.jsonInput.value = '';
+        this.yamlOutput.value = '';
+        SharedUtilities.showNotification('Cleared!', 'success');
+    }
+
+    download() {
+        const yaml = this.yamlOutput.value;
+        if (!yaml) {
+            SharedUtilities.showNotification('Nothing to download', 'warning');
+            return;
+        }
+
+        const blob = new Blob([yaml], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'data.yaml';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        SharedUtilities.showNotification('File downloaded', 'success');
     }
 }
 

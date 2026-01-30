@@ -293,6 +293,61 @@ textarea {
     color: var(--text-light);
 }
 
+/* Content Pages (Legal, etc.) */
+.content-page {
+    flex: 1;
+    padding: 3rem 0;
+}
+
+.content-page h1 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.content-page h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.content-page section {
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.content-page p {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.content-page ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.content-page ul li {
+    margin-bottom: 0.5rem;
+}
+
+.content-page a {
+    color: var(--primary-color);
+    text-decoration: none;
+    border-bottom: 1px solid var(--primary-color);
+    transition: var(--transition);
+}
+
+.content-page a:hover {
+    color: var(--primary-dark);
+    border-bottom-color: var(--primary-dark);
+}
+
+.content-page small {
+    color: var(--text-light);
+    font-size: 0.875rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     h1 { font-size: 2rem; }

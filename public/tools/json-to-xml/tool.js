@@ -31,7 +31,7 @@ class JSONToXMLConverter {
 
             const parsed = JSON.parse(json);
             const xml = this.jsonToXML(parsed);
-            this.xmlOutput.value = '<?xml version="1.0" encoding="UTF-8"?>\n' + xml;
+            this.xmlOutput.value = xml;
             window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
         } catch (error) {
             this.xmlOutput.value = `Error: ${error.message}`;
@@ -59,17 +59,47 @@ class JSONToXMLConverter {
                     if (Array.isArray(value)) {
                         value.forEach(item => {
                             if (typeof item === 'object' && item !== null) {
-                                lines.push(`${indent}<${tagName}>`);
-                                lines.push(this.jsonToXML(item, indent + '  '));
-                                lines.push(`${indent}</${tagName}>`);
+                                const { attributes, content, text } = this.extractAttributesAndText(item);
+                                const openTag = `${indent}<${tagName}${attributes}>`;
+                                
+                                if (text && Object.keys(content).length === 0) {
+                                    // Only text content
+                                    lines.push(`${openTag}${this.escapeXML(text)}</${tagName}>`);
+                                } else if (Object.keys(content).length > 0) {
+                                    // Has child elements
+                                    lines.push(openTag);
+                                    if (text) {
+                                        lines.push(`${indent}  ${this.escapeXML(text)}`);
+                                    }
+                                    lines.push(this.jsonToXML(content, indent + '  '));
+                                    lines.push(`${indent}</${tagName}>`);
+                                } else {
+                                    // No content
+                                    lines.push(`${openTag}</${tagName}>`);
+                                }
                             } else {
                                 lines.push(`${indent}<${tagName}>${this.escapeXML(String(item))}</${tagName}>`);
                             }
                         });
                     } else {
-                        lines.push(`${indent}<${tagName}>`);
-                        lines.push(this.jsonToXML(value, indent + '  '));
-                        lines.push(`${indent}</${tagName}>`);
+                        const { attributes, content, text } = this.extractAttributesAndText(value);
+                        const openTag = `${indent}<${tagName}${attributes}>`;
+                        
+                        if (text && Object.keys(content).length === 0) {
+                            // Only text content
+                            lines.push(`${openTag}${this.escapeXML(text)}</${tagName}>`);
+                        } else if (Object.keys(content).length > 0) {
+                            // Has child elements
+                            lines.push(openTag);
+                            if (text) {
+                                lines.push(`${indent}  ${this.escapeXML(text)}`);
+                            }
+                            lines.push(this.jsonToXML(content, indent + '  '));
+                            lines.push(`${indent}</${tagName}>`);
+                        } else {
+                            // No content
+                            lines.push(`${openTag}</${tagName}>`);
+                        }
                     }
                 } else {
                     lines.push(`${indent}<${tagName}>${this.escapeXML(String(value))}</${tagName}>`);
@@ -78,6 +108,35 @@ class JSONToXMLConverter {
         }
 
         return lines.join('\n');
+    }
+
+    extractAttributesAndText(obj) {
+        const attributes = [];
+        const content = {};
+        let text = '';
+
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                if (key.startsWith('-')) {
+                    // This is an attribute
+                    const attrName = key.substring(1);
+                    const attrValue = this.escapeXML(String(obj[key]));
+                    attributes.push(` ${attrName}="${attrValue}"`);
+                } else if (key === '#text') {
+                    // This is text content
+                    text = obj[key];
+                } else {
+                    // This is a child element
+                    content[key] = obj[key];
+                }
+            }
+        }
+
+        return {
+            attributes: attributes.join(''),
+            content,
+            text
+        };
     }
 
     sanitizeTagName(name) {

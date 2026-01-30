@@ -44,17 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
             outputJSON.textContent = formatted;
 
             showValid('JSON is valid ✓');
-            
-            // Auto-copy to clipboard with notification
-            if (formatted) {
-                navigator.clipboard.writeText(formatted).then(() => {
-                    if (window.MicroTools?.utils?.showNotification) {
-                        window.MicroTools.utils.showNotification('Copied to clipboard!', 'success');
-                    }
-                }).catch(err => {
-                    console.log('Clipboard write failed:', err);
-                });
-            }
         } catch (error) {
             showError('Invalid JSON: ' + error.message);
             outputJSON.textContent = '';

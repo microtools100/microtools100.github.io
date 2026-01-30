@@ -9,14 +9,20 @@ class DuplicateLineRemover {
         this.sortLines = document.getElementById('sortLines');
         this.statsContainer = document.querySelector('.stats-container');
         
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => this.autoCopy());
         this.init();
     }
 
     init() {
-        this.inputText.addEventListener('input', () => this.removeDuplicates());
-        this.caseSensitive.addEventListener('change', () => this.removeDuplicates());
-        this.trimLines.addEventListener('change', () => this.removeDuplicates());
-        this.sortLines.addEventListener('change', () => this.removeDuplicates());
+        this.inputText.addEventListener('input', () => this.debouncedRemoveDuplicates());
+        this.caseSensitive.addEventListener('change', () => this.debouncedRemoveDuplicates());
+        this.trimLines.addEventListener('change', () => this.debouncedRemoveDuplicates());
+        this.sortLines.addEventListener('change', () => this.debouncedRemoveDuplicates());
+    }
+
+    debouncedRemoveDuplicates() {
+        this.removeDuplicates();
+        this.keystrokeDelay.schedule();
     }
 
     removeDuplicates() {
@@ -61,14 +67,18 @@ class DuplicateLineRemover {
         const result = uniqueLines.join('\n');
         this.outputText.value = result;
 
-        // Auto-copy and notify
-        navigator.clipboard.writeText(result).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        });
-
         // Display stats
         const removedCount = originalCount - uniqueLines.length;
         this.displayStats(removedCount, uniqueLines.length);
+    }
+
+    autoCopy() {
+        const result = this.outputText.value;
+        if (result) {
+            navigator.clipboard.writeText(result).then(() => {
+                window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
+            });
+        }
     }
 
     displayStats(removedCount, uniqueCount) {
