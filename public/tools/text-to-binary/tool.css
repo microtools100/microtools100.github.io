@@ -118,3 +118,35 @@
         gap: 1rem;
     }
 }
+
+/* Options alignment */
+.options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.25rem 0;
+}
+
+.option-label input[type="checkbox"] {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+.option-label span {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.4;
+}

@@ -129,37 +129,42 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="instructions">
+                        <h4>Binary Conversion Guide:</h4>
+                        <ul>
+                            <li><strong>ASCII:</strong> Each character is 8 bits (1 byte)</li>
+                            <li><strong>Binary:</strong> Base-2 number system (only 0s and 1s)</li>
+                            <li><strong>Example:</strong> 'A' = 01000001 (decimal 65)</li>
+                            <li><strong>Space:</strong> 00100000 (decimal 32)</li>
+                            <li><strong>Max ASCII:</strong> 127 for standard characters</li>
+                        </ul>
+                    </div>
                 </div>
+
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>About This Tool</h3>
+                        <p>The Text to Binary Converter transforms text into its binary representation using ASCII encoding. Each character is converted to an 8-bit binary number, useful for understanding data encoding and computer fundamentals.</p>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Options</h3>
+                        <div class="options-group">
+                            <label class="option-label">
+                                <input type="checkbox" id="separatorToggle" checked>
+                                <span>Separate bytes with spaces</span>
+                            </label>
+                            <label class="option-label">
+                                <input type="checkbox" id="asciiToggle">
+                                <span>Show ASCII codes</span>
+                            </label>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </div>
     </main>
-                <button class="tool-btn" id="copyBtn">📋 Copy Binary</button>
-                <button class="tool-btn" id="clearBtn">🗑️ Clear</button>
-            </div>
-
-            <div class="options">
-                <label>
-                    <input type="checkbox" id="separatorToggle" checked>
-                    Separate bytes with spaces
-                </label>
-                <label>
-                    <input type="checkbox" id="asciiToggle">
-                    Show ASCII codes
-                </label>
-            </div>
-
-            <div class="info-box">
-                <h4>📚 Binary Conversion:</h4>
-                <ul>
-                    <li><strong>ASCII:</strong> Each character is 8 bits (1 byte)</li>
-                    <li><strong>Binary:</strong> Base-2 number system (only 0s and 1s)</li>
-                    <li><strong>Example:</strong> 'A' = 01000001 (decimal 65)</li>
-                    <li><strong>Space:</strong> 00100000 (decimal 32)</li>
-                    <li><strong>Max ASCII:</strong> 127 for standard characters</li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
@@ -167,6 +172,7 @@
     <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/utils.js"></script>
     <script src="tool.js"></script>
+
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">

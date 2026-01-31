@@ -1,4 +1,4 @@
-// Decision Maker Tool
+// Decision Maker Wheel Tool - Complete Rewrite
 
 class DecisionMaker {
     constructor() {
@@ -7,10 +7,15 @@ class DecisionMaker {
         this.spinBtn = document.getElementById('spinBtn');
         this.resultDisplay = document.querySelector('.result-display');
         this.wheel = document.querySelector('.wheel');
+        this.pointer = document.querySelector('.pointer');
         this.resultText = document.querySelector('.result-text');
         
         this.isSpinning = false;
+        this.currentRotation = 0; // Track total rotation for consistency
+        this.segmentCount = 3; // Default
+        
         this.init();
+        this.initializeWheel();
     }
 
     init() {
@@ -18,14 +23,95 @@ class DecisionMaker {
         this.decisionType.addEventListener('change', () => this.updateUI());
     }
 
+    initializeWheel() {
+        this.createWheel(['YES', 'NO', 'MAYBE'], 'yes-no');
+    }
+
     updateUI() {
         const type = this.decisionType.value;
-        
         if (type === 'yes-no') {
             this.inputOptions.style.display = 'none';
+            this.createWheel(['YES', 'NO', 'MAYBE'], 'yes-no');
+        } else if (type === 'coin') {
+            this.inputOptions.style.display = 'none';
+            this.createWheel(['HEADS', 'TAILS'], 'coin');
+        } else if (type === 'dice') {
+            this.inputOptions.style.display = 'none';
+            this.createWheel(Array.from({ length: 6 }, (_, i) => (i + 1).toString()), 'dice');
         } else if (type === 'custom') {
             this.inputOptions.style.display = 'block';
+            // Show empty wheel for custom - user will update it when they enter options
+            this.createWheel(['Add Options...'], 'custom');
+            
+            // Add event listener to input textarea to update wheel as user types
+            const textarea = document.getElementById('inputText');
+            if (textarea && !textarea.hasAttribute('data-listener-attached')) {
+                textarea.addEventListener('input', () => this.updateCustomWheel());
+                textarea.setAttribute('data-listener-attached', 'true');
+            }
         }
+    }
+
+    updateCustomWheel() {
+        const textarea = document.getElementById('inputText');
+        const text = textarea ? textarea.value.trim() : '';
+        
+        if (!text) {
+            // No options yet - show placeholder
+            this.createWheel(['Add Options...'], 'custom');
+            return;
+        }
+        
+        const options = text.split('\n')
+            .map(o => o.trim())
+            .filter(o => o.length > 0);
+        
+        if (options.length >= 2) {
+            // Valid custom options - show the wheel
+            this.createWheel(options, 'custom');
+        } else if (options.length === 1) {
+            // Only one option - show it but indicate need for more
+            this.createWheel([...options, 'Need more...'], 'custom');
+        }
+    }
+
+    /**
+     * Determines which segment is under the pointer at a given rotation
+     * @param {number} rotationAngle - Total rotation in degrees
+     * @param {number} segmentCount - Number of segments on wheel
+     * @returns {number} - Segment index (0 to segmentCount-1)
+     * 
+     * KEY LOGIC:
+     * - Pointer is at CSS rotation 0° (top of wheel)
+     * - Segments are drawn starting at canvas angle -90° (which is CSS top)
+     * - Segment i spans from angle (i * segmentSize) to ((i+1) * segmentSize)
+     * - After rotating by X degrees, the segment at angle (-X) is under pointer
+     * - So we find which segment contains angle (-rotationAngle % 360)
+     * - Equivalently: (360 - rotationAngle) % 360 / segmentSize
+     */
+    getWinningSegment(rotationAngle, segmentCount) {
+        // Normalize rotation to 0-360 range
+        const normalizedRotation = ((rotationAngle % 360) + 360) % 360;
+        
+        // Segment size in degrees
+        const segmentSize = 360 / segmentCount;
+        
+        // Calculate which segment is under the pointer
+        // The pointer looks at position (360 - normalizedRotation) in the wheel's reference frame
+        const pointerPosition = (360 - normalizedRotation) % 360;
+        
+        // Find segment index
+        let segmentIndex = Math.floor(pointerPosition / segmentSize);
+        
+        // Safety check for edge cases
+        if (segmentIndex >= segmentCount) {
+            segmentIndex = segmentCount - 1;
+        }
+        if (segmentIndex < 0) {
+            segmentIndex = 0;
+        }
+        
+        return segmentIndex;
     }
 
     spin() {
@@ -34,6 +120,7 @@ class DecisionMaker {
         const type = this.decisionType.value;
         let options = [];
 
+        // Get options based on type
         if (type === 'yes-no') {
             options = ['YES', 'NO', 'MAYBE'];
         } else if (type === 'coin') {
@@ -41,7 +128,8 @@ class DecisionMaker {
         } else if (type === 'dice') {
             options = Array.from({ length: 6 }, (_, i) => (i + 1).toString());
         } else if (type === 'custom') {
-            const text = this.inputOptions.value.trim();
+            const textarea = document.getElementById('inputText');
+            const text = textarea ? textarea.value.trim() : '';
             if (!text) {
                 alert('Please enter options');
                 return;
@@ -59,16 +147,27 @@ class DecisionMaker {
         this.isSpinning = true;
         this.spinBtn.disabled = true;
         this.resultDisplay.style.display = 'none';
+        this.resultDisplay.style.opacity = '0';
+        this.pointer.classList.add('visible');
+        this.segmentCount = options.length;
+
+        // Create wheel before spinning
+        this.createWheel(options, type);
+
+        // Calculate spin
+        const spinDuration = 4000; // 4 seconds
+        const totalSpins = 5 + Math.random() * 5; // 5-10 full rotations
+        const finalStopAngle = Math.random() * 360; // Random angle where wheel stops
+        const totalRotation = (totalSpins * 360) + finalStopAngle;
+
+        // Determine winning segment BEFORE animation starts
+        const winningSegmentIndex = this.getWinningSegment(totalRotation, options.length);
+        const winningOption = options[winningSegmentIndex];
 
         // Animate the wheel
-        const rotations = 5 + Math.random() * 5; // 5-10 full rotations
-        const selectedIndex = Math.floor(Math.random() * options.length);
-        const finalRotation = rotations * 360 + (selectedIndex / options.length) * 360;
-
-        // Create wheel if needed
-        this.createWheel(options, type);
-        this.animateWheel(finalRotation, () => {
-            this.showResult(options[selectedIndex]);
+        this.animateWheel(totalRotation, spinDuration, () => {
+            this.showResult(winningOption);
+            this.currentRotation = totalRotation;
             this.isSpinning = false;
             this.spinBtn.disabled = false;
         });
@@ -76,7 +175,7 @@ class DecisionMaker {
 
     createWheel(options, type) {
         const colors = this.getColors(options.length);
-        const sliceAngle = 360 / options.length;
+        const segmentAngle = 360 / options.length;
         
         const canvas = document.createElement('canvas');
         canvas.width = 400;
@@ -87,12 +186,14 @@ class DecisionMaker {
         const centerY = 200;
         const radius = 180;
 
-        // Draw slices
+        // Draw each segment
         options.forEach((option, index) => {
-            const startAngle = (index * sliceAngle - 90) * Math.PI / 180;
-            const endAngle = ((index + 1) * sliceAngle - 90) * Math.PI / 180;
+            // Canvas angles: 0° = right, measured clockwise
+            // We want segment 0 to start at top (-90°), segment 1 after that, etc.
+            const startAngle = (index * segmentAngle - 90) * Math.PI / 180;
+            const endAngle = ((index + 1) * segmentAngle - 90) * Math.PI / 180;
 
-            // Draw slice
+            // Draw colored segment
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -103,14 +204,21 @@ class DecisionMaker {
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Draw text
+            // Draw text in center of segment
             const textAngle = (startAngle + endAngle) / 2;
             const textX = centerX + Math.cos(textAngle) * (radius * 0.6);
             const textY = centerY + Math.sin(textAngle) * (radius * 0.6);
 
             ctx.save();
             ctx.translate(textX, textY);
+            // Keep text upright by counter-rotating it
+            // The text should be perpendicular to the radius, not following the wheel
             ctx.rotate(textAngle + Math.PI / 2);
+            
+            // For longer text or when wheel rotates, ensure readability
+            // Rotate back to horizontal for better readability
+            ctx.rotate(-textAngle - Math.PI / 2);
+            
             ctx.fillStyle = '#fff';
             ctx.font = 'bold 14px Arial';
             ctx.textAlign = 'center';
@@ -123,37 +231,64 @@ class DecisionMaker {
         this.wheel.appendChild(canvas);
     }
 
-    animateWheel(rotation, callback) {
-        let currentRotation = 0;
-        const step = rotation / 30; // 30 frames
-        let frame = 0;
+    animateWheel(targetRotation, duration, callback) {
+        let startTime = null;
 
-        const animate = () => {
-            frame++;
-            currentRotation += step * (frame / 30);
+        const animate = (currentTime) => {
+            if (startTime === null) startTime = currentTime;
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Use a smooth easing that only goes forward, never backward
+            // This is a cubic ease-in-out that naturally decelerates at the end
+            let easeProgress;
+            if (progress < 0.5) {
+                // First half: ease in (accelerate)
+                easeProgress = 2 * progress * progress * progress;
+            } else {
+                // Second half: ease out (decelerate) 
+                const p = progress - 1;
+                easeProgress = 1 + 2 * p * p * p;
+            }
+
+            // Apply rotation - always increases monotonically forward
+            const currentRotation = targetRotation * easeProgress;
             this.wheel.style.transform = `rotate(${currentRotation}deg)`;
 
-            if (frame < 30) {
+            if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
+                // Ensure we end at exactly the target rotation
+                this.wheel.style.transform = `rotate(${targetRotation}deg)`;
                 callback();
             }
         };
 
-        animate();
+        requestAnimationFrame(animate);
     }
 
     showResult(result) {
         this.resultText.textContent = result;
         this.resultDisplay.style.display = 'block';
+        // Ensure it's fully visible with opacity
+        this.resultDisplay.style.opacity = '1';
+        this.resultDisplay.style.transition = 'opacity 0.5s ease';
+        // Force reflow to trigger animation
+        void this.resultDisplay.offsetHeight;
     }
 
     getColors(count) {
+        // Special colors for YES/NO/MAYBE
+        if (count === 3) {
+            return ['#10b981', '#ef4444', '#f59e0b']; // green, red, yellow
+        }
+
+        // Default color palette for other options
         const colors = [
             '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8',
             '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B88B', '#ABEBC6'
         ];
-        
+
         const result = [];
         for (let i = 0; i < count; i++) {
             result.push(colors[i % colors.length]);

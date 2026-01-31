@@ -15,6 +15,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const clearBtn = document.getElementById('clearBtn');
     const downloadBtn = document.getElementById('downloadBtn');
     const copyBtns = document.querySelectorAll('.copy-btn');
+    
+    // RGB Slider elements
+    const redSlider = document.getElementById('redSlider');
+    const greenSlider = document.getElementById('greenSlider');
+    const blueSlider = document.getElementById('blueSlider');
+    const redValue = document.getElementById('redValue');
+    const greenValue = document.getElementById('greenValue');
+    const blueValue = document.getElementById('blueValue');
+
+    // Eyedropper elements
+    const eyedropperBtn = document.getElementById('eyedropperBtn');
 
     let inputTimeout;
     let lastValidColor = '#3498db';
@@ -41,9 +52,17 @@ document.addEventListener('DOMContentLoaded', function() {
         inputTimeout = setTimeout(updateFromHslInput, 300);
     });
 
+    // RGB Slider event listeners
+    redSlider.addEventListener('input', updateFromSliders);
+    greenSlider.addEventListener('input', updateFromSliders);
+    blueSlider.addEventListener('input', updateFromSliders);
+
     bgColor.addEventListener('input', updateContrast);
     clearBtn.addEventListener('click', clearAll);
     downloadBtn.addEventListener('click', downloadPalette);
+    
+    // Eyedropper event listener
+    eyedropperBtn.addEventListener('click', activateEyedropper);
     
     copyBtns.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -92,6 +111,20 @@ document.addEventListener('DOMContentLoaded', function() {
             hslInput.value = `${hsl.h}, ${hsl.s}, ${hsl.l}`;
         }
 
+        // Update RGB sliders (don't cause loops)
+        if (document.activeElement !== redSlider) {
+            redSlider.value = rgb.r;
+            redValue.textContent = rgb.r;
+        }
+        if (document.activeElement !== greenSlider) {
+            greenSlider.value = rgb.g;
+            greenValue.textContent = rgb.g;
+        }
+        if (document.activeElement !== blueSlider) {
+            blueSlider.value = rgb.b;
+            blueValue.textContent = rgb.b;
+        }
+
         // Update shades and tints
         generateShadesTints(hex);
         
@@ -100,6 +133,53 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update contrast
         updateContrast();
+    }
+
+    function updateFromSliders() {
+        const r = parseInt(redSlider.value);
+        const g = parseInt(greenSlider.value);
+        const b = parseInt(blueSlider.value);
+
+        // Update display values
+        redValue.textContent = r;
+        greenValue.textContent = g;
+        blueValue.textContent = b;
+
+        // Convert to hex and update color input
+        const hex = rgbToHex(r, g, b);
+        if (colorInput.value !== hex) {
+            colorInput.value = hex;
+            updateColorValues();
+        }
+    }
+
+    async function activateEyedropper() {
+        // Check if EyeDropper API is supported
+        if (!window.EyeDropper) {
+            if (window.MicroTools?.utils?.showNotification) {
+                window.MicroTools.utils.showNotification('Eyedropper not supported in this browser', 'error');
+            }
+            return;
+        }
+
+        try {
+            const eyeDropper = new EyeDropper();
+            const result = await eyeDropper.open();
+            
+            // Convert the CSS color to hex
+            const hexColor = result.sRGBHex;
+            colorInput.value = hexColor;
+            updateColorValues();
+            
+            if (window.MicroTools?.utils?.showNotification) {
+                window.MicroTools.utils.showNotification(`Color picked: ${hexColor}`, 'success');
+            }
+        } catch (e) {
+            // User cancelled the eyedropper
+            if (e.name !== 'NotAllowedError') {
+                console.error('Eyedropper error:', e);
+            }
+        }
     }
 
     function updateFromHexInput() {

@@ -71,15 +71,22 @@ class JWTDecoder {
 
     decodeBase64(str) {
         try {
+            // Replace URL-safe Base64 characters
+            const base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+            
             // Add padding if necessary
-            const padding = 4 - (str.length % 4);
-            const padded = str + '='.repeat(padding);
+            const padding = (4 - (base64.length % 4)) % 4;
+            const padded = base64 + '='.repeat(padding);
+            
+            // Decode Base64
             const binary = atob(padded);
+            
+            // Convert to UTF-8
             return decodeURIComponent(Array.prototype.map.call(binary, (c) => {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
         } catch (e) {
-            throw new Error('Invalid Base64 encoding');
+            throw new Error('Invalid Base64 encoding: ' + e.message);
         }
     }
 }

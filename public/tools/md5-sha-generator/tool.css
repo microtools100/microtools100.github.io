@@ -2,6 +2,9 @@
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .tool-header {
@@ -23,12 +26,16 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .input-section {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .input-section label {
@@ -44,7 +51,9 @@
     border-radius: 8px;
     font-family: 'Courier New', monospace;
     font-size: 14px;
-    resize: vertical;
+    resize: none;
+    overflow-y: auto;
+    box-sizing: border-box;
     transition: border-color 0.3s;
 }
 
@@ -57,6 +66,8 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .hash-item {
@@ -64,6 +75,8 @@
     padding: 1.5rem;
     border-radius: 8px;
     border-left: 4px solid var(--primary-color);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .hash-item label {
@@ -84,8 +97,17 @@
     font-family: 'Courier New', monospace;
     font-size: 13px;
     word-break: break-all;
+    word-wrap: break-word;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: normal;
+    line-height: 1.4;
+    min-height: 80px;
 }
 
 .copy-small-btn {

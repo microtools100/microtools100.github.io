@@ -78,6 +78,39 @@
                                 <div class="color-picker-wrapper">
                                     <input type="color" id="colorInput" value="#3498db">
                                     <div class="color-preview" id="colorPreview"></div>
+                                    <button id="eyedropperBtn" class="eyedropper-btn" title="Click to pick a color from anywhere on your screen">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <!-- Eyedropper handle -->
+                                            <path d="M12 2l4 4-6 6m0 0l-4 4m10-14l2-2m-8 8l4-4"></path>
+                                            <!-- Dropper bulb -->
+                                            <circle cx="8" cy="16" r="2.5" fill="currentColor"></circle>
+                                            <!-- Dropper tip -->
+                                            <path d="M8 18.5v2.5m-1.5-2.5h3"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <p class="eyedropper-hint">💡 Tip: Click the eyedropper to pick any color from your screen</p>
+                            </div>
+
+                            <!-- RGB Sliders -->
+                            <div class="rgb-sliders-section">
+                                <h3>RGB Sliders</h3>
+                                <div class="rgb-slider-group">
+                                    <div class="slider-control">
+                                        <label for="redSlider">Red</label>
+                                        <input type="range" id="redSlider" min="0" max="255" value="52">
+                                        <span class="slider-value" id="redValue">52</span>
+                                    </div>
+                                    <div class="slider-control">
+                                        <label for="greenSlider">Green</label>
+                                        <input type="range" id="greenSlider" min="0" max="255" value="152">
+                                        <span class="slider-value" id="greenValue">152</span>
+                                    </div>
+                                    <div class="slider-control">
+                                        <label for="blueSlider">Blue</label>
+                                        <input type="range" id="blueSlider" min="0" max="255" value="219">
+                                        <span class="slider-value" id="blueValue">219</span>
+                                    </div>
                                 </div>
                             </div>
 

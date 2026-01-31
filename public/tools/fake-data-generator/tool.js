@@ -2,11 +2,11 @@
 
 class FakeDataGenerator {
     constructor() {
-        this.typeSelect = document.getElementById('typeSelect');
-        this.countInput = document.getElementById('countInput');
+        this.typeSelect = document.getElementById('dataTypeSelect');
+        this.countInput = document.getElementById('quantityInput');
         this.generateBtn = document.getElementById('generateBtn');
-        this.copyBtn = document.querySelector('.copy-btn');
-        this.output = document.getElementById('output');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.output = document.getElementById('outputText');
         this.errorMsg = document.querySelector('.error-msg');
 
         this.firstNames = ['John', 'Jane', 'Michael', 'Emily', 'David', 'Sarah', 'James', 'Jessica', 'Robert', 'Linda', 'William', 'Karen', 'Richard', 'Patricia', 'Joseph', 'Barbara', 'Thomas', 'Susan', 'Charles', 'Lisa'];
@@ -39,12 +39,14 @@ class FakeDataGenerator {
                 else if (type === 'emails') data.push(this.generateEmail());
                 else if (type === 'phones') data.push(this.generatePhone());
                 else if (type === 'addresses') data.push(this.generateAddress());
+                else if (type === 'usernames') data.push(this.generateUsername());
+                else if (type === 'dates') data.push(this.generateDate());
             }
 
             this.output.value = data.join('\n');
             this.clearError();
             window.MicroTools?.utils?.showNotification?.(`Generated ${count} ${type}!`, 'success');
-            this.copyToClipboard();
+            this.copyBtn.disabled = false;
         } catch (error) {
             this.showError('Error generating data');
         }
@@ -76,6 +78,20 @@ class FakeDataGenerator {
         const state = this.states[Math.floor(Math.random() * this.states.length)];
         const zip = Math.floor(Math.random() * 90000) + 10000;
         return `${num} ${street} St, ${city}, ${state} ${zip}`;
+    }
+
+    generateUsername() {
+        const first = this.firstNames[Math.floor(Math.random() * this.firstNames.length)].toLowerCase();
+        const last = this.lastNames[Math.floor(Math.random() * this.lastNames.length)].toLowerCase();
+        const num = Math.floor(Math.random() * 9999);
+        return `${first}_${last}${num}`;
+    }
+
+    generateDate() {
+        const year = Math.floor(Math.random() * 50) + 1970;
+        const month = Math.floor(Math.random() * 12) + 1;
+        const day = Math.floor(Math.random() * 28) + 1;
+        return `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
     }
 
     showError(message) {

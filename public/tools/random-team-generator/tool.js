@@ -5,7 +5,7 @@ class RandomTeamGenerator {
         this.inputText = document.getElementById('inputText');
         this.teamSizeInput = document.getElementById('teamSizeInput');
         this.teamCountInput = document.getElementById('teamCountInput');
-        this.teamAllocationMode = document.getElementById('teamAllocationMode');
+        this.allocationModeRadios = document.querySelectorAll('input[name="allocationMode"]');
         this.shuffleBtn = document.getElementById('shuffleBtn');
         this.outputContainer = document.querySelector('.teams-output');
         
@@ -14,8 +14,10 @@ class RandomTeamGenerator {
 
     init() {
         this.shuffleBtn.addEventListener('click', () => this.generateTeams());
-        this.teamAllocationMode.addEventListener('change', () => {
-            if (this.inputText.value) this.generateTeams();
+        this.allocationModeRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (this.inputText.value) this.generateTeams();
+            });
         });
     }
 
@@ -36,7 +38,7 @@ class RandomTeamGenerator {
             return;
         }
 
-        const mode = this.teamAllocationMode.value;
+        const mode = document.querySelector('input[name="allocationMode"]:checked').value;
         let teams;
 
         if (mode === 'by-size') {
