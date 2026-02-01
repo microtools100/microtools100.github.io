@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online JSON to CSV converter. Convert JSON arrays and objects to CSV format instantly. Perfect for data export.">
+    <meta name="keywords" content="JSON to CSV, JSON converter, CSV export, data converter, JSON parser, spreadsheet export">
+    <meta property="og:title" content="JSON to CSV Converter - Free Online Tool">
+    <meta property="og:description" content="Convert JSON data to CSV format instantly with customizable delimiters and headers.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>JSON to CSV Converter - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>JSON to CSV Converter</h1>
+                <p class="tool-description">
+                    Convert JSON arrays and objects to CSV format instantly. Perfect for exporting data to spreadsheets and data analysis tools.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="convertBtn">
+                                    <span>Convert</span>
+                                    <span>✨</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="jsonInput">JSON Input</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="jsonInput" 
+                                            placeholder='Paste JSON here&#10;&#10;Example:&#10;[&#10;  {"name": "John", "age": 30, "city": "New York"},&#10;  {"name": "Jane", "age": 25, "city": "Boston"}&#10;]'
+                                            rows="12"
+                                            spellcheck="false"
+                                            autofocus></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Paste valid JSON array of objects. Maximum 50,000 characters.
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="csvOutput">CSV Output</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="csvOutput" 
+                                            placeholder='Result will appear here...&#10;&#10;Example output:&#10;name,age,city&#10;John,30,New York&#10;Jane,25,Boston'
+                                            rows="12"
+                                            readonly
+                                            spellcheck="false"></textarea>
+                                    </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success copy-btn" id="copyBtn">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📊</span>
+                                    <h5>Data Export</h5>
+                                    <p>Export API data to spreadsheets and databases</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📈</span>
+                                    <h5>Analytics</h5>
+                                    <p>Import data into Excel or Google Sheets for analysis</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">💾</span>
+                                    <h5>Data Migration</h5>
+                                    <p>Convert structured data between formats</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📋</span>
+                                    <h5>Report Generation</h5>
+                                    <p>Generate CSV reports from JSON data sources</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="how-to-use">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li><strong>Input:</strong> Paste your JSON array of objects into the input field</li>
+                                <li><strong>Convert:</strong> Click the Convert button to transform JSON to CSV format</li>
+                                <li><strong>Output:</strong> The CSV data appears in the output field with comma delimiter</li>
+                                <li><strong>Export:</strong> Copy the result or download as a file for use in spreadsheets</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="how-it-works">
+                            <h3>How It Works</h3>
+                            <ul>
+                                <li><strong>Array of Objects:</strong> The ideal format - each object becomes a row, and keys become column headers</li>
+                                <li><strong>Single Object:</strong> Will be converted to a single-row CSV with property names as headers</li>
+                                <li><strong>Delimiters:</strong> The tool uses comma as delimiter; you can customize in the output if needed</li>
+                                <li><strong>Quotes:</strong> Fields containing delimiters, quotes, or line breaks are automatically quoted</li>
+                                <li><strong>Nested Objects:</strong> Complex nested data is JSON-stringified for the CSV cell</li>
+                                <li><strong>Maximum Size:</strong> Up to 50,000 characters for optimal performance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/csv-to-json/">CSV to JSON Converter</a></li>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Conversion Tips</h4>
+                        <ul>
+                            <li>✓ Array of objects formats perfectly</li>
+                            <li>✓ All objects should have consistent keys</li>
+                            <li>✓ Validates JSON before conversion</li>
+                            <li>✓ Handles nested objects gracefully</li>
+                            <li>✓ Auto-quotes fields with delimiters</li>
+                            <li>✓ Supports data export to Excel/Sheets</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

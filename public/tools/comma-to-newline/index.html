@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tool to convert comma-separated values to newline-separated format instantly. No registration needed.">
+    <meta name="keywords" content="comma to newline, convert comma, newline-separated, data conversion, text formatter">
+    <meta property="og:title" content="Comma to Newline Converter - Free Data Formatter">
+    <meta property="og:description" content="Convert comma-separated values to newline-separated list instantly. Perfect for data processing and formatting.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Comma to Newline Converter - Free Data Formatter | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Comma to Newline Converter",
+        "description": "Free online tool to convert comma-separated values to newline-separated format",
+        "url": "https://microtools.cc/tools/comma-to-newline/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <div class="tool-page">
+                <div class="tool-header">
+                    <h1>Comma to Newline Converter</h1>
+                    <p class="tool-description">Convert comma-separated values to newline-separated list instantly. Paste your data and get formatted results with customizable options.</p>
+                </div>
+
+                <div class="tool-layout">
+                    <div class="tool-main">
+                        <div class="tool-container">
+                            <!-- Options Section -->
+                            <div class="tool-options">
+                                <h3>Options</h3>
+                                <div class="options-group">
+                                    <label for="separator">Separator:</label>
+                                    <select id="separator">
+                                        <option value=",">Comma (,)</option>
+                                        <option value=";">Semicolon (;)</option>
+                                        <option value="|">Pipe (|)</option>
+                                        <option value=" ">Space</option>
+                                    </select>
+                                </div>
+                                <div class="options-group">
+                                    <label for="removeQuotes">
+                                        <input type="checkbox" id="removeQuotes" checked>
+                                        Remove surrounding quotes
+                                    </label>
+                                </div>
+                                <div class="options-group">
+                                    <label for="trimWhitespace">
+                                        <input type="checkbox" id="trimWhitespace" checked>
+                                        Trim whitespace
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Input/Output Section -->
+                            <div class="tool-section">
+                                <h2>Data Conversion</h2>
+                                <div class="tool-content-columns">
+                                    <div class="input-column">
+                                        <div class="input-area">
+                                            <label for="inputData">Comma-Separated Data:</label>
+                                            <textarea id="inputData" placeholder="Paste comma-separated values&#10;&#10;Example:&#10;Apple, Banana, Orange"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-column">
+                                        <div class="input-area">
+                                            <label for="outputData">Newline-Separated Output:</label>
+                                            <textarea id="outputData" placeholder="Output will appear here&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange" readonly></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tool-actions">
+                                    <button class="action-btn" id="clearBtn">Clear All ×</button>
+                                    <button class="action-btn success" id="copyBtn">Copy Output 📋</button>
+                                    <button class="action-btn success" id="downloadBtn">Download ⤓</button>
+                                </div>
+                            </div>
+
+                            <!-- Use Cases -->
+                            <div class="use-cases">
+                                <h3>Use Cases</h3>
+                                <div class="use-case-grid">
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">📋</span>
+                                        <h5>Data Import</h5>
+                                        <p>Convert data from comma-separated format to line-by-line</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">✂️</span>
+                                        <h5>List Processing</h5>
+                                        <p>Split comma-separated lists into individual lines</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">🧹</span>
+                                        <h5>Data Cleaning</h5>
+                                        <p>Remove quotes and whitespace while converting</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">🔄</span>
+                                        <h5>Format Conversion</h5>
+                                        <p>Convert between different delimiter formats</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="tool-sidebar">
+                        <div class="related-tools">
+                            <h4>Related Tools</h4>
+                            <ul>
+                                <li><a href="/tools/newline-to-comma/">Newline to Comma</a></li>
+                                <li><a href="/tools/excel-column-to-comma-list/">Excel to Comma</a></li>
+                                <li><a href="/tools/quote-comma-formatter/">Quote Formatter</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-tips">
+                            <h4>Quick Tips</h4>
+                            <ul>
+                                <li>Remove quotes option cleans up formatted data</li>
+                                <li>Trim whitespace automatically</li>
+                                <li>Perfect for CSV conversion</li>
+                                <li>Choose custom separators</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

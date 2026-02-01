@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online Base64 encoder and decoder. Easily encode and decode Base64 strings. Perfect for developers and data encoding.">
+    <meta name="keywords" content="base64 encoder, base64 decoder, encode base64, decode base64, base64 converter, text encoder">
+    <meta property="og:title" content="Base64 Encoder/Decoder - Free Online Tool">
+    <meta property="og:description" content="Encode text to Base64 and decode Base64 strings instantly. Simple and reliable.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>Base64 Encoder/Decoder - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Base64 Encoder/Decoder",
+        "description": "Free online tool to encode text to Base64 and decode Base64 strings",
+        "url": "https://micro-tools-43a.pages.dev/tools/base64-encoder-decoder/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Base64 Encoder/Decoder</h1>
+                <p class="tool-description">Encode text to Base64 and decode Base64 strings instantly. Perfect for developers and data encoding tasks.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Operation</h3>
+                            <div class="options-grid">
+                                <!-- Mode Selection -->
+                                <input type="radio" name="mode" value="encode" id="encodeMode" class="option-checkbox" checked>
+                                <label for="encodeMode" class="option-label">Encode to Base64</label>
+                                <input type="radio" name="mode" value="decode" id="decodeMode" class="option-checkbox">
+                                <label for="decodeMode" class="option-label">Decode from Base64</label>
+                            </div>
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="processBtn">
+                                    <span id="processBtnText">Encode</span>
+                                    <span>🔐</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                                <button class="action-btn" id="exampleBtn">
+                                    <span>Example</span>
+                                    <span>↻</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputText" id="inputLabel">Enter Text to Encode:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="inputText" 
+                                            placeholder="Paste text or Base64 to encode/decode...&#10;&#10;Example:&#10;Hello World!"
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Maximum 10,000 characters.
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputText" id="outputLabel">Encoded Result:</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputText" 
+                                            placeholder="Result will appear here...&#10;&#10;Example (encoded):&#10;SGVsbG8gV29ybGQh"
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success" id="copyBtn">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Use Cases Section -->
+                    <div class="use-cases">
+                        <h3>Use Cases</h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🔐</span>
+                                <h5>Data Encoding</h5>
+                                <p>Encode sensitive data for safe transmission</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">💾</span>
+                                <h5>File Embedding</h5>
+                                <p>Embed images and files in data URLs</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📧</span>
+                                <h5>Email Encoding</h5>
+                                <p>Encode data for email transmission</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🔗</span>
+                                <h5>URL Parameters</h5>
+                                <p>Safely encode parameters for URLs</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Select "Encode" to convert text to Base64 or "Decode" to convert Base64 back to text</li>
+                            <li>Paste your text or Base64 string into the input field</li>
+                            <li>The result is generated automatically as you type</li>
+                            <li>Copy the result or download it as a text file</li>
+                            <li>Use the "Example" button to see how the tool works</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>Encoding:</strong> Converts text into a string using 64 safe characters (A-Z, a-z, 0-9, +, /)</li>
+                            <li><strong>Decoding:</strong> Converts Base64 strings back to original text</li>
+                            <li><strong>Padding:</strong> "=" characters at the end are used for alignment</li>
+                            <li><strong>Use Case:</strong> Commonly used for transmitting binary data over text-based protocols</li>
+                            <li><strong>Size:</strong> Encoded text is approximately 33% larger than original</li>
+                            <li><strong>Real-time processing:</strong> Results are updated instantly as you type</li>
+                            <li><strong>Bidirectional:</strong> Easily switch between encode and decode modes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/html-escape-unescape/">HTML Escape/Unescape</a></li>
+                            <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Base64 Encoding Tips</h4>
+                        <ul>
+                            <li>Perfect for data URLs and embedding files</li>
+                            <li>Safe for URL and email transmission</li>
+                            <li>No data is sent to any server</li>
+                            <li>Works offline instantly</li>
+                            <li>Click "Example" to see a live demonstration</li>
+                            <li>Maximum 10,000 characters for each operation</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

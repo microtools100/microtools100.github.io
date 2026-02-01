@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online CSV to JSON converter. Convert CSV data to JSON format instantly. Perfect for data transformation and API integration.">
+    <meta name="keywords" content="CSV to JSON, CSV converter, JSON converter, data conversion, data transformation, API data">
+    <meta property="og:title" content="CSV to JSON Converter - Free Online Tool">
+    <meta property="og:description" content="Convert CSV data to JSON format instantly with formatting options.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>CSV to JSON Converter - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>CSV to JSON Converter</h1>
+                <p class="tool-description">
+                    Convert CSV data to JSON format instantly. Perfect for data transformation, API integration, and data migration.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div class="option-group">
+                                <label for="delimiter">Delimiter:</label>
+                                <select id="delimiter">
+                                    <option value=",">Comma (,)</option>
+                                    <option value=";">Semicolon (;)</option>
+                                    <option value="|">Pipe (|)</option>
+                                    <option value="	">Tab</option>
+                                </select>
+                            </div>
+                            <div class="option-group">
+                                <label for="formatOutput">
+                                    <input type="checkbox" id="formatOutput" checked>
+                                    Pretty print JSON (formatted)
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputText">CSV Input</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="inputText" 
+                                            placeholder='Paste CSV here&#10;&#10;Example:&#10;name,age,city&#10;John,30,New York&#10;Jane,25,Boston'
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        The first row is treated as column headers.
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputText">JSON Output</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputText" 
+                                            placeholder='Result will appear here...&#10;&#10;Example output:&#10;[&#10;  {"name": "John", "age": "30", "city": "New York"},&#10;  {"name": "Jane", "age": "25", "city": "Boston"}&#10;]'
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success copy-btn" data-copy="outputText">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">💾</span>
+                                    <h5>Data Migration</h5>
+                                    <p>Convert spreadsheet data to API-friendly JSON format</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🔗</span>
+                                    <h5>API Integration</h5>
+                                    <p>Transform CSV exports to JSON for API requests</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📊</span>
+                                    <h5>Database Import</h5>
+                                    <p>Prepare data for NoSQL and document databases</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🛠️</span>
+                                    <h5>Data Processing</h5>
+                                    <p>Transform data in ETL pipelines and workflows</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How It Works -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <ul>
+                                <li><strong>Header Row:</strong> The first row is treated as column headers</li>
+                                <li><strong>Data Rows:</strong> Each subsequent row becomes a JSON object</li>
+                                <li><strong>Delimiters:</strong> Choose the separator used in your CSV file</li>
+                                <li><strong>Pretty Print:</strong> Formats JSON with indentation for readability</li>
+                                <li><strong>Quotes:</strong> Automatically handles quoted fields with embedded delimiters</li>
+                                <li><strong>Output:</strong> Returns an array of objects, each representing a CSV row</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/json-to-csv/">JSON to CSV Converter</a></li>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Tips</h4>
+                        <ul>
+                            <li>First row must contain column headers</li>
+                            <li>Use single delimiter consistently throughout CSV</li>
+                            <li>Quote fields with embedded delimiters: "value,with,comma"</li>
+                            <li>Enable pretty print for better readability</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Decoder - Free Online Tool | Micro Tools</title>
+    <meta name="description" content="Decode and verify JWT tokens. View header, payload, and signature information.">
+    <meta property="og:title" content="JWT Decoder - Micro Tools">
+    <meta property="og:description" content="Decode JWT tokens online">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+</head>
+<body>
+        <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>JWT Decoder</h1>
+                <p class="tool-description">Decode and analyze JWT tokens. View header, payload, and signature information for debugging and verification.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="decodeBtn">
+                                    <span>Decode JWT</span>
+                                    <span>🔓</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                                <button class="action-btn" id="exampleBtn">
+                                    <span>Example</span>
+                                    <span>↻</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="jwtInput">JWT Token:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="jwtInput" 
+                                            placeholder="Paste your JWT token here...&#10;&#10;Example:&#10;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U"
+                                            rows="12"
+                                            autofocus
+                                            spellcheck="false"></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Paste a JWT token to decode it. Analysis happens in your browser - no data is sent to servers.
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Results Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Decoded Components:</label>
+                                    <div class="jwt-sections">
+                                        <div class="jwt-part">
+                                            <h4>Header</h4>
+                                            <pre id="headerOutput" class="code-block">-</pre>
+                                        </div>
+                                        <div class="jwt-part">
+                                            <h4>Payload</h4>
+                                            <pre id="payloadOutput" class="code-block">-</pre>
+                                        </div>
+                                        <div class="jwt-part">
+                                            <h4>Signature</h4>
+                                            <pre id="signatureOutput" class="code-block">-</pre>
+                                        </div>
+                                    </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success" id="copyBtn">
+                                            <span>Copy All</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Use Cases Section -->
+                    <div class="use-cases">
+                        <h3>Use Cases</h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🔐</span>
+                                <h5>Debug Authentication</h5>
+                                <p>Verify token claims and structure in auth systems</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🔍</span>
+                                <h5>Inspect Headers</h5>
+                                <p>Check algorithm and token type information</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">⏰</span>
+                                <h5>Verify Expiration</h5>
+                                <p>Check token expiration times and validity</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">👤</span>
+                                <h5>View User Data</h5>
+                                <p>Extract user information and claims from tokens</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Paste a JWT token into the input field</li>
+                            <li>Click "Decode JWT" to parse the token or it decodes automatically</li>
+                            <li>View the decoded Header, Payload, and Signature components</li>
+                            <li>Copy or download the decoded JWT components</li>
+                            <li>Use for debugging API tokens, session tokens, and authentication tokens</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>JWT Format:</strong> Three Base64-encoded parts separated by dots (header.payload.signature)</li>
+                            <li><strong>Header:</strong> Contains token type (JWT) and the hashing algorithm used (HS256, RS256, etc.)</li>
+                            <li><strong>Payload:</strong> Contains claims (assertions about the entity) such as user ID, permissions, expiration time</li>
+                            <li><strong>Signature:</strong> Created by encoding the header and payload with a secret key - proves the token hasn't been tampered with</li>
+                            <li><strong>Claims:</strong> Statements about the user (iss: issuer, sub: subject, aud: audience, exp: expiration)</li>
+                            <li><strong>Stateless:</strong> JWT doesn't require server-side session storage, making it ideal for REST APIs</li>
+                            <li><strong>Verification:</strong> Always verify the signature on the server side using the secret key</li>
+                            <li><strong>Security Note:</strong> Decoding happens entirely in your browser. No data is transmitted to any server.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/md5-sha-generator/">MD5 & SHA Hash Generator</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>JWT Security Tips</h4>
+                        <ul>
+                            <li>Always validate JWT signatures on the backend</li>
+                            <li>Check token expiration time (exp claim)</li>
+                            <li>Use HTTPS to transmit tokens securely</li>
+                            <li>Store JWTs securely (not in localStorage for XSS protection)</li>
+                            <li>Never trust token data without signature verification</li>
+                            <li>Use strong keys for signing (HS256) or RSA keys (RS256)</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>
+
+
+
+

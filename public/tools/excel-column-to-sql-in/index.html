@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tool to convert Excel column data to SQL IN list format instantly. Generate ('value1','value2') format for SQL queries.">
+    <meta name="keywords" content="SQL IN list, Excel to SQL, SQL converter, database tool, query builder">
+    <meta property="og:title" content="Excel Column to SQL IN List - Free SQL Formatter">
+    <meta property="og:description" content="Convert Excel column values to SQL IN list format instantly. Perfect for SQL WHERE IN clauses and database queries.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Excel Column to SQL IN List - Free SQL Formatter | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Excel Column to SQL IN List",
+        "description": "Free online tool to convert Excel column data to SQL IN list format",
+        "url": "https://micro-tools-43a.pages.dev/tools/excel-column-to-sql-in/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Excel Column to SQL IN List</h1>
+                <p class="tool-description">
+                    Convert Excel column values to SQL IN list format instantly. Paste your data and get formatted results ready for SQL WHERE IN clauses.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <section class="tool-section three-column">
+                            <!-- Input Column -->
+                            <div class="input-column">
+                                <div class="input-group">
+                                    <label for="inputData">Input Data:</label>
+                                    <div class="input-area">
+                                        <textarea id="inputData" placeholder="Paste Excel column&#10;One value per line&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange" rows="12"></textarea>
+                                    </div>
+                                    <div class="char-count">
+                                        <span id="inputCount">0</span> chars
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Options Column -->
+                            <div class="options-column">
+                                <div class="tool-options">
+                                    <h4>Options</h4>
+                                    <div class="option-group">
+                                        <div class="option-item">
+                                            <label for="quoteType">Quote Type:</label>
+                                            <select id="quoteType">
+                                                <option value="single">Single (')</option>
+                                                <option value="double">Double (")</option>
+                                                <option value="none">None</option>
+                                            </select>
+                                        </div>
+                                        <div class="option-item checkbox">
+                                            <label for="trimWhitespace">
+                                                <input type="checkbox" id="trimWhitespace" checked>
+                                                <span>Trim whitespace</span>
+                                            </label>
+                                        </div>
+                                        <div class="option-item checkbox">
+                                            <label for="removeEmpty">
+                                                <input type="checkbox" id="removeEmpty" checked>
+                                                <span>Remove empty lines</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions-vertical">
+                                    <button class="action-btn primary" id="formatBtn">
+                                        <span>Format</span>
+                                        <span>✨</span>
+                                    </button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Output Column -->
+                            <div class="output-column">
+                                <div class="output-group">
+                                    <label for="outputData">SQL IN Format:</label>
+                                    <div class="output-area">
+                                        <textarea id="outputData" placeholder="SQL output will appear here...&#10;&#10;Example:&#10;('Apple','Banana')" rows="12" readonly></textarea>
+                                    </div>
+                                    <div class="char-count">
+                                        <span id="outputCount">0</span> chars
+                                    </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="use-cases">
+                        <h4>Common Use Cases:</h4>
+                        <div class="use-case-grid">
+                            <div class="use-case">
+                                <div class="use-case-icon">🗄️</div>
+                                <h5>Database Queries</h5>
+                                <p>Format data for SQL WHERE IN clauses and database queries</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">🔍</div>
+                                <h5>Data Filtering</h5>
+                                <p>Create SQL queries to filter records by multiple IDs or values</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">📋</div>
+                                <h5>SQL IN Clauses</h5>
+                                <p>Convert Excel lists to proper SQL IN format for SELECT queries</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">⚙️</div>
+                                <h5>Query Building</h5>
+                                <p>Quickly generate SQL WHERE IN clauses from data lists</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/excel-column-to-comma-list/">Excel to Comma List</a></li>
+                            <li><a href="/tools/quote-comma-formatter/">Quote Formatter</a></li>
+                            <li><a href="/">All Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>SQL IN Tips</h4>
+                        <ul>
+                            <li>Use single quotes for text values</li>
+                            <li>Use no quotes for numeric IDs</li>
+                            <li>Double-check values before running queries</li>
+                            <li>Test queries on a copy of your data first</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

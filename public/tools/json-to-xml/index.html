@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON to XML Converter - Free Online Tool | Micro Tools</title>
+    <meta name="description" content="Convert JSON to XML format instantly. Perfect for API integration and data interchange.">
+    <meta property="og:title" content="JSON to XML Converter - Micro Tools">
+    <meta property="og:description" content="Convert JSON to XML format">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>JSON to XML Converter</h1>
+                <p class="tool-description">Convert JSON to XML format for API integration and data interchange</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="convertBtn">
+                                    <span>Convert</span>
+                                    <span>✨</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="jsonInput">JSON Input</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="jsonInput" 
+                                            placeholder='{"root": {"item": "value"}}&#10;&#10;Example:&#10;{"user": {"name": "John", "age": 30}}'
+                                            rows="12"
+                                            spellcheck="false"
+                                            autofocus></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Paste valid JSON. Maximum 50,000 characters.
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="xmlOutput">XML Output</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="xmlOutput" 
+                                            placeholder='Result will appear here...&#10;&#10;Example output:&#10;&lt;?xml version="1.0"?&gt;&#10;&lt;root&gt;&#10;  &lt;user&gt;&#10;    &lt;name&gt;John&lt;/name&gt;&#10;    &lt;age&gt;30&lt;/age&gt;&#10;  &lt;/user&gt;&#10;&lt;/root&gt;'
+                                            rows="12"
+                                            readonly
+                                            spellcheck="false"></textarea>
+                                    </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success copy-btn" id="copyBtn">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🔄</span>
+                                    <h5>Data Conversion</h5>
+                                    <p>Convert JSON to XML for API integration and legacy systems</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🏗️</span>
+                                    <h5>Data Structure</h5>
+                                    <p>JSON objects become XML elements with proper hierarchy</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📋</span>
+                                    <h5>Formatted Output</h5>
+                                    <p>Includes XML declaration and proper indentation</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">⚙️</span>
+                                    <h5>Array Handling</h5>
+                                    <p>Arrays create multiple elements with the same tag name</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Paste your JSON data into the input field</li>
+                                <li>Click the Convert button to transform the JSON</li>
+                                <li>Review the formatted XML output</li>
+                                <li>Copy the XML or download it as a file</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <ul>
+                                <li><strong>JSON Objects:</strong> Become XML elements with properties as child elements</li>
+                                <li><strong>JSON Arrays:</strong> Create multiple elements with the same tag name</li>
+                                <li><strong>XML Declaration:</strong> Automatically includes &lt;?xml version="1.0"?&gt;</li>
+                                <li><strong>Root Element:</strong> Wraps all converted elements for valid XML structure</li>
+                                <li><strong>Proper Indentation:</strong> Formatted output for easy readability</li>
+                                <li><strong>Special Characters:</strong> Automatically escaped for XML validity</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/xml-to-json/">XML to JSON Converter</a></li>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/json-to-yaml/">JSON to YAML Converter</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Conversion Tips</h4>
+                        <ul>
+                            <li>✓ Ensure your JSON is valid before conversion</li>
+                            <li>✓ Root element wraps the entire XML output</li>
+                            <li>✓ Arrays create repeated elements with same tag</li>
+                            <li>✓ Special characters are auto-escaped</li>
+                            <li>✓ Pretty-printed output for readability</li>
+                            <li>✓ Download as .xml file for use anywhere</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-tools">Text Tools</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#security-tools">Security Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+
+
+
+
