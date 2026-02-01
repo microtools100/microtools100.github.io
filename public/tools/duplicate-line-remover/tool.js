@@ -7,22 +7,31 @@ class DuplicateLineRemover {
         this.caseSensitive = document.getElementById('caseSensitive');
         this.trimLines = document.getElementById('trimLines');
         this.sortLines = document.getElementById('sortLines');
-        this.statsContainer = document.querySelector('.stats-container');
         
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => this.autoCopy());
+        this.processBtn = document.getElementById('processBtn');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.clearBtn = document.getElementById('clearBtn');
+        
         this.init();
     }
 
     init() {
-        this.inputText.addEventListener('input', () => this.debouncedRemoveDuplicates());
-        this.caseSensitive.addEventListener('change', () => this.debouncedRemoveDuplicates());
-        this.trimLines.addEventListener('change', () => this.debouncedRemoveDuplicates());
-        this.sortLines.addEventListener('change', () => this.debouncedRemoveDuplicates());
-    }
-
-    debouncedRemoveDuplicates() {
-        this.removeDuplicates();
-        this.keystrokeDelay.schedule();
+        this.inputText.addEventListener('input', () => this.removeDuplicates());
+        this.caseSensitive.addEventListener('change', () => this.removeDuplicates());
+        this.trimLines.addEventListener('change', () => this.removeDuplicates());
+        this.sortLines.addEventListener('change', () => this.removeDuplicates());
+        
+        this.processBtn.addEventListener('click', () => this.removeDuplicates());
+        this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+        this.clearBtn.addEventListener('click', () => this.clearAll());
+        
+        // Keyboard shortcut: Ctrl/Cmd+Enter to process
+        this.inputText.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                this.removeDuplicates();
+            }
+        });
     }
 
     removeDuplicates() {
@@ -30,7 +39,6 @@ class DuplicateLineRemover {
         
         if (!text) {
             this.outputText.value = '';
-            this.displayStats(0, 0);
             return;
         }
 
@@ -67,33 +75,36 @@ class DuplicateLineRemover {
         const result = uniqueLines.join('\n');
         this.outputText.value = result;
 
-        // Display stats
+        // Show stats notification
         const removedCount = originalCount - uniqueLines.length;
-        this.displayStats(removedCount, uniqueLines.length);
-    }
-
-    autoCopy() {
-        const result = this.outputText.value;
-        if (result) {
-            navigator.clipboard.writeText(result).then(() => {
-                window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-            });
+        if (removedCount > 0) {
+            SharedUtilities.showNotification(`Removed ${removedCount} duplicate(s)`, 'success');
         }
     }
 
-    displayStats(removedCount, uniqueCount) {
-        const html = `
-            <div class="stat-item">
-                <div class="stat-value">${removedCount}</div>
-                <div class="stat-label">Duplicates Removed</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">${uniqueCount}</div>
-                <div class="stat-label">Unique Lines</div>
-            </div>
-        `;
-        
-        this.statsContainer.innerHTML = html;
+    copyToClipboard() {
+        const text = this.outputText.value;
+        if (!text) {
+            SharedUtilities.showNotification('No text to copy', 'warning');
+            return;
+        }
+
+        navigator.clipboard.writeText(text).then(() => {
+            SharedUtilities.showNotification('Copied to clipboard!', 'success');
+            this.copyBtn.textContent = '✓ Copied';
+            setTimeout(() => {
+                this.copyBtn.innerHTML = '<span>Copy</span><span>📋</span>';
+            }, 2000);
+        }).catch(() => {
+            SharedUtilities.showNotification('Failed to copy', 'error');
+        });
+    }
+
+    clearAll() {
+        this.inputText.value = '';
+        this.outputText.value = '';
+        this.inputText.focus();
+        SharedUtilities.showNotification('Cleared!', 'success');
     }
 }
 

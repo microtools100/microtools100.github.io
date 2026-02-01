@@ -10,11 +10,31 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     
-    <title>Word & Character Counter - Instant Text Statistics</title>
+    <title>Word & Character Counter - Free Online Tool | Micro Tools</title>
     
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Word & Character Counter",
+        "description": "Free online word and character counter. Count words, characters, sentences, paragraphs instantly.",
+        "url": "https://micro-tools-43a.pages.dev/tools/word-character-counter/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 <body>
     <header class="site-header">
@@ -31,7 +51,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -39,123 +60,153 @@
         </div>
     </header>
 
-    <main class="tool-main">
+    <main class="tool-page">
         <div class="container">
-            <h1>Word & Character Counter</h1>
-            <p class="tool-subtitle">Instantly count words, characters, sentences, paragraphs, and more. Perfect for analyzing writing statistics and monitoring content length.</p>
+            <header class="tool-header">
+                <h1>Word & Character Counter</h1>
+                <p class="tool-description">Instantly count words, characters, sentences, paragraphs, and more. Perfect for analyzing writing statistics and monitoring content length.</p>
+            </header>
 
-            <div class="tool-options">
-                <h3 class="section-title">Options</h3>
-                <div class="option-group">
-                    <label for="includeSpaces">
-                        <input type="checkbox" id="includeSpaces" checked>
-                        Include spaces in character count
-                    </label>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <section class="tool-options">
+                            <div class="option-group">
+                                <label for="includeSpaces">
+                                    <input type="checkbox" id="includeSpaces" checked>
+                                    Include spaces in character count
+                                </label>
+                            </div>
+                            <div class="option-group">
+                                <label for="includeSpecialChars">
+                                    <input type="checkbox" id="includeSpecialChars" checked>
+                                    Include special characters
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="tool-section">
+                            <div class="input-area">
+                                <label for="textInput">Enter Your Text</label>
+                                <textarea id="textInput" placeholder="Paste your text here&#10;&#10;Example:&#10;The quick brown fox jumps over the lazy dog. This is a sample sentence.&#10;&#10;Statistics will update automatically..."></textarea>
+                            </div>
+                        </section>
+
+                        <div class="stats-display">
+                            <div class="stat-item">
+                                <div class="stat-value" id="characters">0</div>
+                                <div class="stat-label">Characters</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="charactersNoSpaces">0</div>
+                                <div class="stat-label">Without Spaces</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="words">0</div>
+                                <div class="stat-label">Words</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="sentences">0</div>
+                                <div class="stat-label">Sentences</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="paragraphs">0</div>
+                                <div class="stat-label">Paragraphs</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="lines">0</div>
+                                <div class="stat-label">Lines</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="readingTime">0 min</div>
+                                <div class="stat-label">Reading Time</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="speakingTime">0 min</div>
+                                <div class="stat-label">Speaking Time</div>
+                            </div>
+                        </div>
+
+                        <div class="tool-actions">
+                            <button class="action-btn" id="clearBtn">
+                                <span>Clear</span>
+                                <span>✕</span>
+                            </button>
+                            <button class="action-btn success" id="copyBtn">
+                                <span>Copy</span>
+                                <span>📋</span>
+                            </button>
+                            <button class="action-btn" id="exampleBtn">
+                                <span>Example</span>
+                                <span>📄</span>
+                            </button>
+                        </div>
+
+                        <section class="tool-section">
+                            <h2>Use Cases</h2>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📝</span>
+                                    <h4>Writing Analysis</h4>
+                                    <p>Track writing statistics and monitor content quality</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🎓</span>
+                                    <h4>Academic Work</h4>
+                                    <p>Meet word count requirements for essays and papers</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📰</span>
+                                    <h4>Content Creation</h4>
+                                    <p>Optimize SEO content with proper word counts</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">⏱️</span>
+                                    <h4>Reading Time</h4>
+                                    <p>Calculate estimated reading time for articles</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="tool-section">
+                            <h2>Analysis Metrics Explained</h2>
+                            <ul class="formatting-guide">
+                                <li><strong>Words:</strong> Individual words separated by spaces</li>
+                                <li><strong>Characters (with spaces):</strong> Total character count including spaces</li>
+                                <li><strong>Characters (without spaces):</strong> Total characters excluding spaces</li>
+                                <li><strong>Sentences:</strong> Statements ending with . ! or ?</li>
+                                <li><strong>Paragraphs:</strong> Text sections separated by line breaks</li>
+                                <li><strong>Letters:</strong> Alphabetic characters only</li>
+                                <li><strong>Digits:</strong> Numeric characters (0-9)</li>
+                                <li><strong>Special Characters:</strong> Punctuation and symbols</li>
+                                <li><strong>Avg Word Length:</strong> Average number of characters per word</li>
+                                <li><strong>Reading Time:</strong> Estimated minutes to read (at 200 words/min)</li>
+                            </ul>
+                        </section>
+                    </div>
                 </div>
-                <div class="option-group">
-                    <label for="includeSpecialChars">
-                        <input type="checkbox" id="includeSpecialChars" checked>
-                        Include special characters
-                    </label>
-                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h3>Related Tools</h3>
+                        <ul>
+                            <li><a href="/tools/text-lowercase/">Text Lowercase Converter</a></li>
+                            <li><a href="/tools/text-uppercase/">Text Uppercase Converter</a></li>
+                            <li><a href="/tools/remove-extra-spaces/">Remove Extra Spaces</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h3>Pro Tips</h3>
+                        <ul>
+                            <li>Use for blog post optimization</li>
+                            <li>Check academic writing requirements</li>
+                            <li>Analyze SEO content length</li>
+                            <li>Estimate reading time for articles</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
-
-            <div class="input-output-grid">
-                <div class="input-group">
-                    <label for="textInput">Enter Your Text</label>
-                    <textarea id="textInput" placeholder="Paste your text here&#10;&#10;Example:&#10;The quick brown fox jumps over the lazy dog. This is a sample sentence.&#10;&#10;Statistics will update automatically..."></textarea>
-                    <button class="action-btn" id="clearBtn">
-                        <span>Clear Text</span>
-                        <span>×</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value" id="characters">0</div>
-                    <div class="stat-label">Characters</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="charactersNoSpaces">0</div>
-                    <div class="stat-label">Without Spaces</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="words">0</div>
-                    <div class="stat-label">Words</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="sentences">0</div>
-                    <div class="stat-label">Sentences</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="paragraphs">0</div>
-                    <div class="stat-label">Paragraphs</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="lines">0</div>
-                    <div class="stat-label">Lines</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="readingTime">0 min</div>
-                    <div class="stat-label">Reading Time</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="speakingTime">0 min</div>
-                    <div class="stat-label">Speaking Time</div>
-                </div>
-            </div>
-
-            <section class="use-cases">
-                <h2>Use Cases</h2>
-                <div class="use-case-grid">
-                    <div class="use-case-item">
-                        <span class="use-case-icon">📝</span>
-                        <h4>Writing Analysis</h4>
-                        <p>Track writing statistics and monitor content quality</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🎓</span>
-                        <h4>Academic Work</h4>
-                        <p>Meet word count requirements for essays and papers</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">📰</span>
-                        <h4>Content Creation</h4>
-                        <p>Optimize SEO content with proper word counts</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">⏱️</span>
-                        <h4>Reading Time</h4>
-                        <p>Calculate estimated reading time for articles</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="formatting-guide">
-                <h2>Analysis Metrics Explained</h2>
-                <ul>
-                    <li><strong>Words:</strong> Individual words separated by spaces</li>
-                    <li><strong>Characters (with spaces):</strong> Total character count including spaces</li>
-                    <li><strong>Characters (without spaces):</strong> Total characters excluding spaces</li>
-                    <li><strong>Sentences:</strong> Statements ending with . ! or ?</li>
-                    <li><strong>Paragraphs:</strong> Text sections separated by line breaks</li>
-                    <li><strong>Letters:</strong> Alphabetic characters only</li>
-                    <li><strong>Digits:</strong> Numeric characters (0-9)</li>
-                    <li><strong>Special Characters:</strong> Punctuation and symbols</li>
-                    <li><strong>Avg Word Length:</strong> Average number of characters per word</li>
-                    <li><strong>Reading Time:</strong> Estimated minutes to read (at 200 words/min)</li>
-                </ul>
-            </section>
-
-            <section class="related-tools">
-                <h2>Related Tools</h2>
-                <ul>
-                    <li><a href="/tools/text-lowercase/">Text Lowercase Converter</a></li>
-                    <li><a href="/tools/text-uppercase/">Text Uppercase Converter</a></li>
-                    <li><a href="/tools/remove-extra-spaces/">Remove Extra Spaces</a></li>
-                </ul>
-            </section>
         </div>
     </main>    <footer class="site-footer">
         <div class="container">
@@ -171,7 +222,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

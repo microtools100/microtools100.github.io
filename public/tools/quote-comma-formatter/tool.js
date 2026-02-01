@@ -1,93 +1,98 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const inputData = document.getElementById('inputData');
-    const outputData = document.getElementById('outputData');
-    const quoteType = document.getElementById('quoteType');
-    const delimiter = document.getElementById('delimiter');
-    const trimWhitespace = document.getElementById('trimWhitespace');
-    const removeEmpty = document.getElementById('removeEmpty');
-    const formatBtn = document.getElementById('formatBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const inputCount = document.getElementById('inputCount');
-    const outputCount = document.getElementById('outputCount');
-    const keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => autoCopy());
+/**
+ * Quote Comma Formatter Tool
+ * Class-based implementation with keyboard shortcuts and clipboard support
+ */
 
-    // Update character count for input
-    inputData.addEventListener('input', function() {
-        inputCount.textContent = this.value.length;
-    });
-
-    // Update character count for output
-    outputData.addEventListener('input', function() {
-        outputCount.textContent = this.value.length;
-    });
-
-    // Format button
-    formatBtn.addEventListener('click', formatData);
-
-    // Clear button
-    clearBtn.addEventListener('click', function() {
-        inputData.value = '';
-        outputData.value = '';
-        inputCount.textContent = '0';
-        outputCount.textContent = '0';
-        inputData.focus();
-    });
-
-    // Download button
-    downloadBtn.addEventListener('click', downloadText);
-
-    // Real-time formatting as user types with debounce
-    inputData.addEventListener('input', debouncedFormatData);
-    quoteType.addEventListener('change', formatData);
-    delimiter.addEventListener('change', formatData);
-    trimWhitespace.addEventListener('change', formatData);
-    removeEmpty.addEventListener('change', formatData);
-
-    function debouncedFormatData() {
-        formatData();
-        keystrokeDelay.schedule();
+class QuoteCommaFormatter {
+    constructor() {
+        this.inputData = document.getElementById('inputData') || document.getElementById('inputText');
+        this.outputData = document.getElementById('outputData') || document.getElementById('outputText');
+        this.quoteType = document.getElementById('quoteType');
+        this.delimiter = document.getElementById('delimiter');
+        this.trimWhitespace = document.getElementById('trimWhitespace');
+        this.removeEmpty = document.getElementById('removeEmpty');
+        this.formatBtn = document.getElementById('formatBtn');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.downloadBtn = document.getElementById('downloadBtn');
+        this.errorMsg = document.querySelector('.error-msg');
+        
+        this.init();
     }
 
-    function autoCopy() {
-        const result = outputData.value;
-        if (result) {
-            navigator.clipboard.writeText(result).then(() => {
-                SharedUtilities.showNotification('Copied to clipboard!', 'success');
+    init() {
+        if (this.formatBtn) {
+            this.formatBtn.addEventListener('click', () => this.format());
+        }
+        if (this.clearBtn) {
+            this.clearBtn.addEventListener('click', () => this.clearAll());
+        }
+        if (this.copyBtn) {
+            this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+        }
+        if (this.downloadBtn) {
+            this.downloadBtn.addEventListener('click', () => this.downloadText());
+        }
+        
+        this.inputData.addEventListener('input', () => this.format());
+        if (this.quoteType) {
+            this.quoteType.addEventListener('change', () => this.format());
+        }
+        if (this.delimiter) {
+            this.delimiter.addEventListener('change', () => this.format());
+        }
+        if (this.trimWhitespace) {
+            this.trimWhitespace.addEventListener('change', () => this.format());
+        }
+        if (this.removeEmpty) {
+            this.removeEmpty.addEventListener('change', () => this.format());
+        }
+        
+        this.inputData.addEventListener('keydown', (e) => this.handleKeyboard(e));
+    }
+
+    handleKeyboard(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            this.format();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
+            e.preventDefault();
+            this.clearAll();
+        }
+    }
+
+    format() {
+        try {
+            let lines = this.inputData.value.split('\n');
+
+            if (this.removeEmpty && this.removeEmpty.checked) {
+                lines = lines.filter(line => line.trim() !== '');
+            }
+
+            if (this.trimWhitespace && this.trimWhitespace.checked) {
+                lines = lines.map(line => line.trim());
+            }
+
+            const quote = this.getQuote();
+            lines = lines.map(line => {
+                if (line === '') return '';
+                return quote + line + quote;
             });
+
+            const delim = this.delimiter ? this.delimiter.value : ', ';
+            const result = lines.join(delim);
+
+            this.outputData.value = result;
+            this.clearError();
+        } catch (error) {
+            this.showError('Formatting error: ' + error.message);
         }
     }
 
-    function formatData() {
-        let lines = inputData.value.split('\n');
-
-        // Remove empty lines if option is checked
-        if (removeEmpty.checked) {
-            lines = lines.filter(line => line.trim() !== '');
-        }
-
-        // Trim whitespace if option is checked
-        if (trimWhitespace.checked) {
-            lines = lines.map(line => line.trim());
-        }
-
-        // Apply quotes
-        const quote = getQuote();
-        lines = lines.map(line => {
-            if (line === '') return '';
-            return quote + line + quote;
-        });
-
-        // Join with delimiter
-        const delim = delimiter.value;
-        const result = lines.join(delim);
-
-        outputData.value = result;
-        outputCount.textContent = result.length;
-    }
-
-    function getQuote() {
-        const type = quoteType.value;
+    getQuote() {
+        if (!this.quoteType) return "'";
+        const type = this.quoteType.value;
         switch(type) {
             case 'single': return "'";
             case 'double': return '"';
@@ -97,70 +102,65 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function downloadText() {
-        const text = outputData.value;
+    clearAll() {
+        this.inputData.value = '';
+        this.outputData.value = '';
+        this.clearError();
+        this.inputData.focus();
+    }
+
+    copyToClipboard() {
+        const text = this.outputData.value;
         if (!text) {
-            alert('No output to download. Please format some data first.');
+            SharedUtilities.showNotification('No text to copy. Please format some data first.', 'warning');
+            return;
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        
+        SharedUtilities.showNotification('Copied to clipboard!', 'success');
+    }
+
+    downloadText() {
+        const text = this.outputData.value;
+        if (!text) {
+            SharedUtilities.showNotification('No text to download. Please format some data first.', 'warning');
             return;
         }
 
         const element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-        element.setAttribute('download', 'formatted-data.txt');
+        element.setAttribute('download', 'formatted.txt');
         element.style.display = 'none';
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);
+        
+        SharedUtilities.showNotification('Downloaded formatted.txt', 'success');
     }
 
-    // Copy to clipboard functionality
-    setupCopyButtons();
-    
-    function setupCopyButtons() {
-        const copyInputBtn = document.createElement('button');
-        const copyOutputBtn = document.createElement('button');
-
-        copyInputBtn.className = 'copy-btn';
-        copyOutputBtn.className = 'copy-btn';
-        copyInputBtn.textContent = '📋 Copy Input';
-        copyOutputBtn.textContent = '📋 Copy Output';
-
-        // Add copy buttons if needed
-        if (inputData.parentElement) {
-            inputData.parentElement.appendChild(copyInputBtn);
+    showError(message) {
+        if (this.errorMsg) {
+            this.errorMsg.textContent = message;
+            this.errorMsg.classList.add('show');
         }
-        if (outputData.parentElement) {
-            outputData.parentElement.appendChild(copyOutputBtn);
+    }
+
+    clearError() {
+        if (this.errorMsg) {
+            this.errorMsg.textContent = '';
+            this.errorMsg.classList.remove('show');
         }
-
-        copyOutputBtn.addEventListener('click', function() {
-            if (outputData.value) {
-                navigator.clipboard.writeText(outputData.value).then(() => {
-                    showNotification('Copied to clipboard!');
-                });
-            }
-        });
     }
+}
 
-    function showNotification(message) {
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.textContent = message;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 4px;
-            z-index: 1000;
-            animation: slideIn 0.3s ease-in-out;
-        `;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 2000);
-    }
-
-    // Initialize input character count
-    inputCount.textContent = inputData.value.length;
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    window.MicroTools = window.MicroTools || {};
+    window.MicroTools.quoteCommaFormatter = new QuoteCommaFormatter();
 });

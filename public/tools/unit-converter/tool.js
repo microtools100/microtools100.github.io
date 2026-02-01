@@ -1,4 +1,7 @@
-// Unit Converter Tool
+/**
+ * Unit Converter Tool
+ * Converts between different measurement units (length, weight, temperature, volume, time)
+ */
 
 class UnitConverter {
     constructor() {
@@ -7,6 +10,7 @@ class UnitConverter {
         this.fromUnit = document.getElementById('fromUnit');
         this.toUnit = document.getElementById('toUnit');
         this.outputValue = document.getElementById('outputValue');
+        this.swapButton = document.querySelector('.swap-button');
         
         this.conversions = {
             length: {
@@ -73,20 +77,53 @@ class UnitConverter {
         this.init();
     }
 
+    /**
+     * Initialize event listeners and keyboard shortcuts
+     */
     init() {
-        this.categorySelect.addEventListener('change', () => this.updateUnits());
-        this.inputValue.addEventListener('input', () => this.convert());
-        this.fromUnit.addEventListener('change', () => this.convert());
-        this.toUnit.addEventListener('change', () => this.convert());
-        
+        this.setupEventListeners();
+        this.setupKeyboardShortcuts();
         this.updateUnits();
     }
 
+    /**
+     * Setup main event listeners
+     */
+    setupEventListeners() {
+        this.categorySelect.addEventListener('change', () => this.updateUnits());
+        this.inputValue.addEventListener('input', () => this.main());
+        this.fromUnit.addEventListener('change', () => this.main());
+        this.toUnit.addEventListener('change', () => this.main());
+        if (this.swapButton) {
+            this.swapButton.addEventListener('click', () => this.swapUnits());
+        }
+    }
+
+    /**
+     * Setup keyboard shortcuts
+     */
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + Enter: Convert
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                this.main();
+            }
+            // Ctrl/Cmd + Shift + S: Swap units
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 's') {
+                e.preventDefault();
+                this.swapUnits();
+            }
+        });
+    }
+
+    /**
+     * Update unit options based on selected category
+     */
     updateUnits() {
         const category = this.categorySelect.value;
         const units = this.conversions[category].units;
 
-        // Update unit selects
         let fromHtml = '';
         let toHtml = '';
 
@@ -98,10 +135,13 @@ class UnitConverter {
         this.fromUnit.innerHTML = fromHtml;
         this.toUnit.innerHTML = toHtml;
 
-        this.convert();
+        this.main();
     }
 
-    convert() {
+    /**
+     * Main conversion method
+     */
+    main() {
         const category = this.categorySelect.value;
         const inputVal = parseFloat(this.inputValue.value);
         const from = this.fromUnit.value;
@@ -112,25 +152,30 @@ class UnitConverter {
             return;
         }
 
-        let result;
+        try {
+            let result;
 
-        if (category === 'temperature') {
-            result = this.convertTemperature(inputVal, from, to);
-        } else {
-            // Convert to base unit first, then to target unit
-            const baseUnit = this.conversions[category].units[from];
-            const targetUnit = this.conversions[category].units[to];
-            const baseValue = inputVal * baseUnit;
-            result = baseValue / targetUnit;
+            if (category === 'temperature') {
+                result = this.convertTemperature(inputVal, from, to);
+            } else {
+                const baseUnit = this.conversions[category].units[from];
+                const targetUnit = this.conversions[category].units[to];
+                const baseValue = inputVal * baseUnit;
+                result = baseValue / targetUnit;
+            }
+
+            result = Math.round(result * 1000000) / 1000000;
+            this.outputValue.value = result;
+            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
+        } catch (error) {
+            window.MicroTools?.utils?.showNotification?.('Conversion error', 'error');
         }
-
-        // Round to 6 decimal places
-        result = Math.round(result * 1000000) / 1000000;
-        this.outputValue.value = result;
     }
 
+    /**
+     * Convert temperature between Celsius, Fahrenheit, and Kelvin
+     */
     convertTemperature(value, from, to) {
-        // Convert to Celsius first
         let celsius;
 
         switch (from) {
@@ -145,7 +190,6 @@ class UnitConverter {
                 break;
         }
 
-        // Convert from Celsius to target
         switch (to) {
             case 'C':
                 return celsius;
@@ -155,9 +199,28 @@ class UnitConverter {
                 return celsius + 273.15;
         }
     }
+
+    /**
+     * Swap input and output units
+     */
+    swapUnits() {
+        const tempUnit = this.fromUnit.value;
+        this.fromUnit.value = this.toUnit.value;
+        this.toUnit.value = tempUnit;
+        this.main();
+    }
+
+    /**
+     * Clear all inputs
+     */
+    clearAll() {
+        SharedUtilities.clearElements(
+            { inputData: this.inputValue, outputData: this.outputValue },
+            { message: 'Cleared!' }
+        );
+    }
 }
 
-// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     window.MicroTools = window.MicroTools || {};
     window.MicroTools.unitConverter = new UnitConverter();

@@ -3,17 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reading Time Calculator - Micro Tools</title>
     <meta name="description" content="Calculate reading time for your text. Estimates how long it takes to read content based on average reading speed.">
-    <meta property="og:title" content="Reading Time Calculator - Micro Tools">
-    <meta property="og:description" content="Calculate how long it takes to read any text content">
+    <meta name="keywords" content="reading time calculator, text reading time, estimated reading time, WPM">
+    <meta property="og:title" content="Reading Time Calculator - Free Online Tool">
+    <meta property="og:description" content="Calculate estimated reading time for any text based on reading speed (WPM)">
     <meta property="og:type" content="website">
+    
+    <title>Reading Time Calculator - Free Online Tool | Micro Tools</title>
+    
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Reading Time Calculator",
+        "description": "Free online tool to calculate reading time for any text",
+        "url": "https://micro-tools-43a.pages.dev/tools/reading-time-calculator/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 <body>
-        <header class="site-header">
+    <header class="site-header">
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">
@@ -27,7 +50,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -35,84 +59,153 @@
         </div>
     </header>
 
-    <div class="tool-container">
-        <div class="tool-header">
-            <h1>Reading Time Calculator</h1>
-            <p>Calculate estimated reading time for your text</p>
-        </div>
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Reading Time Calculator</h1>
+                <p class="tool-description">
+                    Calculate how long it takes to read any text based on average reading speed. Customize reading speed (WPM) for accurate estimates.
+                </p>
+            </header>
 
-        <div class="tool-content">
-            <div class="tool-grid">
-                <!-- Input Section -->
-                <div class="input-section">
-                    <div class="section-card">
-                        <h3>Your Text</h3>
-                        <textarea 
-                            id="textInput" 
-                            class="tool-textarea"
-                            placeholder="Paste your text here...&#10;&#10;The tool will automatically calculate reading time based on average reading speed.&#10;&#10;Minimum 10 words for accurate estimate."
-                            spellcheck="false"></textarea>
-                        
-                        <div class="reading-speed-control">
-                            <label for="readingSpeed">Reading Speed:</label>
-                            <div class="speed-input-group">
-                                <input type="number" id="readingSpeed" value="200" min="50" max="500" step="10">
-                                <span class="speed-unit">WPM</span>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <section class="tool-section">
+                            <div class="tool-options">
+                                <h3>Reading Speed (WPM)</h3>
+                                <div class="reading-speed-control">
+                                    <label for="readingSpeed">Words Per Minute:</label>
+                                    <input type="number" id="readingSpeed" value="200" min="50" max="500" step="10">
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Input/Output Columns -->
+                        <div class="tool-content-columns">
+                            <section class="tool-section input-column">
+                                <div class="input-area">
+                                    <label for="textInput">Enter your text:</label>
+                                    <textarea 
+                                        id="textInput" 
+                                        placeholder="Paste your text here...&#10;&#10;The tool will calculate reading time based on average reading speed.&#10;&#10;Example: Lorem ipsum dolor sit amet..."
+                                        rows="12"
+                                        autofocus></textarea>
+                                </div>
+                            </section>
+
+                            <section class="tool-section output-column">
+                                <div class="stats-display">
+                                    <div class="stat-item">
+                                        <div class="stat-value" id="readingTime">0 min</div>
+                                        <div class="stat-label">Reading Time</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value" id="wordCount">0</div>
+                                        <div class="stat-label">Words</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value" id="charCount">0</div>
+                                        <div class="stat-label">Characters</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value" id="sentenceCount">0</div>
+                                        <div class="stat-label">Sentences</div>
+                                    </div>
+                                </div>
+
+                                <div class="reading-levels">
+                                    <h4>Speed Estimates:</h4>
+                                    <div class="speed-estimate">
+                                        <span>Slow (150 WPM):</span>
+                                        <strong id="slowTime">-</strong>
+                                    </div>
+                                    <div class="speed-estimate">
+                                        <span>Average (200 WPM):</span>
+                                        <strong id="avgTime">-</strong>
+                                    </div>
+                                    <div class="speed-estimate">
+                                        <span>Fast (250 WPM):</span>
+                                        <strong id="fastTime">-</strong>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">
+                                        <span>Copy Results</span>
+                                        <span>📋</span>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Use Cases -->
+                    <div class="use-cases">
+                        <h4>Common Use Cases:</h4>
+                        <div class="use-case-grid">
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📚</span>
+                                <h5>Blog Posts</h5>
+                                <p>Estimate reading time for articles and blog content</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📰</span>
+                                <h5>News Articles</h5>
+                                <p>Calculate time to read news and journalism pieces</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📖</span>
+                                <h5>eBooks</h5>
+                                <p>Plan reading duration for digital books</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📝</span>
+                                <h5>Documents</h5>
+                                <p>Estimate time to read reports and documents</p>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Results Section -->
-                <div class="results-section">
-                    <div class="section-card highlight">
-                        <h3>Reading Time Results</h3>
-                        
-                        <div class="primary-stat">
-                            <div class="stat-value-large" id="readingTime">0 min</div>
-                            <div class="stat-label-large">Estimated Reading Time</div>
-                        </div>
-
-                        <div class="stats-grid-mini">
-                            <div class="stat-box">
-                                <div class="stat-value" id="wordCount">0</div>
-                                <div class="stat-label">Words</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-value" id="charCount">0</div>
-                                <div class="stat-label">Characters</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-value" id="sentenceCount">0</div>
-                                <div class="stat-label">Sentences</div>
-                            </div>
-                        </div>
-
-                        <div class="reading-levels">
-                            <h4>Reading Speed Estimates:</h4>
-                            <div class="speed-estimate">
-                                <div class="speed-label">Slow Reader (150 WPM):</div>
-                                <div class="speed-value" id="slowTime">-</div>
-                            </div>
-                            <div class="speed-estimate">
-                                <div class="speed-label">Average (200 WPM):</div>
-                                <div class="speed-value" id="avgTime">-</div>
-                            </div>
-                            <div class="speed-estimate">
-                                <div class="speed-label">Fast Reader (250 WPM):</div>
-                                <div class="speed-value" id="fastTime">-</div>
-                            </div>
-                        </div>
-
-                        <button class="action-btn success" id="copyBtn">
-                            <span>Copy Results</span>
-                            <span>📋</span>
-                        </button>
+                    <!-- Formatting Guide -->
+                    <div class="formatting-guide">
+                        <h3>How Reading Time is Calculated</h3>
+                        <ul>
+                            <li><strong>Words:</strong> Count of all words in the text</li>
+                            <li><strong>Reading Speed:</strong> Measured in Words Per Minute (WPM)</li>
+                            <li><strong>Formula:</strong> Reading Time = Total Words ÷ Reading Speed</li>
+                            <li><strong>Customizable:</strong> Adjust WPM to match average, slow, or fast readers</li>
+                            <li><strong>Estimates:</strong> Includes calculations for different reader speeds (150, 200, 250 WPM)</li>
+                        </ul>
                     </div>
                 </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/word-character-counter/">Word Counter</a></li>
+                            <li><a href="/tools/text-uppercase/">Text Uppercase</a></li>
+                            <li><a href="/tools/text-lowercase/">Text Lowercase</a></li>
+                            <li><a href="/tools/remove-extra-spaces/">Remove Extra Spaces</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Reading Speed Facts</h4>
+                        <ul>
+                            <li>Average adult reads 200-250 WPM</li>
+                            <li>Skimming reads 600-700 WPM</li>
+                            <li>Slow/careful reading 100-150 WPM</li>
+                            <li>Tech content typically reads slower</li>
+                            <li>Use for SEO blog post metrics</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
         </div>
-    </div>
+    </main>
 
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
@@ -134,7 +227,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

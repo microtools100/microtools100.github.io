@@ -1,158 +1,185 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const inputJSON = document.getElementById('inputJSON');
-    const outputJSON = document.getElementById('outputJSON');
-    const indentSize = document.getElementById('indentSize');
-    const sortKeys = document.getElementById('sortKeys');
-    const formatBtn = document.getElementById('formatBtn');
-    const minifyBtn = document.getElementById('minifyBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const copyBtn = document.getElementById('copyBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const validationStatus = document.getElementById('validationStatus');
+/**
+ * JSON Formatter & Validator Tool
+ * Class-based implementation with keyboard shortcuts and clipboard support
+ */
 
-    formatBtn.addEventListener('click', formatJSON);
-    minifyBtn.addEventListener('click', minifyJSON);
-    clearBtn.addEventListener('click', clearAll);
-    copyBtn.addEventListener('click', copyOutput);
-    downloadBtn.addEventListener('click', downloadJSON);
-    
-    // Auto-format on input change and option changes
-    inputJSON.addEventListener('input', formatJSON);
-    indentSize.addEventListener('change', formatJSON);
-    sortKeys.addEventListener('change', formatJSON);
+class JSONFormatter {
+    constructor() {
+        // Input/Output elements
+        this.inputJSON = document.getElementById('inputJSON');
+        this.outputJSON = document.getElementById('outputJSON');
+        this.errorMsg = document.querySelector('.error-msg');
+        
+        // Action buttons
+        this.formatBtn = document.getElementById('formatBtn');
+        this.minifyBtn = document.getElementById('minifyBtn');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.downloadBtn = document.getElementById('downloadBtn');
+        
+        // Options (if present in future versions)
+        this.indentSize = document.getElementById('indentSize');
+        this.sortKeys = document.getElementById('sortKeys');
+        
+        this.init();
+    }
 
-    function formatJSON() {
+    init() {
+        // Button event listeners
+        this.formatBtn.addEventListener('click', () => this.format());
+        this.minifyBtn.addEventListener('click', () => this.minify());
+        this.clearBtn.addEventListener('click', () => this.clearAll());
+        this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+        this.downloadBtn.addEventListener('click', () => this.downloadJSON());
+        
+        // Keyboard shortcuts
+        this.inputJSON.addEventListener('keydown', (e) => this.handleKeyboard(e));
+        
+        // Set focus to input
+        this.inputJSON.focus();
+    }
+
+    handleKeyboard(e) {
+        // Ctrl+Enter / Cmd+Enter: Format
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            this.format();
+        }
+        // Ctrl+Shift+L / Cmd+Shift+L: Clear
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
+            e.preventDefault();
+            this.clearAll();
+        }
+    }
+
+    format() {
         try {
-            const input = inputJSON.value.trim();
+            const input = this.inputJSON.value.trim();
             if (!input) {
-                showError('Please paste some JSON');
+                this.showError('Please enter some JSON to format');
+                SharedUtilities.showNotification('Empty input', 'warning');
+                this.outputJSON.value = '';
                 return;
             }
 
             let parsed = JSON.parse(input);
 
-            // Sort keys if enabled
-            if (sortKeys.checked) {
-                parsed = sortObjectKeys(parsed);
+            // Sort keys if enabled (for future use)
+            if (this.sortKeys && this.sortKeys.checked) {
+                parsed = this.sortObjectKeys(parsed);
             }
 
-            // Get indentation
-            let indent = getIndent();
+            // Get indentation (default 2 spaces)
+            const indent = this.getIndent();
 
             // Format with indentation
             const formatted = JSON.stringify(parsed, null, indent);
-            outputJSON.textContent = formatted;
-
-            showValid('JSON is valid ✓');
+            this.outputJSON.value = formatted;
+            
+            this.clearError();
+            SharedUtilities.showNotification('JSON is valid ✓', 'success');
         } catch (error) {
-            showError('Invalid JSON: ' + error.message);
-            outputJSON.textContent = '';
+            this.showError('Invalid JSON: ' + error.message);
+            SharedUtilities.showNotification('Invalid JSON', 'error');
+            this.outputJSON.value = '';
         }
     }
 
-    function minifyJSON() {
+    minify() {
         try {
-            const input = inputJSON.value.trim();
+            const input = this.inputJSON.value.trim();
             if (!input) {
-                showError('Please paste some JSON');
+                this.showError('Please enter some JSON to minify');
+                SharedUtilities.showNotification('Empty input', 'warning');
                 return;
             }
 
-            let parsed = JSON.parse(input);
+            const parsed = JSON.parse(input);
             const minified = JSON.stringify(parsed);
-            outputJSON.textContent = minified;
+            this.outputJSON.value = minified;
 
-            showValid('JSON minified ✓');
+            this.clearError();
+            SharedUtilities.showNotification('JSON minified ✓', 'success');
         } catch (error) {
-            showError('Invalid JSON: ' + error.message);
-            outputJSON.textContent = '';
+            this.showError('Invalid JSON: ' + error.message);
+            SharedUtilities.showNotification('Invalid JSON', 'error');
+            this.outputJSON.value = '';
         }
     }
 
-    function sortObjectKeys(obj) {
+    sortObjectKeys(obj) {
         if (Array.isArray(obj)) {
-            return obj.map(item => sortObjectKeys(item));
+            return obj.map(item => this.sortObjectKeys(item));
         } else if (obj !== null && typeof obj === 'object') {
             const sorted = {};
             Object.keys(obj).sort().forEach(key => {
-                sorted[key] = sortObjectKeys(obj[key]);
+                sorted[key] = this.sortObjectKeys(obj[key]);
             });
             return sorted;
         }
         return obj;
     }
 
-    function getIndent() {
-        const size = indentSize.value;
-        if (size === 'tab') {
-            return '\t';
+    getIndent() {
+        if (this.indentSize && this.indentSize.value) {
+            const size = this.indentSize.value;
+            if (size === 'tab') {
+                return '\t';
+            }
+            return parseInt(size);
         }
-        return parseInt(size);
+        return 2; // Default to 2 spaces
     }
 
-    function clearAll() {
-        inputJSON.value = '';
-        outputJSON.textContent = '';
-        validationStatus.classList.add('hidden');
-        inputJSON.focus();
+    clearAll() {
+        this.inputJSON.value = '';
+        this.outputJSON.value = '';
+        this.clearError();
+        SharedUtilities.showNotification('Cleared', 'info');
+        this.inputJSON.focus();
     }
 
-    function copyOutput() {
-        const text = outputJSON.textContent;
+    copyToClipboard() {
+        const text = this.outputJSON.value.trim();
         if (!text) {
-            alert('No JSON to copy. Please format some JSON first.');
+            this.showError('No JSON to copy. Please format some JSON first.');
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
             return;
         }
 
-        navigator.clipboard.writeText(text).then(() => {
-            showNotification('Copied to clipboard!');
-        });
+        SharedUtilities.copyToClipboard(text, 'Copied to clipboard!', 'success');
+        this.clearError();
     }
 
-    function downloadJSON() {
-        const text = outputJSON.textContent;
+    downloadJSON() {
+        const text = this.outputJSON.value.trim();
         if (!text) {
-            alert('No JSON to download. Please format some JSON first.');
+            this.showError('No JSON to download. Please format some JSON first.');
+            SharedUtilities.showNotification('Nothing to download', 'warning');
             return;
         }
 
-        const element = document.createElement('a');
-        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(text));
-        element.setAttribute('download', 'formatted.json');
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
+        SharedUtilities.downloadAsFile(text, 'formatted.json', 'application/json');
+        SharedUtilities.showNotification('Downloaded successfully!', 'success');
     }
 
-    function showValid(message) {
-        validationStatus.textContent = message;
-        validationStatus.classList.remove('hidden', 'invalid');
-        validationStatus.classList.add('valid');
+    showError(message) {
+        if (this.errorMsg) {
+            this.errorMsg.textContent = message;
+            this.errorMsg.classList.add('show');
+        }
     }
 
-    function showError(message) {
-        validationStatus.textContent = message;
-        validationStatus.classList.remove('hidden', 'valid');
-        validationStatus.classList.add('invalid');
+    clearError() {
+        if (this.errorMsg) {
+            this.errorMsg.textContent = '';
+            this.errorMsg.classList.remove('show');
+        }
     }
+}
 
-    function showNotification(message) {
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.textContent = message;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 4px;
-            z-index: 1000;
-            animation: slideIn 0.3s ease-in-out;
-        `;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 2000);
-    }
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    window.MicroTools = window.MicroTools || {};
+    window.MicroTools.jsonFormatter = new JSONFormatter();
 });

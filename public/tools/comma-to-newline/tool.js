@@ -4,53 +4,31 @@ class CommaToNewlineConverter {
         this.elements = {
             inputData: document.getElementById('inputData'),
             outputData: document.getElementById('outputData'),
-            formatBtn: document.getElementById('formatBtn'),
             clearBtn: document.getElementById('clearBtn'),
+            copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
             separator: document.getElementById('separator'),
             removeQuotes: document.getElementById('removeQuotes'),
-            trimWhitespace: document.getElementById('trimWhitespace'),
-            inputCount: document.getElementById('inputCount'),
-            outputCount: document.getElementById('outputCount')
+            trimWhitespace: document.getElementById('trimWhitespace')
         };
 
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => this.autoCopy());
         this.init();
     }
 
     init() {
         this.setupEventListeners();
-        this.updateCharCount();
     }
 
     setupEventListeners() {
-        this.elements.formatBtn.addEventListener('click', () => this.format());
         this.elements.clearBtn.addEventListener('click', () => this.clear());
+        this.elements.copyBtn.addEventListener('click', () => this.copyOutput());
         this.elements.downloadBtn.addEventListener('click', () => this.download());
         
-        // Auto-format on input with keystroke delay for auto-copy
-        this.elements.inputData.addEventListener('input', () => {
-            this.debouncedFormat();
-        });
-        
-        this.elements.separator.addEventListener('change', () => {
-            this.debouncedFormat();
-        });
-        
-        this.elements.removeQuotes.addEventListener('change', () => {
-            this.debouncedFormat();
-        });
-        
-        this.elements.trimWhitespace.addEventListener('change', () => {
-            this.debouncedFormat();
-        });
-        
-        this.elements.outputData.addEventListener('input', () => this.updateCharCount());
-    }
-
-    debouncedFormat() {
-        this.format();
-        this.keystrokeDelay.schedule();
+        // Auto-format on input
+        this.elements.inputData.addEventListener('input', () => this.format());
+        this.elements.separator.addEventListener('change', () => this.format());
+        this.elements.removeQuotes.addEventListener('change', () => this.format());
+        this.elements.trimWhitespace.addEventListener('change', () => this.format());
     }
 
     format() {
@@ -58,7 +36,6 @@ class CommaToNewlineConverter {
         
         if (!input.trim()) {
             this.elements.outputData.value = '';
-            this.updateCharCount();
             return;
         }
 
@@ -79,30 +56,28 @@ class CommaToNewlineConverter {
         const output = values.join('\n');
 
         this.elements.outputData.value = output;
-        this.updateCharCount();
-    }
-
-    autoCopy() {
-        const outputText = this.elements.outputData.value;
-        if (outputText) {
-            navigator.clipboard.writeText(outputText).then(() => {
-                SharedUtilities.showNotification('Copied to clipboard', 'success');
-            }).catch(() => {
-                SharedUtilities.showNotification('Failed to copy', 'error');
-            });
-        }
     }
 
     clear() {
         this.elements.inputData.value = '';
         this.elements.outputData.value = '';
-        this.updateCharCount();
         SharedUtilities.showNotification('Cleared all data', 'success');
     }
 
-    updateCharCount() {
-        this.elements.inputCount.textContent = this.elements.inputData.value.length;
-        this.elements.outputCount.textContent = this.elements.outputData.value.length;
+    copyOutput() {
+        const outputText = this.elements.outputData.value;
+        if (!outputText.trim()) {
+            SharedUtilities.showNotification('No data to copy', 'warning');
+            return;
+        }
+
+        const textArea = document.createElement('textarea');
+        textArea.value = outputText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        SharedUtilities.showNotification('Copied to clipboard', 'success');
     }
 
     download() {

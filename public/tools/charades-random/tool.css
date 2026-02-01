@@ -1,4 +1,6 @@
-/* Charades Generator Specific Styles */
+﻿/* charades-random - Tool-Specific Styles */
+
+/* Tool-specific: Custom Grid for Options */
 .options-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -229,7 +231,7 @@
 }
 
 .game-variations li::before {
-    content: '🎯';
+    content: 'ðŸŽ¯';
     position: absolute;
     left: 0;
 }

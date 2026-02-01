@@ -1,36 +1,52 @@
-// CSV to JSON Converter Tool - Production Ready
+/**
+ * CSV to JSON Converter Tool
+ * Class-based implementation with keyboard shortcuts and clipboard support
+ */
 
 class CSVToJSON {
     constructor() {
         this.csvInput = document.getElementById('csvInput') || document.getElementById('inputText');
         this.jsonOutput = document.getElementById('jsonOutput') || document.getElementById('outputText');
         this.convertBtn = document.getElementById('convertBtn');
-        this.copyBtn = document.querySelector('.copy-btn');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.downloadBtn = document.getElementById('downloadBtn');
         this.hasHeaderRow = document.getElementById('hasHeaderRow');
         this.errorMsg = document.querySelector('.error-msg');
         
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(() => this.autoCopy());
         this.init();
     }
 
     init() {
         if (this.convertBtn) {
             this.convertBtn.addEventListener('click', () => this.convert());
-        } else {
-            this.csvInput.addEventListener('input', () => this.debouncedConvert());
         }
-        this.csvInput.addEventListener('input', () => this.clearError());
-        if (this.hasHeaderRow) {
-            this.hasHeaderRow.addEventListener('change', () => this.debouncedConvert());
+        if (this.clearBtn) {
+            this.clearBtn.addEventListener('click', () => this.clearAll());
         }
         if (this.copyBtn) {
             this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         }
+        if (this.downloadBtn) {
+            this.downloadBtn.addEventListener('click', () => this.downloadJSON());
+        }
+        
+        this.csvInput.addEventListener('input', () => this.convert());
+        if (this.hasHeaderRow) {
+            this.hasHeaderRow.addEventListener('change', () => this.convert());
+        }
+        this.csvInput.addEventListener('keydown', (e) => this.handleKeyboard(e));
     }
 
-    debouncedConvert() {
-        this.convert();
-        this.keystrokeDelay.schedule();
+    handleKeyboard(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            this.convert();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
+            e.preventDefault();
+            this.clearAll();
+        }
     }
 
     convert() {
@@ -53,17 +69,6 @@ class CSVToJSON {
         }
     }
 
-    autoCopy() {
-        const text = this.jsonOutput.value;
-        if (text) {
-            navigator.clipboard.writeText(text).then(() => {
-                SharedUtilities.showNotification('Copied to clipboard!', 'success');
-            }).catch(() => {
-                SharedUtilities.showNotification('Failed to copy', 'error');
-            });
-        }
-    }
-
     csvToJSON(csvText, hasHeader = true) {
         const lines = csvText.split('\n').filter(line => line.trim());
         if (lines.length === 0) return [];
@@ -71,7 +76,7 @@ class CSVToJSON {
         const rows = lines.map(line => this.parseCSVLine(line));
         
         if (!hasHeader) {
-            return rows.map((row, index) => {
+            return rows.map((row) => {
                 const obj = {};
                 row.forEach((value, i) => {
                     obj[`column_${i + 1}`] = value;
@@ -118,29 +123,51 @@ class CSVToJSON {
         return result;
     }
 
+    clearAll() {
+        this.csvInput.value = '';
+        this.jsonOutput.value = '';
+        this.clearError();
+        this.csvInput.focus();
+    }
+
+    copyToClipboard() {
+        const text = this.jsonOutput.value;
+        if (!text) {
+            this.showError('No JSON to copy. Please convert some CSV first.');
+            return;
+        }
+
+        SharedUtilities.copyToClipboard(text, 'Copied to clipboard!', 'success');
+    }
+
+    downloadJSON() {
+        const text = this.jsonOutput.value;
+        if (!text) {
+            this.showError('No JSON to download. Please convert some CSV first.');
+            return;
+        }
+
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', 'converted.json');
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
     showError(message) {
         if (this.errorMsg) {
             this.errorMsg.textContent = message;
-            this.errorMsg.style.display = 'block';
+            this.errorMsg.classList.add('show');
         }
     }
 
     clearError() {
         if (this.errorMsg) {
             this.errorMsg.textContent = '';
-            this.errorMsg.style.display = 'none';
+            this.errorMsg.classList.remove('show');
         }
-    }
-
-    copyToClipboard() {
-        const text = this.jsonOutput.value;
-        if (!text) return;
-
-        navigator.clipboard.writeText(text).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-        });
     }
 }
 

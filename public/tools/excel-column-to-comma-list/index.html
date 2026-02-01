@@ -13,7 +13,7 @@
     <title>Excel Column to Comma List - Free Converter | Micro Tools</title>
     
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
@@ -51,7 +51,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -72,11 +73,24 @@
                 <div class="tool-main">
                     <div class="tool-container">
                         <section class="tool-section three-column">
+                            <!-- Input Column -->
+                            <div class="input-column">
+                                <div class="input-group">
+                                    <label for="inputData">Input Data:</label>
+                                    <div class="input-area">
+                                        <textarea id="inputData" placeholder="Paste Excel column values&#10;One per line&#10;&#10;Example:&#10;John&#10;Jane&#10;Bob" rows="12"></textarea>
+                                    </div>
+                                    <div class="char-count">
+                                        <span id="inputCount">0</span> chars
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Options Column -->
                             <div class="options-column">
                                 <div class="tool-options">
-                                    <h3>Options</h3>
-                                    <div class="options-group">
+                                    <h4>Options</h4>
+                                    <div class="option-group">
                                         <div class="option-item">
                                             <label for="separator">Separator:</label>
                                             <select id="separator">
@@ -125,31 +139,23 @@
                                 </div>
                             </div>
 
-                            <!-- Input Column -->
-                            <div class="input-column">
-                                <div class="input-group">
-                                    <label for="inputData">Input Data:</label>
-                                    <textarea id="inputData" placeholder="Paste Excel column values&#10;One per line&#10;&#10;Example:&#10;John&#10;Jane&#10;Bob" rows="14"></textarea>
-                                    <div class="char-count">
-                                        <span id="inputCount">0</span> chars
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- Output Column -->
                             <div class="output-column">
                                 <div class="output-group">
                                     <label for="outputData">Formatted Output:</label>
-                                    <textarea id="outputData" placeholder="Result will appear here...&#10;&#10;Example:&#10;John, Jane, Bob" rows="14" readonly></textarea>
+                                    <div class="output-area">
+                                        <textarea id="outputData" placeholder="Result will appear here...&#10;&#10;Example:&#10;John, Jane, Bob" rows="12" readonly></textarea>
+                                    </div>
                                     <div class="char-count">
                                         <span id="outputCount">0</span> chars
                                     </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <button class="action-btn success" id="downloadBtn">
-                                    <span>Download</span>
-                                    <span>⤓</span>
-                                </button>
                             </div>
                         </section>
                     </div>
@@ -191,19 +197,8 @@
                         </ul>
                     </div>
 
-                    <div class="formatting-guide">
-                        <h4>Formatting Options</h4>
-                        <ul>
-                            <li><strong>Comma:</strong> Standard CSV format</li>
-                            <li><strong>Semicolon:</strong> European CSV format</li>
-                            <li><strong>Pipe:</strong> For database imports</li>
-                            <li><strong>Tab:</strong> For spreadsheet imports</li>
-                            <li><strong>Quotes:</strong> Wrap values with quotes</li>
-                        </ul>
-                    </div>
-
-                    <div class="tips">
-                        <h4>Tips:</h4>
+                    <div class="tool-tips">
+                        <h4>Quick Tips</h4>
                         <ul>
                             <li>Copy directly from Excel cells</li>
                             <li>Use different separators for various formats</li>
@@ -228,7 +223,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

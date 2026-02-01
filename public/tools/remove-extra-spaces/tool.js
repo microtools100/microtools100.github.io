@@ -17,6 +17,7 @@ class RemoveSpacesTool {
             spacesRemoved: document.getElementById('spacesRemoved'),
             charCount: document.getElementById('charCount'),
             lineCount: document.getElementById('lineCount'),
+            errorMsg: document.querySelector('.error-msg'),
             
             // Options
             removeDoubleSpaces: document.getElementById('removeDoubleSpaces'),
@@ -194,7 +195,10 @@ class RemoveSpacesTool {
             { inputData: this.elements.input, outputData: this.elements.output },
             { 
                 message: 'Text cleared',
-                onClear: () => this.updateStats()
+                onClear: () => {
+                    this.updateStats();
+                    this.clearError();
+                }
             }
         );
     }
@@ -206,9 +210,10 @@ class RemoveSpacesTool {
     }
     
     async copyToClipboard() {
-        const text = this.elements.output.value;
+        const text = this.elements.output.value.trim();
         if (!text) {
-            SharedUtilities.showNotification('No text to copy', 'warning');
+            this.showError('No text to copy. Please clean some text first.');
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
             return;
         }
         
@@ -220,13 +225,21 @@ class RemoveSpacesTool {
             document.execCommand('copy');
             SharedUtilities.showNotification('Copied to clipboard!', 'success');
         }
+        this.clearError();
     }
     
     download() {
-        const text = this.elements.output.value;
+        const text = this.elements.output.value.trim();
+        if (!text) {
+            this.showError('No text to download. Please clean some text first.');
+            SharedUtilities.showNotification('Nothing to download', 'warning');
+            return;
+        }
+
         SharedUtilities.downloadAsFile(text, 'cleaned-text.txt', 'text/plain', {
             successMessage: 'Text downloaded as cleaned-text.txt'
         });
+        this.clearError();
     }
     
     updateStats() {
@@ -318,6 +331,20 @@ class RemoveSpacesTool {
     
     formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    showError(message) {
+        if (this.elements.errorMsg) {
+            this.elements.errorMsg.textContent = message;
+            this.elements.errorMsg.classList.add('show');
+        }
+    }
+
+    clearError() {
+        if (this.elements.errorMsg) {
+            this.elements.errorMsg.textContent = '';
+            this.elements.errorMsg.classList.remove('show');
+        }
     }
 }
 

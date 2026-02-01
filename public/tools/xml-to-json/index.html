@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XML to JSON Converter - Micro Tools</title>
+    <title>XML to JSON Converter - Free Online Tool | Micro Tools</title>
     <meta name="description" content="Convert XML to JSON format instantly. Parse XML and transform to JSON structure.">
     <meta property="og:title" content="XML to JSON Converter - Micro Tools">
     <meta property="og:description" content="Convert XML to JSON format">
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>
         <header class="site-header">
@@ -26,7 +27,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -44,88 +46,144 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="convertBtn">
+                                    <span>Convert</span>
+                                    <span>✨</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Input and Output -->
                         <div class="tool-content-columns">
                             <!-- Input Column -->
                             <section class="tool-section input-column">
                                 <div class="input-group">
-                                    <label for="xmlInput">XML Input:</label>
+                                    <label for="xmlInput">XML Input</label>
                                     <div class="input-area">
                                         <textarea 
                                             id="xmlInput" 
-                                            placeholder="<?xml version=\"1.0\"?>\n<root>\n  <item>value</item>\n</root>"
+                                            placeholder='&lt;?xml version="1.0"?&gt;&#10;&lt;root&gt;&#10;  &lt;item&gt;value&lt;/item&gt;&#10;&lt;/root&gt;&#10;&#10;Example:&#10;&lt;?xml version="1.0"?&gt;&#10;&lt;user&gt;&#10;  &lt;name&gt;John&lt;/name&gt;&#10;  &lt;age&gt;30&lt;/age&gt;&#10;&lt;/user&gt;'
                                             rows="12"
-                                            spellcheck="false"></textarea>
+                                            spellcheck="false"
+                                            autofocus></textarea>
                                     </div>
-                                    <div class="hint">Paste valid XML to convert. Maximum 50,000 characters.</div>
-                                </div>
-
-                                <div class="tool-actions">
-                                    <button class="action-btn primary" id="convertBtn">
-                                        <span>Convert</span>
-                                        <span>✨</span>
-                                    </button>
-                                    <button class="action-btn" id="clearBtn">
-                                        <span>Clear</span>
-                                        <span>×</span>
-                                    </button>
+                                    <div class="hint">
+                                        Paste valid XML. Maximum 50,000 characters.
+                                    </div>
                                 </div>
                             </section>
 
                             <!-- Output Column -->
                             <section class="tool-section output-column">
                                 <div class="output-group">
-                                    <label for="jsonOutput">JSON Output:</label>
+                                    <label for="jsonOutput">JSON Output</label>
                                     <div class="output-area">
                                         <textarea 
                                             id="jsonOutput" 
-                                            placeholder='{"root": {"item": "value"}}'
+                                            placeholder='Result will appear here...&#10;&#10;Example output:&#10;{&#10;  "user": {&#10;    "name": "John",&#10;    "age": "30"&#10;  }&#10;}'
                                             rows="12"
                                             readonly
                                             spellcheck="false"></textarea>
                                     </div>
-                                    <div class="hint">Your JSON output will appear here</div>
-                                </div>
-
-                                <div class="tool-actions">
-                                    <button class="action-btn success" id="copyBtn">
-                                        <span>Copy</span>
-                                        <span>📋</span>
-                                    </button>
-                                    <button class="action-btn" id="downloadBtn">
-                                        <span>Download</span>
-                                        <span>⤓</span>
-                                    </button>
+                                    <div class="output-actions">
+                                        <button class="action-btn success copy-btn" id="copyBtn">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </section>
                         </div>
-                    </div>
 
-                    <div class="use-cases">
-                        <h4>About XML to JSON:</h4>
-                        <div class="use-case-grid">
-                            <div class="use-case">
-                                <div class="use-case-icon">🔄</div>
-                                <h5>Data Conversion</h5>
-                                <p>Convert XML to JSON for modern APIs and applications</p>
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🔄</span>
+                                    <h5>Data Conversion</h5>
+                                    <p>Convert XML to JSON for modern APIs and applications</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🏗️</span>
+                                    <h5>Data Structure</h5>
+                                    <p>XML elements become JSON properties with proper hierarchy</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📋</span>
+                                    <h5>Formatted Output</h5>
+                                    <p>Outputs properly indented and minified JSON</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">⚙️</span>
+                                    <h5>Attribute Handling</h5>
+                                    <p>XML attributes are preserved in the JSON output</p>
+                                </div>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">🏗️</div>
-                                <h5>Structure</h5>
-                                <p>XML elements become JSON properties with proper hierarchy</p>
-                            </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">📋</div>
-                                <h5>Formatted</h5>
-                                <p>Outputs properly indented and minified JSON</p>
-                            </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">⚙️</div>
-                                <h5>Attributes</h5>
-                                <p>XML attributes are preserved in the JSON output</p>
-                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Paste your XML data into the input field</li>
+                                <li>Click the Convert button to transform the XML</li>
+                                <li>Review the formatted JSON output</li>
+                                <li>Copy the JSON or download it as a file</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <ul>
+                                <li><strong>XML Elements:</strong> Become JSON object properties with their values</li>
+                                <li><strong>XML Attributes:</strong> Preserved and included in the JSON output</li>
+                                <li><strong>Text Content:</strong> Stored as text or value properties depending on structure</li>
+                                <li><strong>Nested Elements:</strong> Create nested JSON objects maintaining hierarchy</li>
+                                <li><strong>Multiple Elements:</strong> With same name become JSON arrays</li>
+                                <li><strong>Pretty Print:</strong> Formatted output for easy readability</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/json-to-xml/">JSON to XML Converter</a></li>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/json-to-yaml/">JSON to YAML Converter</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Conversion Tips</h4>
+                        <ul>
+                            <li>Ensure your XML is well-formed and valid</li>
+                            <li>XML declaration (&lt;?xml...?&gt;) is optional</li>
+                            <li>Attributes create nested properties in JSON</li>
+                            <li>Text nodes are preserved in output</li>
+                            <li>Use the download option to save as .json file</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
         </div>
     </main>
@@ -150,7 +208,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

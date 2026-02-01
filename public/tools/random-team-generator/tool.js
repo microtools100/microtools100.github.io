@@ -1,7 +1,8 @@
-// Random Team Generator Tool
+// Random Team Generator Tool - Standardized Implementation
 
 class RandomTeamGenerator {
     constructor() {
+        // Element references
         this.inputText = document.getElementById('inputText');
         this.teamSizeInput = document.getElementById('teamSizeInput');
         this.teamCountInput = document.getElementById('teamCountInput');
@@ -9,15 +10,41 @@ class RandomTeamGenerator {
         this.shuffleBtn = document.getElementById('shuffleBtn');
         this.outputContainer = document.querySelector('.teams-output');
         
+        // Initialize listeners
         this.init();
     }
 
     init() {
-        this.shuffleBtn.addEventListener('click', () => this.generateTeams());
+        // Main button listeners
+        if (this.shuffleBtn) {
+            this.shuffleBtn.addEventListener('click', () => this.generateTeams());
+        }
+
+        // Mode change listeners
         this.allocationModeRadios.forEach(radio => {
             radio.addEventListener('change', () => {
-                if (this.inputText.value) this.generateTeams();
+                if (this.inputText.value.trim()) {
+                    this.generateTeams();
+                }
             });
+        });
+
+        // Real-time input listeners
+        this.inputText.addEventListener('input', () => this.generateTeams());
+        this.teamSizeInput.addEventListener('change', () => this.generateTeams());
+        this.teamCountInput.addEventListener('change', () => this.generateTeams());
+
+        // Keyboard shortcuts: Ctrl+Enter to generate, Ctrl+K to clear
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.generateTeams();
+                } else if (e.key === 'k' || e.key === 'K') {
+                    e.preventDefault();
+                    this.clearAll();
+                }
+            }
         });
     }
 
@@ -25,7 +52,7 @@ class RandomTeamGenerator {
         const text = this.inputText.value.trim();
         
         if (!text) {
-            this.outputContainer.innerHTML = '<p style="text-align: center; color: #999;">Enter names/items to generate teams</p>';
+            this.outputContainer.innerHTML = '<p style="text-align: center; color: var(--text-color-secondary);">Enter names/items to generate teams</p>';
             return;
         }
 
@@ -34,7 +61,7 @@ class RandomTeamGenerator {
             .filter(item => item.length > 0);
 
         if (items.length < 2) {
-            this.outputContainer.innerHTML = '<p style="text-align: center; color: #999;">Need at least 2 items to create teams</p>';
+            this.outputContainer.innerHTML = '<p style="text-align: center; color: var(--text-color-secondary);">Need at least 2 items to create teams</p>';
             return;
         }
 
@@ -50,10 +77,14 @@ class RandomTeamGenerator {
         }
 
         this.displayTeams(teams);
+        
+        // Show success notification via SharedUtilities if available
+        if (window.SharedUtilities?.showNotification) {
+            window.SharedUtilities.showNotification(`Generated ${teams.length} team(s)!`, 'success');
+        }
     }
 
     divideByTeamSize(items, teamSize) {
-        // Shuffle items
         const shuffled = this.shuffleArray([...items]);
         const teams = [];
 
@@ -65,7 +96,6 @@ class RandomTeamGenerator {
     }
 
     divideByTeamCount(items, teamCount) {
-        // Shuffle items
         const shuffled = this.shuffleArray([...items]);
         const teams = Array.from({ length: teamCount }, () => []);
 
@@ -98,11 +128,43 @@ class RandomTeamGenerator {
                     <ul class="team-members">
                         ${teamMembersHtml}
                     </ul>
+                    <button class="copy-team-btn" data-team-index="${index}" title="Copy team members">📋 Copy</button>
                 </div>
             `;
         }).join('');
 
         this.outputContainer.innerHTML = html;
+
+        // Add copy listeners to team cards
+        this.outputContainer.querySelectorAll('.copy-team-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(e.currentTarget.dataset.teamIndex);
+                this.copyTeamToClipboard(teams[index]);
+            });
+        });
+    }
+
+    copyTeamToClipboard(team) {
+        const text = team.join('\n');
+        navigator.clipboard.writeText(text).then(() => {
+            if (window.SharedUtilities?.showNotification) {
+                window.SharedUtilities.showNotification('Team copied to clipboard!', 'success');
+            }
+        }).catch(() => {
+            if (window.SharedUtilities?.showNotification) {
+                window.SharedUtilities.showNotification('Failed to copy', 'error');
+            }
+        });
+    }
+
+    clearAll() {
+        this.inputText.value = '';
+        this.outputContainer.innerHTML = '';
+        this.inputText.focus();
+        
+        if (window.SharedUtilities?.showNotification) {
+            window.SharedUtilities.showNotification('Cleared all inputs', 'info');
+        }
     }
 
     escapeHtml(text) {

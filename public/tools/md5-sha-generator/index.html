@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD5 & SHA Hash Generator - Micro Tools</title>
+    <title>MD5 & SHA Hash Generator - Free Online Tool | Micro Tools</title>
     <meta name="description" content="Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes for any text. Fast and secure hashing tool.">
     <meta property="og:title" content="MD5 & SHA Hash Generator - Micro Tools">
     <meta property="og:description" content="Generate cryptographic hashes online">
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>
         <header class="site-header">
@@ -26,70 +27,186 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
-                    </ul>
-                </nav>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
     </header>
 
-    <div class="tool-container">
-        <div class="tool-header">
-            <h1>MD5 & SHA Hash Generator</h1>
-            <p>Generate secure cryptographic hashes for any text</p>
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>MD5 & SHA Hash Generator</h1>
+                <p class="tool-description">Generate secure cryptographic hashes for any text using MD5, SHA-1, SHA-256, SHA-384, and SHA-512 algorithms.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="textInput">Enter text to hash:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="textInput" 
+                                            placeholder="Type or paste text to generate hashes...&#10;&#10;Example:&#10;Hello World"
+                                            rows="12"
+                                            autofocus
+                                            spellcheck="false"
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter any text to generate multiple hash values. No limits on length.
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="generateBtn">
+                                        <span>Generate Hashes</span>
+                                        <span>🔐</span>
+                                    </button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                    <button class="action-btn" id="exampleBtn">
+                                        <span>Example</span>
+                                        <span>↻</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Generated Hashes:</label>
+                                    <div class="hash-results">
+                                        <div class="hash-item">
+                                            <div class="hash-label">MD5 (128-bit):</div>
+                                            <div class="hash-output" id="md5Hash">-</div>
+                                            <button class="copy-small-btn" onclick="copyHash('md5Hash')">📋 Copy</button>
+                                        </div>
+                                        <div class="hash-item">
+                                            <div class="hash-label">SHA-1 (160-bit):</div>
+                                            <div class="hash-output" id="sha1Hash">-</div>
+                                            <button class="copy-small-btn" onclick="copyHash('sha1Hash')">📋 Copy</button>
+                                        </div>
+                                        <div class="hash-item">
+                                            <div class="hash-label">SHA-256 (256-bit):</div>
+                                            <div class="hash-output" id="sha256Hash">-</div>
+                                            <button class="copy-small-btn" onclick="copyHash('sha256Hash')">📋 Copy</button>
+                                        </div>
+                                        <div class="hash-item">
+                                            <div class="hash-label">SHA-384 (384-bit):</div>
+                                            <div class="hash-output" id="sha384Hash">-</div>
+                                            <button class="copy-small-btn" onclick="copyHash('sha384Hash')">📋 Copy</button>
+                                        </div>
+                                        <div class="hash-item">
+                                            <div class="hash-label">SHA-512 (512-bit):</div>
+                                            <div class="hash-output" id="sha512Hash">-</div>
+                                            <button class="copy-small-btn" onclick="copyHash('sha512Hash')">📋 Copy</button>
+                                        </div>
+                                    </div>
+                                    <div class="tool-actions">
+                                        <button class="action-btn success" id="copyAllBtn">
+                                            <span>Copy All</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Instructions -->
+                    <div class="instructions">
+                        <h4>How to use this hash generator:</h4>
+                        <ol>
+                            <li>Type or paste text into the input field</li>
+                            <li>Click "Generate Hashes" to compute all hash values</li>
+                            <li>Copy individual hashes using the "Copy" button next to each algorithm</li>
+                            <li>Or click "Copy All" to copy all hashes at once</li>
+                            <li>Use these hashes for password storage, data verification, or file integrity checking</li>
+                        </ol>
+                        <p><strong>Security Note:</strong> All hashing happens in your browser. No data is transmitted to any server.</p>
+                    </div>
+
+                    <!-- Use Cases -->
+                    <div class="use-cases">
+                        <h4>Common Use Cases:</h4>
+                        <div class="use-case-grid">
+                            <div class="use-case">
+                                <div class="use-case-icon">🔒</div>
+                                <h5>Password Hashing</h5>
+                                <p>Generate secure password hashes for storage</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">✓</div>
+                                <h5>File Integrity</h5>
+                                <p>Verify file contents haven't been modified</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">🔗</div>
+                                <h5>Blockchain</h5>
+                                <p>SHA-256 is foundational to Bitcoin and many cryptosystems</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">🔍</div>
+                                <h5>Data Deduplication</h5>
+                                <p>Find duplicate files by comparing hash values</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hash Algorithm Information -->
+                    <div class="formatting-guide">
+                        <h3>Hash Algorithm Information</h3>
+                        <ul>
+                            <li><strong>MD5 (128-bit / 32 hex chars):</strong> Legacy algorithm - DO NOT use for security-critical applications. Vulnerable to collision attacks.</li>
+                            <li><strong>SHA-1 (160-bit / 40 hex chars):</strong> Deprecated - No longer recommended for digital signatures and certificates due to collision vulnerabilities.</li>
+                            <li><strong>SHA-256 (256-bit / 64 hex chars):</strong> Secure and widely used. Foundation of blockchain technology (Bitcoin). Recommended for most applications.</li>
+                            <li><strong>SHA-384 (384-bit / 96 hex chars):</strong> Stronger variant suitable for highly sensitive data. Used in some military and government applications.</li>
+                            <li><strong>SHA-512 (512-bit / 128 hex chars):</strong> Maximum security level. Produces the longest hash. Best for critical cryptographic operations.</li>
+                            <li><strong>One-Way Function:</strong> Hashing is irreversible - you cannot recover the original text from a hash value.</li>
+                            <li><strong>Deterministic:</strong> Same input always produces same hash output, making it ideal for verification.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/password-generator/">Password Generator</a></li>
+                            <li><a href="/tools/password-strength-checker/">Password Strength Checker</a></li>
+                            <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Hash Security Tips</h4>
+                        <ul>
+                            <li>Always use SHA-256 or stronger for new projects</li>
+                            <li>Never rely on MD5 or SHA-1 for security</li>
+                            <li>Add salt to passwords before hashing for better security</li>
+                            <li>Store hashes, never store plain text passwords</li>
+                            <li>Use bcrypt or Argon2 for password hashing in production</li>
+                            <li>Hashes are deterministic - same input = same output</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
-
-        <div class="tool-content">
-            <div class="input-section">
-                <label for="textInput">Text to Hash:</label>
-                <textarea 
-                    id="textInput" 
-                    class="tool-textarea"
-                    placeholder="Enter text to generate hashes..."
-                    spellcheck="false"></textarea>
-            </div>
-
-            <div class="hash-results">
-                <div class="hash-item">
-                    <label>MD5:</label>
-                    <div class="hash-output" id="md5Hash">-</div>
-                    <button class="copy-small-btn" onclick="copyHash('md5Hash')">Copy</button>
-                </div>
-                <div class="hash-item">
-                    <label>SHA-1:</label>
-                    <div class="hash-output" id="sha1Hash">-</div>
-                    <button class="copy-small-btn" onclick="copyHash('sha1Hash')">Copy</button>
-                </div>
-                <div class="hash-item">
-                    <label>SHA-256:</label>
-                    <div class="hash-output" id="sha256Hash">-</div>
-                    <button class="copy-small-btn" onclick="copyHash('sha256Hash')">Copy</button>
-                </div>
-                <div class="hash-item">
-                    <label>SHA-384:</label>
-                    <div class="hash-output" id="sha384Hash">-</div>
-                    <button class="copy-small-btn" onclick="copyHash('sha384Hash')">Copy</button>
-                </div>
-                <div class="hash-item">
-                    <label>SHA-512:</label>
-                    <div class="hash-output" id="sha512Hash">-</div>
-                    <button class="copy-small-btn" onclick="copyHash('sha512Hash')">Copy</button>
-                </div>
-            </div>
-
-            <div class="info-box">
-                <h4>🔐 Hash Algorithm Information:</h4>
-                <ul>
-                    <li><strong>MD5:</strong> 128-bit hash (32 hex chars) - Legacy, use SHA-256+ for security</li>
-                    <li><strong>SHA-1:</strong> 160-bit hash (40 hex chars) - Deprecated, vulnerable to collisions</li>
-                    <li><strong>SHA-256:</strong> 256-bit hash (64 hex chars) - Secure, widely used in blockchain</li>
-                    <li><strong>SHA-384:</strong> 384-bit hash (96 hex chars) - More secure variant</li>
-                    <li><strong>SHA-512:</strong> 512-bit hash (128 hex chars) - Maximum security</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
@@ -111,9 +228,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
-                    </ul>
-                </div>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>

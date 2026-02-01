@@ -14,10 +14,32 @@ class QRCodeGenerator {
     }
 
     init() {
+        this.setupEventListeners();
+        this.setupKeyboardShortcuts();
+    }
+
+    setupEventListeners() {
         this.inputText.addEventListener('input', () => this.generateQR());
         this.sizeInput.addEventListener('change', () => this.generateQR());
         this.errorCorrectionSelect.addEventListener('change', () => this.generateQR());
         this.downloadBtn.addEventListener('click', () => this.downloadQR());
+    }
+
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+D to download
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                if (!this.downloadBtn.disabled) {
+                    this.downloadQR();
+                }
+            }
+            // Ctrl+L to focus input
+            if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+                e.preventDefault();
+                this.inputText.focus();
+            }
+        });
     }
 
     generateQR() {
@@ -95,6 +117,29 @@ class QRCodeGenerator {
         } catch (error) {
             this.showError(`Download failed: ${error.message}`);
         }
+    }
+
+    copyToClipboard() {
+        const text = this.inputText.value.trim();
+        if (!text) {
+            SharedUtilities.showNotification('No QR code text to copy', 'warning');
+            return;
+        }
+
+        navigator.clipboard.writeText(text).then(() => {
+            SharedUtilities.showNotification('Text copied to clipboard', 'success');
+        }).catch(() => {
+            SharedUtilities.showNotification('Failed to copy text', 'error');
+        });
+    }
+
+    clearAll() {
+        this.inputText.value = '';
+        this.qrContainer.innerHTML = '';
+        this.qrContainer.style.display = 'none';
+        this.downloadBtn.disabled = true;
+        this.clearError();
+        SharedUtilities.showNotification('QR code cleared', 'info');
     }
 
     showError(message) {

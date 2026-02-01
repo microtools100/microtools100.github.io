@@ -1,5 +1,8 @@
+// String Case Converter Tool - Standardized Implementation
+
 class StringCaseConverter {
     constructor() {
+        // Element references
         this.inputElement = document.getElementById('inputString');
         this.copyButtons = document.querySelectorAll('.copy-btn');
         this.clearBtn = document.getElementById('clearBtn');
@@ -9,11 +12,28 @@ class StringCaseConverter {
     }
 
     init() {
+        // Input listener for real-time conversion
         this.inputElement.addEventListener('input', () => this.updateOutputs());
+        
+        // Copy button listeners
         this.copyButtons.forEach(btn => {
             btn.addEventListener('click', (e) => this.copySingle(e));
         });
-        this.clearBtn.addEventListener('click', () => this.clear());
+
+        // Clear button listener
+        if (this.clearBtn) {
+            this.clearBtn.addEventListener('click', () => this.clearAll());
+        }
+
+        // Keyboard shortcuts: Ctrl+A to select all, Ctrl+K to clear
+        this.inputElement.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'k' || e.key === 'K') {
+                    e.preventDefault();
+                    this.clearAll();
+                }
+            }
+        });
 
         // Set initial state
         this.updateOutputs();
@@ -119,39 +139,34 @@ class StringCaseConverter {
         const text = outputElement.textContent;
 
         if (!text) {
-            alert('No output to copy. Please enter text first.');
+            SharedUtilities.showNotification('No output to copy. Please enter text first.', 'warning');
             return;
         }
 
-        navigator.clipboard.writeText(text).then(() => {
-            const originalText = btn.textContent;
-            btn.textContent = '✓';
-            btn.style.background = '#28a745';
-            btn.style.color = 'white';
-            btn.style.borderColor = '#28a745';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-                btn.style.color = '';
-                btn.style.borderColor = '';
-            }, 1500);
-        }).catch(() => {
-            alert('Failed to copy. Please try again.');
-        });
+        this.copyToClipboard(text, `Copied ${format}!`);
     }
 
-    clear() {
+    copyToClipboard(text, successMessage = 'Copied to clipboard!') {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        
+        SharedUtilities.showNotification(successMessage, 'success');
+    }
+
+    clearAll() {
         this.inputElement.value = '';
         this.updateOutputs();
         this.inputElement.focus();
+        SharedUtilities.showNotification('Cleared input', 'info');
     }
 }
 
 // Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new StringCaseConverter();
-    });
-} else {
-    new StringCaseConverter();
-}
+document.addEventListener('DOMContentLoaded', () => {
+    window.MicroTools = window.MicroTools || {};
+    window.MicroTools.stringCaseConverter = new StringCaseConverter();
+});

@@ -1,113 +1,258 @@
-// Base64 Encoder/Decoder Tool - Production Ready
-
+// Base64 Encoder/Decoder Tool
 class Base64Tool {
     constructor() {
-        this.inputText = document.getElementById('inputText');
-        this.outputText = document.getElementById('outputText');
-        this.encodeBtn = document.getElementById('encodeBtn');
-        this.decodeBtn = document.getElementById('decodeBtn');
-        this.copyBtn = document.querySelector('.copy-btn');
-        this.errorMsg = document.querySelector('.error-msg');
+        this.maxChars = 10000;
+        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
+        this.keystrokeDelay = null; // Keystroke delay handler
+        this.exampleText = "Hello World!";
+        
+        this.elements = {
+            inputText: document.getElementById('inputText'),
+            outputText: document.getElementById('outputText'),
+            encodeMode: document.getElementById('encodeMode'),
+            decodeMode: document.getElementById('decodeMode'),
+            processBtn: document.getElementById('processBtn'),
+            processBtnText: document.getElementById('processBtnText'),
+            clearBtn: document.getElementById('clearBtn'),
+            copyBtn: document.getElementById('copyBtn'),
+            downloadBtn: document.getElementById('downloadBtn'),
+            exampleBtn: document.getElementById('exampleBtn'),
+            inputLabel: document.getElementById('inputLabel'),
+            outputLabel: document.getElementById('outputLabel'),
+            errorMsg: document.querySelector('.error-msg')
+        };
+        
+        this.isEncode = true;
         this.init();
     }
 
     init() {
-        this.encodeBtn.addEventListener('click', () => this.encode());
-        this.decodeBtn.addEventListener('click', () => this.decode());
-        this.inputText.addEventListener('input', () => this.clearError());
-        this.inputText.addEventListener('input', () => this.autoConvert());
-        if (this.copyBtn) {
-            this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+        this.setupEventListeners();
+        this.setupKeyboardShortcuts();
+        // Initialize keystroke delay handler using global utility
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
+            () => this.executeCopy(),
+            this.autoCopyDelay
+        );
+    }
+
+    setupEventListeners() {
+        // Mode selection
+        this.elements.encodeMode.addEventListener('change', () => this.updateMode());
+        this.elements.decodeMode.addEventListener('change', () => this.updateMode());
+
+        // Process button
+        this.elements.processBtn.addEventListener('click', () => this.process());
+
+        // Clear button
+        this.elements.clearBtn.addEventListener('click', () => this.clear());
+
+        // Copy button
+        this.elements.copyBtn.addEventListener('click', () => this.copyToClipboard());
+
+        // Download button
+        this.elements.downloadBtn.addEventListener('click', () => this.download());
+
+        // Example button
+        if (this.elements.exampleBtn) {
+            this.elements.exampleBtn.addEventListener('click', () => this.loadExample());
+        }
+
+        // Real-time processing on input
+        this.elements.inputText.addEventListener('input', () => {
+            this.processWithoutAutoCopy();
+            // Schedule auto-copy after keystroke delay
+            this.keystrokeDelay.schedule();
+        });
+
+        // Character limit warning
+        this.elements.inputText.addEventListener('input', this.checkCharacterLimit.bind(this));
+    }
+
+    setupKeyboardShortcuts() {
+        SharedUtilities.setupKeyboardShortcuts({
+            'Ctrl+Enter': () => this.process(),
+            'Escape': () => this.clear(),
+            'Ctrl+E': () => this.loadExample()
+        });
+    }
+
+    updateMode() {
+        this.isEncode = this.elements.encodeMode.checked;
+        this.elements.inputLabel.textContent = this.isEncode ? 'Enter Text to Encode:' : 'Enter Base64 to Decode:';
+        this.elements.outputLabel.textContent = this.isEncode ? 'Encoded Result:' : 'Decoded Result:';
+        this.elements.processBtnText.textContent = this.isEncode ? 'Encode' : 'Decode';
+        this.process();
+    }
+
+    processWithoutAutoCopy() {
+        const input = this.elements.inputText.value.trim();
+
+        if (!input) {
+            this.elements.outputText.value = '';
+            this.clearError();
+            return;
+        }
+
+        try {
+            let result;
+            if (this.isEncode) {
+                result = btoa(input);
+            } else {
+                result = atob(input);
+            }
+            this.elements.outputText.value = result;
+            this.clearError();
+        } catch (error) {
+            this.showError('Error: Invalid input. Check your text for encoding errors.');
+            this.elements.outputText.value = '';
         }
     }
 
-    clearError() {
-        if (this.errorMsg) {
-            this.errorMsg.textContent = '';
-            this.errorMsg.style.display = 'none';
+    process() {
+        const input = this.elements.inputText.value.trim();
+
+        if (!input) {
+            this.elements.outputText.value = '';
+            this.clearError();
+            return;
+        }
+
+        try {
+            let result;
+            if (this.isEncode) {
+                result = btoa(input);
+            } else {
+                result = atob(input);
+            }
+            this.elements.outputText.value = result;
+            this.clearError();
+
+            // Auto-copy to clipboard with a small delay
+            setTimeout(() => {
+                SharedUtilities.copyToClipboardSilently(result);
+                // Show success message
+                const actionText = this.isEncode ? 'encoded' : 'decoded';
+                SharedUtilities.showNotification(`Text ${actionText} and copied to clipboard`, 'success');
+            }, 10);
+
+            // Save to history
+            this.saveToHistory(input, result);
+        } catch (error) {
+            this.showError(this.isEncode ? 'Error: Invalid characters for encoding.' : 'Error: Invalid Base64 string.');
+            this.elements.outputText.value = '';
+            const actionText = this.isEncode ? 'encoding' : 'decoding';
+            SharedUtilities.showNotification(`Error ${actionText} text`, 'error');
+        }
+    }
+
+    clear() {
+        SharedUtilities.clearElements(
+            { inputData: this.elements.inputText, outputData: this.elements.outputText },
+            { 
+                message: 'Text cleared',
+                onClear: () => {
+                    this.clearError();
+                }
+            }
+        );
+    }
+
+    loadExample() {
+        this.elements.inputText.value = this.exampleText;
+        this.process();
+        SharedUtilities.showNotification('Example loaded. Try different modes to see the effect.', 'info');
+    }
+
+    async copyToClipboard() {
+        const text = this.elements.outputText.value.trim();
+        if (!text) {
+            this.showError('No result to copy. Please encode or decode text first.');
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
+            return;
+        }
+
+        if (window.MicroTools?.utils?.copyToClipboard) {
+            await window.MicroTools.utils.copyToClipboard(text, this.elements.copyBtn);
+        } else {
+            // Fallback copy method
+            this.elements.outputText.select();
+            document.execCommand('copy');
+            SharedUtilities.showNotification('Copied to clipboard!', 'success');
+        }
+        this.clearError();
+    }
+
+    download() {
+        const text = this.elements.outputText.value.trim();
+        if (!text) {
+            this.showError('No result to download. Please encode or decode text first.');
+            SharedUtilities.showNotification('Nothing to download', 'warning');
+            return;
+        }
+
+        const filename = this.isEncode ? 'base64-encoded.txt' : 'base64-decoded.txt';
+        SharedUtilities.downloadAsFile(text, filename, 'text/plain', {
+            successMessage: `Text downloaded as ${filename}`
+        });
+        this.clearError();
+    }
+
+    checkCharacterLimit() {
+        const count = this.elements.inputText.value.length;
+        if (count > this.maxChars) {
+            SharedUtilities.showNotification(`Character limit exceeded (${this.maxChars} max). Text will be truncated.`, 'warning');
+            this.elements.inputText.value = this.elements.inputText.value.substring(0, this.maxChars);
+        }
+    }
+
+    saveToHistory(original, processed) {
+        try {
+            const history = JSON.parse(localStorage.getItem('base64History') || '[]');
+            history.unshift({
+                original: original.substring(0, 100) + (original.length > 100 ? '...' : ''),
+                processed: processed.substring(0, 100) + (processed.length > 100 ? '...' : ''),
+                mode: this.isEncode ? 'encode' : 'decode',
+                timestamp: new Date().toISOString()
+            });
+
+            // Keep only last 10 items
+            if (history.length > 10) {
+                history.pop();
+            }
+
+            localStorage.setItem('base64History', JSON.stringify(history));
+        } catch (e) {
+            // Silently fail if localStorage is full or not available
+            console.log('Could not save to history:', e);
+        }
+    }
+
+    executeCopy() {
+        const outputText = this.elements.outputText.value;
+        if (outputText) {
+            SharedUtilities.copyToClipboardSilently(outputText);
+            SharedUtilities.showNotification('Copied to clipboard', 'success');
         }
     }
 
     showError(message) {
-        if (this.errorMsg) {
-            this.errorMsg.textContent = message;
-            this.errorMsg.style.display = 'block';
+        if (this.elements.errorMsg) {
+            this.elements.errorMsg.textContent = message;
+            this.elements.errorMsg.classList.add('show');
         }
     }
 
-    encode() {
-        const text = this.inputText.value.trim();
-        if (!text) {
-            this.outputText.value = '';
-            this.clearError();
-            return;
+    clearError() {
+        if (this.elements.errorMsg) {
+            this.elements.errorMsg.textContent = '';
+            this.elements.errorMsg.classList.remove('show');
         }
-
-        try {
-            const encoded = btoa(unescape(encodeURIComponent(text)));
-            this.outputText.value = encoded;
-            this.clearError();
-            this.copyToClipboard();
-        } catch (error) {
-            this.showError('Error encoding: Invalid characters detected');
-        }
-    }
-
-    decode() {
-        const text = this.inputText.value.trim();
-        if (!text) {
-            this.outputText.value = '';
-            this.clearError();
-            return;
-        }
-
-        try {
-            if (!this.isValidBase64(text)) {
-                this.showError('Invalid Base64 format. Ensure input contains only Base64 characters (A-Z, a-z, 0-9, +, /, =)');
-                return;
-            }
-            const decoded = decodeURIComponent(escape(atob(text)));
-            this.outputText.value = decoded;
-            this.clearError();
-            this.copyToClipboard();
-        } catch (error) {
-            this.showError('Error decoding: Invalid Base64 string');
-        }
-    }
-
-    isValidBase64(str) {
-        const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
-        if (!base64Regex.test(str)) return false;
-        try {
-            atob(str);
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    autoConvert() {
-        // Optional: auto-detect if input looks like Base64 and auto-decode
-        const text = this.inputText.value.trim();
-        if (text.length > 10 && /^[A-Za-z0-9+/]+={0,2}$/.test(text)) {
-            // Input looks like base64 - could auto-decode, but keep manual for user control
-        }
-    }
-
-    copyToClipboard() {
-        const text = this.outputText.value;
-        if (!text) return;
-
-        navigator.clipboard.writeText(text).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-        }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-        });
     }
 }
 
-// Initialize when DOM is ready
+// Initialize tool when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.MicroTools = window.MicroTools || {};
-    window.MicroTools.base64Tool = new Base64Tool();
+    window.base64Tool = new Base64Tool();
 });
+

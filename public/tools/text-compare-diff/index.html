@@ -10,11 +10,24 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     
-    <title>Text Compare/Diff - Compare Texts Side-by-Side</title>
+    <title>Text Compare/Diff - Free Online Tool | Micro Tools</title>
     
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Text Compare/Diff Tool",
+        "description": "Free online text comparison tool. Compare two texts side-by-side and see differences highlighted.",
+        "url": "https://microtools.cc/tools/text-compare-diff/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
 </head>
 <body>
     <header class="site-header">
@@ -31,7 +44,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -41,97 +55,139 @@
 
     <main class="tool-main">
         <div class="container">
-            <h1>Text Compare/Diff</h1>
-            <p class="tool-subtitle">Compare two texts side-by-side and instantly see differences highlighted. Perfect for code review, content validation, and version comparison.</p>
-
-            <div class="tool-options">
-                <h3 class="section-title">Options</h3>
-                <div class="option-group">
-                    <label for="ignoreCase">
-                        <input type="checkbox" id="ignoreCase">
-                        Ignore case (treat uppercase and lowercase as same)
-                    </label>
+            <div class="tool-page">
+                <div class="tool-header">
+                    <h1>Text Compare/Diff</h1>
+                    <p class="tool-description">Compare two texts side-by-side and instantly see differences highlighted. Perfect for code review, content validation, and version comparison.</p>
                 </div>
-                <div class="option-group">
-                    <label for="ignoreWhitespace">
-                        <input type="checkbox" id="ignoreWhitespace">
-                        Ignore whitespace differences
-                    </label>
+
+                <div class="tool-layout">
+                    <div class="tool-main">
+                        <div class="tool-container">
+                            <!-- Options Section -->
+                            <div class="tool-options">
+                                <h3>Comparison Options</h3>
+                                <div class="option-group">
+                                    <label for="ignoreCase">
+                                        <input type="checkbox" id="ignoreCase">
+                                        Ignore case (treat uppercase and lowercase as same)
+                                    </label>
+                                </div>
+                                <div class="option-group">
+                                    <label for="ignoreWhitespace">
+                                        <input type="checkbox" id="ignoreWhitespace">
+                                        Ignore whitespace differences
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Input Section -->
+                            <div class="tool-section">
+                                <h2>Input Texts</h2>
+                                <div class="tool-content-columns">
+                                    <div class="input-column">
+                                        <div class="input-area">
+                                            <label for="text1">Original Text</label>
+                                            <textarea id="text1" placeholder="Paste first text here&#10;&#10;Example:&#10;The quick brown fox&#10;jumps over the lazy dog"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="input-column">
+                                        <div class="input-area">
+                                            <label for="text2">Modified Text</label>
+                                            <textarea id="text2" placeholder="Paste second text here&#10;&#10;Example:&#10;The fast brown fox&#10;jumps over the lazy cat"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stats Section -->
+                            <div class="tool-section">
+                                <h2>Comparison Statistics</h2>
+                                <div class="stats-display" id="diff-stats">
+                                    <!-- Stats will be populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Results Section -->
+                            <div class="tool-section">
+                                <h2>Comparison Results</h2>
+                                <div class="diff-results">
+                                    <div>
+                                        <h3>Original</h3>
+                                        <div class="diff-output" id="output1"></div>
+                                    </div>
+                                    <div>
+                                        <h3>Modified</h3>
+                                        <div class="diff-output" id="output2"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Use Cases Section -->
+                            <div class="use-cases">
+                                <h3>Use Cases</h3>
+                                <div class="use-case-grid">
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">💻</span>
+                                        <h5>Code Review</h5>
+                                        <p>Compare code changes and review differences before merging</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">📄</span>
+                                        <h5>Document Comparison</h5>
+                                        <p>Track changes between versions of documents and articles</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">✅</span>
+                                        <h5>Content Validation</h5>
+                                        <p>Verify content changes and ensure accuracy</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">📋</span>
+                                        <h5>Version Control</h5>
+                                        <p>Monitor and compare different versions of text</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Formatting Guide -->
+                            <div class="formatting-guide">
+                                <h3>Interpretation Guide</h3>
+                                <ul>
+                                    <li><strong>Same Lines (Gray):</strong> Lines that are identical in both texts</li>
+                                    <li><strong>Removed Lines (Red):</strong> Lines that exist in the original but not in the modified</li>
+                                    <li><strong>Added Lines (Green):</strong> Lines that exist in the modified but not in the original</li>
+                                    <li><strong>Modified Lines (Yellow):</strong> Lines that have changed content</li>
+                                    <li><strong>Ignore Case:</strong> When enabled, treats "Hello" and "hello" as the same</li>
+                                    <li><strong>Ignore Whitespace:</strong> When enabled, extra spaces are normalized for comparison</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="tool-sidebar">
+                        <div class="related-tools">
+                            <h4>Related Tools</h4>
+                            <ul>
+                                <li><a href="/tools/remove-extra-spaces/">Remove Extra Spaces</a></li>
+                                <li><a href="/tools/word-character-counter/">Word & Character Counter</a></li>
+                                <li><a href="/tools/text-lowercase/">Text Lowercase Converter</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-tips">
+                            <h4>Quick Tips</h4>
+                            <ul>
+                                <li>Paste both texts to compare</li>
+                                <li>Use checkboxes to ignore case or whitespace</li>
+                                <li>Red = removed, Green = added, Yellow = modified</li>
+                                <li>Click stats to see detailed results</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="compare-grid">
-                <div class="input-group">
-                    <label for="text1">Original Text</label>
-                    <textarea id="text1" placeholder="Paste first text here&#10;&#10;Example:&#10;The quick brown fox&#10;jumps over the lazy dog"></textarea>
-                </div>
-                <div class="input-group">
-                    <label for="text2">Modified Text</label>
-                    <textarea id="text2" placeholder="Paste second text here&#10;&#10;Example:&#10;The fast brown fox&#10;jumps over the lazy cat"></textarea>
-                </div>
-            </div>
-
-            <div class="diff-stats">
-                <!-- Stats will be populated by JavaScript -->
-            </div>
-
-            <div class="diff-results">
-                <div>
-                    <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 1rem;">Original</h3>
-                    <div class="diff-output" id="output1"></div>
-                </div>
-                <div>
-                    <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 1rem;">Modified</h3>
-                    <div class="diff-output" id="output2"></div>
-                </div>
-            </div>
-
-            <section class="use-cases">
-                <h2>Use Cases</h2>
-                <div class="use-case-grid">
-                    <div class="use-case-item">
-                        <span class="use-case-icon">💻</span>
-                        <h4>Code Review</h4>
-                        <p>Compare code changes and review differences before merging</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">📄</span>
-                        <h4>Document Comparison</h4>
-                        <p>Track changes between versions of documents and articles</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">✅</span>
-                        <h4>Content Validation</h4>
-                        <p>Verify content changes and ensure accuracy</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">📋</span>
-                        <h4>Version Control</h4>
-                        <p>Monitor and compare different versions of text</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="formatting-guide">
-                <h2>Interpretation Guide</h2>
-                <ul>
-                    <li><strong>Same Lines (Gray):</strong> Lines that are identical in both texts</li>
-                    <li><strong>Removed Lines (Red):</strong> Lines that exist in the original but not in the modified</li>
-                    <li><strong>Added Lines (Green):</strong> Lines that exist in the modified but not in the original</li>
-                    <li><strong>Modified Lines (Yellow):</strong> Lines that have changed content</li>
-                    <li><strong>Ignore Case:</strong> When enabled, treats "Hello" and "hello" as the same</li>
-                    <li><strong>Ignore Whitespace:</strong> When enabled, extra spaces are normalized for comparison</li>
-                </ul>
-            </section>
-
-            <section class="related-tools">
-                <h2>Related Tools</h2>
-                <ul>
-                    <li><a href="/tools/remove-extra-spaces/">Remove Extra Spaces</a></li>
-                    <li><a href="/tools/word-character-counter/">Word & Character Counter</a></li>
-                    <li><a href="/tools/text-lowercase/">Text Lowercase Converter</a></li>
-                </ul>
-            </section>
         </div>
     </main>    <footer class="site-footer">
         <div class="container">
@@ -147,7 +203,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

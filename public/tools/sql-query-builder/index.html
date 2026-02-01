@@ -13,7 +13,7 @@
     <title>SQL Query Builder - Generate SQL Queries | Micro Tools</title>
     
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
@@ -44,14 +44,15 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                                <nav class="main-nav">
+                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -71,6 +72,9 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
                         <section class="tool-section">
                             <!-- Mode Selection -->
                             <div class="mode-selector">
@@ -226,6 +230,22 @@
                                 </div>
                             </div>
 
+                            <!-- Tool Actions (Above Output) -->
+                            <div class="tool-actions">
+                                <button class="action-btn primary" id="generateBtn">
+                                    <span>Generate Query</span>
+                                    <span>✨</span>
+                                </button>
+                                <button class="action-btn" id="copyBtn">
+                                    <span>Copy Query</span>
+                                    <span>📋</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>✕</span>
+                                </button>
+                            </div>
+
                             <!-- Generated Query Output -->
                             <div class="query-output">
                                 <h3>Generated SQL Query</h3>
@@ -233,28 +253,97 @@
                                     <pre id="queryOutput"></pre>
                                 </div>
                             </div>
-
-                            <!-- Tool Actions -->
-                            <div class="tool-actions">
-                                <button class="action-btn" id="clearBtn">
-                                    <span>Clear</span>
-                                    <span>✕</span>
-                                </button>
-                                <button class="action-btn" id="copyBtn">
-                                    <span>Copy Query</span>
-                                    <span>📋</span>
-                                </button>
-                                <button class="action-btn primary" id="generateBtn">
-                                    <span>Generate Query</span>
-                                    <span>✨</span>
-                                </button>
-                            </div>
                         </section>
                     </div>
+
+                    <!-- Use Cases Section -->
+                    <div class="use-cases">
+                        <h3>Use Cases</h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📚</span>
+                                <h5>Learning SQL</h5>
+                                <p>Understand SQL syntax by building queries visually</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">⚡</span>
+                                <h5>Quick Query Generation</h5>
+                                <p>Build SELECT, INSERT, UPDATE, DELETE queries quickly</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🔍</span>
+                                <h5>Complex Filtering</h5>
+                                <p>Create WHERE conditions and advanced filters easily</p>
+                            </div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">✅</span>
+                                <h5>Validate Syntax</h5>
+                                <p>Generate syntactically correct SQL queries</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Choose between Simple mode for basic queries or Advanced mode for complex ones</li>
+                            <li>Select your query type: SELECT, INSERT, UPDATE, or DELETE</li>
+                            <li>Enter table name and configure your query parameters</li>
+                            <li>Add columns, conditions, or values as needed</li>
+                            <li>Click Generate Query to create your SQL</li>
+                            <li>Copy the generated query or use it directly</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>Simple Mode:</strong> Basic interface for straightforward queries with dropdown menus</li>
+                            <li><strong>Advanced Mode:</strong> Full control with input fields for complex query building</li>
+                            <li><strong>Query Types:</strong> Support for SELECT, INSERT, UPDATE, and DELETE operations</li>
+                            <li><strong>Column Selection:</strong> Choose specific columns or use SELECT * for all columns</li>
+                            <li><strong>Conditions:</strong> Build WHERE clauses with multiple AND/OR conditions</li>
+                            <li><strong>Advanced Options:</strong> GROUP BY, HAVING, ORDER BY, LIMIT clauses support</li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/sql-formatter/">SQL Formatter</a></li>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/regex-tester/">Regex Tester</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Query Types</h4>
+                        <ul>
+                            <li>SELECT: Retrieve data from tables</li>
+                            <li>INSERT: Add new rows to a table</li>
+                            <li>UPDATE: Modify existing data</li>
+                            <li>DELETE: Remove rows from table</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Builder Tips</h4>
+                        <ul>
+                            <li>Use Simple mode for quick queries</li>
+                            <li>Advanced mode offers more options</li>
+                            <li>Check generated syntax before use</li>
+                            <li>Format query with SQL Formatter tool</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
         </div>
-    </main>    <footer class="site-footer">
+    </main>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -268,7 +357,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

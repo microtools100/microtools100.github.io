@@ -2,6 +2,7 @@
 
 class PasswordStrengthChecker {
     constructor() {
+        // Get DOM elements
         this.passwordInput = document.getElementById('passwordInput');
         this.toggleBtn = document.getElementById('toggleVisibility');
         this.strengthBar = document.getElementById('strengthBar');
@@ -13,15 +14,66 @@ class PasswordStrengthChecker {
         this.recommendationsContainer = document.getElementById('recommendationsContainer');
         this.recommendationsList = document.getElementById('recommendationsList');
         
+        // Get or create copy and clear buttons
+        this.copyBtn = document.getElementById('copyBtn') || this.createCopyButton();
+        this.clearBtn = document.getElementById('clearBtn') || this.createClearButton();
+        
+        // Get criteria elements
+        this.criteriaElements = {
+            length: document.getElementById('crit-length'),
+            lowercase: document.getElementById('crit-lowercase'),
+            uppercase: document.getElementById('crit-uppercase'),
+            numbers: document.getElementById('crit-numbers'),
+            special: document.getElementById('crit-special'),
+            nocommon: document.getElementById('crit-nocommon')
+        };
+        
         this.commonPasswords = ['password', '123456', 'qwerty', 'abc123', 'password123', '12345678', 
                                 'letmein', 'welcome', 'monkey', 'dragon', 'master', 'admin', 'iloveyou'];
         
         this.init();
     }
 
+    createCopyButton() {
+        const btn = document.createElement('button');
+        btn.id = 'copyBtn';
+        btn.className = 'action-btn';
+        btn.textContent = '📋 Copy';
+        btn.title = 'Copy password to clipboard';
+        return btn;
+    }
+
+    createClearButton() {
+        const btn = document.createElement('button');
+        btn.id = 'clearBtn';
+        btn.className = 'action-btn danger';
+        btn.textContent = '🗑️ Clear';
+        btn.title = 'Clear password input';
+        return btn;
+    }
+
     init() {
-        this.passwordInput.addEventListener('input', () => this.analyzePassword());
+        // Event listeners for input
+        this.passwordInput.addEventListener('input', () => this.checkStrength());
+        this.passwordInput.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
+        
+        // Event listeners for buttons
         this.toggleBtn.addEventListener('click', () => this.togglePasswordVisibility());
+        this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+        this.clearBtn.addEventListener('click', () => this.clearAll());
+    }
+
+    handleKeyboardShortcuts(e) {
+        // Ctrl+C / Cmd+C to copy (in addition to button)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'c' && !e.shiftKey) {
+            e.preventDefault();
+            this.copyToClipboard();
+        }
+        // Ctrl+L / Cmd+L to clear
+        if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+            e.preventDefault();
+            this.clearAll();
+        }
     }
 
     togglePasswordVisibility() {
@@ -30,7 +82,7 @@ class PasswordStrengthChecker {
         this.toggleBtn.textContent = isPassword ? '👁️‍🗨️' : '👁️';
     }
 
-    analyzePassword() {
+    checkStrength() {
         const password = this.passwordInput.value;
         
         if (!password) {
@@ -39,7 +91,7 @@ class PasswordStrengthChecker {
         }
 
         const analysis = this.getPasswordAnalysis(password);
-        this.updateDisplay(analysis);
+        this.updateStrengthDisplay(analysis);
     }
 
     getPasswordAnalysis(password) {
@@ -96,9 +148,7 @@ class PasswordStrengthChecker {
         if (/(.)\1{2,}/.test(this.passwordInput.value)) score -= 10;
 
         return Math.max(0, Math.min(100, score));
-    }
-
-    getStrengthLevel(score) {
+    }    getStrengthLevel(score) {
         if (score < 20) return { level: 'Very Weak', class: 'very-weak', color: '#ef4444' };
         if (score < 40) return { level: 'Weak', class: 'weak', color: '#f97316' };
         if (score < 60) return { level: 'Fair', class: 'fair', color: '#f59e0b' };
@@ -148,7 +198,7 @@ class PasswordStrengthChecker {
         return recommendations;
     }
 
-    updateDisplay(analysis) {
+    updateStrengthDisplay(analysis) {
         // Update meter
         this.strengthBar.className = 'strength-bar ' + analysis.strength.class;
         
@@ -196,6 +246,28 @@ class PasswordStrengthChecker {
                 }
             }
         });
+    }
+
+    copyToClipboard() {
+        const password = this.passwordInput.value;
+        
+        if (!password) {
+            SharedUtilities.showNotification('Password is empty', 'warning');
+            return;
+        }
+
+        navigator.clipboard.writeText(password).then(() => {
+            SharedUtilities.showNotification('Password copied to clipboard', 'success');
+        }).catch(() => {
+            SharedUtilities.showNotification('Failed to copy password', 'error');
+        });
+    }
+
+    clearAll() {
+        this.passwordInput.value = '';
+        this.resetDisplay();
+        this.passwordInput.focus();
+        SharedUtilities.showNotification('Password cleared', 'info');
     }
 
     resetDisplay() {

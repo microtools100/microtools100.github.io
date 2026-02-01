@@ -17,10 +17,33 @@ class ReadingTimeCalculator {
     init() {
         this.textInput.addEventListener('input', () => this.calculate());
         this.readingSpeedInput.addEventListener('change', () => this.calculate());
-        this.copyBtn.addEventListener('click', () => this.copyResults());
+        if (this.copyBtn) {
+            this.copyBtn.addEventListener('click', () => this.copyResults());
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
         
         // Initial calculation
         this.calculate();
+    }
+
+    handleKeyboardShortcuts(e) {
+        // Ctrl/Cmd+Enter to calculate
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            this.calculate();
+        }
+        // Ctrl/Cmd+Shift+C to copy results
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+            e.preventDefault();
+            this.copyResults();
+        }
+        // Ctrl/Cmd+Shift+K to clear
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'K') {
+            e.preventDefault();
+            this.clearAll();
+        }
     }
 
     calculate() {
@@ -81,7 +104,7 @@ class ReadingTimeCalculator {
     copyResults() {
         const text = this.textInput.value;
         if (!text.trim()) {
-            window.MicroTools?.utils?.showNotification?.('Please enter text first', 'warning');
+            SharedUtilities.showNotification('Please enter text first', 'warning');
             return;
         }
 
@@ -93,11 +116,22 @@ class ReadingTimeCalculator {
 
         const results = `Reading Time Analysis:\n\nReading Time: ${readingTimeMinutes} min (@ ${readingSpeed} WPM)\nWords: ${wordCount}\nCharacters: ${charCount}\nSentences: ${sentenceCount}\n\nAlternative Speeds:\nSlow (150 WPM): ${Math.ceil(wordCount / 150)} min\nAverage (200 WPM): ${Math.ceil(wordCount / 200)} min\nFast (250 WPM): ${Math.ceil(wordCount / 250)} min`;
 
-        navigator.clipboard.writeText(results).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Results copied to clipboard!', 'success');
-        }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-        });
+        this.textInput.select();
+        document.execCommand('copy');
+        this.copyBtn.textContent = '✓ Copied!';
+        this.copyBtn.classList.add('success');
+        SharedUtilities.showNotification('Results copied to clipboard!', 'success');
+        setTimeout(() => {
+            this.copyBtn.textContent = 'Copy Results';
+            this.copyBtn.classList.remove('success');
+        }, 2000);
+    }
+
+    clearAll() {
+        this.textInput.value = '';
+        this.resetResults();
+        this.textInput.focus();
+        window.MicroTools?.utils?.showNotification?.('Cleared all inputs', 'info');
     }
 }
 

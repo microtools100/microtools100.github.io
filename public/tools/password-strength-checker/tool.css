@@ -1,6 +1,9 @@
-/* Password Strength Checker - Tool Specific Styles */
+﻿/* password-strength-checker - Tool-Specific Styles */
 
 :root {
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
     --very-weak-color: #ef4444;
     --weak-color: #f97316;
     --fair-color: #f59e0b;
@@ -9,16 +12,61 @@
     --very-strong-color: #059669;
 }
 
-.password-input-group {
+.tool-page {
+    min-height: 100vh;
+    background: var(--bg-color);
+}
+
+.tool-header {
+    background: linear-gradient(135deg, var(--primary-color), #0066cc);
+    color: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: var(--radius-lg);
+}
+
+.tool-header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+}
+
+.tool-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.tool-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
     margin-bottom: 2rem;
 }
 
-.password-input-group label {
+.tool-section {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.tool-section h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.option-group {
+    margin-bottom: 1.5rem;
+}
+
+.option-group label {
     display: block;
     font-weight: 600;
     color: var(--text-color);
     margin-bottom: 0.5rem;
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .password-input-wrapper {
@@ -53,11 +101,53 @@
     cursor: pointer;
     padding: 0.5rem;
     transition: all 0.2s;
+    border-radius: var(--radius-sm);
 }
 
 .toggle-visibility-btn:hover {
-    background: var(--surface-color);
-    border-radius: var(--radius-sm);
+    background: var(--border-color);
+}
+
+.action-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-btn:hover {
+    background: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.action-btn.secondary {
+    background: var(--border-color);
+    color: var(--text-color);
+}
+
+.action-btn.secondary:hover {
+    background: #d1d5db;
+}
+
+.action-btn.danger {
+    background: var(--error-color);
+}
+
+.action-btn.danger:hover {
+    background: #dc2626;
 }
 
 .strength-meter-container {
@@ -216,7 +306,7 @@
 }
 
 .criterion-icon.met::after {
-    content: '✓';
+    content: 'âœ“';
 }
 
 .recommendations {
@@ -246,11 +336,18 @@
 }
 
 .recommendations li::before {
-    content: '→';
+    content: 'â†’';
     position: absolute;
     left: 0;
     color: var(--strong-color);
     font-weight: bold;
+}
+
+.tool-content-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 .use-cases {
@@ -265,7 +362,7 @@
 
 .use-case-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
 }
 
@@ -321,6 +418,52 @@
     border-bottom: none;
 }
 
+.tool-sidebar {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.tool-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.tool-sidebar .related-tools,
+.tool-sidebar .formatting-guide,
+.tool-sidebar .tool-tips {
+    margin-bottom: 2rem;
+}
+
+.tool-sidebar .related-tools:last-child,
+.tool-sidebar .formatting-guide:last-child,
+.tool-sidebar .tool-tips:last-child {
+    margin-bottom: 0;
+}
+
+.tool-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tool-sidebar li {
+    padding: 0.5rem 0;
+    color: var(--text-color);
+}
+
+.tool-sidebar a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.tool-sidebar a:hover {
+    text-decoration: underline;
+}
+
 .related-tools {
     margin: 3rem 0;
 }
@@ -356,7 +499,33 @@
     text-decoration: underline;
 }
 
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .tool-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-content-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
+    .tool-header {
+        padding: 1.5rem;
+    }
+
+    .tool-header h1 {
+        font-size: 1.5rem;
+    }
+
     .password-stats {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -367,6 +536,38 @@
 
     .use-case-grid {
         grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .tool-section {
+        padding: 1rem;
+    }
+
+    .tool-header h1 {
+        font-size: 1.25rem;
+    }
+
+    .tool-header p {
+        font-size: 0.95rem;
+    }
+
+    .password-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .action-btn {
+        font-size: 0.85rem;
+        padding: 0.6rem 1rem;
     }
 }
 

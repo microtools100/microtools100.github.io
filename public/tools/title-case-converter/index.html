@@ -10,11 +10,31 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     
-    <title>Title Case Converter - Format Text to Title Case Online</title>
+    <title>Title Case Converter - Free Online Tool | Micro Tools</title>
     
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Title Case Converter",
+        "description": "Free online tool to convert text to title case format",
+        "url": "https://micro-tools-43a.pages.dev/tools/title-case-converter/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 <body>
     <header class="site-header">
@@ -31,7 +51,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -39,85 +60,186 @@
         </div>
     </header>
 
-    <main class="tool-main">
+    <main class="tool-page">
         <div class="container">
-            <h1>Title Case Converter</h1>
-            <p class="tool-subtitle">Convert text to title case format instantly. Perfect for headlines, titles, and professional documents.</p>
+            <header class="tool-header">
+                <h1>Title Case Converter</h1>
+                <p class="tool-description">
+                    Convert text to title case format instantly. Perfect for headlines, titles, and professional documents.
+                </p>
+            </header>
 
-            <div class="tool-options">
-                <h3 class="section-title">Options</h3>
-                <div class="option-group">
-                    <label for="titleStyle">Title Style:</label>
-                    <select id="titleStyle">
-                        <option value="standard">Standard Title Case</option>
-                        <option value="all-caps">ALL CAPS</option>
-                        <option value="first-letter">First Letter Only</option>
-                    </select>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Conversion Options</h3>
+                            <div class="option-group">
+                                <label for="titleStyle">Title Style:</label>
+                                <select id="titleStyle">
+                                    <option value="standard">Standard Title Case</option>
+                                    <option value="all-caps">ALL CAPS</option>
+                                    <option value="first-letter">First Letter Only</option>
+                                </select>
+                            </div>
+                            <div class="option-group">
+                                <label for="preserveCase">
+                                    <input type="checkbox" id="preserveCase" checked>
+                                    Preserve acronyms (e.g., USA, API)
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputText">Enter your text:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="inputText" 
+                                            placeholder="Type or paste your text here...&#10;&#10;Example:&#10;this is a sample heading"
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter any text you want to convert to title case. Maximum 10,000 characters.
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="convertBtn">
+                                        <span>Convert</span>
+                                        <span>↓</span>
+                                    </button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                    <button class="action-btn" id="exampleBtn">
+                                        <span>Example</span>
+                                        <span>↻</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <div class="output-header">
+                                        <label for="outputText">Title Case Text:</label>
+                                        <div class="stats-display">
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="charCount">0</span>
+                                                <span class="stat-label">Characters</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="wordCount">0</span>
+                                                <span class="stat-label">Words</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="capitalPercent">0%</span>
+                                                <span class="stat-label">Capitalized</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputText" 
+                                            placeholder="Your title case text will appear here...&#10;&#10;Example output:&#10;This Is A Sample Heading"
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                    <div class="tool-actions">
+                                        <button class="action-btn success" id="copyBtn" data-copy="outputText">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Instructions -->
+                    <div class="instructions">
+                        <h4>How to use this title case converter:</h4>
+                        <ol>
+                            <li>Type or paste your text into the input field</li>
+                            <li>Select your preferred title style (Standard, ALL CAPS, or First Letter Only)</li>
+                            <li>Choose whether to preserve acronyms</li>
+                            <li>Click "Convert" to transform your text</li>
+                            <li>Copy the result using the "Copy to Clipboard" button or download as .txt</li>
+                        </ol>
+                        <p><strong>Tip:</strong> You can also press Ctrl+Enter (Cmd+Enter on Mac) to convert instantly.</p>
+                    </div>
+
+                    <!-- Use Cases -->
+                    <div class="use-cases">
+                        <h4>Common Use Cases:</h4>
+                        <div class="use-case-grid">
+                            <div class="use-case">
+                                <div class="use-case-icon">📰</div>
+                                <h5>Blog Titles</h5>
+                                <p>Format blog post titles with proper capitalization</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">📑</div>
+                                <h5>Document Headers</h5>
+                                <p>Create professional document headings</p>
+                            </div>
+                            <div class="use-case">
+                                <div class="use-case-icon">🎬</div>
+                                <h5>Video Titles</h5>
+                                <p>Format titles for YouTube and social media</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Title Case Rules -->
+                    <div class="formatting-guide">
+                        <h3>Title Case Rules</h3>
+                        <ul>
+                            <li><strong>Capitalize:</strong> First and last words, all nouns, verbs, adjectives, and adverbs</li>
+                            <li><strong>Don't capitalize:</strong> Articles (a, an, the), conjunctions, and prepositions (unless first or last)</li>
+                            <li><strong>Exceptions:</strong> Capitalize prepositions and conjunctions if they're the first or last word</li>
+                            <li><strong>Acronyms:</strong> When preserved, acronyms stay in ALL CAPS (API, USA, HTML)</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="option-group">
-                    <label for="preserveCase">
-                        <input type="checkbox" id="preserveCase" checked>
-                        Preserve acronyms (e.g., USA, API)
-                    </label>
-                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/text-uppercase/">Text Uppercase Converter</a></li>
+                            <li><a href="/tools/text-lowercase/">Text Lowercase Converter</a></li>
+                            <li><a href="/tools/sentence-case-converter/">Sentence Case Converter</a></li>
+                            <li><a href="/tools/string-case-converter/">String Case Converter</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Title Case Best Practices</h4>
+                        <ul>
+                            <li>Always capitalize the first and last words</li>
+                            <li>Capitalize all important words (nouns, verbs, adjectives)</li>
+                            <li>Skip small words (a, an, the, and, but, or)</li>
+                            <li>Use for headlines, titles, and document headers</li>
+                            <li>Preserve acronyms for technical terms</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
-
-            <div class="input-output-grid">
-                <div class="input-group">
-                    <label for="inputText">Input Text</label>
-                    <textarea id="inputText" placeholder="enter text here&#10;&#10;Example:&#10;this is a sample heading&#10;&#10;Result:&#10;This Is A Sample Heading" rows="10"></textarea>
-                </div>
-                <div class="output-group">
-                    <label for="outputText">Output Text</label>
-                    <textarea id="outputText" readonly placeholder="Result will appear here..." rows="10"></textarea>
-                    <button class="copy-btn" data-copy="outputText">📋 Copy</button>
-                </div>
-            </div>
-
-            <section class="use-cases">
-                <h2>Use Cases</h2>
-                <div class="use-case-grid">
-                    <div class="use-case-item">
-                        <span class="use-case-icon">📰</span>
-                        <h4>Blog Titles</h4>
-                        <p>Format blog post titles with proper capitalization</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">📑</span>
-                        <h4>Document Headers</h4>
-                        <p>Create professional document headings</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🎬</span>
-                        <h4>Video Titles</h4>
-                        <p>Format titles for YouTube and social media</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">📧</span>
-                        <h4>Email Subject Lines</h4>
-                        <p>Create professional email subject lines</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="formatting-guide">
-                <h2>Title Case Rules</h2>
-                <ul>
-                    <li><strong>Capitalize:</strong> First and last words, all nouns, verbs, adjectives, and adverbs</li>
-                    <li><strong>Don't capitalize:</strong> Articles (a, an, the), conjunctions, and prepositions</li>
-                    <li><strong>Exceptions:</strong> Capitalize prepositions and conjunctions if they're the first or last word</li>
-                    <li><strong>Acronyms:</strong> When preserved, acronyms stay in ALL CAPS (API, USA, HTML)</li>
-                </ul>
-            </section>
-
-            <section class="related-tools">
-                <h2>Related Tools</h2>
-                <ul>
-                    <li><a href="/tools/text-uppercase/">Text Uppercase Converter</a></li>
-                    <li><a href="/tools/text-lowercase/">Text Lowercase Converter</a></li>
-                    <li><a href="/tools/sentence-case-converter/">Sentence Case Converter</a></li>
-                </ul>
-            </section>
         </div>
     </main>    <footer class="site-footer">
         <div class="container">
@@ -133,7 +255,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

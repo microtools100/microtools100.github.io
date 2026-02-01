@@ -1,436 +1,308 @@
-/* Remove Extra Spaces Tool Specific Styles */
+﻿/* Remove Extra Spaces Tool - Tool Styles */
 
-/* Three-Column Layout for Desktop */
-.tool-section.three-column {
-    display: grid;
-    grid-template-columns: 1fr 0.8fr 1fr;
-    gap: 2rem;
-    align-items: stretch;
-}
-
-.input-column,
-.options-column,
-.output-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.input-area textarea,
-.output-area textarea {
-    flex: 1;
-    min-height: 300px;
-}
-
+/* Override tool-options for this tool */
 .tool-options {
-    background: var(--surface-color);
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.tool-options .section-title,
+.tool-options h3 {
+    margin-bottom: 0.75rem !important;
+    font-size: 1rem !important;
+}
+
+/* Error Message */
+.error-msg {
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: var(--radius-md);
+    color: #c33;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.error-msg.show {
+    display: block;
+}
+
+/* Tool Content Columns */
+.tool-content-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Input and Output Sections */
+.tool-section {
+    background: white;
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
-    margin-bottom: 1rem;
 }
 
-.tool-options h3 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-    font-size: 1.1rem;
-}
-
-.option-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.option-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.option-row:last-child {
-    border-bottom: none;
-}
-
-.option-row label {
-    font-weight: 500;
-    color: var(--text-color);
-    cursor: pointer;
-    flex: 1;
-    font-size: 0.95rem;
-}
-
-.option-row input[type="checkbox"] {
-    margin: 0;
-    cursor: pointer;
-    width: 18px;
-    height: 18px;
-}
-
-.tool-actions-vertical {
+.input-group,
+.output-group {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.tool-actions-vertical .action-btn {
-    width: 100%;
-}
-
-.output-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: auto;
-}
-
-.output-actions .action-btn {
-    width: 100%;
-}
-
-/* Output header */
-.output-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.output-header label {
-    margin-bottom: 0;
-    font-size: 1.125rem;
+.input-group label,
+.output-group label {
     font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-color);
 }
 
+.input-area,
+.output-area {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.input-group textarea,
+.output-group textarea {
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    resize: none;
+    background: white;
+    color: var(--text-color);
+    border: none;
+}
+
+.input-group textarea:focus,
+.output-group textarea:focus {
+    outline: none;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Stats Display */
 .stats-display {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 0.75rem;
 }
 
 .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     flex: 1;
-    min-width: 100px;
-    text-align: center;
-    padding: 0.75rem;
-    background: var(--surface-color);
-    border-radius: var(--radius-md);
 }
 
 .stat-value {
-    display: block;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
 }
 
 .stat-label {
-    display: block;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-top: 0.25rem;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1400px) {
-    .tool-section.three-column {
-        grid-template-columns: 1fr 0.6fr 1fr;
-    }
+/* Options Grid - 6 columns: checkbox at 1,3,5 and labels at 2,4,6 */
+.options-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+    align-items: center;
 }
 
-@media (max-width: 1024px) {
-    .tool-section.three-column {
-        grid-template-columns: 1fr 1fr;
+.option-checkbox {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.option-label {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Tool Actions Horizontal */
+.tool-actions-horizontal {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tool-actions-horizontal .action-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+/* Output Actions */
+.output-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.output-actions .action-btn {
+    flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tool-content-columns {
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
-    .options-column {
-        grid-column: 1 / -1;
-    }
-    
-    .option-group {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-    }
-    
-    .option-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-        border-bottom: none;
-        padding: 0.5rem;
-        background: white;
-        border-radius: 4px;
-        border: 1px solid var(--border-color);
-    }
-}
 
-@media (max-width: 768px) {
-    .tool-section.three-column {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+    .input-group textarea,
+    .output-group textarea {
+        min-height: 250px;
     }
-    
-    .input-area textarea,
-    .output-area textarea {
-        min-height: 200px;
+
+    /* Mobile: 2-column layout (checkbox | label) */
+    .options-grid {
+        grid-template-columns: auto 1fr;
+        gap: 0.5rem 0.75rem;
     }
-    
-    .stats-display {
-        flex-wrap: wrap;
+
+    .option-checkbox {
+        width: 18px;
+        height: 18px;
+    }
+
+    .option-label {
+        white-space: normal;
+    }
+
+    /* Buttons: 2 per row on mobile */
+    .tool-actions-horizontal {
         gap: 0.5rem;
     }
-    
-    .stat-item {
-        flex: 1 0 calc(50% - 0.5rem);
+
+    .tool-actions-horizontal .action-btn {
+        flex: 1 1 calc(50% - 0.25rem);
         min-width: auto;
-        padding: 0.5rem;
+        padding: 0.6rem 0.4rem;
+        font-size: 0.85rem;
     }
-    
-    .stat-value {
-        font-size: 1.25rem;
-    }
-    
-    .output-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+
+    .tool-actions-horizontal .action-btn:nth-child(3) {
+        flex: 1 1 calc(50% - 0.25rem);
     }
 }
 
-@media (max-width: 480px) {
-    .input-area textarea,
-    .output-area textarea {
-        min-height: 150px;
-    }
-    
-    .stats-display {
-        gap: 0.25rem;
-    }
-    
-    .stat-item {
-        flex: 1 0 100%;
-        padding: 0.5rem;
-    }
-    
-    .option-row {
-        padding: 0.4rem;
-    }
-    
-    .option-row label {
-        font-size: 0.9rem;
-    }
-    
-    .stat-value {
-        font-size: 1.1rem;
-    }
-}
-
-/* Remove old styles that are no longer needed */
-
-}
-
-.option-row input[type="checkbox"] {
-    width: auto;
-    margin: 0 0 0 1rem;
-    cursor: pointer;
-}
-
-/* Use cases */
+/* Use Cases Section */
 .use-cases {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.use-cases h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .use-case-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
-    margin-top: 1.5rem;
 }
 
-.use-case {
+.use-case-item {
     background: var(--surface-color);
-    border-radius: var(--radius-md);
     padding: 1.5rem;
+    border-radius: var(--radius-md);
     text-align: center;
 }
 
 .use-case-icon {
     font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.use-case h5 {
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.use-case p {
-    font-size: 0.875rem;
-    color: var(--text-light);
-    margin-bottom: 0;
-}
-
-/* Preview */
-.preview {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.preview h4 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.preview-example {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    font-size: 0.875rem;
-}
-
-.preview-before, .preview-after {
-    padding: 1rem;
-    border-radius: var(--radius-sm);
-}
-
-.preview-before {
-    background: #fee2e2;
-    border: 1px solid #fecaca;
-}
-
-.preview-after {
-    background: #dcfce7;
-    border: 1px solid #bbf7d0;
-}
-
-.preview-before h5, .preview-after h5 {
-    margin-bottom: 0.5rem;
-    font-size: 0.875rem;
-}
-
-.preview-before pre, .preview-after pre {
-    white-space: pre-wrap;
-    word-break: break-all;
-    margin: 0;
-    font-family: monospace;
-    font-size: 0.75rem;
-}
-
-/* Character counter */
-.char-counter {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0.5rem;
-    font-size: 0.75rem;
-    color: var(--text-light);
-    background: white;
-    padding: 0.125rem 0.5rem;
-    border-radius: 1rem;
-}
-
-.input-area, .output-area {
-    position: relative;
-}
-
-/* Related tools */
-.related-tools, .tool-tips {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.related-tools h4, .tool-tips h4 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.related-tools ul, .tool-tips ul {
-    list-style: none;
-}
-
-.related-tools li, .tool-tips li {
+    display: block;
     margin-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    position: relative;
 }
 
-.related-tools li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--primary-color);
-}
-
-.tool-tips li::before {
-    content: '💡';
-    position: absolute;
-    left: 0;
-}
-
-.related-tools a {
+.use-case-item h5 {
     color: var(--text-color);
-    text-decoration: none;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
 }
 
-.related-tools a:hover {
+.use-case-item p {
+    color: var(--text-color-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* How It Works / Formatting Guide */
+.formatting-guide {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+}
+
+.formatting-guide h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.formatting-guide ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+}
+
+.formatting-guide li {
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.formatting-guide strong {
     color: var(--primary-color);
 }
 
-/* Responsive adjustments */
-@media (max-width: 991px) {
-    .output-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-    
-    .stats-display {
-        width: 100%;
-        justify-content: flex-start;
-    }
-    
-    .use-case-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .preview-example {
-        grid-template-columns: 1fr;
-    }
-    
-    .option-group {
-        grid-template-columns: 1fr;
-    }
+/* Instructions Section */
+.instructions {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
 }
 
-@media (max-width: 480px) {
-    .stats-display {
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-    
-    .stat-item {
-        flex: 1 0 calc(50% - 1rem);
-        text-align: center;
-    }
-    
-    .option-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-    
-    .option-row input[type="checkbox"] {
-        margin: 0;
-        align-self: flex-end;
-    }
+.instructions h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.instructions ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+}
+
+.instructions li {
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    line-height: 1.5;
 }

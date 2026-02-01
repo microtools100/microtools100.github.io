@@ -8,7 +8,7 @@ class TextCompareDiff {
         this.ignoreWhitespace = document.getElementById('ignoreWhitespace');
         this.output1 = document.getElementById('output1');
         this.output2 = document.getElementById('output2');
-        this.diffStats = document.querySelector('.diff-stats');
+        this.diffStats = document.getElementById('diff-stats');
         
         this.init();
     }
@@ -18,6 +18,27 @@ class TextCompareDiff {
         this.text2.addEventListener('input', () => this.compare());
         this.ignoreCase.addEventListener('change', () => this.compare());
         this.ignoreWhitespace.addEventListener('change', () => this.compare());
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
+    }
+
+    handleKeyboardShortcuts(e) {
+        // Ctrl/Cmd+Shift+C to copy first output
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+            e.preventDefault();
+            this.copyToClipboard(this.output1.textContent, 'Original text copied!');
+        }
+        // Ctrl/Cmd+Shift+V to copy second output
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'V') {
+            e.preventDefault();
+            this.copyToClipboard(this.output2.textContent, 'Modified text copied!');
+        }
+        // Ctrl/Cmd+Shift+K to clear all
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'K') {
+            e.preventDefault();
+            this.clearAll();
+        }
     }
 
     compare() {
@@ -43,20 +64,27 @@ class TextCompareDiff {
     }
 
     diffLines(lines1, lines2) {
+        // Create a map of lines for better matching
         const diff = [];
+        const used2 = new Set();
         const maxLen = Math.max(lines1.length, lines2.length);
 
+        // Simple line-by-line comparison algorithm
         for (let i = 0; i < maxLen; i++) {
-            const line1 = lines1[i] || '';
-            const line2 = lines2[i] || '';
+            const line1 = lines1[i];
+            const line2 = lines2[i];
 
-            if (line1 === line2) {
-                diff.push({ type: 'same', content: line1 });
-            } else if (!line1) {
+            if (line1 === undefined) {
+                // Remaining lines in text2 are additions
                 diff.push({ type: 'add', content: line2 });
-            } else if (!line2) {
+            } else if (line2 === undefined) {
+                // Remaining lines in text1 are removals
                 diff.push({ type: 'remove', content: line1 });
+            } else if (line1 === line2) {
+                // Lines are identical
+                diff.push({ type: 'same', content: line1 });
             } else {
+                // Lines are different
                 diff.push({ type: 'modify', content1: line1, content2: line2 });
             }
         }
@@ -67,28 +95,36 @@ class TextCompareDiff {
     displayDiff(diffResult, originalLines1, originalLines2) {
         let html1 = '';
         let html2 = '';
+        let lineNum1 = 1;
+        let lineNum2 = 1;
 
-        diffResult.forEach((item, index) => {
+        diffResult.forEach((item) => {
             switch (item.type) {
                 case 'same':
-                    html1 += `<div class="line same-line"><span class="line-num">${index + 1}</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
-                    html2 += `<div class="line same-line"><span class="line-num">${index + 1}</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
+                    html1 += `<div class="line same-line"><span class="line-num">${lineNum1}</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
+                    html2 += `<div class="line same-line"><span class="line-num">${lineNum2}</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
+                    lineNum1++;
+                    lineNum2++;
                     break;
                 case 'remove':
                     html1 += `<div class="line remove-line"><span class="line-num">-</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
+                    lineNum1++;
                     break;
                 case 'add':
                     html2 += `<div class="line add-line"><span class="line-num">+</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
+                    lineNum2++;
                     break;
                 case 'modify':
-                    html1 += `<div class="line modify-line"><span class="line-num">~</span><pre>${this.escapeHtml(item.content1)}</pre></div>`;
-                    html2 += `<div class="line modify-line"><span class="line-num">~</span><pre>${this.escapeHtml(item.content2)}</pre></div>`;
+                    html1 += `<div class="line modify-line"><span class="line-num">${lineNum1}</span><pre>${this.escapeHtml(item.content1)}</pre></div>`;
+                    html2 += `<div class="line modify-line"><span class="line-num">${lineNum2}</span><pre>${this.escapeHtml(item.content2)}</pre></div>`;
+                    lineNum1++;
+                    lineNum2++;
                     break;
             }
         });
 
-        this.output1.innerHTML = html1 || '<div class="empty-state">No differences</div>';
-        this.output2.innerHTML = html2 || '<div class="empty-state">No differences</div>';
+        this.output1.innerHTML = html1 || '<div class="empty-state">No content to compare</div>';
+        this.output2.innerHTML = html2 || '<div class="empty-state">No content to compare</div>';
     }
 
     displayStats(text1, text2, diffResult) {
@@ -123,6 +159,32 @@ class TextCompareDiff {
         `;
 
         this.diffStats.innerHTML = html;
+    }
+
+    copyToClipboard(text, message = 'Copied to clipboard!') {
+        if (!text.trim()) {
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
+            return;
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        
+        SharedUtilities.showNotification(message, 'success');
+    }
+
+    clearAll() {
+        this.text1.value = '';
+        this.text2.value = '';
+        this.output1.innerHTML = '';
+        this.output2.innerHTML = '';
+        this.diffStats.innerHTML = '';
+        this.text1.focus();
+        SharedUtilities.showNotification('Cleared all inputs', 'info');
     }
 
     escapeHtml(text) {

@@ -1,3 +1,135 @@
+class MD5SHAGenerator {
+    constructor() {
+        this.textInput = document.getElementById('textInput');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.copyAllBtn = document.getElementById('copyAllBtn');
+        
+        this.hashElements = {
+            md5: document.getElementById('md5Hash'),
+            sha1: document.getElementById('sha1Hash'),
+            sha256: document.getElementById('sha256Hash'),
+            sha384: document.getElementById('sha384Hash'),
+            sha512: document.getElementById('sha512Hash')
+        };
+
+        this.currentHashes = {};
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.setupKeyboardShortcuts();
+    }
+
+    setupEventListeners() {
+        this.textInput.addEventListener('input', () => this.generateHashes());
+        if (this.clearBtn) {
+            this.clearBtn.addEventListener('click', () => this.clearAll());
+        }
+        if (this.copyAllBtn) {
+            this.copyAllBtn.addEventListener('click', () => this.copyAllHashes());
+        }
+    }
+
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+A in input to select all
+            if ((e.ctrlKey || e.metaKey) && e.key === 'a' && document.activeElement === this.textInput) {
+                e.preventDefault();
+                this.textInput.select();
+            }
+            // Ctrl+Shift+C to copy all hashes
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'c') {
+                e.preventDefault();
+                this.copyAllHashes();
+            }
+        });
+    }
+
+    async generateHashes() {
+        const text = this.textInput.value;
+        
+        if (!text) {
+            this.clearHashDisplay();
+            return;
+        }
+
+        try {
+            const md5Result = md5(text);
+            this.hashElements.md5.textContent = md5Result;
+            this.currentHashes.md5 = md5Result;
+
+            const sha1Result = await sha1(text);
+            this.hashElements.sha1.textContent = sha1Result;
+            this.currentHashes.sha1 = sha1Result;
+
+            const sha256Result = await sha256(text);
+            this.hashElements.sha256.textContent = sha256Result;
+            this.currentHashes.sha256 = sha256Result;
+
+            const sha384Result = await sha384(text);
+            this.hashElements.sha384.textContent = sha384Result;
+            this.currentHashes.sha384 = sha384Result;
+
+            const sha512Result = await sha512(text);
+            this.hashElements.sha512.textContent = sha512Result;
+            this.currentHashes.sha512 = sha512Result;
+
+        } catch (error) {
+            console.error('Hash generation error:', error);
+            SharedUtilities.showNotification('Error generating hashes', 'error');
+            this.clearHashDisplay();
+        }
+    }
+
+    clearHashDisplay() {
+        Object.values(this.hashElements).forEach(el => {
+            el.textContent = '-';
+        });
+        this.currentHashes = {};
+    }
+
+    copyToClipboard(hashType) {
+        const text = this.currentHashes[hashType];
+        if (!text) {
+            SharedUtilities.showNotification('No hash to copy', 'warning');
+            return;
+        }
+
+        navigator.clipboard.writeText(text).then(() => {
+            SharedUtilities.showNotification(`${hashType.toUpperCase()} hash copied to clipboard!`, 'success');
+        }).catch(() => {
+            SharedUtilities.showNotification('Failed to copy hash', 'error');
+        });
+    }
+
+    copyAllHashes() {
+        if (Object.keys(this.currentHashes).length === 0) {
+            SharedUtilities.showNotification('No hashes to copy', 'warning');
+            return;
+        }
+
+        const text = `MD5: ${this.currentHashes.md5 || '-'}
+SHA-1: ${this.currentHashes.sha1 || '-'}
+SHA-256: ${this.currentHashes.sha256 || '-'}
+SHA-384: ${this.currentHashes.sha384 || '-'}
+SHA-512: ${this.currentHashes.sha512 || '-'}`;
+
+        navigator.clipboard.writeText(text).then(() => {
+            SharedUtilities.showNotification('All hashes copied to clipboard!', 'success');
+        }).catch(() => {
+            SharedUtilities.showNotification('Failed to copy hashes', 'error');
+        });
+    }
+
+    clearAll() {
+        this.textInput.value = '';
+        this.clearHashDisplay();
+        this.textInput.focus();
+        SharedUtilities.showNotification('Input cleared', 'info');
+    }
+}
+
 // Simple MD5 implementation
 function md5(str) {
     function rotateLeft(n, b) {
@@ -157,32 +289,35 @@ class MD5SHAGenerator {
         const text = this.textInput.value;
         
         if (!text) {
-            document.getElementById('md5Hash').textContent = '-';
-            document.getElementById('sha1Hash').textContent = '-';
-            document.getElementById('sha256Hash').textContent = '-';
-            document.getElementById('sha384Hash').textContent = '-';
-            document.getElementById('sha512Hash').textContent = '-';
+            this.clearHashDisplay();
             return;
         }
 
         try {
             const md5Result = md5(text);
-            document.getElementById('md5Hash').textContent = md5Result;
+            this.hashElements.md5.textContent = md5Result;
+            this.currentHashes.md5 = md5Result;
 
             const sha1Result = await sha1(text);
-            document.getElementById('sha1Hash').textContent = sha1Result;
+            this.hashElements.sha1.textContent = sha1Result;
+            this.currentHashes.sha1 = sha1Result;
 
             const sha256Result = await sha256(text);
-            document.getElementById('sha256Hash').textContent = sha256Result;
+            this.hashElements.sha256.textContent = sha256Result;
+            this.currentHashes.sha256 = sha256Result;
 
             const sha384Result = await sha384(text);
-            document.getElementById('sha384Hash').textContent = sha384Result;
+            this.hashElements.sha384.textContent = sha384Result;
+            this.currentHashes.sha384 = sha384Result;
 
             const sha512Result = await sha512(text);
-            document.getElementById('sha512Hash').textContent = sha512Result;
+            this.hashElements.sha512.textContent = sha512Result;
+            this.currentHashes.sha512 = sha512Result;
+
         } catch (error) {
             console.error('Hash generation error:', error);
-            window.MicroTools?.utils?.showNotification?.('Error generating hashes', 'error');
+            SharedUtilities.showNotification('Error generating hashes', 'error');
+            this.clearHashDisplay();
         }
     }
 }
@@ -190,17 +325,18 @@ class MD5SHAGenerator {
 function copyHash(elementId) {
     const text = document.getElementById(elementId).textContent;
     if (text === '-') {
-        window.MicroTools?.utils?.showNotification?.('Nothing to copy', 'warning');
+        SharedUtilities.showNotification('Nothing to copy', 'warning');
         return;
     }
 
     navigator.clipboard.writeText(text).then(() => {
-        window.MicroTools?.utils?.showNotification?.('Hash copied to clipboard!', 'success');
+        SharedUtilities.showNotification('Hash copied to clipboard!', 'success');
     }).catch(() => {
-        window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
+        SharedUtilities.showNotification('Failed to copy', 'error');
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new MD5SHAGenerator();
+    window.MicroTools = window.MicroTools || {};
+    window.MicroTools.md5SHAGenerator = new MD5SHAGenerator();
 });

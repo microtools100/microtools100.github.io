@@ -215,7 +215,8 @@ class PerformanceMonitor {
      * Log metrics to console
      */
     logMetrics(title, data) {
-        if (process.env.NODE_ENV === 'development') {
+        // Check if running in development mode (only in browser, not Node.js)
+        if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'development') {
             console.group(`📊 ${title}`);
             console.table(data);
             console.groupEnd();

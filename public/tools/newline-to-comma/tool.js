@@ -1,189 +1,132 @@
-// Newline to Comma Converter
-class NewlineToCommaConverter {
-    constructor() {
-        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
-        this.keystrokeDelay = null; // Keystroke delay handler
-        this.elements = {
-            inputData: document.getElementById('inputData'),
-            outputData: document.getElementById('outputData'),
-            formatBtn: document.getElementById('formatBtn'),
-            clearBtn: document.getElementById('clearBtn'),
-            downloadBtn: document.getElementById('downloadBtn'),
-            addQuotes: document.getElementById('addQuotes'),
-            trimWhitespace: document.getElementById('trimWhitespace'),
-            removeEmpty: document.getElementById('removeEmpty'),
-            inputCount: document.getElementById('inputCount'),
-            outputCount: document.getElementById('outputCount')
-        };
+/**
+ * Newline to Comma Converter Tool
+ * Class-based implementation with keyboard shortcuts and clipboard support
+ */
 
+class NewlineToComma {
+    constructor() {
+        this.inputData = document.getElementById('inputData');
+        this.outputData = document.getElementById('outputData');
+        this.addQuotes = document.getElementById('addQuotes');
+        this.trimWhitespace = document.getElementById('trimWhitespace');
+        this.removeEmpty = document.getElementById('removeEmpty');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.downloadBtn = document.getElementById('downloadBtn');
+        
         this.init();
     }
 
     init() {
-        this.setupEventListeners();
-        this.updateCharCount();
-        // Initialize keystroke delay handler using global utility
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
-            () => this.executeCopy(),
-            this.autoCopyDelay
-        );
+        if (this.clearBtn) {
+            this.clearBtn.addEventListener('click', () => this.clearAll());
+        }
+        if (this.copyBtn) {
+            this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+        }
+        if (this.downloadBtn) {
+            this.downloadBtn.addEventListener('click', () => this.downloadText());
+        }
+        
+        this.inputData.addEventListener('input', () => this.format());
+        if (this.addQuotes) {
+            this.addQuotes.addEventListener('change', () => this.format());
+        }
+        if (this.trimWhitespace) {
+            this.trimWhitespace.addEventListener('change', () => this.format());
+        }
+        if (this.removeEmpty) {
+            this.removeEmpty.addEventListener('change', () => this.format());
+        }
+        
+        this.inputData.addEventListener('keydown', (e) => this.handleKeyboard(e));
     }
 
-    setupEventListeners() {
-        this.elements.formatBtn.addEventListener('click', () => this.format());
-        this.elements.clearBtn.addEventListener('click', () => this.clear());
-        this.elements.downloadBtn.addEventListener('click', () => this.download());
-        
-        // Auto-format on input for real-time conversion with keystroke delay for auto-copy
-        this.elements.inputData.addEventListener('input', () => {
-            this.updateCharCount();
-            // Always format in real-time
-            if (this.elements.inputData.value.trim().length > 0) {
-                this.formatWithoutAutoCopy();
-                this.keystrokeDelay.schedule();
-            }
-        });
-        
-        this.elements.outputData.addEventListener('input', () => this.updateCharCount());
+    handleKeyboard(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            this.format();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
+            e.preventDefault();
+            this.clearAll();
+        }
     }
 
     format() {
-        const input = this.elements.inputData.value;
-        
-        if (!input.trim()) {
-            SharedUtilities.showNotification('Please paste some data', 'warning');
-            return;
-        }
-
-        let lines = input.split('\n');
-
-        // Trim whitespace if enabled
-        if (this.elements.trimWhitespace.checked) {
-            lines = lines.map(line => line.trim());
-        }
-
-        // Remove empty lines if enabled
-        if (this.elements.removeEmpty.checked) {
-            lines = lines.filter(line => line.length > 0);
-        }
-
-        // Add quotes if enabled
-        const quoteType = this.elements.addQuotes.value;
-        if (quoteType !== 'none') {
-            const quote = quoteType === 'double' ? '"' : "'";
-            lines = lines.map(line => `${quote}${line}${quote}`);
-        }
-
-        // Join with comma and space
-        const output = lines.join(', ');
-
-        this.elements.outputData.value = output;
-        this.updateCharCount();
-    }
-    
-    executeCopy() {
-        const outputText = this.elements.outputData.value;
-        if (outputText) {
-            SharedUtilities.copyToClipboardSilently(outputText);
-            SharedUtilities.showNotification('Copied to clipboard', 'success');
-        }
-    }
-
-    clear() {
-        SharedUtilities.clearElements(
-            { inputData: this.elements.inputData, outputData: this.elements.outputData },
-            { 
-                message: 'Cleared all data',
-                onClear: () => this.updateCharCount()
+        try {
+            const input = this.inputData.value;
+            
+            if (!input.trim()) {
+                this.outputData.value = '';
+                return;
             }
-        );
-    }
 
-    updateCharCount() {
-        this.elements.inputCount.textContent = this.elements.inputData.value.length;
-        this.elements.outputCount.textContent = this.elements.outputData.value.length;
-    }
-    
-    formatWithoutAutoCopy() {
-        const input = this.elements.inputData.value;
-        
-        if (!input.trim()) {
-            return;
-        }
+            let lines = input.split('\n');
 
-        let lines = input.split('\n');
-
-        // Trim whitespace if enabled
-        if (this.elements.trimWhitespace.checked) {
-            lines = lines.map(line => line.trim());
-        }
-
-        // Remove empty lines if enabled
-        if (this.elements.removeEmpty.checked) {
-            lines = lines.filter(line => line.length > 0);
-        }
-
-        // Add quotes if enabled
-        const quoteType = this.elements.addQuotes.value;
-        if (quoteType !== 'none') {
-            const quote = quoteType === 'double' ? '"' : "'";
-            lines = lines.map(line => `${quote}${line}${quote}`);
-        }
-
-        // Join with comma and space
-        const output = lines.join(', ');
-
-        this.elements.outputData.value = output;
-        this.updateCharCount();
-    }
-    
-    scheduleAutoCopy() {
-        // Clear existing timeout
-        if (this.autoCopyTimeout) {
-            clearTimeout(this.autoCopyTimeout);
-        }
-        
-        // Schedule new auto-copy after delay
-        this.autoCopyTimeout = setTimeout(() => {
-            const outputText = this.elements.outputData.value;
-            if (outputText) {
-                SharedUtilities.copyToClipboardSilently(outputText);
-                SharedUtilities.showNotification('Copied to clipboard', 'success');
+            if (this.trimWhitespace && this.trimWhitespace.checked) {
+                lines = lines.map(line => line.trim());
             }
-        }, this.autoCopyDelay);
+
+            if (this.removeEmpty && this.removeEmpty.checked) {
+                lines = lines.filter(line => line.length > 0);
+            }
+
+            if (this.addQuotes && this.addQuotes.value !== 'none') {
+                const quote = this.addQuotes.value === 'double' ? '"' : "'";
+                lines = lines.map(line => `${quote}${line}${quote}`);
+            }
+
+            const output = lines.join(', ');
+            this.outputData.value = output;
+        } catch (error) {
+            SharedUtilities.showNotification('Formatting error: ' + error.message, 'error');
+        }
     }
 
-    async copyToClipboard() {
-        const output = this.elements.outputData.value;
-        
-        if (!output) {
-            SharedUtilities.showNotification('Nothing to copy', 'warning');
+    clearAll() {
+        this.inputData.value = '';
+        this.outputData.value = '';
+        SharedUtilities.showNotification('Cleared all data', 'success');
+        this.inputData.focus();
+    }
+
+    copyToClipboard() {
+        const text = this.outputData.value;
+        if (!text) {
+            this.showError('No text to copy. Please format some data first.');
             return;
         }
 
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            await window.MicroTools.utils.copyToClipboard(output);
-        } else {
-            // Fallback copy method
-            const textarea = document.createElement('textarea');
-            textarea.value = output;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            SharedUtilities.showNotification('Copied to clipboard!', 'success');
-        }
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        SharedUtilities.showNotification('Copied to clipboard', 'success');
     }
 
-    download() {
-        const output = this.elements.outputData.value;
-        SharedUtilities.downloadAsFile(output, 'newline-to-comma.txt', 'text/plain', {
-            successMessage: 'File downloaded'
-        });
+    downloadText() {
+        const text = this.outputData.value;
+        if (!text) {
+            SharedUtilities.showNotification('No data to download', 'warning');
+            return;
+        }
+
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', 'newline-to-comma.txt');
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+        SharedUtilities.showNotification('File downloaded', 'success');
     }
 }
 
-// Initialize tool when DOM is loaded
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    window.newlineToCommaConverter = new NewlineToCommaConverter();
+    window.MicroTools = window.MicroTools || {};
+    window.MicroTools.newlineToComma = new NewlineToComma();
 });

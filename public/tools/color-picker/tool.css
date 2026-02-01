@@ -1,4 +1,53 @@
-/* Color Picker Tool Styles */
+﻿/* color-picker - Tool-Specific Styles */
+
+:root {
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
+}
+
+/* Tool Page Layout */
+.tool-page {
+    padding: 2rem 0;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tool-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.tool-description {
+    font-size: 1.1rem;
+    color: var(--text-color-secondary);
+    margin: 0;
+}
+
+/* Two-column layout: tool content + sidebar */
+.tool-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.tool-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.tool-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Tool-Specific Styles */
 
 .eyedropper-btn {
     display: flex;

@@ -1,71 +1,205 @@
+// JWT Decoder Tool - Standardized Implementation
 class JWTDecoder {
     constructor() {
-        this.jwtInput = document.getElementById('jwtInput');
-        this.headerOutput = document.getElementById('headerOutput');
-        this.payloadOutput = document.getElementById('payloadOutput');
-        this.signatureOutput = document.getElementById('signatureOutput');
-        this.alert = document.getElementById('alert');
+        this.maxChars = 10000;
+        this.autoCopyDelay = 500;
+        this.keystrokeDelay = null;
+        this.exampleToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjk5OTk5OTk5OTl9.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U';
+        
+        this.elements = {
+            jwtInput: document.getElementById('jwtInput'),
+            headerOutput: document.getElementById('headerOutput'),
+            payloadOutput: document.getElementById('payloadOutput'),
+            signatureOutput: document.getElementById('signatureOutput'),
+            copyBtn: document.getElementById('copyBtn'),
+            downloadBtn: document.getElementById('downloadBtn'),
+            decodeBtn: document.getElementById('decodeBtn'),
+            clearBtn: document.getElementById('clearBtn'),
+            exampleBtn: document.getElementById('exampleBtn'),
+            errorMsg: document.querySelector('.error-msg')
+        };
 
         this.init();
     }
 
     init() {
-        this.jwtInput.addEventListener('input', () => this.decode());
+        this.setupEventListeners();
+        this.setupKeyboardShortcuts();
+        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
+            () => this.decode(),
+            this.autoCopyDelay
+        );
+    }
+
+    setupEventListeners() {
+        // Real-time listener
+        if (this.elements.jwtInput) {
+            this.elements.jwtInput.addEventListener('input', () => this.decode());
+        }
+
+        // Button listeners
+        if (this.elements.decodeBtn) {
+            this.elements.decodeBtn.addEventListener('click', () => this.decode());
+        }
+
+        if (this.elements.copyBtn) {
+            this.elements.copyBtn.addEventListener('click', () => this.copyAll());
+        }
+
+        if (this.elements.clearBtn) {
+            this.elements.clearBtn.addEventListener('click', () => this.clearAll());
+        }
+
+        if (this.elements.downloadBtn) {
+            this.elements.downloadBtn.addEventListener('click', () => this.download());
+        }
+
+        if (this.elements.exampleBtn) {
+            this.elements.exampleBtn.addEventListener('click', () => this.loadExample());
+        }
+
+        // Character limit
+        if (this.elements.jwtInput) {
+            this.elements.jwtInput.addEventListener('input', this.checkCharacterLimit.bind(this));
+        }
+    }
+
+    setupKeyboardShortcuts() {
+        SharedUtilities.setupKeyboardShortcuts({
+            'Ctrl+Enter': () => this.decode(),
+            'Escape': () => this.clearAll(),
+            'Ctrl+E': () => this.loadExample()
+        });
     }
 
     decode() {
-        const token = this.jwtInput.value.trim();
-        this.alert.innerHTML = '';
-
-        if (!token) {
-            this.headerOutput.textContent = '-';
-            this.payloadOutput.textContent = '-';
-            this.signatureOutput.textContent = '-';
-            return;
-        }
-
-        const parts = token.split('.');
-
-        if (parts.length !== 3) {
-            this.alert.innerHTML = '<p style="color: #d32f2f;">Invalid JWT: Token must have 3 parts separated by dots</p>';
-            this.headerOutput.textContent = '-';
-            this.payloadOutput.textContent = '-';
-            this.signatureOutput.textContent = '-';
-            return;
-        }
-
         try {
+            const token = this.elements.jwtInput.value.trim();
+
+            if (!token) {
+                this.clearOutputs();
+                this.clearError();
+                return;
+            }
+
+            const parts = token.split('.');
+
+            if (parts.length !== 3) {
+                this.showError('Invalid JWT: Token must have 3 parts separated by dots');
+                this.clearOutputs();
+                SharedUtilities.showNotification('Invalid JWT format', 'error');
+                return;
+            }
+
             const header = this.decodeBase64(parts[0]);
             const payload = this.decodeBase64(parts[1]);
             const signature = parts[2];
 
-            this.headerOutput.textContent = JSON.stringify(JSON.parse(header), null, 2);
-            this.payloadOutput.textContent = JSON.stringify(JSON.parse(payload), null, 2);
-            this.signatureOutput.textContent = signature;
+            this.elements.headerOutput.textContent = JSON.stringify(JSON.parse(header), null, 2);
+            this.elements.payloadOutput.textContent = JSON.stringify(JSON.parse(payload), null, 2);
+            this.elements.signatureOutput.textContent = signature;
 
             // Check expiration
+            let expirationMessage = '';
             try {
                 const payloadObj = JSON.parse(payload);
                 if (payloadObj.exp) {
                     const expiryDate = new Date(payloadObj.exp * 1000);
                     const now = new Date();
                     if (now > expiryDate) {
-                        this.alert.innerHTML = `<p style="color: #d32f2f;">⚠️ Token has expired on ${expiryDate.toLocaleString()}</p>`;
+                        expirationMessage = `⚠️ Token has expired on ${expiryDate.toLocaleString()}`;
+                        this.showError(expirationMessage);
+                        SharedUtilities.showNotification('JWT has expired', 'warning');
                     } else {
-                        this.alert.innerHTML = `<p style="color: #388e3c;">✓ Token expires on ${expiryDate.toLocaleString()}</p>`;
+                        expirationMessage = `✓ Token expires on ${expiryDate.toLocaleString()}`;
+                        this.clearError();
+                        SharedUtilities.showNotification('JWT decoded successfully!', 'success');
                     }
+                } else {
+                    this.clearError();
+                    SharedUtilities.showNotification('JWT decoded successfully!', 'success');
                 }
             } catch (e) {
-                // Ignore expiration check errors
+                this.clearError();
+                SharedUtilities.showNotification('JWT decoded successfully!', 'success');
             }
-
-            window.MicroTools?.utils?.showNotification?.('JWT decoded successfully!', 'success');
         } catch (error) {
-            this.headerOutput.textContent = 'Error decoding';
-            this.payloadOutput.textContent = 'Error decoding';
-            this.signatureOutput.textContent = 'Error decoding';
-            this.alert.innerHTML = `<p style="color: #d32f2f;">Invalid JWT: ${error.message}</p>`;
-            window.MicroTools?.utils?.showNotification?.('Invalid JWT token', 'error');
+            this.showError(`Invalid JWT: ${error.message}`);
+            this.clearOutputs();
+            SharedUtilities.showNotification(`Decode error: ${error.message}`, 'error');
+        }
+    }
+
+    copyAll() {
+        const header = this.elements.headerOutput.textContent;
+        const payload = this.elements.payloadOutput.textContent;
+        const signature = this.elements.signatureOutput.textContent;
+
+        if (header === '-' || payload === '-' || signature === '-') {
+            this.showError('Nothing to copy. Decode a JWT first.');
+            SharedUtilities.showNotification('No JWT decoded yet', 'warning');
+            return;
+        }
+
+        try {
+            const allComponents = `HEADER:\n${header}\n\nPAYLOAD:\n${payload}\n\nSIGNATURE:\n${signature}`;
+            SharedUtilities.copyToClipboardSilently(allComponents);
+            SharedUtilities.showNotification('All JWT components copied!', 'success');
+            this.clearError();
+        } catch (error) {
+            this.showError('Failed to copy JWT components');
+            SharedUtilities.showNotification('Failed to copy', 'error');
+        }
+    }
+
+    download() {
+        const header = this.elements.headerOutput.textContent;
+        const payload = this.elements.payloadOutput.textContent;
+        const signature = this.elements.signatureOutput.textContent;
+
+        if (header === '-' || payload === '-' || signature === '-') {
+            this.showError('Nothing to download. Decode a JWT first.');
+            SharedUtilities.showNotification('No JWT decoded yet', 'warning');
+            return;
+        }
+
+        try {
+            const content = `HEADER:\n${header}\n\nPAYLOAD:\n${payload}\n\nSIGNATURE:\n${signature}`;
+            SharedUtilities.downloadAsFile(content, 'jwt-decoded.txt', 'text/plain', {
+                successMessage: 'JWT components downloaded as jwt-decoded.txt'
+            });
+            this.clearError();
+        } catch (error) {
+            this.showError('Failed to download JWT components');
+            SharedUtilities.showNotification('Failed to download', 'error');
+        }
+    }
+
+    clearAll() {
+        this.elements.jwtInput.value = '';
+        this.clearOutputs();
+        this.clearError();
+        this.elements.jwtInput.focus();
+        SharedUtilities.showNotification('Cleared all inputs', 'info');
+    }
+
+    loadExample() {
+        this.elements.jwtInput.value = this.exampleToken;
+        this.decode();
+        SharedUtilities.showNotification('Example JWT loaded. You can modify it to test decoding.', 'info');
+    }
+
+    clearOutputs() {
+        this.elements.headerOutput.textContent = '-';
+        this.elements.payloadOutput.textContent = '-';
+        this.elements.signatureOutput.textContent = '-';
+    }
+
+    checkCharacterLimit() {
+        const count = this.elements.jwtInput.value.length;
+        if (count > this.maxChars) {
+            SharedUtilities.showNotification(`Character limit exceeded (${this.maxChars} max). Text will be truncated.`, 'warning');
+            this.elements.jwtInput.value = this.elements.jwtInput.value.substring(0, this.maxChars);
         }
     }
 
@@ -89,22 +223,23 @@ class JWTDecoder {
             throw new Error('Invalid Base64 encoding: ' + e.message);
         }
     }
-}
 
-function copySection(elementId) {
-    const text = document.getElementById(elementId).textContent;
-    if (text === '-' || text === 'Error decoding') {
-        window.MicroTools?.utils?.showNotification?.('Nothing to copy', 'warning');
-        return;
+    showError(message) {
+        if (this.elements.errorMsg) {
+            this.elements.errorMsg.textContent = message;
+            this.elements.errorMsg.classList.add('show');
+        }
     }
 
-    navigator.clipboard.writeText(text).then(() => {
-        window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
-    }).catch(() => {
-        window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
-    });
+    clearError() {
+        if (this.elements.errorMsg) {
+            this.elements.errorMsg.textContent = '';
+            this.elements.errorMsg.classList.remove('show');
+        }
+    }
 }
 
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    new JWTDecoder();
+    window.jwtDecoder = new JWTDecoder();
 });

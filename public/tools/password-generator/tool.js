@@ -64,9 +64,20 @@ class PasswordGenerator {
         this.setupQuickPresets();
         this.updateLengthValue();
         this.setupStrengthPreset();
+        this.setupKeyboardShortcuts();
         
         // Generate initial passwords
         this.generatePasswords();
+    }
+
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Enter or Cmd+Enter to generate
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                this.generatePasswords();
+            }
+            // Ctrl+C is handled by copyPassword
+        });
     }
 
     setupEventListeners() {

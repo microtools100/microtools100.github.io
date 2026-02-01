@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Formatter - Micro Tools</title>
+    <title>SQL Formatter - Free Online Tool | Micro Tools</title>
     <meta name="description" content="Format and beautify SQL queries. Makes SQL code readable with proper indentation and line breaks.">
     <meta property="og:title" content="SQL Formatter - Micro Tools">
     <meta property="og:description" content="Format and beautify SQL queries online">
     <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tools.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>
         <header class="site-header">
@@ -26,7 +27,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -44,110 +46,160 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="formatBtn">
+                                    <span>Format</span>
+                                    <span>✨</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Input and Output -->
                         <div class="tool-content-columns">
                             <!-- Input Column -->
                             <section class="tool-section input-column">
                                 <div class="input-group">
-                                    <label for="sqlInput">SQL Input:</label>
+                                    <label for="sqlInput">SQL Input</label>
                                     <div class="input-area">
                                         <textarea 
                                             id="sqlInput" 
-                                            placeholder="SELECT id, name FROM users WHERE age > 18 ORDER BY name"
+                                            placeholder='SELECT id, name FROM users WHERE age > 18 ORDER BY name'
                                             rows="12"
-                                            spellcheck="false"></textarea>
+                                            spellcheck="false"
+                                            autofocus></textarea>
                                     </div>
-                                    <div class="hint">Paste your SQL query. Maximum 50,000 characters.</div>
-                                </div>
-
-                                <div class="tool-actions">
-                                    <button class="action-btn primary" id="formatBtn">
-                                        <span>Format</span>
-                                        <span>✨</span>
-                                    </button>
-                                    <button class="action-btn" id="clearBtn">
-                                        <span>Clear</span>
-                                        <span>×</span>
-                                    </button>
+                                    <div class="hint">
+                                        Paste your SQL query. Maximum 50,000 characters.
+                                    </div>
                                 </div>
                             </section>
 
                             <!-- Output Column -->
                             <section class="tool-section output-column">
                                 <div class="output-group">
-                                    <label for="sqlOutput">Formatted SQL:</label>
+                                    <label for="sqlOutput">Formatted SQL</label>
                                     <div class="output-area">
                                         <textarea 
                                             id="sqlOutput" 
-                                            placeholder="SELECT\n  id,\n  name\nFROM users\nWHERE age > 18\nORDER BY name"
+                                            placeholder='SELECT&#10;  id,&#10;  name&#10;FROM users&#10;WHERE age > 18&#10;ORDER BY name'
                                             rows="12"
                                             readonly
                                             spellcheck="false"></textarea>
                                     </div>
-                                    <div class="hint">Your formatted SQL will appear here</div>
-                                </div>
-
-                                <div class="tool-actions">
-                                    <button class="action-btn success" id="copyBtn">
-                                        <span>Copy</span>
-                                        <span>📋</span>
-                                    </button>
-                                    <button class="action-btn" id="downloadBtn">
-                                        <span>Download</span>
-                                        <span>⤓</span>
-                                    </button>
+                                    <div class="output-actions">
+                                        <button class="action-btn success copy-btn" id="copyBtn">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </section>
                         </div>
-                    </div>
 
-                    <div class="use-cases">
-                        <h4>About SQL Formatter:</h4>
-                        <div class="use-case-grid">
-                            <div class="use-case">
-                                <div class="use-case-icon">📝</div>
-                                <h5>Code Formatting</h5>
-                                <p>Automatically indent and format SQL for better readability</p>
-                            </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">🔍</div>
-                                <h5>Debugging</h5>
-                                <p>Make complex queries easier to understand and debug</p>
-                            </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">📋</div>
-                                <h5>Consistency</h5>
-                                <p>Ensure consistent formatting across your SQL code</p>
-                            </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">⚙️</div>
-                                <h5>Performance</h5>
-                                <p>Properly formatted queries are easier to optimize</p>
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📝</span>
+                                    <h5>Code Formatting</h5>
+                                    <p>Automatically indent and format SQL for better readability</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🔍</span>
+                                    <h5>Debugging</h5>
+                                    <p>Make complex queries easier to understand and debug</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📋</span>
+                                    <h5>Consistency</h5>
+                                    <p>Ensure consistent formatting across your SQL code</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">⚙️</span>
+                                    <h5>Performance</h5>
+                                    <p>Properly formatted queries are easier to optimize</p>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Paste your SQL query into the input field</li>
+                                <li>Click the Format button to beautify your SQL</li>
+                                <li>Review the formatted output with proper indentation</li>
+                                <li>Copy the SQL or download it as a file</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <ul>
+                                <li><strong>Keyword Detection:</strong> Recognizes SQL keywords and places them on new lines</li>
+                                <li><strong>Indentation:</strong> Applies proper indentation for clauses and conditions</li>
+                                <li><strong>Readability:</strong> Adds line breaks for complex queries</li>
+                                <li><strong>Consistency:</strong> Ensures uniform formatting across the entire query</li>
+                                <li><strong>JOIN Handling:</strong> Properly formats JOIN clauses with appropriate spacing</li>
+                                <li><strong>Subquery Support:</strong> Maintains hierarchy in nested queries</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/sql-query-builder/">SQL Query Builder</a></li>
+                            <li><a href="/tools/json-to-xml/">JSON to XML Converter</a></li>
+                        </ul>
                     </div>
 
-                    <div class="formatting-guide">
-                        <h2>💡 SQL Formatting Tips:</h2>
+                    <div class="tool-tips">
+                        <h4>SQL Formatting Rules</h4>
                         <ul>
-                            <li>Keywords are uppercased (SELECT, WHERE, FROM, etc.)</li>
-                            <li>Clauses are placed on separate lines for readability</li>
-                            <li>Commas are placed at the end of columns</li>
-                            <li>Conditions are properly indented</li>
-                            <li>Use Minify to compress for production queries</li>
+                            <li>Keywords are uppercased automatically</li>
+                            <li>Each clause starts on a new line</li>
+                            <li>Conditions are indented for clarity</li>
+                            <li>JOINs are properly separated</li>
+                            <li>Subqueries maintain their structure</li>
                         </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Formatting Tips</h4>
+                        <ul>
+                            <li>Use Format for development readability</li>
+                            <li>Keep queries well-structured</li>
+                            <li>Remove extra whitespace automatically</li>
+                            <li>Test formatted queries before use</li>
+                            <li>Save formatted queries as .sql files</li>
+                        </ul>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-    </div>
 
-    <script src="/assets/js/shared-utilities.js"></script>
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="tool.js"></script>
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
@@ -162,7 +214,8 @@
                         <li><a href="/#data-tools">Data Tools</a></li>
                         <li><a href="/#developer-tools">Developer Tools</a></li>
                         <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#random-tools">Random Tools</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                        <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -190,9 +243,11 @@
         </div>
     </footer>
 
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
 </body>
 </html>
-
-
-
-
