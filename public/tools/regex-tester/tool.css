@@ -286,29 +286,10 @@
     gap: 1.5rem;
 }
 
-.use-case-item {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
-    text-align: center;
-}
-
 .use-case-icon {
     font-size: 2rem;
     display: block;
     margin-bottom: 0.75rem;
-}
-
-.use-case-item h5 {
-    color: var(--text-color);
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-}
-
-.use-case-item p {
-    color: var(--text-color-secondary);
-    font-size: 0.9rem;
-    margin: 0;
 }
 
 /* How It Works / Formatting Guide */
@@ -614,22 +595,24 @@
 /* Formatting Guide and Tips */
 .formatting-guide,
 .related-tools {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
+    background: white;
     border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .formatting-guide h2,
 .related-tools h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
     color: var(--primary-color);
-    margin: 0 0 1rem 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .formatting-guide h3 {
     color: var(--primary-color);
-    margin-top: 1.5rem;
+    margin-top: 0;
     margin-bottom: 1rem;
     font-size: 1rem;
 }
@@ -637,30 +620,40 @@
 .formatting-guide ul,
 .related-tools ul {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
 .formatting-guide li,
 .related-tools li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-color);
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
     font-size: 0.95rem;
+}
+
+.formatting-guide li::before,
+.related-tools li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 .formatting-guide li:last-child,
 .related-tools li:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .related-tools a {
-    color: var(--primary-color);
+    color: var(--text-color);
     text-decoration: none;
-    font-weight: 500;
+    transition: color 0.2s;
 }
 
 .related-tools a:hover {
+    color: var(--primary-color);
     text-decoration: underline;
 }
 

@@ -196,29 +196,10 @@
     gap: 1.5rem;
 }
 
-.use-case-item {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
-    text-align: center;
-}
-
 .use-case-icon {
     font-size: 2rem;
     display: block;
     margin-bottom: 0.75rem;
-}
-
-.use-case-item h5 {
-    color: var(--text-color);
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-}
-
-.use-case-item p {
-    color: var(--text-color-secondary);
-    font-size: 0.9rem;
-    margin: 0;
 }
 
 /* How It Works / Formatting Guide */

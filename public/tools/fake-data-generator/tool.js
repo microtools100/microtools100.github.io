@@ -1,4 +1,7 @@
-// Fake Data Generator Tool - Production Ready
+/**
+ * Fake Data Generator Tool
+ * Generate fake names, emails, phone numbers, addresses, usernames, and birth dates
+ */
 
 class FakeDataGenerator {
     constructor() {
@@ -7,7 +10,7 @@ class FakeDataGenerator {
         this.generateBtn = document.getElementById('generateBtn');
         this.copyBtn = document.getElementById('copyBtn');
         this.output = document.getElementById('outputText');
-        this.errorMsg = document.querySelector('.error-msg');
+        this.errorMsg = document.getElementById('errorMsg');
 
         this.firstNames = ['John', 'Jane', 'Michael', 'Emily', 'David', 'Sarah', 'James', 'Jessica', 'Robert', 'Linda', 'William', 'Karen', 'Richard', 'Patricia', 'Joseph', 'Barbara', 'Thomas', 'Susan', 'Charles', 'Lisa'];
         this.lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin'];
@@ -19,7 +22,18 @@ class FakeDataGenerator {
         this.init();
     }
 
+    /**
+     * Initialize event listeners
+     */
     init() {
+        this.setupEventListeners();
+        this.setupKeyboardShortcuts();
+    }
+
+    /**
+     * Setup main event listeners
+     */
+    setupEventListeners() {
         if (this.generateBtn) {
             this.generateBtn.addEventListener('click', () => this.generate());
         }
@@ -28,9 +42,44 @@ class FakeDataGenerator {
         }
     }
 
+    /**
+     * Setup keyboard shortcuts
+     */
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + Enter: Generate
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                this.generate();
+            }
+        });
+    }
+
+    /**
+     * Clear error message
+     */
+    clearError() {
+        if (this.errorMsg) {
+            this.errorMsg.classList.remove('show');
+        }
+    }
+
+    /**
+     * Show error message
+     */
+    showError(message) {
+        if (this.errorMsg) {
+            this.errorMsg.textContent = message;
+            this.errorMsg.classList.add('show');
+        }
+    }
+
+    /**
+     * Generate fake data
+     */
     generate() {
         const type = this.typeSelect.value;
-        const count = Math.min(100, Math.max(1, parseInt(this.countInput.value) || 1));
+        const count = Math.min(1000, Math.max(1, parseInt(this.countInput.value) || 1));
 
         try {
             let data = [];
@@ -45,25 +94,35 @@ class FakeDataGenerator {
 
             this.output.value = data.join('\n');
             this.clearError();
-            window.MicroTools?.utils?.showNotification?.(`Generated ${count} ${type}!`, 'success');
+            SharedUtilities.showNotification(`Generated ${count} ${type}!`, 'success');
             this.copyBtn.disabled = false;
         } catch (error) {
-            this.showError('Error generating data');
+            this.showError(`Error generating data: ${error.message}`);
+            SharedUtilities.showNotification('Error generating data', 'error');
         }
     }
 
+    /**
+     * Generate a random full name
+     */
     generateName() {
         const first = this.firstNames[Math.floor(Math.random() * this.firstNames.length)];
         const last = this.lastNames[Math.floor(Math.random() * this.lastNames.length)];
         return `${first} ${last}`;
     }
 
+    /**
+     * Generate a random email address
+     */
     generateEmail() {
         const name = this.generateName().toLowerCase().replace(' ', '.');
         const domain = this.domains[Math.floor(Math.random() * this.domains.length)];
         return `${name}${Math.floor(Math.random() * 999)}@${domain}`;
     }
 
+    /**
+     * Generate a random phone number
+     */
     generatePhone() {
         const areaCode = Math.floor(Math.random() * 900) + 100;
         const exchange = Math.floor(Math.random() * 900) + 100;
@@ -71,6 +130,9 @@ class FakeDataGenerator {
         return `+1-${areaCode}-${exchange}-${number}`;
     }
 
+    /**
+     * Generate a random address
+     */
     generateAddress() {
         const street = this.streets[Math.floor(Math.random() * this.streets.length)];
         const num = Math.floor(Math.random() * 9999) + 1;
@@ -80,48 +142,49 @@ class FakeDataGenerator {
         return `${num} ${street} St, ${city}, ${state} ${zip}`;
     }
 
+    /**
+     * Generate a random username
+     */
     generateUsername() {
-        const first = this.firstNames[Math.floor(Math.random() * this.firstNames.length)].toLowerCase();
-        const last = this.lastNames[Math.floor(Math.random() * this.lastNames.length)].toLowerCase();
-        const num = Math.floor(Math.random() * 9999);
-        return `${first}_${last}${num}`;
+        const adjectives = ['Cool', 'Quick', 'Smart', 'Bright', 'Swift', 'Clever', 'Happy', 'Lucky'];
+        const nouns = ['Tiger', 'Eagle', 'Fox', 'Wolf', 'Bear', 'Lion', 'Hawk', 'Snake'];
+        const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+        const noun = nouns[Math.floor(Math.random() * nouns.length)];
+        const num = Math.floor(Math.random() * 999);
+        return `${adj}${noun}${num}`;
     }
 
+    /**
+     * Generate a random birth date
+     */
     generateDate() {
-        const year = Math.floor(Math.random() * 50) + 1970;
-        const month = Math.floor(Math.random() * 12) + 1;
-        const day = Math.floor(Math.random() * 28) + 1;
-        return `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
+        const start = new Date(1950, 0, 1);
+        const end = new Date(2010, 0, 1);
+        const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+        return date.toISOString().split('T')[0];
     }
 
-    showError(message) {
-        if (this.errorMsg) {
-            this.errorMsg.textContent = message;
-            this.errorMsg.style.display = 'block';
-        }
-    }
-
-    clearError() {
-        if (this.errorMsg) {
-            this.errorMsg.textContent = '';
-            this.errorMsg.style.display = 'none';
-        }
-    }
-
+    /**
+     * Copy output to clipboard
+     */
     copyToClipboard() {
-        const text = this.output.value;
-        if (!text) return;
+        if (!this.output.value) {
+            SharedUtilities.showNotification('No data to copy', 'warning');
+            return;
+        }
 
-        navigator.clipboard.writeText(text).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
+        navigator.clipboard.writeText(this.output.value).then(() => {
+            SharedUtilities.showNotification('Data copied to clipboard!', 'success');
         }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
+            SharedUtilities.showNotification('Failed to copy data', 'error');
         });
     }
 }
 
-// Initialize when DOM is ready
+/**
+ * Initialize on DOM ready
+ */
 document.addEventListener('DOMContentLoaded', () => {
     window.MicroTools = window.MicroTools || {};
-    window.MicroTools.fakeDataGenerator = new FakeDataGenerator();
+    window.fakeDataGenerator = new FakeDataGenerator();
 });

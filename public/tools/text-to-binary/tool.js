@@ -1,20 +1,31 @@
 /**
  * Text to Binary Converter Tool
- * Converts text to binary representation and vice versa
+ * Converts text to binary representation and vice versa with ASCII codes
  */
 
 class TextToBinaryConverter {
     constructor() {
-        this.textInput = document.getElementById('textInput');
-        this.binaryOutput = document.getElementById('binaryOutput');
-        this.convertBtn = document.getElementById('convertBtn');
-        this.reverseBtn = document.getElementById('reverseBtn');
-        this.copyBtn = document.getElementById('copyBtn');
-        this.clearBtn = document.getElementById('clearBtn');
-        this.downloadBtn = document.getElementById('downloadBtn');
-        this.separatorToggle = document.getElementById('separatorToggle');
-        this.asciiToggle = document.getElementById('asciiToggle');
+        this.elements = {
+            textInput: document.getElementById('textInput'),
+            binaryOutput: document.getElementById('binaryOutput'),
+            convertBtn: document.getElementById('convertBtn'),
+            copyBtn: document.getElementById('copyBtn'),
+            clearBtn: document.getElementById('clearBtn'),
+            downloadBtn: document.getElementById('downloadBtn'),
+            exampleBtn: document.getElementById('exampleBtn'),
+            separatorToggle: document.getElementById('separatorToggle'),
+            asciiToggle: document.getElementById('asciiToggle'),
+            errorMsg: document.querySelector('.error-msg'),
+            charCount: document.getElementById('charCount'),
+            byteCount: document.getElementById('byteCount'),
+            binaryLength: document.getElementById('binaryLength'),
+            inputLabel: document.getElementById('inputLabel'),
+            outputLabel: document.getElementById('outputLabel'),
+            inputHint: document.getElementById('inputHint'),
+            modeRadios: document.querySelectorAll('input[name="conversionMode"]')
+        };
 
+        this.currentMode = 'textToBinary';
         this.autoConvertTimer = null;
         this.init();
     }
@@ -31,16 +42,23 @@ class TextToBinaryConverter {
      * Setup main event listeners
      */
     setupEventListeners() {
-        this.convertBtn.addEventListener('click', () => this.main());
-        this.reverseBtn.addEventListener('click', () => this.reverse());
-        this.copyBtn.addEventListener('click', () => this.copyToClipboard());
-        this.clearBtn.addEventListener('click', () => this.clearAll());
-        if (this.downloadBtn) {
-            this.downloadBtn.addEventListener('click', () => this.download());
+        this.elements.convertBtn.addEventListener('click', () => this.main());
+        this.elements.copyBtn.addEventListener('click', () => this.copyToClipboard());
+        this.elements.clearBtn.addEventListener('click', () => this.clearAll());
+        this.elements.exampleBtn.addEventListener('click', () => this.loadExample());
+        
+        if (this.elements.downloadBtn) {
+            this.elements.downloadBtn.addEventListener('click', () => this.download());
         }
-        this.separatorToggle.addEventListener('change', () => this.main());
-        this.asciiToggle.addEventListener('change', () => this.main());
-        this.textInput.addEventListener('input', () => this.autoConvert());
+        
+        this.elements.separatorToggle.addEventListener('change', () => this.main());
+        this.elements.asciiToggle.addEventListener('change', () => this.main());
+        this.elements.textInput.addEventListener('input', () => this.autoConvert());
+
+        // Mode selection listeners
+        this.elements.modeRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => this.changeMode(e.target.value));
+        });
     }
 
     /**
@@ -53,15 +71,15 @@ class TextToBinaryConverter {
                 e.preventDefault();
                 this.main();
             }
-            // Ctrl/Cmd + Shift + C: Copy
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'c') {
-                e.preventDefault();
-                this.copyToClipboard();
-            }
-            // Ctrl/Cmd + Shift + X: Clear
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'x') {
+            // Escape: Clear all
+            if (e.key === 'Escape') {
                 e.preventDefault();
                 this.clearAll();
+            }
+            // Ctrl/Cmd + E: Example
+            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                e.preventDefault();
+                this.loadExample();
             }
         });
     }
@@ -75,30 +93,88 @@ class TextToBinaryConverter {
     }
 
     /**
+     * Show error message
+     */
+    showError(message) {
+        this.elements.errorMsg.textContent = message;
+        this.elements.errorMsg.classList.add('show');
+        setTimeout(() => {
+            this.elements.errorMsg.classList.remove('show');
+        }, 4000);
+    }
+
+    /**
+     * Change conversion mode between text-to-binary and binary-to-text
+     */
+    changeMode(mode) {
+        this.currentMode = mode;
+        this.clearAll();
+        
+        if (mode === 'textToBinary') {
+            this.elements.inputLabel.textContent = 'Enter Text';
+            this.elements.outputLabel.textContent = 'Binary Output';
+            this.elements.inputHint.textContent = 'Maximum 10,000 characters.';
+            this.elements.textInput.placeholder = 'Type or paste your text here...\n\nExample:\nHello World';
+            this.elements.binaryOutput.placeholder = 'Binary representation will appear here...';
+            this.elements.separatorToggle.parentElement.style.display = 'block';
+            this.elements.asciiToggle.parentElement.style.display = 'block';
+        } else {
+            this.elements.inputLabel.textContent = 'Enter Binary';
+            this.elements.outputLabel.textContent = 'Text Output';
+            this.elements.inputHint.textContent = 'Paste binary code with spaces or newlines between bytes (8 bits each).';
+            this.elements.textInput.placeholder = 'Paste binary code here...\n\nExample:\n01001000 01100101 01101100 01101100 01101111';
+            this.elements.binaryOutput.placeholder = 'Text output will appear here...';
+            this.elements.separatorToggle.parentElement.style.display = 'none';
+            this.elements.asciiToggle.parentElement.style.display = 'none';
+        }
+    }
+
+    /**
      * Main conversion method
      */
     main() {
-        const text = this.textInput.value;
-        if (!text) {
-            this.binaryOutput.value = '';
+        const input = this.elements.textInput.value;
+        
+        if (!input) {
+            this.elements.binaryOutput.value = '';
+            this.updateStats(0, 0, 0);
             return;
         }
 
         try {
-            const binary = this.textToBinary(text);
-            this.binaryOutput.value = binary;
-            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
+            let output;
+            if (this.currentMode === 'textToBinary') {
+                output = this.textToBinary(input);
+                const byteCount = input.length;
+                const binaryLength = output.replace(/[^01]/g, '').length;
+                this.updateStats(input.length, byteCount, binaryLength);
+            } else {
+                output = this.binaryToText(input);
+                this.updateStats(output.length, output.length, 0);
+            }
+            
+            this.elements.binaryOutput.value = output;
+            SharedUtilities.showNotification('Converted successfully!', 'success');
         } catch (error) {
-            window.MicroTools?.utils?.showNotification?.('Conversion error', 'error');
+            this.showError('Conversion error: ' + error.message);
         }
+    }
+
+    /**
+     * Update statistics display
+     */
+    updateStats(charCount, byteCount, binaryLength) {
+        if (this.elements.charCount) this.elements.charCount.textContent = charCount;
+        if (this.elements.byteCount) this.elements.byteCount.textContent = byteCount;
+        if (this.elements.binaryLength) this.elements.binaryLength.textContent = binaryLength;
     }
 
     /**
      * Convert text to binary
      */
     textToBinary(text) {
-        const separator = this.separatorToggle.checked ? ' ' : '';
-        const showASCII = this.asciiToggle.checked;
+        const separator = this.elements.separatorToggle.checked ? ' ' : '';
+        const showASCII = this.elements.asciiToggle.checked;
 
         return text.split('').map((char) => {
             const ascii = char.charCodeAt(0);
@@ -115,76 +191,93 @@ class TextToBinaryConverter {
      * Convert binary to text
      */
     binaryToText(binary) {
-        let clean = binary.replace(/[^01]/g, ' ').trim();
-        const bytes = clean.split(/\s+/).filter(b => b.length === 8);
+        // Remove ASCII codes in parentheses if present
+        let clean = binary.replace(/\(\d+\)/g, '').replace(/[^01]/g, ' ').trim();
+        const bytes = clean.split(/\s+/).filter(b => b.length === 8 || b.length > 0);
 
-        return bytes.map(byte => {
-            const ascii = parseInt(byte, 2);
-            return String.fromCharCode(ascii);
-        }).join('');
+        let result = '';
+        for (const byte of bytes) {
+            if (byte.length === 8) {
+                const ascii = parseInt(byte, 2);
+                if (ascii >= 0 && ascii <= 127) {
+                    result += String.fromCharCode(ascii);
+                }
+            }
+        }
+
+        if (!result) {
+            throw new Error('Invalid binary format. Each character must be 8 bits.');
+        }
+
+        return result;
     }
 
     /**
-     * Reverse conversion (text to binary or binary to text)
+     * Load example data
      */
-    reverse() {
-        const isBinary = this.binaryOutput.value.replace(/[^01\s()]/g, '').length > 0;
-
-        if (isBinary) {
-            try {
-                const text = this.binaryToText(this.binaryOutput.value);
-                this.textInput.value = text;
-                this.main();
-                window.MicroTools?.utils?.showNotification?.('Converted from binary!', 'success');
-            } catch (error) {
-                window.MicroTools?.utils?.showNotification?.('Invalid binary format', 'error');
-            }
+    loadExample() {
+        if (this.currentMode === 'textToBinary') {
+            const example = 'Hello World';
+            this.elements.textInput.value = example;
         } else {
-            this.main();
+            const example = '01001000 01100101 01101100 01101100 01101111 00100000 01010111 01101111 01110010 01101100 01100100';
+            this.elements.textInput.value = example;
         }
+        this.elements.textInput.focus();
+        this.main();
+        SharedUtilities.showNotification('Example loaded!', 'success');
     }
 
     /**
      * Copy output to clipboard using SharedUtilities
      */
     copyToClipboard() {
-        if (!this.binaryOutput.value) {
-            window.MicroTools?.utils?.showNotification?.('Nothing to copy', 'warning');
+        if (!this.elements.binaryOutput.value) {
+            this.showError('Nothing to copy');
             return;
         }
 
-        SharedUtilities.copyToClipboard(this.binaryOutput.value, 'Binary copied to clipboard!', 'success');
+        SharedUtilities.copyToClipboard(
+            this.elements.binaryOutput.value,
+            'Binary copied to clipboard!'
+        );
     }
 
     /**
      * Clear all input and output
      */
     clearAll() {
-        SharedUtilities.clearElements(
-            { inputData: this.textInput, outputData: this.binaryOutput },
-            { message: 'Cleared!' }
-        );
+        this.elements.textInput.value = '';
+        this.elements.binaryOutput.value = '';
+        this.updateStats(0, 0, 0);
+        this.elements.textInput.focus();
+        SharedUtilities.showNotification('Cleared!', 'success');
     }
 
     /**
      * Download output as text file
      */
     download() {
-        if (!this.binaryOutput.value) {
-            window.MicroTools?.utils?.showNotification?.('Nothing to download', 'warning');
+        if (!this.elements.binaryOutput.value) {
+            this.showError('Nothing to download');
             return;
         }
 
-        const blob = new Blob([this.binaryOutput.value], { type: 'text/plain' });
+        const content = this.elements.binaryOutput.value;
+        const blob = new Blob([content], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'binary-output.txt';
+        link.download = 'text-to-binary.txt';
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
         URL.revokeObjectURL(url);
+        SharedUtilities.showNotification('Downloaded!', 'success');
     }
 }
 
+// Initialize tool when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     new TextToBinaryConverter();
 });

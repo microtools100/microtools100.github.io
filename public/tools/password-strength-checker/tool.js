@@ -59,6 +59,13 @@ class PasswordStrengthChecker {
         
         // Event listeners for buttons
         this.toggleBtn.addEventListener('click', () => this.togglePasswordVisibility());
+        
+        // Check button (if present)
+        const checkBtn = document.getElementById('checkBtn');
+        if (checkBtn) {
+            checkBtn.addEventListener('click', () => this.checkStrength());
+        }
+        
         this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.clearBtn.addEventListener('click', () => this.clearAll());
     }
@@ -79,7 +86,20 @@ class PasswordStrengthChecker {
     togglePasswordVisibility() {
         const isPassword = this.passwordInput.type === 'password';
         this.passwordInput.type = isPassword ? 'text' : 'password';
-        this.toggleBtn.textContent = isPassword ? '👁️‍🗨️' : '👁️';
+        
+        // Toggle icon visibility
+        const showIcon = this.toggleBtn.querySelector('.toggle-icon-show');
+        const hideIcon = this.toggleBtn.querySelector('.toggle-icon-hide');
+        
+        if (isPassword) {
+            // Now showing password - show hide icon
+            if (showIcon) showIcon.style.display = 'none';
+            if (hideIcon) hideIcon.style.display = 'inline-block';
+        } else {
+            // Now hiding password - show show icon
+            if (showIcon) showIcon.style.display = 'inline-block';
+            if (hideIcon) hideIcon.style.display = 'none';
+        }
     }
 
     checkStrength() {
@@ -210,7 +230,7 @@ class PasswordStrengthChecker {
         this.lengthStat.textContent = analysis.length;
         this.scoreStat.textContent = `${analysis.score}/100`;
         this.timeStat.textContent = analysis.crackTime;
-        this.entropyStat.textContent = `${analysis.entropy} bits`;
+        this.entropyStat.textContent = Math.round(analysis.entropy);
 
         // Update criteria
         this.updateCriteria(analysis);
@@ -277,7 +297,7 @@ class PasswordStrengthChecker {
         this.lengthStat.textContent = '0';
         this.scoreStat.textContent = '0/100';
         this.timeStat.textContent = 'Instant';
-        this.entropyStat.textContent = '0 bits';
+        this.entropyStat.textContent = '0';
         this.recommendationsContainer.style.display = 'none';
         
         // Reset criteria

@@ -3,17 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tool to convert images to Base64 data URLs. Embed images directly in HTML and CSS without external file requests.">
+    <meta name="keywords" content="image to base64, image encoder, convert image, data url, base64 encoding, embed image">
+    <meta property="og:title" content="Image to Base64 Converter - Free Online Tool">
+    <meta property="og:description" content="Convert images to Base64 format for embedding in HTML and CSS. No uploads to server - everything is processed locally.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
     <title>Image to Base64 Converter - Free Online Tool | Micro Tools</title>
-    <meta name="description" content="Convert images to Base64 data URLs. Embed images directly in HTML/CSS without external files.">
-    <meta property="og:title" content="Image to Base64 Converter - Micro Tools">
-    <meta property="og:description" content="Convert images to Base64 format">
+    
     <link rel="stylesheet" href="/assets/css/core.css">
     <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image to Base64 Converter Tool",
+        "description": "Free online tool to convert images to Base64 data URLs for embedding in HTML and CSS",
+        "url": "https://micro-tools-43a.pages.dev/tools/image-to-base64/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 <body>
-        <header class="site-header">
+    <header class="site-header">
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">
@@ -29,6 +53,8 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
@@ -38,7 +64,9 @@
         <div class="container">
             <header class="tool-header">
                 <h1>Image to Base64 Converter</h1>
-                <p class="tool-description">Convert images to Base64 data URLs for embedding directly in HTML and CSS without external file requests.</p>
+                <p class="tool-description">
+                    Convert images to Base64 data URLs for embedding directly in HTML and CSS without external file requests. Perfect for small icons, logos, and images.
+                </p>
             </header>
 
             <div class="tool-layout">
@@ -47,59 +75,71 @@
                         <!-- Tool Options -->
                         <div class="tool-options">
                             <h3 class="section-title">Image Upload</h3>
-                            <div class="option-group">
-                                <label for="imageInput">Select Image:</label>
-                                <input 
-                                    type="file" 
-                                    id="imageInput" 
-                                    accept="image/*"
-                                    class="file-input">
-                                <p class="upload-hint">Supported: JPG, PNG, GIF, WebP, SVG (max 5MB)</p>
+                            <div class="options-grid">
+                                <label for="imageInput" class="file-label">
+                                    <span class="file-btn">Choose Image</span>
+                                    <input 
+                                        type="file" 
+                                        id="imageInput" 
+                                        accept="image/*"
+                                        style="display: none;">
+                                </label>
+                                <p class="upload-hint">JPG, PNG, GIF, WebP, SVG (max 5MB)</p>
+                            </div>
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
                             </div>
                         </div>
 
-                        <!-- Preview Section -->
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Preview and Output -->
                         <div class="tool-content-columns">
+                            <!-- Preview Column -->
                             <section class="tool-section input-column">
-                                <div class="preview-section">
-                                    <label>Image Preview:</label>
+                                <div class="input-group">
+                                    <label>Image Preview</label>
                                     <div class="preview-box">
-                                        <img id="preview" src="" alt="Preview" style="display: none;">
-                                        <p id="noPreview" style="color: #999;">Image preview will appear here</p>
+                                        <img id="preview" alt="Image preview" style="display: none; max-width: 100%; max-height: 300px; border-radius: 4px;">
+                                        <p id="noPreview" class="preview-placeholder">No image selected. Click "Choose Image" to upload.</p>
                                     </div>
-                                    <div class="info-row">
+                                    <div class="info-display">
                                         <div class="info-item">
-                                            <span class="label">File Size:</span>
-                                            <span id="fileSize">-</span>
+                                            <span class="info-label">File Size:</span>
+                                            <span class="info-value" id="fileSize">-</span>
                                         </div>
                                         <div class="info-item">
-                                            <span class="label">Dimensions:</span>
-                                            <span id="dimensions">-</span>
+                                            <span class="info-label">Dimensions:</span>
+                                            <span class="info-value" id="dimensions">-</span>
                                         </div>
                                     </div>
                                 </div>
                             </section>
 
+                            <!-- Output Column -->
                             <section class="tool-section output-column">
                                 <div class="output-group">
-                                    <div class="output-header">
-                                        <label for="base64Output">Base64 Output:</label>
-                                        <div class="stats-display">
-                                            <div class="stat-item">
-                                                <span class="stat-value" id="base64Size">0 KB</span>
-                                                <span class="stat-label">Size</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label for="base64Output">Base64 Output</label>
                                     <div class="output-area">
                                         <textarea 
                                             id="base64Output" 
                                             placeholder="data:image/png;base64,..."
                                             rows="12"
                                             readonly
-                                            spellcheck="false"></textarea>
+                                            spellcheck="false"
+                                        ></textarea>
                                     </div>
-                                    <div class="tool-actions">
+                                    <div class="stats-display">
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="base64Size">0 KB</span>
+                                            <span class="stat-label">Output Size</span>
+                                        </div>
+                                    </div>
+                                    <div class="output-actions">
                                         <button class="action-btn success" id="copyBtn">
                                             <span>Copy</span>
                                             <span>📋</span>
@@ -108,95 +148,89 @@
                                             <span>Download</span>
                                             <span>⤓</span>
                                         </button>
-                                        <button class="action-btn" id="clearBtn">
-                                            <span>Clear</span>
-                                            <span>×</span>
-                                        </button>
                                     </div>
                                 </div>
                             </section>
                         </div>
+                    </div>
 
-                        <!-- Format Options -->
-                        <div class="tool-options">
-                            <h3 class="section-title">Output Format</h3>
-                            <div class="format-options">
-                                <div class="option-group">
-                                    <label>Choose Format:</label>
-                                    <div class="options-row">
-                                        <label>
-                                            <input type="radio" name="format" value="dataurl" checked> Data URL
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="format" value="base64only"> Base64 Only
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="format" value="htmlimg"> HTML img tag
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="format" value="cssbg"> CSS background
-                                        </label>
-                                    </div>
-                                </div>
+                    <!-- Format Options -->
+                    <div class="tool-options">
+                        <h3 class="section-title">Output Format</h3>
+                        <div class="options-grid">
+                            <div class="radio-group">
+                                <input type="radio" id="dataUrlFormat" name="format" value="dataurl" checked>
+                                <label for="dataUrlFormat" class="option-label">Data URL</label>
+                            </div>
+                            <div class="radio-group">
+                                <input type="radio" id="base64OnlyFormat" name="format" value="base64only">
+                                <label for="base64OnlyFormat" class="option-label">Base64 Only</label>
+                            </div>
+                            <div class="radio-group">
+                                <input type="radio" id="htmlImgFormat" name="format" value="htmlimg">
+                                <label for="htmlImgFormat" class="option-label">HTML img tag</label>
+                            </div>
+                            <div class="radio-group">
+                                <input type="radio" id="cssBgFormat" name="format" value="cssbg">
+                                <label for="cssBgFormat" class="option-label">CSS background</label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Instructions -->
-                    <div class="instructions">
-                        <h4>How to use this image to Base64 converter:</h4>
-                        <ol>
-                            <li>Click "Select Image" to choose an image file from your device</li>
-                            <li>The image preview will display and Base64 encoding will begin</li>
-                            <li>Choose your preferred output format (Data URL, Base64 Only, etc.)</li>
-                            <li>Click "Copy" to copy the result to your clipboard</li>
-                            <li>Paste the result directly into your HTML, CSS, or JavaScript code</li>
-                        </ol>
-                        <p><strong>Note:</strong> All processing happens in your browser. No data is uploaded to any server.</p>
-                    </div>
-
-                    <!-- Use Cases -->
+                    <!-- Use Cases Section -->
                     <div class="use-cases">
-                        <h4>Common Use Cases:</h4>
+                        <h3>Use Cases</h3>
                         <div class="use-case-grid">
-                            <div class="use-case">
-                                <div class="use-case-icon">🖼️</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🖼️</span>
                                 <h5>Embed Images</h5>
-                                <p>Embed small images directly in HTML without external files</p>
+                                <p>Include small images directly in HTML without external files</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">🎨</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🎨</span>
                                 <h5>CSS Backgrounds</h5>
                                 <p>Use Base64 images as CSS background properties</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">⚡</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">⚡</span>
                                 <h5>Reduce Requests</h5>
-                                <p>Minimize HTTP requests by embedding images</p>
+                                <p>Minimize HTTP requests by embedding images directly</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">📱</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📧</span>
                                 <h5>Email Images</h5>
                                 <p>Include images in emails using data URLs</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Image to Base64 Guide -->
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Click "Choose Image" to select an image file from your device</li>
+                            <li>The image preview will display and Base64 encoding will begin automatically</li>
+                            <li>Choose your preferred output format (Data URL, Base64 Only, HTML img tag, or CSS background)</li>
+                            <li>Click "Copy" to copy the result to your clipboard</li>
+                            <li>Paste the result directly into your HTML, CSS, or JavaScript code</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
                     <div class="formatting-guide">
-                        <h3>Image to Base64 Encoding Guide</h3>
+                        <h3>How It Works</h3>
                         <ul>
+                            <li><strong>Base64 Encoding:</strong> Binary image data is converted to ASCII text representation using Base64 algorithm</li>
                             <li><strong>Data URL Format:</strong> Includes MIME type and Base64 prefix for direct HTML/CSS use</li>
-                            <li><strong>Supported Formats:</strong> JPEG, PNG, GIF, WebP, SVG - all images are converted to PNG Base64</li>
-                            <li><strong>Size Increase:</strong> Base64 encoded images are approximately 33% larger than the original</li>
-                            <li><strong>Best Practice:</strong> Use for small icons and images (typically under 10 KB)</li>
-                            <li><strong>Browser Caching:</strong> Data URLs bypass browser image caching, so best for small assets</li>
-                            <li><strong>Encoding Process:</strong> Image bytes are converted to ASCII characters using Base64 algorithm</li>
+                            <li><strong>Supported Formats:</strong> JPEG, PNG, GIF, WebP, SVG - all converted to appropriate Base64 format</li>
+                            <li><strong>Size Increase:</strong> Base64 encoded images are approximately 33% larger than the original binary file</li>
+                            <li><strong>Best Practice:</strong> Use for small icons and images (typically under 10 KB) to avoid bloating HTML/CSS files</li>
+                            <li><strong>Browser Caching:</strong> Data URLs bypass browser image caching, so best for small static assets</li>
+                            <li><strong>Local Processing:</strong> All conversion happens in your browser - no data is uploaded to any server</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Sidebar -->
                 <aside class="tool-sidebar">
                     <div class="related-tools">
                         <h4>Related Tools</h4>
@@ -204,17 +238,19 @@
                             <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
                             <li><a href="/tools/html-escape-unescape/">HTML Escape/Unescape</a></li>
                             <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                            <li><a href="/">All Developer Tools</a></li>
                         </ul>
                     </div>
 
                     <div class="tool-tips">
                         <h4>Image Conversion Tips</h4>
                         <ul>
-                            <li>Compress images before converting for smaller sizes</li>
-                            <li>Use for decorative images and small icons</li>
+                            <li>Compress images before converting for smaller Base64 sizes</li>
+                            <li>Best used for decorative images and small icons</li>
                             <li>Avoid for large product or content images</li>
-                            <li>Check resulting file size before using</li>
-                            <li>Consider using WebP for better compression</li>
+                            <li>Check resulting file size before using in production</li>
+                            <li>Consider using WebP format for better compression</li>
+                            <li>Data URLs work in all modern browsers</li>
                         </ul>
                     </div>
                 </aside>
@@ -228,6 +264,7 @@
     <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/utils.js"></script>
     <script src="tool.js"></script>
+
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
@@ -244,10 +281,35 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
                         <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
                         <li><a href="/tools/password-generator/">Password Generator</a></li>
                         <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>

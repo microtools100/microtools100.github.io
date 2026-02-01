@@ -1,53 +1,563 @@
-﻿/* password-generator - Tool-Specific Styles */
-:root {
-    --success-color: #10b981;
-    --error-color: #ef4444;
-    --warning-color: #f59e0b;
+﻿/* Password Generator Tool - Tool Styles */
+
+/* Override tool-options for this tool */
+.tool-options {
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
 }
 
-/* Password Generator Tool Page Layout */
-.tool-page {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
+.tool-options .section-title,
+.tool-options h3 {
+    margin-bottom: 0.75rem !important;
+    font-size: 1rem !important;
 }
 
-.tool-header {
-    grid-column: 1 / -1;
-    margin-bottom: 1rem;
+/* Error Message */
+.error-msg {
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: var(--radius-md);
+    color: #c33;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    display: none;
 }
 
-.tool-layout {
+.error-msg.show {
+    display: block;
+}
+
+/* Tool Content Columns */
+.tool-content-columns {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-}
-
-.tool-main {
-    grid-column: 1 / 2;
-}
-
-.tool-container {
-    width: 100%;
-}
-
-.tool-section {
     margin-bottom: 2rem;
+}
+
+/* For single column layout - ensures full width */
+.tool-content-columns.single-column {
+    grid-template-columns: 1fr;
+}
+
+/* Tool Section */
+.tool-section {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.output-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.output-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+/* Settings Grid */
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.setting-item label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.range-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-color);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.range-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.select-input {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: white;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Options Grid */
+.options-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+    align-items: center;
+}
+
+.option-checkbox {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.option-label {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Advanced Options */
+.advanced-options {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.advanced-options.hidden {
+    display: none;
+}
+
+/* Tool Actions Horizontal */
+.tool-actions-horizontal {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tool-actions-horizontal .action-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+/* Output Actions */
+.output-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.output-actions .action-btn {
+    flex: 1;
+}
+
+/* Action Buttons */
+.action-btn {
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: white;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: var(--surface-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.action-btn.primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.action-btn.primary:hover {
+    opacity: 0.9;
+}
+
+.action-btn.success {
+    background: #22c55e;
+    color: white;
+    border-color: #22c55e;
+}
+
+.action-btn.success:hover {
+    opacity: 0.9;
+}
+
+/* Passwords Container */
+.passwords-container {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.password-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.password-text {
+    word-break: break-all;
+    flex: 1;
+}
+
+.password-copy-btn {
+    margin-left: 1rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.password-copy-btn:hover {
+    opacity: 0.9;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-color-secondary);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.5;
+}
+
+/* Stats Display */
+.stats-display {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 0.75rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.25rem;
+}
+
+/* Use Cases Section */
+.use-cases {
+    margin-bottom: 2rem;
+}
+
+.use-cases h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+.use-case-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+
+/* Instructions Section */
+.instructions {
     background: var(--surface-color);
     padding: 1.5rem;
     border-radius: var(--radius-md);
+    margin-bottom: 2rem;
 }
 
-.tool-section h3 {
+.instructions h3 {
     color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
-.tool-options {
+.instructions ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+}
+
+.instructions li {
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+/* How It Works / Formatting Guide */
+.formatting-guide {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+}
+
+.formatting-guide h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.formatting-guide ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+}
+
+.formatting-guide li {
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.formatting-guide strong {
+    color: var(--primary-color);
+}
+
+/* Sidebar Styles */
+.tool-sidebar {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.related-tools,
+.tool-tips {
+    margin-bottom: 1.5rem;
+}
+
+.related-tools:last-child,
+.tool-tips:last-child {
+    margin-bottom: 0;
+}
+
+.related-tools h4,
+.tool-tips h4 {
+    font-size: 0.95rem;
+    margin: 0 0 0.75rem 0;
+    color: var(--text-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.related-tools ul,
+.tool-tips ul {
+    list-style: disc;
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.related-tools li,
+.tool-tips li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.related-tools li:last-child,
+.tool-tips li:last-child {
+    margin-bottom: 0;
+}
+
+.related-tools a,
+.tool-tips a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: block;
+    padding: 0.25rem 0;
+}
+
+.related-tools a:hover,
+.tool-tips a:hover {
+    color: var(--text-color);
+    text-decoration: underline;
+    padding-left: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tool-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .options-grid {
+        grid-template-columns: auto 1fr;
+        gap: 0.5rem;
+    }
+
+    .tool-actions-horizontal {
+        gap: 0.25rem;
+    }
+
+    .tool-actions-horizontal .action-btn {
+        min-width: 80px;
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .use-case-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-sidebar {
+        position: static;
+        top: 0;
+        margin-top: 2rem;
+    }
+
+    .passwords-container {
+        max-height: 300px;
+    }
+
+    .stat-item {
+        padding: 0.5rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .tool-options {
+        padding: 1rem !important;
+    }
+
+    .options-grid {
+        grid-template-columns: auto 1fr;
+        gap: 0.25rem 0.75rem;
+    }
+
+    .tool-actions-horizontal {
+        flex-direction: column;
+    }
+
+    .tool-actions-horizontal .action-btn {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .output-actions {
+        flex-direction: column;
+    }
+
+    .output-actions .action-btn {
+        width: 100%;
+    }
+
+    .stats-display {
+        flex-direction: column;
+    }
+
+    .stat-item {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+
+    .password-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .password-copy-btn {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+}
     background: var(--surface-color);
     padding: 1.5rem;
     border-radius: var(--radius-md);
@@ -211,7 +721,7 @@
 
 .password-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1rem;
 }
 
@@ -247,6 +757,7 @@
     background: none;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
+    color: var(--text-color);
     cursor: pointer;
     transition: var(--transition);
 }
@@ -492,8 +1003,6 @@
 
 /* Sidebar */
 .tool-sidebar {
-    grid-column: 2 / 3;
-    grid-row: 2 / 4;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -548,7 +1057,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
     .tool-page {
         grid-template-columns: 1fr;
         gap: 1.5rem;

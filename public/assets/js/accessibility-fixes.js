@@ -258,11 +258,16 @@ class AccessibilityFixes {
             }
         }
 
-        // Check heading hierarchy
+        // Check heading hierarchy (excluding use-case-item headings which have their own styling)
         const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
         let prevLevel = 0;
 
         headings.forEach(heading => {
+            // Skip use-case-item headings as they have their own standardized styling
+            if (heading.closest('.use-case-item')) {
+                return;
+            }
+            
             const level = parseInt(heading.tagName[1]);
             
             // Fix skipped levels

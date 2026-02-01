@@ -16,6 +16,25 @@
     <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Password Strength Checker",
+        "description": "Free online tool to check password strength and security",
+        "url": "https://micro-tools-43a.pages.dev/tools/password-strength-checker/",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 <body>
     <header class="site-header">
@@ -25,7 +44,7 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                                <nav class="main-nav">
+                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
@@ -34,139 +53,210 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
     </header>
 
-    <main class="tool-main">
+    <main class="tool-page">
         <div class="container">
-            <h1>Password Strength Checker</h1>
-            <p class="tool-subtitle">Analyze your password security in real-time. Get instant feedback on strength, vulnerabilities, and recommendations for creating secure passwords.</p>
+            <header class="tool-header">
+                <h1>Password Strength Checker</h1>
+                <p class="tool-description">
+                    Analyze your password security in real-time. Get instant feedback on strength, vulnerabilities, and recommendations for creating secure passwords.
+                </p>
+            </header>
 
-            <div class="error-msg"></div>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Check Password Strength</h3>
+                            
+                            <div class="password-input-group">
+                                <label for="passwordInput">Enter Password</label>
+                                <div class="password-input-wrapper">
+                                    <input 
+                                        type="password" 
+                                        id="passwordInput" 
+                                        placeholder="Type your password here..."
+                                        autocomplete="off"
+                                    />
+                                    <button id="toggleVisibility" class="toggle-visibility-btn" title="Toggle password visibility">
+                                        <svg class="toggle-icon-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+                                        <svg class="toggle-icon-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                                            <line x1="1" y1="1" x2="23" y2="23"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
 
-            <div class="password-input-group">
-                <label for="passwordInput">Enter Password</label>
-                <div class="password-input-wrapper">
-                    <input 
-                        type="password" 
-                        id="passwordInput" 
-                        placeholder="Type your password here&#10;Try: P@ssw0rd123"
-                        autocomplete="off"
-                    />
-                    <button id="toggleVisibility" class="toggle-visibility-btn" aria-label="Toggle password visibility">👁️</button>
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="checkBtn">
+                                    <span>Check Strength</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Output Section -->
+                        <div class="tool-content-columns single-column">
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Strength Analysis</label>
+                                    
+                                    <div class="strength-meter-container">
+                                        <div class="strength-meter">
+                                            <div id="strengthBar" class="strength-bar"></div>
+                                        </div>
+                                        <div id="strengthLabel" class="strength-label">Enter a password to check strength</div>
+                                    </div>
+
+                                    <div class="stats-display">
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="lengthStat">0</span>
+                                            <span class="stat-label">Length</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="scoreStat">0/100</span>
+                                            <span class="stat-label">Score</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="timeStat">Instant</span>
+                                            <span class="stat-label">Time to Crack</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="entropyStat">0</span>
+                                            <span class="stat-label">Entropy</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="criteria-checklist">
+                                        <h4>Criteria Checklist</h4>
+                                        <div class="criteria-items">
+                                            <div class="criterion">
+                                                <span id="crit-length" class="criterion-icon">○</span>
+                                                <label>At least 8 characters</label>
+                                            </div>
+                                            <div class="criterion">
+                                                <span id="crit-lowercase" class="criterion-icon">○</span>
+                                                <label>Lowercase letters (a-z)</label>
+                                            </div>
+                                            <div class="criterion">
+                                                <span id="crit-uppercase" class="criterion-icon">○</span>
+                                                <label>Uppercase letters (A-Z)</label>
+                                            </div>
+                                            <div class="criterion">
+                                                <span id="crit-numbers" class="criterion-icon">○</span>
+                                                <label>Numbers (0-9)</label>
+                                            </div>
+                                            <div class="criterion">
+                                                <span id="crit-special" class="criterion-icon">○</span>
+                                                <label>Special characters (!@#$%)</label>
+                                            </div>
+                                            <div class="criterion">
+                                                <span id="crit-nocommon" class="criterion-icon">○</span>
+                                                <label>Not a common password</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="recommendationsContainer" class="recommendations" style="display: none;">
+                                        <h4>🎯 Recommendations</h4>
+                                        <ul id="recommendationsList"></ul>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Use Cases Section -->
+                    <div class="use-cases">
+                        <h3>Use Cases</h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-item">
+                                <h5>Account Security</h5>
+                                <p>Create strong passwords for email, banking, and important accounts</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>Corporate Compliance</h5>
+                                <p>Meet password policy requirements for enterprise security</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>User Onboarding</h5>
+                                <p>Guide users to set secure passwords during registration</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>Breach Prevention</h5>
+                                <p>Check if your password strength protects against common attacks</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Enter your password in the input field</li>
+                            <li>Click "Check Strength" to analyze the password</li>
+                            <li>View the strength meter and detailed analysis</li>
+                            <li>Check the criteria checklist to see what requirements are met</li>
+                            <li>Follow recommendations to strengthen your password</li>
+                            <li>Use the "Toggle Visibility" button to see/hide the password</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>Strength Calculation:</strong> Algorithm analyzes length, character variety, entropy, and complexity patterns</li>
+                            <li><strong>Character Analysis:</strong> Checks for uppercase, lowercase, numbers, and special characters</li>
+                            <li><strong>Common Password Detection:</strong> Identifies weak passwords from common password lists</li>
+                            <li><strong>Pattern Detection:</strong> Detects keyboard patterns and sequential characters</li>
+                            <li><strong>Time to Crack Estimation:</strong> Calculates approximate time needed to brute-force the password</li>
+                            <li><strong>Real-time Feedback:</strong> Updates strength analysis as you type</li>
+                            <li><strong>Privacy Protection:</strong> All analysis happens in your browser - no passwords sent to servers</li>
+                        </ul>
+                    </div>
                 </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/password-generator/">Password Generator</a></li>
+                            <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                            <li><a href="/tools/text-compare-diff/">Text Compare & Diff</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Password Security Tips</h4>
+                        <ul>
+                            <li>Aim for at least 12-16 characters for maximum security</li>
+                            <li>Use uppercase, lowercase, numbers, and special characters</li>
+                            <li>Avoid keyboard patterns like "qwerty" or "12345"</li>
+                            <li>Don't use personal information in passwords</li>
+                            <li>Use different passwords for different services</li>
+                            <li>Change passwords after security breaches</li>
+                            <li>Enable two-factor authentication for critical accounts</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
-
-            <div class="strength-meter-container">
-                <div class="strength-meter">
-                    <div id="strengthBar" class="strength-bar"></div>
-                </div>
-                <div id="strengthLabel" class="strength-label">Enter a password to check strength</div>
-            </div>
-
-            <div class="password-stats">
-                <div class="stat-item">
-                    <span class="stat-label">Length</span>
-                    <span id="lengthStat" class="stat-value">0</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Score</span>
-                    <span id="scoreStat" class="stat-value">0/100</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Time to Crack</span>
-                    <span id="timeStat" class="stat-value">Instant</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Entropy</span>
-                    <span id="entropyStat" class="stat-value">0 bits</span>
-                </div>
-            </div>
-
-            <div class="criteria-checklist">
-                <h3>Criteria Checklist</h3>
-                <div class="criteria-items">
-                    <div class="criterion">
-                        <span id="crit-length" class="criterion-icon">○</span>
-                        <label>At least 8 characters</label>
-                    </div>
-                    <div class="criterion">
-                        <span id="crit-lowercase" class="criterion-icon">○</span>
-                        <label>Lowercase letters (a-z)</label>
-                    </div>
-                    <div class="criterion">
-                        <span id="crit-uppercase" class="criterion-icon">○</span>
-                        <label>Uppercase letters (A-Z)</label>
-                    </div>
-                    <div class="criterion">
-                        <span id="crit-numbers" class="criterion-icon">○</span>
-                        <label>Numbers (0-9)</label>
-                    </div>
-                    <div class="criterion">
-                        <span id="crit-special" class="criterion-icon">○</span>
-                        <label>Special characters (!@#$%)</label>
-                    </div>
-                    <div class="criterion">
-                        <span id="crit-nocommon" class="criterion-icon">○</span>
-                        <label>Not a common password</label>
-                    </div>
-                </div>
-            </div>
-
-            <div id="recommendationsContainer" class="recommendations" style="display: none;">
-                <h3>🎯 Recommendations</h3>
-                <ul id="recommendationsList"></ul>
-            </div>
-
-            <section class="use-cases">
-                <h2>Use Cases</h2>
-                <div class="use-case-grid">
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🔐</span>
-                        <h4>Account Security</h4>
-                        <p>Create strong passwords for email, banking, and important accounts</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🏢</span>
-                        <h4>Corporate Compliance</h4>
-                        <p>Meet password policy requirements for enterprise security</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">👥</span>
-                        <h4>User Onboarding</h4>
-                        <p>Guide users to set secure passwords during registration</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🛡️</span>
-                        <h4>Breach Prevention</h4>
-                        <p>Check if your password strength protects against common attacks</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="formatting-guide">
-                <h2>Password Security Tips</h2>
-                <ul>
-                    <li><strong>Minimum 12 characters:</strong> Aim for at least 12 characters for maximum security</li>
-                    <li><strong>Mix character types:</strong> Use uppercase, lowercase, numbers, and symbols</li>
-                    <li><strong>Avoid patterns:</strong> Don't use keyboard patterns (qwerty) or personal info</li>
-                    <li><strong>Use passphrases:</strong> Combine random words for both strength and memorability</li>
-                    <li><strong>Unique passwords:</strong> Use different passwords for different services</li>
-                    <li><strong>Update regularly:</strong> Change passwords after security breaches</li>
-                    <li><strong>Enable MFA:</strong> Add two-factor authentication for critical accounts</li>
-                </ul>
-            </section>
-
-            <section class="related-tools">
-                <h2>Related Tools</h2>
-                <ul>
-                    <li><a href="/tools/password-generator/">Password Generator</a></li>
-                    <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
-                    <li><a href="/tools/text-compare-diff/">Text Compare & Diff</a></li>
-                </ul>
-            </section>
         </div>
     </main>    <footer class="site-footer">
         <div class="container">
@@ -184,6 +274,8 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>

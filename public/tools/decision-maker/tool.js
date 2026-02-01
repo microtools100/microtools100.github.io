@@ -9,6 +9,7 @@ class DecisionMaker {
         this.wheel = document.querySelector('.wheel');
         this.pointer = document.querySelector('.pointer');
         this.resultText = document.querySelector('.result-text');
+        this.errorMsg = document.getElementById('errorMsg');
         
         this.isSpinning = false;
         this.currentRotation = 0; // Track total rotation for consistency
@@ -18,9 +19,38 @@ class DecisionMaker {
         this.initializeWheel();
     }
 
+    /**
+     * Clear error message
+     */
+    clearError() {
+        if (this.errorMsg) {
+            this.errorMsg.classList.remove('show');
+        }
+    }
+
+    /**
+     * Show error message
+     */
+    showError(message) {
+        if (this.errorMsg) {
+            this.errorMsg.textContent = message;
+            this.errorMsg.classList.add('show');
+        }
+    }
+
     init() {
         this.spinBtn.addEventListener('click', () => this.spin());
         this.decisionType.addEventListener('change', () => this.updateUI());
+        this.setupKeyboardShortcuts();
+    }
+
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                this.spin();
+            }
+        });
     }
 
     initializeWheel() {
@@ -29,17 +59,21 @@ class DecisionMaker {
 
     updateUI() {
         const type = this.decisionType.value;
+        this.clearError();
         if (type === 'yes-no') {
-            this.inputOptions.style.display = 'none';
+            this.inputOptions.classList.remove('active');
             this.createWheel(['YES', 'NO', 'MAYBE'], 'yes-no');
+            SharedUtilities.showNotification('Ready to make a decision!', 'info');
         } else if (type === 'coin') {
-            this.inputOptions.style.display = 'none';
+            this.inputOptions.classList.remove('active');
             this.createWheel(['HEADS', 'TAILS'], 'coin');
+            SharedUtilities.showNotification('Heads or Tails?', 'info');
         } else if (type === 'dice') {
-            this.inputOptions.style.display = 'none';
+            this.inputOptions.classList.remove('active');
             this.createWheel(Array.from({ length: 6 }, (_, i) => (i + 1).toString()), 'dice');
+            SharedUtilities.showNotification('Roll the dice!', 'info');
         } else if (type === 'custom') {
-            this.inputOptions.style.display = 'block';
+            this.inputOptions.classList.add('active');
             // Show empty wheel for custom - user will update it when they enter options
             this.createWheel(['Add Options...'], 'custom');
             
@@ -131,7 +165,8 @@ class DecisionMaker {
             const textarea = document.getElementById('inputText');
             const text = textarea ? textarea.value.trim() : '';
             if (!text) {
-                alert('Please enter options');
+                this.showError('Please enter your options in the text area');
+                SharedUtilities.showNotification('Please enter your options', 'warning');
                 return;
             }
             options = text.split('\n')
@@ -139,11 +174,13 @@ class DecisionMaker {
                 .filter(o => o.length > 0);
 
             if (options.length < 2) {
-                alert('Please enter at least 2 options');
+                this.showError('Please enter at least 2 options (one per line)');
+                SharedUtilities.showNotification('Need at least 2 options', 'warning');
                 return;
             }
         }
 
+        this.clearError();
         this.isSpinning = true;
         this.spinBtn.disabled = true;
         this.resultDisplay.style.display = 'none';
@@ -268,30 +305,36 @@ class DecisionMaker {
     }
 
     showResult(result) {
-        this.resultText.textContent = result;
-        this.resultDisplay.style.display = 'block';
-        // Ensure it's fully visible with opacity
-        this.resultDisplay.style.opacity = '1';
-        this.resultDisplay.style.transition = 'opacity 0.5s ease';
-        // Force reflow to trigger animation
-        void this.resultDisplay.offsetHeight;
+        // Add delay to ensure wheel animation completes fully
+        setTimeout(() => {
+            this.resultText.textContent = result;
+            this.resultDisplay.style.display = 'block';
+            // Ensure it's fully visible with opacity
+            this.resultDisplay.style.opacity = '1';
+            this.resultDisplay.style.transition = 'opacity 0.5s ease';
+            // Force reflow to trigger animation
+            void this.resultDisplay.offsetHeight;
+        }, 600);
     }
 
     getColors(count) {
-        // Special colors for YES/NO/MAYBE
-        if (count === 3) {
-            return ['#10b981', '#ef4444', '#f59e0b']; // green, red, yellow
-        }
-
-        // Default color palette for other options
-        const colors = [
-            '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8',
-            '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B88B', '#ABEBC6'
+        // Bright color palette for all wheels
+        const brightColors = [
+            '#10b981', // emerald green
+            '#ef4444', // bright red
+            '#f59e0b', // amber yellow
+            '#3b82f6', // bright blue
+            '#ec4899', // pink
+            '#8b5cf6', // purple
+            '#06b6d4', // cyan
+            '#f97316', // orange
+            '#14b8a6', // teal
+            '#6366f1'  // indigo
         ];
 
         const result = [];
         for (let i = 0; i < count; i++) {
-            result.push(colors[i % colors.length]);
+            result.push(brightColors[i % brightColors.length]);
         }
         return result;
     }

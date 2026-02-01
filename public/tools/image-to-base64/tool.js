@@ -11,6 +11,7 @@ class ImageToBase64Converter {
         this.downloadBtn = document.getElementById('downloadBtn');
         this.clearBtn = document.getElementById('clearBtn');
         this.formatRadios = document.getElementsByName('format');
+        this.errorMsg = document.querySelector('.error-msg');
 
         this.currentBase64 = null;
         this.currentImageName = null;
@@ -26,13 +27,21 @@ class ImageToBase64Converter {
         this.formatRadios.forEach(radio => radio.addEventListener('change', () => this.updateOutput()));
     }
 
+    showError(message) {
+        this.errorMsg.textContent = message;
+        this.errorMsg.classList.add('show');
+        setTimeout(() => {
+            this.errorMsg.classList.remove('show');
+        }, 4000);
+    }
+
     handleImageUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
 
         // Validate file size (5MB max)
         if (file.size > 5 * 1024 * 1024) {
-            window.MicroTools?.utils?.showNotification?.('File too large (max 5MB)', 'error');
+            this.showError('File too large (max 5MB)');
             this.clear();
             return;
         }
@@ -53,7 +62,7 @@ class ImageToBase64Converter {
                 this.fileSize.textContent = this.formatBytes(file.size);
                 this.base64Size.textContent = this.formatBytes(this.currentBase64.length);
                 this.updateOutput();
-                window.MicroTools?.utils?.showNotification?.('Image loaded successfully!', 'success');
+                SharedUtilities.showNotification('Image loaded successfully!', 'success');
             };
         };
 
@@ -88,20 +97,28 @@ class ImageToBase64Converter {
 
     copy() {
         if (!this.base64Output.value) {
-            window.MicroTools?.utils?.showNotification?.('Nothing to copy', 'warning');
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
             return;
         }
 
         navigator.clipboard.writeText(this.base64Output.value).then(() => {
-            window.MicroTools?.utils?.showNotification?.('Copied to clipboard!', 'success');
+            SharedUtilities.showNotification('Copied to clipboard!', 'success');
         }).catch(() => {
-            window.MicroTools?.utils?.showNotification?.('Failed to copy', 'error');
+            SharedUtilities.showNotification('Failed to copy', 'error');
         });
+    }
+
+    formatBytes(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
     }
 
     download() {
         if (!this.currentBase64) {
-            window.MicroTools?.utils?.showNotification?.('No image to download', 'warning');
+            SharedUtilities.showNotification('No image to download', 'warning');
             return;
         }
 
@@ -163,7 +180,7 @@ class ImageToBase64Converter {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
 
-        window.MicroTools?.utils?.showNotification?.('Downloaded HTML file!', 'success');
+        SharedUtilities.showNotification('Downloaded successfully!', 'success');
     }
 
     clear() {
@@ -177,6 +194,7 @@ class ImageToBase64Converter {
         this.base64Output.value = '';
         this.currentBase64 = null;
         this.currentImageName = null;
+        SharedUtilities.showNotification('Cleared!', 'success');
     }
 
     formatBytes(bytes) {

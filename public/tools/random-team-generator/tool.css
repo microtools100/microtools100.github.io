@@ -1,281 +1,390 @@
-﻿/* random-team-generator - Tool-Specific Styles */
+﻿/* Random Team Generator - Standardized Tool Styles */
 
-:root {
-    --success-color: #10b981;
-    --error-color: #ef4444;
-    --warning-color: #f59e0b;
+/* Override tool-options for this tool */
+.tool-options {
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
 }
 
-/* Tool Layout Structure */
-.tool-page {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2rem;
-    padding: 2rem 0;
-}
-
-.tool-main {
-    min-width: 0;
-}
-
-.tool-sidebar {
+/* Tool Actions Horizontal */
+.tool-actions-horizontal {
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-/* Sections and Components */
-.tool-header {
-    margin-bottom: 2rem;
-}
-
-.tool-header h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-}
-
-.tool-header .tool-description,
-.tool-description {
-    color: var(--text-color-secondary);
-    font-size: 1rem;
-    margin: 0;
-}
-
-.tool-layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2rem;
-}
-
-.tool-section {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-    margin-bottom: 2rem;
-}
-
-.option-group {
-    display: flex;
-    flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
-.option-group:last-child {
-    margin-bottom: 0;
+.tool-actions-horizontal .action-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
 }
 
-.option-group label {
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 0.95rem;
-}
-
-.option-group select,
-.option-group input[type="number"],
-.option-group input[type="radio"] {
-    padding: 0.6rem;
-    border: 1px solid var(--border-color);
+/* Error Message */
+.error-msg {
+    background: #fee;
+    border: 1px solid #fcc;
     border-radius: var(--radius-md);
-    font-size: 0.95rem;
-    background: white;
-    cursor: pointer;
-}
-
-.option-group select,
-.option-group input[type="number"] {
-    width: 100%;
-}
-
-.option-group input[type="radio"] {
-    margin-right: 0.5rem;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-}
-
-.option-group label:has(input[type="radio"]) {
-    display: flex;
-    align-items: center;
-    font-weight: 400;
-    margin: 0;
-}
-
-.action-btn {
-    padding: 0.75rem 1.5rem;
-    background: var(--surface-color);
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-}
-
-.action-btn:hover {
-    background: var(--primary-color);
-    color: white;
-}
-
-.action-btn.primary {
-    background: var(--primary-color);
-    color: white;
-}
-
-.action-btn.primary:hover {
-    opacity: 0.9;
-}
-
-.action-btn.success {
-    border-color: var(--success-color);
-    color: var(--success-color);
-}
-
-.action-btn.success:hover {
-    background: var(--success-color);
-    color: white;
-}
-
-/* Input Styles */
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.input-group label {
-    font-weight: 600;
-    color: var(--text-color);
-    font-size: 0.95rem;
-}
-
-.input-group textarea {
+    color: #c33;
     padding: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.error-msg.show {
+    display: block;
+}
+
+/* Settings Section */
+.settings-section {
+    background: white;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    font-family: 'Courier New', monospace;
-    font-size: 0.95rem;
-    resize: vertical;
-    background: white;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.settings-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1rem;
     color: var(--text-color);
-    min-height: 150px;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.setting-item label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.setting-item select,
+.setting-item input[type="range"] {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.range-display {
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+    margin-top: 0.25rem;
 }
 
 /* Tool Content Columns */
 .tool-content-columns {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
+    margin-bottom: 2rem;
 }
 
-/* Use Case Grid */
-.use-case-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-}
-
-.use-case-item {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
+/* Input Column */
+.input-column {
+    background: white;
     border: 1px solid var(--border-color);
-    text-align: center;
-}
-
-.use-case-icon {
-    font-size: 2.5rem;
-    display: block;
-    margin-bottom: 0.75rem;
-}
-
-.use-case-item h4 {
-    color: var(--primary-color);
-    margin: 0.5rem 0;
-    font-size: 1rem;
-}
-
-.use-case-item p {
-    color: var(--text-color-secondary);
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-/* Formatting Guide and Tips */
-.formatting-guide,
-.related-tools {
-    background: var(--surface-color);
-    padding: 1.5rem;
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
+    padding: 1.5rem;
 }
 
-.formatting-guide h2,
-.related-tools h2 {
-    color: var(--primary-color);
-    margin: 0 0 1rem 0;
-    font-size: 1.2rem;
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-.formatting-guide h3 {
-    color: var(--primary-color);
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-}
-
-.formatting-guide ul,
-.related-tools ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.formatting-guide li,
-.related-tools li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border-color);
+.input-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
     color: var(--text-color);
+}
+
+.input-area textarea {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    resize: vertical;
+    background: white;
+    color: var(--text-color);
+    min-height: 300px;
+}
+
+.input-area textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+    margin-top: 0.5rem;
+}
+
+/* Output Column */
+.output-column {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.output-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.output-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+/* Teams Display */
+.teams-output {
+    min-height: 300px;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.no-teams {
+    text-align: center;
+    color: var(--text-color-secondary);
+    padding: 2rem 1rem;
     font-size: 0.95rem;
 }
 
-.formatting-guide li:last-child,
-.related-tools li:last-child {
+.teams-display {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.team-card {
+    background: linear-gradient(135deg, #f0f7ff 0%, #f9f9ff 100%);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-color);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+}
+
+.team-header {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+}
+
+.team-members {
+    margin: 0 0 0.75rem 0;
+}
+
+.team-members ul {
+    list-style: none;
+    padding-left: 1rem;
+    margin: 0;
+}
+
+.team-members li {
+    padding: 0.4rem 0;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.team-members li:last-child {
     border-bottom: none;
 }
 
-.related-tools a {
-    color: var(--primary-color);
-    text-decoration: none;
+.team-count {
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
     font-weight: 500;
 }
 
-.related-tools a:hover {
-    text-decoration: underline;
+/* Output Actions */
+.output-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
 }
 
-/* Sidebar Styling */
+.output-actions .action-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* Use Cases Section */
+.use-cases {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.use-cases h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+/* Instructions Section */
+.instructions {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.instructions h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.instructions ol {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: var(--text-color);
+}
+
+.instructions li {
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Formatting Guide (How It Works) */
+.formatting-guide {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.formatting-guide h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.formatting-guide ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: var(--text-color);
+}
+
+.formatting-guide li {
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Sidebar */
 .tool-sidebar {
     position: sticky;
     top: 2rem;
     height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.tool-sidebar .formatting-guide,
-.tool-sidebar .related-tools {
-    margin-bottom: 0;
+.related-tools,
+.tool-tips {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
-/* Media Queries */
-@media (max-width: 1200px) {
-    .tool-page,
+.related-tools h4,
+.tool-tips h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.related-tools ul,
+.tool-tips ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.related-tools li,
+.tool-tips li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.related-tools li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.tool-tips li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.related-tools a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.related-tools a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
     .tool-layout {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
     }
 
     .tool-sidebar {
@@ -287,46 +396,53 @@
 }
 
 @media (max-width: 768px) {
-    .tool-section {
-        padding: 1rem;
+    .tool-content-columns {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
     }
 
     .use-case-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .input-area textarea {
+        min-height: 200px;
+    }
+
+    .teams-output {
+        min-height: 200px;
     }
 
     .tool-sidebar {
         grid-template-columns: 1fr;
     }
 
-    .action-btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-    }
-
-    .input-group textarea {
-        min-height: 120px;
+    .tool-options {
+        padding: 1rem !important;
     }
 }
 
 @media (max-width: 480px) {
-    .tool-header h1 {
-        font-size: 1.5rem;
+    .use-case-grid {
+        grid-template-columns: 1fr;
     }
 
-    .tool-section {
-        padding: 0.75rem;
-        margin-bottom: 1rem;
+    .settings-grid {
+        grid-template-columns: 1fr;
     }
 
-    .action-btn {
-        padding: 0.5rem 0.75rem;
+    .tool-actions-horizontal {
+        gap: 0.5rem;
+    }
+
+    .tool-actions-horizontal .action-btn {
+        min-width: 80px;
+        padding: 0.5rem 0.6rem;
         font-size: 0.85rem;
-        width: 100%;
-    }
-
-    .use-case-item {
-        padding: 1rem;
     }
 }
 

@@ -25,7 +25,7 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                                <nav class="main-nav">
+                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
@@ -34,102 +34,155 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
     </header>
 
-    <main class="tool-main">
+    <main class="tool-page">
         <div class="container">
-            <h1>Fake Data Generator</h1>
-            <p class="tool-subtitle">Generate fake names, emails, phone numbers, and addresses for testing. Perfect for development and quality assurance.</p>
+            <header class="tool-header">
+                <h1>Fake Data Generator</h1>
+                <p class="tool-description">Generate fake names, emails, phone numbers, addresses, and more for testing. Perfect for development and quality assurance.</p>
+            </header>
 
-            <div class="tool-options">
-                <h3 class="section-title">Settings</h3>
-                <div class="options-grid">
-                    <div class="option-group">
-                        <label for="dataTypeSelect">Data Type:</label>
-                        <select id="dataTypeSelect">
-                            <option value="names">Full Names</option>
-                            <option value="emails">Email Addresses</option>
-                            <option value="phones">Phone Numbers</option>
-                            <option value="addresses">Street Addresses</option>
-                            <option value="usernames">Usernames</option>
-                            <option value="dates">Birth Dates</option>
-                        </select>
-                    </div>
-                    <div class="option-group">
-                        <label for="quantityInput">Quantity:</label>
-                        <input type="number" id="quantityInput" min="1" max="1000" value="10">
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <div class="option-group">
+                                <label for="dataTypeSelect">Data Type</label>
+                                <select id="dataTypeSelect">
+                                    <option value="names">Full Names</option>
+                                    <option value="emails">Email Addresses</option>
+                                    <option value="phones">Phone Numbers</option>
+                                    <option value="addresses">Street Addresses</option>
+                                    <option value="usernames">Usernames</option>
+                                    <option value="dates">Birth Dates</option>
+                                </select>
+                            </div>
+                            <div class="option-group">
+                                <label for="quantityInput">Quantity</label>
+                                <input type="number" id="quantityInput" min="1" max="1000" value="10">
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg" id="errorMsg"></div>
+
+                        <!-- Action Buttons -->
+                        <div class="tool-actions-horizontal">
+                            <button class="action-btn primary" id="generateBtn">
+                                <span>Generate Data</span>
+                            </button>
+                            <button class="action-btn success" id="copyBtn" disabled>
+                                <span>Copy All</span>
+                            </button>
+                        </div>
+
+                        <!-- Output Section -->
+                        <section class="tool-section output-column">
+                            <div class="output-group">
+                                <label for="outputText">Generated Data</label>
+                                <div class="output-area">
+                                    <textarea 
+                                        id="outputText" 
+                                        placeholder="Generated data will appear here..."
+                                        rows="12"
+                                        readonly
+                                        spellcheck="false"></textarea>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Use Cases -->
+                        <section class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <h5>Software Testing</h5>
+                                    <p>Generate test data for development and QA</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Database Seeding</h5>
+                                    <p>Populate databases with realistic dummy data</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Load Testing</h5>
+                                    <p>Create large datasets for performance testing</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>UI Mockups</h5>
+                                    <p>Fill forms and templates with realistic data</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- How It Works -->
+                        <section class="instructions">
+                            <h3>How It Works</h3>
+                            <ol>
+                                <li>Select the data type you want to generate (names, emails, phone numbers, addresses, usernames, or dates)</li>
+                                <li>Enter the quantity of records you need (up to 1000 per generation)</li>
+                                <li>Click "Generate Data" to create the fake data</li>
+                                <li>Review the generated data in the output area</li>
+                                <li>Click "Copy All" to copy all generated data to your clipboard</li>
+                                <li>Use the data in your testing, development, or database seeding workflows</li>
+                            </ol>
+                        </section>
+
+                        <!-- Data Types Reference -->
+                        <section class="formatting-guide">
+                            <h3>Data Types Available</h3>
+                            <ul>
+                                <li><strong>Full Names:</strong> Realistic first and last name combinations</li>
+                                <li><strong>Email Addresses:</strong> Valid email format with various domains</li>
+                                <li><strong>Phone Numbers:</strong> US format with area code and exchange</li>
+                                <li><strong>Street Addresses:</strong> Complete addresses with street, city, state, and ZIP</li>
+                                <li><strong>Usernames:</strong> Realistic username variations</li>
+                                <li><strong>Birth Dates:</strong> Random dates in YYYY-MM-DD format</li>
+                            </ul>
+                            <h4 style="margin-top: 1.5rem;">Quantity Limits & Features:</h4>
+                            <ul style="margin-top: 1rem;">
+                                <li>Maximum 1000 records per generation</li>
+                                <li>Completely random generation each time</li>
+                                <li>No external API calls - all generated locally</li>
+                                <li>Privacy assured - no data is stored or sent</li>
+                            </ul>
+                        </section>
                     </div>
                 </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <section class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/password-generator/">Password Generator</a></li>
+                            <li><a href="/tools/random-team-generator/">Random Team Generator</a></li>
+                            <li><a href="/tools/uuid-generator/">UUID Generator</a></li>
+                        </ul>
+                    </section>
+
+                    <section class="tool-tips">
+                        <h4>Generator Tips</h4>
+                        <ul>
+                            <li>Use for software testing and QA environments</li>
+                            <li>Perfect for database seeding in development</li>
+                            <li>Generate up to 1000 records at once for bulk testing</li>
+                            <li>All data is generated locally - no server storage</li>
+                            <li>Copy and paste directly into your applications</li>
+                        </ul>
+                    </section>
+                </aside>
             </div>
-
-            <div class="button-group">
-                <button id="generateBtn" class="generate-btn">🔄 Generate Data</button>
-                <button id="copyBtn" class="copy-btn" disabled>📋 Copy All</button>
-            </div>
-
-            <div class="output-group">
-                <label for="outputText">Generated Data</label>
-                <textarea id="outputText" readonly placeholder="Generated data will appear here..."></textarea>
-            </div>
-
-            <section class="use-cases">
-                <h2>Use Cases</h2>
-                <div class="use-case-grid">
-                    <div class="use-case-item">
-                        <span class="use-case-icon">💻</span>
-                        <h4>Software Testing</h4>
-                        <p>Generate test data for development and QA</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">📝</span>
-                        <h4>Database Seeding</h4>
-                        <p>Populate databases with realistic dummy data</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🧪</span>
-                        <h4>Load Testing</h4>
-                        <p>Create large datasets for performance testing</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🎨</span>
-                        <h4>UI Mockups</h4>
-                        <p>Fill forms and templates with realistic data</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="formatting-guide">
-                <h2>Data Types Available</h2>
-                <ul>
-                    <li><strong>Full Names:</strong> Realistic first and last name combinations</li>
-                    <li><strong>Email Addresses:</strong> Valid email format with various domains</li>
-                    <li><strong>Phone Numbers:</strong> US format (XXX) XXX-XXXX</li>
-                    <li><strong>Street Addresses:</strong> Complete addresses with street, city, state, and ZIP</li>
-                    <li><strong>Usernames:</strong> Realistic username variations</li>
-                    <li><strong>Birth Dates:</strong> Random dates in YYYY-MM-DD format</li>
-                </ul>
-                <h3 style="margin-top: 1.5rem; color: var(--primary-color);">Quantity Limits:</h3>
-                <ul style="margin-top: 1rem;">
-                    <li>Maximum 1000 records per generation</li>
-                    <li>Completely random generation each time</li>
-                    <li>No external API calls - all generated locally</li>
-                    <li>Privacy assured - no data is stored or sent</li>
-                </ul>
-            </section>
-
-            <section class="related-tools">
-                <h2>Related Tools</h2>
-                <ul>
-                    <li><a href="/tools/password-generator/">Password Generator</a></li>
-                    <li><a href="/tools/random-team-generator/">Random Team Generator</a></li>
-                    <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
-                </ul>
-            </section>
         </div>
-    </main>    <footer class="site-footer">
+    </main>
+
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -145,6 +198,8 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
@@ -175,6 +230,9 @@
     <script src="/assets/js/accessibility-fixes.js"></script>
     <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
     <script src="tool.js"></script>
 </body>
 </html>

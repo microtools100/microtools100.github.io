@@ -13,7 +13,7 @@
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>
-        <header class="site-header">
+    <header class="site-header">
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">
@@ -29,76 +29,158 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
     </header>
 
-    <div class="tool-container">
-        <div class="tool-header">
-            <h1>Countdown Timer</h1>
-            <p>Set a countdown timer with hours, minutes, and seconds</p>
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Countdown Timer</h1>
+                <p class="tool-description">Set a countdown timer with hours, minutes, and seconds. Get audio notifications when time is up.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Timer Display -->
+                        <div class="timer-display">
+                            <div class="timer-text" id="timerDisplay">00:00:00</div>
+                        </div>
+
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <div class="input-group">
+                                <label for="hours">Hours</label>
+                                <input type="number" id="hours" value="0" min="0" max="23">
+                            </div>
+                            <div class="input-group">
+                                <label for="minutes">Minutes</label>
+                                <input type="number" id="minutes" value="1" min="0" max="59">
+                            </div>
+                            <div class="input-group">
+                                <label for="seconds">Seconds</label>
+                                <input type="number" id="seconds" value="0" min="0" max="59">
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg" id="errorMsg"></div>
+
+                        <!-- Control Buttons -->
+                        <div class="tool-actions-horizontal">
+                            <button class="action-btn primary" id="startBtn">
+                                <span>Start</span>
+                            </button>
+                            <button class="action-btn" id="pauseBtn" disabled>
+                                <span>Pause</span>
+                            </button>
+                            <button class="action-btn" id="resetBtn">
+                                <span>Reset</span>
+                            </button>
+                        </div>
+
+                        <!-- Preset Buttons -->
+                        <div class="preset-section">
+                            <h3>Quick Presets</h3>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" onclick="setPreset(1, 0, 0)">1 min</button>
+                                <button class="preset-btn" onclick="setPreset(5, 0, 0)">5 min</button>
+                                <button class="preset-btn" onclick="setPreset(10, 0, 0)">10 min</button>
+                                <button class="preset-btn" onclick="setPreset(30, 0, 0)">30 min</button>
+                                <button class="preset-btn" onclick="setPreset(0, 1, 0)">1 hour</button>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="tool-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="soundToggle" checked>
+                                <span>Sound notification when timer ends</span>
+                            </label>
+                        </div>
+
+                        <!-- Use Cases -->
+                        <section class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <h5>Cooking</h5>
+                                    <p>Time recipes, boiling water, and cooking durations</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Studying</h5>
+                                    <p>Pomodoro technique and study session timing</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Fitness</h5>
+                                    <p>Workout intervals, rest periods, and exercises</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Work</h5>
+                                    <p>Meeting durations, presentation timing, breaks</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- How It Works -->
+                        <section class="instructions">
+                            <h3>How It Works</h3>
+                            <ol>
+                                <li>Enter the desired time in hours, minutes, and seconds</li>
+                                <li>Click "Start" to begin the countdown</li>
+                                <li>Use "Pause" to temporarily stop the timer</li>
+                                <li>Use "Reset" to clear and start fresh</li>
+                                <li>Alternatively, click a preset button for quick timing</li>
+                                <li>The timer will alert you with sound and notification when finished</li>
+                            </ol>
+                        </section>
+
+                        <!-- How to Use -->
+                        <section class="formatting-guide">
+                            <h3>Timer Features</h3>
+                            <ul>
+                                <li>Set timers up to 23 hours, 59 minutes, 59 seconds</li>
+                                <li>Pause and resume at any time during countdown</li>
+                                <li>Quick preset buttons for common durations (1, 5, 10, 30 minutes, 1 hour)</li>
+                                <li>Optional audio notification when timer completes</li>
+                                <li>Page title updates to show remaining time during countdown</li>
+                                <li>Browser tab shows timer status for easy monitoring</li>
+                                <li>Works completely offline - no server required</li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <section class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/password-generator/">Password Generator</a></li>
+                            <li><a href="/tools/random-team-generator/">Random Team Generator</a></li>
+                            <li><a href="/tools/qr-code-generator/">QR Code Generator</a></li>
+                        </ul>
+                    </section>
+
+                    <section class="tool-tips">
+                        <h4>Timer Tips</h4>
+                        <ul>
+                            <li>Use for productivity with the Pomodoro Technique (25 min work, 5 min break)</li>
+                            <li>Set multiple timers for cooking different dishes</li>
+                            <li>Combine with study sessions for focused learning intervals</li>
+                            <li>Perfect for workout timing and rest between sets</li>
+                            <li>Leave your browser tab open to see time updates in the title</li>
+                        </ul>
+                    </section>
+                </aside>
+            </div>
         </div>
+    </main>
 
-        <div class="tool-content">
-            <div class="timer-display">
-                <div class="timer-text" id="timerDisplay">00:00:00</div>
-            </div>
-
-            <div class="input-group">
-                <div class="input-field">
-                    <label for="hours">Hours</label>
-                    <input type="number" id="hours" value="0" min="0" max="23">
-                </div>
-                <div class="input-field">
-                    <label for="minutes">Minutes</label>
-                    <input type="number" id="minutes" value="1" min="0" max="59">
-                </div>
-                <div class="input-field">
-                    <label for="seconds">Seconds</label>
-                    <input type="number" id="seconds" value="0" min="0" max="59">
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="timer-btn" id="startBtn">▶️ Start</button>
-                <button class="timer-btn pause" id="pauseBtn" disabled>⏸️ Pause</button>
-                <button class="timer-btn" id="resetBtn">🔄 Reset</button>
-            </div>
-
-            <div class="preset-buttons">
-                <button class="preset-btn" onclick="setPreset(1, 0, 0)">1 min</button>
-                <button class="preset-btn" onclick="setPreset(5, 0, 0)">5 min</button>
-                <button class="preset-btn" onclick="setPreset(10, 0, 0)">10 min</button>
-                <button class="preset-btn" onclick="setPreset(30, 0, 0)">30 min</button>
-            </div>
-
-            <div class="options">
-                <label>
-                    <input type="checkbox" id="soundToggle" checked>
-                    Sound notification when timer ends
-                </label>
-            </div>
-
-            <div class="info-box">
-                <h4>⏱️ Timer Features:</h4>
-                <ul>
-                    <li>Set up to 23 hours, 59 minutes, 59 seconds</li>
-                    <li>Pause and resume at any time</li>
-                    <li>Quick preset buttons for common durations</li>
-                    <li>Optional sound notification</li>
-                    <li>Page title updates during countdown</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script src="/assets/js/shared-utilities.js"></script>
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="tool.js"></script>
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
@@ -115,6 +197,8 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
@@ -140,6 +224,12 @@
         </div>
     </footer>
 
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
 </body>
 </html>
 

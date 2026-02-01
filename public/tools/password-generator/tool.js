@@ -23,7 +23,6 @@ class PasswordGenerator {
             length: document.getElementById('length'),
             lengthValue: document.getElementById('lengthValue'),
             count: document.getElementById('count'),
-            strength: document.getElementById('strength'),
             
             // Character types
             uppercase: document.getElementById('uppercase'),
@@ -52,7 +51,7 @@ class PasswordGenerator {
             strengthScore: document.getElementById('strengthScore'),
             entropyBits: document.getElementById('entropyBits'),
             crackTime: document.getElementById('crackTime'),
-            strengthBar: document.getElementById('strengthBar')
+            errorMsg: document.querySelector('.error-msg')
         };
 
         this.generatedPasswords = [];
@@ -63,11 +62,23 @@ class PasswordGenerator {
         this.setupEventListeners();
         this.setupQuickPresets();
         this.updateLengthValue();
-        this.setupStrengthPreset();
         this.setupKeyboardShortcuts();
         
         // Generate initial passwords
         this.generatePasswords();
+    }
+
+    /**
+     * Show error message
+     */
+    showError(message) {
+        if (this.elements.errorMsg) {
+            this.elements.errorMsg.textContent = message;
+            this.elements.errorMsg.classList.add('show');
+            setTimeout(() => {
+                this.elements.errorMsg.classList.remove('show');
+            }, 4000);
+        }
     }
 
     setupKeyboardShortcuts() {
@@ -110,10 +121,8 @@ class PasswordGenerator {
             this.generatePasswords();
         });
         
-        // Strength preset
-        this.elements.strength.addEventListener('change', () => this.applyStrengthPreset());
-        
         // Character type changes
+
         const charTypes = [this.elements.uppercase, this.elements.lowercase, 
                           this.elements.numbers, this.elements.symbols];
         charTypes.forEach(type => {
@@ -134,16 +143,8 @@ class PasswordGenerator {
         });
     }
 
-    setupStrengthPreset() {
-        this.elements.strength.addEventListener('change', () => {
-            if (this.elements.strength.value !== 'custom') {
-                this.applyStrengthPreset();
-                this.generatePasswords();
-            }
-        });
-    }
-
     updateLengthValue() {
+
         this.elements.lengthValue.textContent = this.elements.length.value;
     }
 
@@ -162,47 +163,8 @@ class PasswordGenerator {
         }
     }
 
-    applyStrengthPreset() {
-        const strength = this.elements.strength.value;
-        
-        switch(strength) {
-            case 'weak':
-                this.elements.length.value = 8;
-                this.elements.uppercase.checked = false;
-                this.elements.lowercase.checked = true;
-                this.elements.numbers.checked = false;
-                this.elements.symbols.checked = false;
-                break;
-                
-            case 'medium':
-                this.elements.length.value = 12;
-                this.elements.uppercase.checked = true;
-                this.elements.lowercase.checked = true;
-                this.elements.numbers.checked = true;
-                this.elements.symbols.checked = false;
-                break;
-                
-            case 'strong':
-                this.elements.length.value = 16;
-                this.elements.uppercase.checked = true;
-                this.elements.lowercase.checked = true;
-                this.elements.numbers.checked = true;
-                this.elements.symbols.checked = true;
-                break;
-                
-            case 'very-strong':
-                this.elements.length.value = 20;
-                this.elements.uppercase.checked = true;
-                this.elements.lowercase.checked = true;
-                this.elements.numbers.checked = true;
-                this.elements.symbols.checked = true;
-                break;
-        }
-        
-        this.updateLengthValue();
-    }
-
     applyPreset(preset) {
+
         const settings = this.presets[preset];
         if (!settings) return;
         
@@ -554,13 +516,13 @@ class PasswordGenerator {
                     <span class="password-number">Password ${index + 1}</span>
                     <div class="password-actions">
                         <button class="copy-password" title="Copy password">
-                            <span>📋</span>
+                            <span>Copy</span>
                         </button>
                         <button class="toggle-mask" title="Show/hide password">
-                            <span>👁️</span>
+                            <span>Show</span>
                         </button>
                         <button class="refresh-password" title="Regenerate this password">
-                            <span>↻</span>
+                            <span>New</span>
                         </button>
                     </div>
                 </div>
@@ -582,7 +544,7 @@ class PasswordGenerator {
             toggleBtn.addEventListener('click', () => {
                 passwordValue.classList.toggle('masked');
                 toggleBtn.innerHTML = passwordValue.classList.contains('masked') ? 
-                    '<span>👁️</span>' : '<span>👁️‍🗨️</span>';
+                    '<span>Show</span>' : '<span>Hide</span>';
             });
             refreshBtn.addEventListener('click', () => this.refreshSinglePassword(index));
             
@@ -597,7 +559,6 @@ class PasswordGenerator {
             this.elements.strengthScore.textContent = '0%';
             this.elements.entropyBits.textContent = '0';
             this.elements.crackTime.textContent = 'Instant';
-            this.elements.strengthBar.style.width = '0%';
             return;
         }
         
@@ -608,16 +569,6 @@ class PasswordGenerator {
         this.elements.strengthScore.textContent = `${Math.round(avgStrength)}%`;
         this.elements.entropyBits.textContent = Math.round(avgEntropy);
         this.elements.crackTime.textContent = this.estimateCrackTime(avgEntropy);
-        
-        // Update strength bar
-        this.elements.strengthBar.style.width = `${avgStrength}%`;
-        
-        // Update bar color based on strength
-        if (avgStrength >= 80) this.elements.strengthBar.style.backgroundColor = 'var(--success-color)';
-        else if (avgStrength >= 60) this.elements.strengthBar.style.backgroundColor = '#10b981';
-        else if (avgStrength >= 40) this.elements.strengthBar.style.backgroundColor = 'var(--warning-color)';
-        else if (avgStrength >= 20) this.elements.strengthBar.style.backgroundColor = '#f59e0b';
-        else this.elements.strengthBar.style.backgroundColor = 'var(--error-color)';
     }
 
     async copyPassword(password, button) {
@@ -657,6 +608,7 @@ class PasswordGenerator {
         
         if (window.MicroTools?.utils?.copyToClipboard) {
             await window.MicroTools.utils.copyToClipboard(text, this.elements.copyAllBtn);
+            SharedUtilities.showNotification('All passwords copied to clipboard', 'success');
         } else {
             // Fallback copy method
             const textarea = document.createElement('textarea');

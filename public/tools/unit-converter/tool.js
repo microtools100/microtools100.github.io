@@ -11,6 +11,7 @@ class UnitConverter {
         this.toUnit = document.getElementById('toUnit');
         this.outputValue = document.getElementById('outputValue');
         this.swapButton = document.querySelector('.swap-button');
+        this.errorMsg = document.getElementById('errorMsg');
         
         this.conversions = {
             length: {
@@ -147,6 +148,11 @@ class UnitConverter {
         const from = this.fromUnit.value;
         const to = this.toUnit.value;
 
+        // Clear previous error
+        if (this.errorMsg) {
+            this.errorMsg.classList.remove('show');
+        }
+
         if (isNaN(inputVal) || inputVal === '') {
             this.outputValue.value = '';
             return;
@@ -166,9 +172,14 @@ class UnitConverter {
 
             result = Math.round(result * 1000000) / 1000000;
             this.outputValue.value = result;
-            window.MicroTools?.utils?.showNotification?.('Converted successfully!', 'success');
+            SharedUtilities.showNotification('Converted successfully!', 'success');
         } catch (error) {
-            window.MicroTools?.utils?.showNotification?.('Conversion error', 'error');
+            const errorMessage = `Conversion error: ${error.message}`;
+            if (this.errorMsg) {
+                this.errorMsg.textContent = errorMessage;
+                this.errorMsg.classList.add('show');
+            }
+            SharedUtilities.showNotification(errorMessage, 'error');
         }
     }
 
@@ -214,10 +225,12 @@ class UnitConverter {
      * Clear all inputs
      */
     clearAll() {
-        SharedUtilities.clearElements(
-            { inputData: this.inputValue, outputData: this.outputValue },
-            { message: 'Cleared!' }
-        );
+        this.inputValue.value = '';
+        this.outputValue.value = '';
+        if (this.errorMsg) {
+            this.errorMsg.classList.remove('show');
+        }
+        SharedUtilities.showNotification('Cleared!', 'info');
     }
 }
 

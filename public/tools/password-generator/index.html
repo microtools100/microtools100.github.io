@@ -70,117 +70,87 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
-                        <section class="tool-section">
-                            <div class="tool-options">
-                                <h3>Password Settings</h3>
-                                <div class="options-grid">
-                                    <div class="option-group">
-                                        <label for="length">Password Length:</label>
-                                        <input type="range" id="length" min="8" max="64" value="16">
-                                        <div class="range-value">
-                                            <span id="lengthValue">16</span> characters
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="option-group">
-                                        <label for="count">Number of Passwords:</label>
-                                        <select id="count">
-                                            <option value="1">1 password</option>
-                                            <option value="3">3 passwords</option>
-                                            <option value="5" selected>5 passwords</option>
-                                            <option value="10">10 passwords</option>
-                                            <option value="20">20 passwords</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="option-group">
-                                        <label for="strength">Password Strength:</label>
-                                        <select id="strength">
-                                            <option value="weak">Weak (8 chars, letters only)</option>
-                                            <option value="medium">Medium (12 chars, letters + numbers)</option>
-                                            <option value="strong" selected>Strong (16 chars, mixed)</option>
-                                            <option value="very-strong">Very Strong (20+ chars, all types)</option>
-                                            <option value="custom">Custom Settings</option>
-                                        </select>
-                                    </div>
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Password Settings</h3>
+                            <div class="settings-grid">
+                                <div class="setting-item">
+                                    <label for="length">Password Length: <span id="lengthValue">16</span> characters</label>
+                                    <input type="range" id="length" min="8" max="64" value="16" class="range-slider">
                                 </div>
                                 
-                                <div class="character-types">
-                                    <h4>Character Types:</h4>
-                                    <div class="types-grid">
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="uppercase" checked>
-                                            <label for="uppercase">Uppercase Letters (A-Z)</label>
-                                            <span class="char-example">ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="lowercase" checked>
-                                            <label for="lowercase">Lowercase Letters (a-z)</label>
-                                            <span class="char-example">abcdefghijklmnopqrstuvwxyz</span>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="numbers" checked>
-                                            <label for="numbers">Numbers (0-9)</label>
-                                            <span class="char-example">0123456789</span>
-                                        </div>
-                                        <div class="checkbox-option">
-                                            <input type="checkbox" id="symbols" checked>
-                                            <label for="symbols">Symbols (!@#$% etc.)</label>
-                                            <span class="char-example">!@#$%^&*()_+-=[]{}|;:,.<>?</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="advanced-options">
-                                    <button class="action-btn" id="toggleAdvanced">
-                                        <span>Advanced Options</span>
-                                        <span>⚙️</span>
-                                    </button>
-                                    <div class="advanced-content hidden" id="advancedOptions">
-                                        <div class="advanced-grid">
-                                            <div class="option-group">
-                                                <label for="excludeSimilar">Exclude similar characters:</label>
-                                                <input type="checkbox" id="excludeSimilar" checked>
-                                                <div class="hint">Exclude i, l, 1, L, o, 0, O</div>
-                                            </div>
-                                            <div class="option-group">
-                                                <label for="excludeAmbiguous">Exclude ambiguous characters:</label>
-                                                <input type="checkbox" id="excludeAmbiguous">
-                                                <div class="hint">Exclude {}[]()/\'"`~,;:.<></div>
-                                            </div>
-                                            <div class="option-group">
-                                                <label for="requireEach">Require at least one of each type:</label>
-                                                <input type="checkbox" id="requireEach" checked>
-                                            </div>
-                                            <div class="option-group">
-                                                <label for="avoidDuplicates">Avoid duplicate characters:</label>
-                                                <input type="checkbox" id="avoidDuplicates">
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="setting-item">
+                                    <label for="count">Number of Passwords:</label>
+                                    <select id="count" class="select-input">
+                                        <option value="1">1 password</option>
+                                        <option value="3">3 passwords</option>
+                                        <option value="5" selected>5 passwords</option>
+                                        <option value="10">10 passwords</option>
+                                        <option value="20">20 passwords</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="tool-actions">
+                            <h3 class="section-title">Character Types</h3>
+                            <div class="options-grid">
+                                <input type="checkbox" id="uppercase" class="option-checkbox" checked>
+                                <label for="uppercase" class="option-label">Uppercase Letters (A-Z)</label>
+                                <input type="checkbox" id="lowercase" class="option-checkbox" checked>
+                                <label for="lowercase" class="option-label">Lowercase Letters (a-z)</label>
+                                <input type="checkbox" id="numbers" class="option-checkbox" checked>
+                                <label for="numbers" class="option-label">Numbers (0-9)</label>
+                                <input type="checkbox" id="symbols" class="option-checkbox" checked>
+                                <label for="symbols" class="option-label">Symbols (!@#$% etc.)</label>
+                            </div>
+
+                            <div class="tool-actions-horizontal">
                                 <button class="action-btn primary" id="generateBtn">
-                                    <span>Generate Passwords</span>
-                                    <span>🔒</span>
+                                    <span>Generate</span>
                                 </button>
                                 <button class="action-btn" id="clearBtn">
-                                    <span>Clear All</span>
-                                    <span>×</span>
+                                    <span>Clear</span>
                                 </button>
                                 <button class="action-btn" id="presetBtn">
-                                    <span>Common Presets</span>
-                                    <span>📋</span>
+                                    <span>Quick Presets</span>
+                                </button>
+                                <button class="action-btn" id="toggleAdvanced">
+                                    <span>Advanced</span>
                                 </button>
                             </div>
-                        </section>
+                        </div>
 
-                        <section class="tool-section">
-                            <div class="output-group">
-                                <div class="output-header">
-                                    <label>Generated Passwords:</label>
+                        <!-- Advanced Options (Hidden by default) -->
+                        <div class="advanced-options hidden" id="advancedOptions">
+                            <div class="tool-options">
+                                <h3 class="section-title">Advanced Options</h3>
+                                <div class="options-grid">
+                                    <input type="checkbox" id="excludeSimilar" class="option-checkbox" checked>
+                                    <label for="excludeSimilar" class="option-label">Exclude similar chars (i,l,1,L,o,0,O)</label>
+                                    <input type="checkbox" id="excludeAmbiguous" class="option-checkbox">
+                                    <label for="excludeAmbiguous" class="option-label">Exclude ambiguous chars</label>
+                                    <input type="checkbox" id="requireEach" class="option-checkbox" checked>
+                                    <label for="requireEach" class="option-label">Require one of each type</label>
+                                    <input type="checkbox" id="avoidDuplicates" class="option-checkbox">
+                                    <label for="avoidDuplicates" class="option-label">Avoid duplicate characters</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Output Section - Full Width -->
+                        <div class="tool-content-columns single-column">
+                            <!-- Passwords Output -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Generated Passwords</label>
+                                    <div class="passwords-container" id="passwordsOutput">
+                                        <div class="empty-state">
+                                            <p>Click "Generate" to create secure passwords</p>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="stats-display">
                                         <div class="stat-item">
                                             <span class="stat-value" id="strengthScore">0%</span>
@@ -195,77 +165,71 @@
                                             <span class="stat-label">Crack Time</span>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="passwords-container" id="passwordsOutput">
-                                    <!-- Example output: -->
-                                    <!-- K9@mLp2x$Qr5vW1f -->
-                                    <!-- Generated passwords will appear here -->
-                                    <div class="empty-state">
-                                        <div class="empty-icon">🔒</div>
-                                        <h4>No passwords generated yet</h4>
-                                        <p>Click "Generate Passwords" to create your first secure password!</p>
+                                    
+                                    <div class="output-actions">
+                                        <button class="action-btn success" id="copyAllBtn">
+                                            <span>Copy All</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                        </button>
+                                        <button class="action-btn" id="refreshBtn">
+                                            <span>Regenerate</span>
+                                        </button>
                                     </div>
                                 </div>
-                                
-                                <div class="tool-actions">
-                                    <button class="action-btn success" id="copyAllBtn">
-                                        <span>Copy All Passwords</span>
-                                        <span>📋</span>
-                                    </button>
-                                    <button class="action-btn" id="downloadBtn">
-                                        <span>Download as .txt</span>
-                                        <span>⤓</span>
-                                    </button>
-                                    <button class="action-btn" id="refreshBtn">
-                                        <span>Refresh All</span>
-                                        <span>↻</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </section>
+                            </section>
+                        </div>
                     </div>
 
-                    <div class="instructions">
-                        <h4>Password Security Tips:</h4>
-                        <ol>
-                            <li><strong>Use long passwords:</strong> At least 12-16 characters for important accounts</li>
-                            <li><strong>Mix character types:</strong> Use uppercase, lowercase, numbers, and symbols</li>
-                            <li><strong>Never reuse passwords:</strong> Use unique passwords for each account</li>
-                            <li><strong>Use a password manager:</strong> Store and generate passwords securely</li>
-                            <li><strong>Enable two-factor authentication:</strong> Add an extra layer of security</li>
-                            <li><strong>Change passwords regularly:</strong> Especially for critical accounts</li>
-                        </ol>
-                        <p><strong>Warning:</strong> These passwords are generated in your browser. Make sure to save them securely!</p>
-                    </div>
-                    <div class="password-uses">
-                        <h4>Common Password Uses:</h4>
-                        <div class="uses-grid">
-                            <div class="use">
-                                <div class="use-icon">💻</div>
+                    <!-- Use Cases Section -->
+                    <div class="use-cases">
+                        <h3>Use Cases</h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-item">
                                 <h5>Email Accounts</h5>
                                 <p>Most critical - protect with strongest passwords</p>
-                                <span class="use-recommendation">16+ characters, all types</span>
                             </div>
-                            <div class="use">
-                                <div class="use-icon">🏦</div>
+                            <div class="use-case-item">
                                 <h5>Banking & Finance</h5>
                                 <p>Financial security requires maximum protection</p>
-                                <span class="use-recommendation">20+ characters, unique</span>
                             </div>
-                            <div class="use">
-                                <div class="use-icon">📱</div>
+                            <div class="use-case-item">
                                 <h5>Social Media</h5>
                                 <p>Protect your online identity and privacy</p>
-                                <span class="use-recommendation">14+ characters, mixed</span>
                             </div>
-                            <div class="use">
-                                <div class="use-icon">📶</div>
+                            <div class="use-case-item">
                                 <h5>WiFi Networks</h5>
                                 <p>Secure your home or office network access</p>
-                                <span class="use-recommendation">12+ characters, memorable</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Adjust the password length using the slider (8-64 characters)</li>
+                            <li>Select the number of passwords to generate (1-20)</li>
+                            <li>Choose which character types to include (uppercase, lowercase, numbers, symbols)</li>
+                            <li>Click "Generate" to create secure passwords instantly</li>
+                            <li>Use "Copy All" to copy all passwords to clipboard</li>
+                            <li>Download as text file if you want to save them locally</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>Randomization:</strong> Each password is generated using cryptographically random character selection</li>
+                            <li><strong>Customizable Length:</strong> Passwords can be 8-64 characters to match your security requirements</li>
+                            <li><strong>Character Mix:</strong> Combine uppercase, lowercase, numbers, and symbols for maximum strength</li>
+                            <li><strong>Strength Calculation:</strong> Algorithm evaluates entropy and displays estimated crack time</li>
+                            <li><strong>Avoid Duplicates:</strong> Optional feature prevents character repetition for better randomness</li>
+                            <li><strong>Exclude Similar:</strong> Removes easily confused characters (i, l, 1, L, o, 0, O)</li>
+                            <li><strong>Local Processing:</strong> All generation happens in your browser - no passwords sent to servers</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -273,43 +237,23 @@
                     <div class="related-tools">
                         <h4>Related Tools</h4>
                         <ul>
-                            <li><a href="/tools/charades-random/">Charades Generator</a></li>
+                            <li><a href="/tools/password-strength-checker/">Password Strength Checker</a></li>
+                            <li><a href="/tools/uuid-generator/">UUID Generator</a></li>
                             <li><a href="/">All Security Tools</a></li>
                         </ul>
                     </div>
 
-                    <div class="password-strength">
-                        <h4>Password Strength Meter</h4>
-                        <div class="strength-meter">
-                            <div class="strength-bar" id="strengthBar"></div>
-                        </div>
-                        <div class="strength-labels">
-                            <span>Weak</span>
-                            <span>Fair</span>
-                            <span>Good</span>
-                            <span>Strong</span>
-                            <span>Very Strong</span>
-                        </div>
-                    </div>
-
-                    <div class="password-facts">
-                        <h4>Password Facts</h4>
+                    <div class="tool-tips">
+                        <h4>Password Security Tips</h4>
                         <ul>
-                            <li>63% of data breaches involve weak passwords</li>
-                            <li>51% of people reuse passwords across accounts</li>
-                            <li>A 12-character password takes 200+ years to crack</li>
-                            <li>Adding symbols increases security 10,000x</li>
+                            <li>Use at least 12-16 characters for important accounts</li>
+                            <li>Mix all character types for maximum strength</li>
+                            <li>Never reuse passwords across accounts</li>
+                            <li>Use a password manager to store passwords securely</li>
+                            <li>Enable two-factor authentication for critical accounts</li>
+                            <li>Change passwords regularly for sensitive accounts</li>
+                            <li>A 12-char password takes 200+ years to crack</li>
                         </ul>
-                    </div>
-
-                    <div class="quick-presets">
-                        <h4>Quick Presets</h4>
-                        <div class="preset-buttons">
-                            <button class="preset-btn" data-preset="wifi">📶 WiFi Password</button>
-                            <button class="preset-btn" data-preset="email">📧 Email Password</button>
-                            <button class="preset-btn" data-preset="bank">🏦 Banking Password</button>
-                            <button class="preset-btn" data-preset="memorable">🧠 Memorable Password</button>
-                        </div>
                     </div>
                 </aside>
             </div>
@@ -330,6 +274,8 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
@@ -358,7 +304,6 @@
     <script src="/assets/js/shared-utilities.js"></script>
     <script src="/assets/js/accessibility-audit.js"></script>
     <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/utils.js"></script>
     <script src="tool.js"></script>

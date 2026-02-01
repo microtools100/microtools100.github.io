@@ -256,31 +256,12 @@
     gap: 1rem;
 }
 
-.use-case-item {
-    background: white;
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-    text-align: center;
-}
-
 .use-case-icon {
     font-size: 2rem;
     display: block;
     margin-bottom: 0.5rem;
 }
 
-.use-case-item h5 {
-    color: var(--primary-color);
-    margin: 0.5rem 0;
-    font-size: 0.95rem;
-}
-
-.use-case-item p {
-    color: var(--text-color-secondary);
-    font-size: 0.85rem;
-    margin: 0;
-}
 
 /* Formatting Guide */
 .formatting-guide {
@@ -328,46 +309,67 @@
 
 .related-tools,
 .tool-tips {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
+    background: white;
     border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .related-tools h4,
 .tool-tips h4 {
-    color: var(--primary-color);
     margin-top: 0;
     margin-bottom: 1rem;
+    color: var(--primary-color);
     font-size: 1rem;
 }
 
 .related-tools ul,
 .tool-tips ul {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
 .related-tools li,
 .tool-tips li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.related-tools li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.tool-tips li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 .related-tools li:last-child,
 .tool-tips li:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .related-tools a {
-    color: var(--primary-color);
+    color: var(--text-color);
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
+    transition: color 0.2s;
 }
 
 .related-tools a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
     text-decoration: underline;
     opacity: 0.8;
 }

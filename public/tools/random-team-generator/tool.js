@@ -1,186 +1,270 @@
-// Random Team Generator Tool - Standardized Implementation
-
 class RandomTeamGenerator {
     constructor() {
-        // Element references
-        this.inputText = document.getElementById('inputText');
-        this.teamSizeInput = document.getElementById('teamSizeInput');
+        // DOM Elements
+        this.generateBtn = document.getElementById('generateBtn');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.allocationModeSelect = document.getElementById('allocationMode');
         this.teamCountInput = document.getElementById('teamCountInput');
-        this.allocationModeRadios = document.querySelectorAll('input[name="allocationMode"]');
-        this.shuffleBtn = document.getElementById('shuffleBtn');
-        this.outputContainer = document.querySelector('.teams-output');
-        
-        // Initialize listeners
+        this.teamSizeInput = document.getElementById('teamSizeInput');
+        this.inputText = document.getElementById('inputText');
+        this.teamsOutput = document.querySelector('.teams-output');
+        this.errorMsg = document.querySelector('.error-msg');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.downloadBtn = document.getElementById('downloadBtn');
+        this.printBtn = document.getElementById('printBtn');
+
+        // State
+        this.teams = [];
+        this.currentTeamsText = '';
+
         this.init();
     }
 
     init() {
-        // Main button listeners
-        if (this.shuffleBtn) {
-            this.shuffleBtn.addEventListener('click', () => this.generateTeams());
-        }
+        this.setupEventListeners();
+        this.setupFooterYear();
+    }
 
-        // Mode change listeners
-        this.allocationModeRadios.forEach(radio => {
-            radio.addEventListener('change', () => {
-                if (this.inputText.value.trim()) {
-                    this.generateTeams();
-                }
-            });
-        });
-
-        // Real-time input listeners
-        this.inputText.addEventListener('input', () => this.generateTeams());
-        this.teamSizeInput.addEventListener('change', () => this.generateTeams());
-        this.teamCountInput.addEventListener('change', () => this.generateTeams());
-
-        // Keyboard shortcuts: Ctrl+Enter to generate, Ctrl+K to clear
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey || e.metaKey) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    this.generateTeams();
-                } else if (e.key === 'k' || e.key === 'K') {
-                    e.preventDefault();
-                    this.clearAll();
-                }
+    setupEventListeners() {
+        this.generateBtn.addEventListener('click', () => this.generate());
+        this.clearBtn.addEventListener('click', () => this.clear());
+        this.allocationModeSelect.addEventListener('change', () => {
+            this.toggleSettingsVisibility();
+            if (this.inputText.value.trim()) {
+                this.generate();
             }
         });
+        this.teamCountInput.addEventListener('change', () => {
+            if (this.inputText.value.trim() && this.allocationModeSelect.value === 'by-count') {
+                this.generate();
+            }
+        });
+        this.teamSizeInput.addEventListener('change', () => {
+            if (this.inputText.value.trim() && this.allocationModeSelect.value === 'by-size') {
+                this.generate();
+            }
+        });
+        this.copyBtn.addEventListener('click', () => this.copyToClipboard());
+        this.downloadBtn.addEventListener('click', () => this.download());
+        this.printBtn.addEventListener('click', () => this.print());
     }
 
-    generateTeams() {
-        const text = this.inputText.value.trim();
-        
-        if (!text) {
-            this.outputContainer.innerHTML = '<p style="text-align: center; color: var(--text-color-secondary);">Enter names/items to generate teams</p>';
-            return;
-        }
+    toggleSettingsVisibility() {
+        const mode = this.allocationModeSelect.value;
+        const teamCountItem = document.getElementById('teamCountItem');
+        const teamSizeItem = document.getElementById('teamSizeItem');
 
-        const items = text.split('\n')
-            .map(item => item.trim())
-            .filter(item => item.length > 0);
-
-        if (items.length < 2) {
-            this.outputContainer.innerHTML = '<p style="text-align: center; color: var(--text-color-secondary);">Need at least 2 items to create teams</p>';
-            return;
-        }
-
-        const mode = document.querySelector('input[name="allocationMode"]:checked').value;
-        let teams;
-
-        if (mode === 'by-size') {
-            const teamSize = parseInt(this.teamSizeInput.value) || 2;
-            teams = this.divideByTeamSize(items, teamSize);
+        if (mode === 'by-count') {
+            teamCountItem.style.display = 'flex';
+            teamSizeItem.style.display = 'none';
         } else {
-            const teamCount = parseInt(this.teamCountInput.value) || 2;
-            teams = this.divideByTeamCount(items, teamCount);
-        }
-
-        this.displayTeams(teams);
-        
-        // Show success notification via SharedUtilities if available
-        if (window.SharedUtilities?.showNotification) {
-            window.SharedUtilities.showNotification(`Generated ${teams.length} team(s)!`, 'success');
+            teamCountItem.style.display = 'none';
+            teamSizeItem.style.display = 'flex';
         }
     }
 
-    divideByTeamSize(items, teamSize) {
-        const shuffled = this.shuffleArray([...items]);
-        const teams = [];
+    generate() {
+        this.clearError();
 
-        for (let i = 0; i < shuffled.length; i += teamSize) {
-            teams.push(shuffled.slice(i, i + teamSize));
+        const input = this.inputText.value.trim();
+        if (!input) {
+            this.showError('Please enter at least one name or item');
+            return;
+        }
+
+        const members = input.split('\n').map(m => m.trim()).filter(m => m);
+        
+        if (members.length < 2) {
+            this.showError('Please enter at least 2 names or items');
+            return;
+        }
+
+        if (members.length > 200) {
+            this.showError('Maximum 200 entries allowed');
+            return;
+        }
+
+        const mode = this.allocationModeSelect.value;
+        const teamCount = parseInt(this.teamCountInput.value);
+        const teamSize = parseInt(this.teamSizeInput.value);
+
+        if (mode === 'by-count') {
+            if (teamCount < 2 || teamCount > 20) {
+                this.showError('Team count must be between 2 and 20');
+                return;
+            }
+            if (teamCount > members.length) {
+                this.showError(`Cannot create ${teamCount} teams with only ${members.length} members`);
+                return;
+            }
+            this.teams = this.divideByCount(members, teamCount);
+        } else {
+            if (teamSize < 1 || teamSize > 10) {
+                this.showError('Team size must be between 1 and 10');
+                return;
+            }
+            if (teamSize > members.length) {
+                this.showError(`Team size cannot exceed total members (${members.length})`);
+                return;
+            }
+            this.teams = this.divideBySize(members, teamSize);
+        }
+
+        this.displayTeams();
+        window.MicroTools.utils.showNotification(`Generated ${this.teams.length} teams!`, 'success');
+    }
+
+    divideByCount(members, count) {
+        const shuffled = this.shuffleArray([...members]);
+        const teams = Array.from({ length: count }, () => []);
+        
+        shuffled.forEach((member, index) => {
+            teams[index % count].push(member);
+        });
+
+        return teams;
+    }
+
+    divideBySize(members, size) {
+        const shuffled = this.shuffleArray([...members]);
+        const teams = [];
+        
+        for (let i = 0; i < shuffled.length; i += size) {
+            teams.push(shuffled.slice(i, i + size));
         }
 
         return teams;
     }
 
-    divideByTeamCount(items, teamCount) {
-        const shuffled = this.shuffleArray([...items]);
-        const teams = Array.from({ length: teamCount }, () => []);
-
-        // Distribute items round-robin
-        shuffled.forEach((item, index) => {
-            teams[index % teamCount].push(item);
-        });
-
-        return teams.filter(team => team.length > 0);
-    }
-
     shuffleArray(array) {
-        // Fisher-Yates shuffle algorithm
-        for (let i = array.length - 1; i > 0; i--) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
-        return array;
+        return shuffled;
     }
 
-    displayTeams(teams) {
-        const html = teams.map((team, index) => {
-            const teamMembersHtml = team.map(member => 
-                `<li class="team-member">${this.escapeHtml(member)}</li>`
-            ).join('');
+    displayTeams() {
+        if (this.teams.length === 0) {
+            this.teamsOutput.innerHTML = '<p class="no-teams">No teams generated yet</p>';
+            this.currentTeamsText = '';
+            return;
+        }
 
-            return `
+        let html = '<div class="teams-display">';
+        let text = '';
+
+        this.teams.forEach((team, index) => {
+            html += `
                 <div class="team-card">
-                    <h3>Team ${index + 1} (${team.length} member${team.length !== 1 ? 's' : ''})</h3>
-                    <ul class="team-members">
-                        ${teamMembersHtml}
-                    </ul>
-                    <button class="copy-team-btn" data-team-index="${index}" title="Copy team members">📋 Copy</button>
+                    <div class="team-header">Team ${index + 1}</div>
+                    <div class="team-members">
+                        <ul>
+                            ${team.map(member => `<li>${member}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="team-count">${team.length} ${team.length === 1 ? 'member' : 'members'}</div>
                 </div>
             `;
-        }).join('');
-
-        this.outputContainer.innerHTML = html;
-
-        // Add copy listeners to team cards
-        this.outputContainer.querySelectorAll('.copy-team-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const index = parseInt(e.currentTarget.dataset.teamIndex);
-                this.copyTeamToClipboard(teams[index]);
-            });
+            text += `Team ${index + 1}:\n${team.join('\n')}\n\n`;
         });
+
+        html += '</div>';
+        this.teamsOutput.innerHTML = html;
+        this.currentTeamsText = text.trim();
     }
 
-    copyTeamToClipboard(team) {
-        const text = team.join('\n');
-        navigator.clipboard.writeText(text).then(() => {
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification('Team copied to clipboard!', 'success');
-            }
-        }).catch(() => {
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification('Failed to copy', 'error');
-            }
-        });
+    copyToClipboard() {
+        if (this.teams.length === 0) {
+            window.MicroTools.utils.showNotification('No teams to copy', 'warning');
+            return;
+        }
+
+        window.MicroTools.utils.copyToClipboard(this.currentTeamsText, this.copyBtn);
     }
 
-    clearAll() {
+    download() {
+        if (this.teams.length === 0) {
+            window.MicroTools.utils.showNotification('No teams to download', 'warning');
+            return;
+        }
+
+        const text = this.currentTeamsText;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'teams.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        window.MicroTools.utils.showNotification('Downloaded successfully', 'success');
+    }
+
+    print() {
+        if (this.teams.length === 0) {
+            window.MicroTools.utils.showNotification('No teams to print', 'warning');
+            return;
+        }
+
+        const printWindow = window.open('', '', 'width=800,height=600');
+        const content = this.teams.map((team, index) => 
+            `<div class="print-team"><strong>Team ${index + 1}:</strong><br>${team.join('<br>')}</div>`
+        ).join('<br>');
+
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Random Teams</title>
+                <style>
+                    body { font-family: Arial; margin: 20px; }
+                    .print-team { margin: 15px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+                    strong { color: #333; }
+                </style>
+            </head>
+            <body>
+                <h1>Random Team Generator Results</h1>
+                ${content}
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    }
+
+    clear() {
         this.inputText.value = '';
-        this.outputContainer.innerHTML = '';
-        this.inputText.focus();
-        
-        if (window.SharedUtilities?.showNotification) {
-            window.SharedUtilities.showNotification('Cleared all inputs', 'info');
+        this.teams = [];
+        this.currentTeamsText = '';
+        this.teamsOutput.innerHTML = '';
+        this.clearError();
+        window.MicroTools.utils.showNotification('Cleared', 'success');
+    }
+
+    showError(message) {
+        if (this.errorMsg) {
+            this.errorMsg.textContent = message;
+            this.errorMsg.classList.add('show');
         }
     }
 
-    escapeHtml(text) {
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-        return text.replace(/[&<>"']/g, m => map[m]);
+    clearError() {
+        if (this.errorMsg) {
+            this.errorMsg.classList.remove('show');
+        }
+    }
+
+    setupFooterYear() {
+        const currentYear = document.getElementById('currentYear');
+        if (currentYear) {
+            currentYear.textContent = new Date().getFullYear();
+        }
     }
 }
 
-// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    window.MicroTools = window.MicroTools || {};
-    window.MicroTools.randomTeamGenerator = new RandomTeamGenerator();
+    new RandomTeamGenerator();
 });

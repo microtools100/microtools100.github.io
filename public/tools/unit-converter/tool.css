@@ -1,60 +1,53 @@
-﻿/* unit-converter - Tool-Specific Styles */
+﻿/* Unit Converter - Tool Styles */
 
-:root {
-    --success-color: #10b981;
-    --error-color: #ef4444;
-    --warning-color: #f59e0b;
-}
-
+/* Tool Options */
 .tool-options {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: 6px;
-    margin-bottom: 2rem;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
 }
 
 .tool-options .section-title {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
 }
 
-.option-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+/* Error Message */
+.error-msg {
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: var(--radius-md);
+    color: #c33;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    display: none;
 }
 
-.option-group:last-child {
-    margin-bottom: 0;
-}
-
-.option-group label {
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 0.95rem;
+.error-msg.show {
     display: block;
 }
 
-.option-group select {
-    padding: 0.6rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 0.95rem;
-    background: white;
-    cursor: pointer;
-    width: 100%;
-}
-
-/* Converter Grid Layout */
+/* Converter Grid */
 .converter-grid {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 1.5rem;
-    margin: 2rem 0;
-    align-items: flex-end;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.converter-input,
+.converter-output {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .input-group,
@@ -67,27 +60,23 @@
 .input-group label,
 .output-group label {
     font-weight: 600;
-    color: var(--text-color);
     font-size: 0.95rem;
+    color: var(--text-color);
 }
 
 .input-group input,
 .output-group input {
     padding: 0.8rem;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     font-size: 1rem;
     background: white;
     color: var(--text-color);
-}
-
-.input-group input {
     font-weight: 500;
 }
 
 .output-group input {
-    background: #f3f4f6;
-    font-weight: 500;
+    background: var(--surface-color);
 }
 
 .unit-select-group {
@@ -98,6 +87,294 @@
 
 .unit-select-group label {
     font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.unit-select-group select {
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    background: white;
+    cursor: pointer;
+}
+
+.swap-button {
+    padding: 0.8rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    min-width: 60px;
+}
+
+.swap-button:hover {
+    background: var(--primary-dark);
+}
+
+/* Option Group */
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.option-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.option-group select {
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    background: white;
+    cursor: pointer;
+}
+
+/* Use Cases Section */
+.use-cases {
+    margin-bottom: 2rem;
+}
+
+.use-cases h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+
+
+/* Instructions Section */
+.instructions {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+}
+
+.instructions h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.instructions ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+}
+
+.instructions li {
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+/* How It Works / Formatting Guide */
+.formatting-guide {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+}
+
+.formatting-guide h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.formatting-guide h4 {
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.formatting-guide ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+}
+
+.formatting-guide li {
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+/* Unit Table */
+.unit-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+
+.unit-table thead {
+    background: var(--primary-color);
+    color: white;
+}
+
+.unit-table th,
+.unit-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border: 1px solid var(--border-color);
+}
+
+.unit-table tbody tr:nth-child(even) {
+    background: var(--surface-color);
+}
+
+.unit-table tbody tr:hover {
+    background: var(--border-color);
+}
+
+/* Sidebar */
+.tool-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.related-tools,
+.tool-tips {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.related-tools h4,
+.tool-tips h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.related-tools ul,
+.tool-tips ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.related-tools li,
+.tool-tips li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.related-tools li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.tool-tips li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.related-tools a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.related-tools a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.related-tools li:last-child,
+.tool-tips li:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .tool-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-sidebar {
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    .related-tools,
+    .tool-tips {
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .converter-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .swap-button {
+        transform: rotate(90deg);
+    }
+
+    .use-case-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-sidebar {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .unit-table {
+        font-size: 0.9rem;
+    }
+
+    .unit-table th,
+    .unit-table td {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .converter-grid {
+        gap: 0.75rem;
+    }
+
+    .unit-table {
+        font-size: 0.8rem;
+    }
+
+    .unit-table th,
+    .unit-table td {
+        padding: 0.4rem 0.5rem;
+    }
+}
     color: var(--text-color);
     font-size: 0.95rem;
 }
@@ -150,33 +427,10 @@
     gap: 1.5rem;
 }
 
-.use-case-item {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: 6px;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.use-case-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
 .use-case-icon {
     font-size: 2rem;
     margin-bottom: 0.5rem;
     display: block;
-}
-
-.use-case-item h4 {
-    color: var(--primary-color);
-    margin: 0.5rem 0;
-}
-
-.use-case-item p {
-    color: var(--text-color-secondary);
-    font-size: 0.95rem;
 }
 
 .formatting-guide {

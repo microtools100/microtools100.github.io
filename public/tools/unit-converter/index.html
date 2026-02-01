@@ -3,15 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online unit converter. Convert between length, weight, temperature, volume, and time units instantly.">
-    <meta name="keywords" content="unit converter, length converter, weight converter, temperature converter, volume converter, time converter, metric converter">
-    <meta property="og:title" content="Unit Converter - Free Online Tool">
-    <meta property="og:description" content="Convert between different units of measurement instantly.">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    
     <title>Unit Converter - Free Online Tool | Micro Tools</title>
-    
+    <meta name="description" content="Convert between length, weight, temperature, volume, and time units instantly. Free online unit converter.">
+    <meta property="og:title" content="Unit Converter - Micro Tools">
+    <meta property="og:description" content="Convert between different units of measurement instantly">
     <link rel="stylesheet" href="/assets/css/core.css">
     <link rel="stylesheet" href="/assets/css/tool-standard.css">
     <link rel="stylesheet" href="tool.css">
@@ -25,7 +20,7 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                                <nav class="main-nav">
+                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
@@ -41,129 +36,176 @@
         </div>
     </header>
 
-    <main class="tool-main">
+    <main class="tool-page">
         <div class="container">
-            <h1>Unit Converter</h1>
-            <p class="tool-subtitle">Convert between different units of measurement. Length, weight, temperature, volume, and time conversions.</p>
+            <header class="tool-header">
+                <h1>Unit Converter</h1>
+                <p class="tool-description">Convert between different units of measurement. Length, weight, temperature, volume, and time conversions.</p>
+            </header>
 
-            <div class="tool-options">
-                <h3 class="section-title">Conversion Type</h3>
-                <div class="option-group">
-                    <label for="categorySelect">Select Category:</label>
-                    <select id="categorySelect">
-                        <option value="length">Length</option>
-                        <option value="weight">Weight</option>
-                        <option value="temperature">Temperature</option>
-                        <option value="volume">Volume</option>
-                        <option value="time">Time</option>
-                    </select>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Conversion Category</h3>
+                            <div class="option-group">
+                                <label for="categorySelect">Select Category:</label>
+                                <select id="categorySelect">
+                                    <option value="length">Length</option>
+                                    <option value="weight">Weight</option>
+                                    <option value="temperature">Temperature</option>
+                                    <option value="volume">Volume</option>
+                                    <option value="time">Time</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg" id="errorMsg"></div>
+
+                        <!-- Converter Grid -->
+                        <div class="converter-grid">
+                            <div class="converter-input">
+                                <div class="input-group">
+                                    <label for="inputValue">Value</label>
+                                    <input type="number" id="inputValue" placeholder="Enter value" step="any" autofocus>
+                                </div>
+                                <div class="unit-select-group">
+                                    <label for="fromUnit">From Unit</label>
+                                    <select id="fromUnit"></select>
+                                </div>
+                            </div>
+
+                            <button class="swap-button" title="Swap units">⇄</button>
+
+                            <div class="converter-output">
+                                <div class="output-group">
+                                    <label for="outputValue">Result</label>
+                                    <input type="number" id="outputValue" readonly placeholder="Result will appear here">
+                                </div>
+                                <div class="unit-select-group">
+                                    <label for="toUnit">To Unit</label>
+                                    <select id="toUnit"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <h5>Travel & Navigation</h5>
+                                    <p>Convert distances and temperatures for travel</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Cooking & Recipes</h5>
+                                    <p>Convert ingredients and measurements for recipes</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Fitness & Health</h5>
+                                    <p>Convert weight, height, and other measurements</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Science & Engineering</h5>
+                                    <p>Precise unit conversions for calculations</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Select a conversion category from the dropdown</li>
+                                <li>Enter the value you want to convert</li>
+                                <li>Select the source unit (From)</li>
+                                <li>Select the target unit (To)</li>
+                                <li>The result appears automatically</li>
+                                <li>Click the swap button (⇄) to reverse units</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>Supported Conversions</h3>
+                            <table class="unit-table">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Units</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Length</strong></td>
+                                        <td>mm, cm, m, km, in, ft, yd, mi</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Weight</strong></td>
+                                        <td>mg, g, kg, oz, lb, ton</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Temperature</strong></td>
+                                        <td>°C, °F, K</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Volume</strong></td>
+                                        <td>ml, l, fl oz, cup, pint, gallon</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Time</strong></td>
+                                        <td>ms, s, min, h, day, week</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h4 style="margin-top: 1.5rem; color: var(--primary-color);">Features</h4>
+                            <ul style="margin-top: 1rem;">
+                                <li>Real-time conversion as you type</li>
+                                <li>Support for metric and imperial units</li>
+                                <li>Accurate temperature conversions</li>
+                                <li>Swap units with one click</li>
+                                <li>High precision calculations</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/word-character-counter/">Word & Character Counter</a></li>
+                            <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
+                            <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Conversion Tips</h4>
+                        <ul>
+                            <li>Temperature conversions use absolute values</li>
+                            <li>Swap button exchanges source and target units</li>
+                            <li>All conversions are calculated in real-time</li>
+                            <li>Use metric units for scientific calculations</li>
+                            <li>Imperial units are common in US measurements</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
-
-            <div class="converter-grid">
-                <div>
-                    <div class="input-group">
-                        <label for="inputValue">Value</label>
-                        <input type="number" id="inputValue" placeholder="Enter value" step="any">
-                    </div>
-                    <div class="unit-select-group" style="margin-top: 0.5rem;">
-                        <label for="fromUnit">From</label>
-                        <select id="fromUnit"></select>
-                    </div>
-                </div>
-
-                <button class="swap-button" style="align-self: flex-end; margin-bottom: 0.5rem;">⇄</button>
-
-                <div>
-                    <div class="output-group">
-                        <label for="outputValue">Result</label>
-                        <input type="number" id="outputValue" readonly placeholder="Result will appear here">
-                    </div>
-                    <div class="unit-select-group" style="margin-top: 0.5rem;">
-                        <label for="toUnit">To</label>
-                        <select id="toUnit"></select>
-                    </div>
-                </div>
-            </div>
-
-            <section class="use-cases">
-                <h2>Use Cases</h2>
-                <div class="use-case-grid">
-                    <div class="use-case-item">
-                        <span class="use-case-icon">✈️</span>
-                        <h4>Travel & Navigation</h4>
-                        <p>Convert distances and temperatures for travel</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">👨‍🍳</span>
-                        <h4>Cooking & Recipes</h4>
-                        <p>Convert ingredients and measurements for recipes</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🏃</span>
-                        <h4>Fitness & Health</h4>
-                        <p>Convert weight, height, and other measurements</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🔬</span>
-                        <h4>Science & Engineering</h4>
-                        <p>Precise unit conversions for calculations</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="formatting-guide">
-                <h2>Supported Conversions</h2>
-                <table class="unit-table">
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Units</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Length</strong></td>
-                            <td>mm, cm, m, km, in, ft, yd, mi</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Weight</strong></td>
-                            <td>mg, g, kg, oz, lb, ton</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Temperature</strong></td>
-                            <td>°C, °F, K</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Volume</strong></td>
-                            <td>ml, l, fl oz, cup, pint, gallon</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Time</strong></td>
-                            <td>ms, s, min, h, day, week</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3 style="margin-top: 1.5rem; color: var(--primary-color);">Features:</h3>
-                <ul style="margin-top: 1rem;">
-                    <li>Real-time conversion as you type</li>
-                    <li>Support for metric and imperial units</li>
-                    <li>Accurate temperature conversions</li>
-                    <li>Swap units with one click</li>
-                    <li>High precision calculations</li>
-                </ul>
-            </section>
-
-            <section class="related-tools">
-                <h2>Related Tools</h2>
-                <ul>
-                    <li><a href="/tools/word-character-counter/">Word & Character Counter</a></li>
-                    <li><a href="/tools/base64-encoder-decoder/">Base64 Encoder/Decoder</a></li>
-                    <li><a href="/tools/password-generator/">Password Generator</a></li>
-                </ul>
-            </section>
         </div>
-    </main>    <footer class="site-footer">
+    </main>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="tool.js"></script>
+
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -206,12 +248,6 @@
         </div>
     </footer>
 
-    <script src="/assets/js/shared-utilities.js"></script>
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="tool.js"></script>
 </body>
 </html>
 

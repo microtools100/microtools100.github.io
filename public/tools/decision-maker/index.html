@@ -25,7 +25,7 @@
                     <h1>Micro Tools</h1>
                     <span class="tagline">Free Online Utilities</span>
                 </a>
-                                <nav class="main-nav">
+                <nav class="main-nav">
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#text-tools">Text Tools</a></li>
@@ -34,103 +34,154 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </nav>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>
     </header>
 
-    <main class="tool-main">
+    <main class="tool-page">
         <div class="container">
-            <h1>Decision Maker</h1>
-            <p class="tool-subtitle">Make random decisions with a spinning wheel. Perfect for Yes/No choices, coin flips, dice rolls, and custom decisions.</p>
+            <header class="tool-header">
+                <h1>Decision Maker</h1>
+                <p class="tool-description">Make random decisions with a spinning wheel. Perfect for Yes/No choices, coin flips, dice rolls, and custom decisions.</p>
+            </header>
 
-            <div class="tool-options">
-                <h3 class="section-title">Choice Type</h3>
-                <div class="option-group">
-                    <label for="decisionType">Select Decision Type:</label>
-                    <select id="decisionType">
-                        <option value="yes-no">Yes / No / Maybe</option>
-                        <option value="coin">Coin Flip (Heads/Tails)</option>
-                        <option value="dice">Dice Roll (1-6)</option>
-                        <option value="custom">Custom Options</option>
-                    </select>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <div class="option-group">
+                                <label for="decisionType">Decision Type</label>
+                                <select id="decisionType">
+                                    <option value="yes-no">Yes / No / Maybe</option>
+                                    <option value="coin">Coin Flip (Heads/Tails)</option>
+                                    <option value="dice">Dice Roll (1-6)</option>
+                                    <option value="custom">Custom Options</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg" id="errorMsg"></div>
+
+                        <!-- Custom Options Input -->
+                        <div class="input-group" id="inputOptions">
+                            <label for="inputText">Enter Options (one per line)</label>
+                            <div class="input-area">
+                                <textarea 
+                                    id="inputText" 
+                                    placeholder="Enter your options&#10;&#10;Example:&#10;Pizza&#10;Sushi&#10;Burgers&#10;Tacos"
+                                    rows="6"
+                                    spellcheck="false"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Spinner Container -->
+                        <div class="spinner-container">
+                            <div class="tool-actions-horizontal">
+                                <button id="spinBtn" class="action-btn primary">
+                                    <span>Spin the Wheel!</span>
+                                </button>
+                            </div>
+
+                            <div class="wheel-wrapper">
+                                <div class="pointer"></div>
+                                <div class="wheel"></div>
+                            </div>
+
+                            <div class="result-display">
+                                <div class="result-label">Your Decision:</div>
+                                <div class="result-text"></div>
+                            </div>
+                        </div>
+
+                        <!-- Use Cases -->
+                        <section class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <h5>Daily Choices</h5>
+                                    <p>Decide what to eat, where to go, what to watch</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Games & Fun</h5>
+                                    <p>Use for games, parties, and entertainment</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Quick Decisions</h5>
+                                    <p>Make fast decisions when torn between options</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <h5>Group Activities</h5>
+                                    <p>Fair decision making for groups and teams</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- How It Works -->
+                        <section class="instructions">
+                            <h3>How It Works</h3>
+                            <ol>
+                                <li>Select a decision type from the dropdown menu (Yes/No, Coin, Dice, or Custom)</li>
+                                <li>For custom options, enter your choices one per line in the text area</li>
+                                <li>Review the spinning wheel with your available options</li>
+                                <li>Click "Spin the Wheel!" to make a random decision</li>
+                                <li>Watch the wheel spin and see your result below</li>
+                                <li>Spin again anytime to get a new random selection</li>
+                            </ol>
+                        </section>
+
+                        <!-- How to Use / Features -->
+                        <section class="formatting-guide">
+                            <h3>Decision Types</h3>
+                            <ul>
+                                <li><strong>Yes/No/Maybe:</strong> Quick decisions with three options</li>
+                                <li><strong>Coin Flip:</strong> Classic heads or tails choice</li>
+                                <li><strong>Dice Roll:</strong> Roll a standard six-sided die (1-6)</li>
+                                <li><strong>Custom Options:</strong> Add your own choices for any decision</li>
+                            </ul>
+                            <h4 style="margin-top: 1.5rem;">Tips for Best Results:</h4>
+                            <ul style="margin-top: 1rem;">
+                                <li>Use for fun decision making and entertainment</li>
+                                <li>Add as many custom options as you need</li>
+                                <li>Spin multiple times to compare different outcomes</li>
+                                <li>Great for breaking ties and settling disputes fairly</li>
+                                <li>Works great for group activities and party games</li>
+                            </ul>
+                        </section>
+                    </div>
                 </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <section class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/random-team-generator/">Random Team Generator</a></li>
+                            <li><a href="/tools/password-generator/">Password Generator</a></li>
+                            <li><a href="/tools/fake-data-generator/">Fake Data Generator</a></li>
+                        </ul>
+                    </section>
+
+                    <section class="tool-tips">
+                        <h4>Wheel Tips</h4>
+                        <ul>
+                            <li>The wheel uses true random selection</li>
+                            <li>All outcomes are equally likely each spin</li>
+                            <li>Perfect for settling group decisions</li>
+                            <li>Create unlimited custom option sets</li>
+                            <li>Works great for games and entertainment</li>
+                        </ul>
+                    </section>
+                </aside>
             </div>
-
-            <div class="input-group" id="inputOptions">
-                <label for="inputOptions">Enter Options (one per line)</label>
-                <textarea id="inputText" placeholder="Enter your options&#10;&#10;Example:&#10;Pizza&#10;Sushi&#10;Burgers&#10;Tacos"></textarea>
-            </div>
-
-            <div class="spinner-container">
-                <button id="spinBtn" class="spin-btn">🎡 Spin the Wheel!</button>
-
-                <div class="wheel-wrapper">
-                    <div class="pointer"></div>
-                    <div class="wheel"></div>
-                </div>
-
-                <div class="result-display">
-                    <div class="result-label">Your Decision:</div>
-                    <div class="result-text"></div>
-                </div>
-            </div>
-
-            <section class="use-cases">
-                <h2>Use Cases</h2>
-                <div class="use-case-grid">
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🍕</span>
-                        <h4>Daily Choices</h4>
-                        <p>Decide what to eat, where to go, what to watch</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🎲</span>
-                        <h4>Games & Fun</h4>
-                        <p>Use for games, parties, and entertainment</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🎯</span>
-                        <h4>Quick Decisions</h4>
-                        <p>Make fast decisions when torn between options</p>
-                    </div>
-                    <div class="use-case-item">
-                        <span class="use-case-icon">🤝</span>
-                        <h4>Group Activities</h4>
-                        <p>Fair decision making for groups and teams</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="formatting-guide">
-                <h2>How to Use</h2>
-                <ul>
-                    <li><strong>Yes/No/Maybe:</strong> Quick decisions with three options</li>
-                    <li><strong>Coin Flip:</strong> Classic heads or tails choice</li>
-                    <li><strong>Dice Roll:</strong> Roll a standard six-sided die</li>
-                    <li><strong>Custom Options:</strong> Add your own choices (one per line)</li>
-                    <li><strong>Spin:</strong> Click the button to spin the wheel</li>
-                    <li><strong>Fair Result:</strong> Completely random selection from all options</li>
-                </ul>
-                <h3 style="margin-top: 1.5rem; color: var(--primary-color);">Tips:</h3>
-                <ul style="margin-top: 1rem;">
-                    <li>Use for fun decision making and entertainment</li>
-                    <li>Add as many custom options as you need</li>
-                    <li>Spin multiple times to compare different outcomes</li>
-                    <li>Great for breaking ties and settling disputes</li>
-                </ul>
-            </section>
-
-            <section class="related-tools">
-                <h2>Related Tools</h2>
-                <ul>
-                    <li><a href="/tools/random-team-generator/">Random Team Generator</a></li>
-                    <li><a href="/tools/password-generator/">Password Generator</a></li>
-                    <li><a href="/tools/fake-data-generator/">Fake Data Generator</a></li>
-                </ul>
-            </section>
         </div>
-    </main>    <footer class="site-footer">
+    </main>
+
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -146,6 +197,8 @@
                         <li><a href="/#security-tools">Security Tools</a></li>
                         <li><a href="/#utilities">Utilities</a></li>
                         <li><a href="/#games">Games & Generators</a></li>
+                    </ul>
+                </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>

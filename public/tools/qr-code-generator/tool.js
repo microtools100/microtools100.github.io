@@ -1,8 +1,13 @@
-// QR Code Generator Tool
+/**
+ * QR Code Generator Tool
+ * Generate QR codes from text and URLs
+ */
 
 class QRCodeGenerator {
     constructor() {
         this.inputText = document.getElementById('inputText');
+        this.generateBtn = document.getElementById('generateBtn');
+        this.clearBtn = document.getElementById('clearBtn');
         this.sizeInput = document.getElementById('sizeInput');
         this.errorCorrectionSelect = document.getElementById('errorCorrection');
         this.qrContainer = document.getElementById('qrContainer');
@@ -20,6 +25,8 @@ class QRCodeGenerator {
 
     setupEventListeners() {
         this.inputText.addEventListener('input', () => this.generateQR());
+        this.generateBtn.addEventListener('click', () => this.generateQR());
+        this.clearBtn.addEventListener('click', () => this.clearAll());
         this.sizeInput.addEventListener('change', () => this.generateQR());
         this.errorCorrectionSelect.addEventListener('change', () => this.generateQR());
         this.downloadBtn.addEventListener('click', () => this.downloadQR());
@@ -48,7 +55,7 @@ class QRCodeGenerator {
         const errorCorrection = this.errorCorrectionSelect.value;
 
         if (!text) {
-            this.qrContainer.style.display = 'none';
+            this.qrContainer.innerHTML = '';
             this.downloadBtn.disabled = true;
             this.clearError();
             return;
@@ -83,14 +90,12 @@ class QRCodeGenerator {
                 correctLevel: errorCorrectionMap[errorCorrection]
             });
 
-            // Display container
-            this.qrContainer.style.display = 'block';
             this.downloadBtn.disabled = false;
             this.clearError();
+            SharedUtilities.showNotification('QR code generated successfully!', 'success');
 
         } catch (error) {
             this.showError(`Error generating QR code: ${error.message}`);
-            this.qrContainer.style.display = 'none';
             this.downloadBtn.disabled = true;
         }
     }
@@ -119,40 +124,26 @@ class QRCodeGenerator {
         }
     }
 
-    copyToClipboard() {
-        const text = this.inputText.value.trim();
-        if (!text) {
-            SharedUtilities.showNotification('No QR code text to copy', 'warning');
-            return;
-        }
-
-        navigator.clipboard.writeText(text).then(() => {
-            SharedUtilities.showNotification('Text copied to clipboard', 'success');
-        }).catch(() => {
-            SharedUtilities.showNotification('Failed to copy text', 'error');
-        });
-    }
-
     clearAll() {
         this.inputText.value = '';
         this.qrContainer.innerHTML = '';
-        this.qrContainer.style.display = 'none';
         this.downloadBtn.disabled = true;
         this.clearError();
+        this.inputText.focus();
         SharedUtilities.showNotification('QR code cleared', 'info');
     }
 
     showError(message) {
         if (this.errorMsg) {
             this.errorMsg.textContent = message;
-            this.errorMsg.style.display = 'block';
+            this.errorMsg.classList.add('show');
         }
     }
 
     clearError() {
         if (this.errorMsg) {
             this.errorMsg.textContent = '';
-            this.errorMsg.style.display = 'none';
+            this.errorMsg.classList.remove('show');
         }
     }
 }
