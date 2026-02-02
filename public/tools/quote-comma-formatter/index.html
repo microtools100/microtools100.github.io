@@ -64,67 +64,102 @@
                 <div class="tool-layout">
                     <div class="tool-main">
                         <div class="tool-container">
-                            <!-- Options Section -->
+                            <!-- Tool Options -->
                             <div class="tool-options">
-                                <h3>Formatting Options</h3>
-                                <div class="options-group">
-                                    <label for="quoteType">Quote Type:</label>
-                                    <select id="quoteType">
-                                        <option value="single">Single (')</option>
-                                        <option value="double">Double (")</option>
-                                        <option value="backtick">Backticks (`)</option>
-                                        <option value="none">None</option>
-                                    </select>
+                                <h3 class="section-title">Options</h3>
+                                <div class="sql-options-grid">
+                                    <div class="option-item">
+                                        <label for="quoteType">Quote Type:</label>
+                                        <select id="quoteType">
+                                            <option value="single">Single (')</option>
+                                            <option value="double">Double (")</option>
+                                            <option value="backtick">Backticks (`)</option>
+                                            <option value="none">None</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="option-item">
+                                        <label for="delimiter">Delimiter:</label>
+                                        <select id="delimiter">
+                                            <option value=", ">Comma & Space (,)</option>
+                                            <option value=",">Comma (,)</option>
+                                            <option value="; ">Semicolon & Space (;)</option>
+                                            <option value=";">Semicolon (;)</option>
+                                            <option value=" | ">Pipe & Space (|)</option>
+                                            <option value="|">Pipe (|)</option>
+                                            <option value="\n">Newline</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 1.5rem; grid-column: 1 / -1;">
+                                        <div class="option-item checkbox">
+                                            <label for="trimWhitespace">
+                                                <input type="checkbox" id="trimWhitespace" checked>
+                                                <span>Trim whitespace</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="option-item checkbox">
+                                            <label for="removeEmpty">
+                                                <input type="checkbox" id="removeEmpty" checked>
+                                                <span>Remove empty lines</span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="options-group">
-                                    <label for="delimiter">Delimiter:</label>
-                                    <select id="delimiter">
-                                        <option value=", ">Comma & Space (,)</option>
-                                        <option value=",">Comma (,)</option>
-                                        <option value="; ">Semicolon & Space (;)</option>
-                                        <option value=";">Semicolon (;)</option>
-                                        <option value=" | ">Pipe & Space (|)</option>
-                                        <option value="|">Pipe (|)</option>
-                                        <option value="\n">Newline</option>
-                                    </select>
-                                </div>
-                                <div class="options-group">
-                                    <label for="trimWhitespace">
-                                        <input type="checkbox" id="trimWhitespace" checked>
-                                        Trim whitespace
-                                    </label>
-                                </div>
-                                <div class="options-group">
-                                    <label for="removeEmpty">
-                                        <input type="checkbox" id="removeEmpty" checked>
-                                        Remove empty lines
-                                    </label>
+                                <div class="tool-actions-horizontal">
+                                    <button class="action-btn primary" id="formatBtn">
+                                        <span>Format</span>
+                                    </button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Input/Output Section -->
-                            <div class="tool-section">
-                                <h2>Data Formatting</h2>
-                                <div class="tool-content-columns">
-                                    <div class="input-column">
+                            <!-- Two-Column Layout for Input and Output -->
+                            <div class="tool-content-columns">
+                                <!-- Input Column -->
+                                <section class="tool-section input-column">
+                                    <div class="input-group">
+                                        <label for="inputData">Input Data</label>
                                         <div class="input-area">
-                                            <label for="inputData">Input Data:</label>
-                                            <textarea id="inputData" placeholder="Paste values one per line&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange"></textarea>
+                                            <textarea 
+                                                id="inputData" 
+                                                placeholder="Paste values one per line&#10;One per line&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange"
+                                                rows="12"
+                                            ></textarea>
+                                        </div>
+                                        <div class="hint">
+                                            Maximum 10,000 characters.
                                         </div>
                                     </div>
+                                </section>
 
-                                    <div class="input-column">
-                                        <div class="input-area">
-                                            <label for="outputData">Formatted Result:</label>
-                                            <textarea id="outputData" placeholder="Output will appear here&#10;&#10;Example:&#10;'Apple', 'Banana'" readonly></textarea>
+                                <!-- Output Column -->
+                                <section class="tool-section output-column">
+                                    <div class="output-group">
+                                        <label for="outputData">Formatted Result</label>
+                                        <div class="output-area">
+                                            <textarea 
+                                                id="outputData" 
+                                                placeholder="Formatted output will appear here...&#10;&#10;Example:&#10;'Apple', 'Banana', 'Orange'"
+                                                rows="12"
+                                                readonly
+                                            ></textarea>
+                                        </div>
+                                        <div class="stats-display">
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="itemCount">0</span>
+                                                <span class="stat-label">Items</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="charCount">0</span>
+                                                <span class="stat-label">Characters</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tool-actions">
-                                    <button class="action-btn" id="clearBtn">Clear All ×</button>
-                                    <button class="action-btn success" id="copyBtn">Copy Output 📋</button>
-                                    <button class="action-btn success" id="downloadBtn">Download ⤓</button>
-                                </div>
+                                </section>
                             </div>
 
                             <!-- Use Cases -->
@@ -152,6 +187,31 @@
                                         <p>Quickly generate formatted data for code snippets</p>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- How to Use Section -->
+                            <div class="instructions">
+                                <h3>How to Use</h3>
+                                <ol>
+                                    <li>Paste your values into the input field (one per line)</li>
+                                    <li>Select your preferred quote type (single, double, backticks, or none)</li>
+                                    <li>Choose your delimiter (comma, semicolon, pipe, or newline)</li>
+                                    <li>Configure additional options (trim whitespace, remove empty lines)</li>
+                                    <li>Copy the formatted output or download as a file</li>
+                                </ol>
+                            </div>
+
+                            <!-- How It Works Section -->
+                            <div class="formatting-guide">
+                                <h3>How It Works</h3>
+                                <ul>
+                                    <li><strong>Quote Types:</strong> Wraps each value with single quotes, double quotes, backticks, or no quotes</li>
+                                    <li><strong>Delimiters:</strong> Joins values with comma, semicolon, pipe, or newline separator</li>
+                                    <li><strong>Trimming:</strong> Removes leading and trailing whitespace from each value</li>
+                                    <li><strong>Empty Removal:</strong> Optionally filters out empty or blank lines</li>
+                                    <li><strong>Copy & Download:</strong> Easily copy to clipboard or download as a text file</li>
+                                    <li><strong>Real-time Preview:</strong> See formatted output as you adjust options</li>
+                                </ul>
                             </div>
                         </div>
                     </div>

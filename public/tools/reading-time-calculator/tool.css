@@ -237,69 +237,6 @@
     background: var(--success-color);
 }
 
-/* Use Cases Grid */
-.use-cases {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.use-cases h4 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-}
-
-.use-case-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-
-.use-case-icon {
-    font-size: 2rem;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-
-/* Formatting Guide */
-.formatting-guide {
-    background: var(--surface-color);
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-    margin-top: 2rem;
-}
-
-.formatting-guide h3 {
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-}
-
-.formatting-guide ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.formatting-guide li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-color);
-    font-size: 0.9rem;
-}
-
-.formatting-guide li:last-child {
-    border-bottom: none;
-}
-
-.formatting-guide strong {
-    color: var(--primary-color);
-}
-
 /* Sidebar */
 .tool-sidebar {
     display: flex;

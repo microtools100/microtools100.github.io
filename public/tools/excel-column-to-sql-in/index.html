@@ -72,105 +72,151 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
-                        <section class="tool-section three-column">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div class="sql-options-grid">
+                                <div class="option-item">
+                                    <label for="quoteType">Quote Type:</label>
+                                    <select id="quoteType">
+                                        <option value="single">Single (')</option>
+                                        <option value="double">Double (")</option>
+                                        <option value="none">None</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="option-item checkbox">
+                                    <label for="trimWhitespace">
+                                        <input type="checkbox" id="trimWhitespace" checked>
+                                        <span>Trim whitespace</span>
+                                    </label>
+                                </div>
+
+                                <div class="option-item checkbox">
+                                    <label for="removeEmpty">
+                                        <input type="checkbox" id="removeEmpty" checked>
+                                        <span>Remove empty lines</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="formatBtn">
+                                    <span>Format</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
                             <!-- Input Column -->
-                            <div class="input-column">
+                            <section class="tool-section input-column">
                                 <div class="input-group">
-                                    <label for="inputData">Input Data:</label>
+                                    <label for="inputData">Input Data</label>
                                     <div class="input-area">
-                                        <textarea id="inputData" placeholder="Paste Excel column&#10;One value per line&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange" rows="12"></textarea>
+                                        <textarea 
+                                            id="inputData" 
+                                            placeholder="Paste Excel column values...&#10;One per line&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange"
+                                            rows="12"
+                                        ></textarea>
                                     </div>
-                                    <div class="char-count">
-                                        <span id="inputCount">0</span> chars
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Options Column -->
-                            <div class="options-column">
-                                <div class="tool-options">
-                                    <h4>Options</h4>
-                                    <div class="option-group">
-                                        <div class="option-item">
-                                            <label for="quoteType">Quote Type:</label>
-                                            <select id="quoteType">
-                                                <option value="single">Single (')</option>
-                                                <option value="double">Double (")</option>
-                                                <option value="none">None</option>
-                                            </select>
-                                        </div>
-                                        <div class="option-item checkbox">
-                                            <label for="trimWhitespace">
-                                                <input type="checkbox" id="trimWhitespace" checked>
-                                                <span>Trim whitespace</span>
-                                            </label>
-                                        </div>
-                                        <div class="option-item checkbox">
-                                            <label for="removeEmpty">
-                                                <input type="checkbox" id="removeEmpty" checked>
-                                                <span>Remove empty lines</span>
-                                            </label>
-                                        </div>
+                                    <div class="hint">
+                                        Maximum 10,000 characters.
                                     </div>
                                 </div>
-
-                                <div class="tool-actions-vertical">
-                                    <button class="action-btn primary" id="formatBtn">
-                                        <span>Format</span>
-                                        <span>✨</span>
-                                    </button>
-                                    <button class="action-btn" id="clearBtn">
-                                        <span>Clear</span>
-                                        <span>×</span>
-                                    </button>
-                                </div>
-                            </div>
+                            </section>
 
                             <!-- Output Column -->
-                            <div class="output-column">
+                            <section class="tool-section output-column">
                                 <div class="output-group">
-                                    <label for="outputData">SQL IN Format:</label>
+                                    <label for="outputData">SQL IN Format</label>
                                     <div class="output-area">
-                                        <textarea id="outputData" placeholder="SQL output will appear here...&#10;&#10;Example:&#10;('Apple','Banana')" rows="12" readonly></textarea>
+                                        <textarea 
+                                            id="outputData" 
+                                            placeholder="SQL output will appear here...&#10;&#10;Example:&#10;('Apple','Banana','Orange')"
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
                                     </div>
-                                    <div class="char-count">
-                                        <span id="outputCount">0</span> chars
+                                    <div class="stats-display">
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="itemCount">0</span>
+                                            <span class="stat-label">Items</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="charCount">0</span>
+                                            <span class="stat-label">Characters</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="outputCount">0</span>
+                                            <span class="stat-label">Output Chars</span>
+                                        </div>
                                     </div>
                                     <div class="output-actions">
-                                        <button class="action-btn success" id="downloadBtn">
+                                        <button class="action-btn success" id="copyBtn">
+                                            <span>Copy</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
                                             <span>Download</span>
-                                            <span>⤓</span>
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+                        </div>
                     </div>
 
+                    <!-- Use Cases Section -->
                     <div class="use-cases">
-                        <h4>Common Use Cases:</h4>
+                        <h3>Use Cases</h3>
                         <div class="use-case-grid">
-                            <div class="use-case">
-                                <div class="use-case-icon">🗄️</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🗄️</span>
                                 <h5>Database Queries</h5>
                                 <p>Format data for SQL WHERE IN clauses and database queries</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">🔍</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🔍</span>
                                 <h5>Data Filtering</h5>
                                 <p>Create SQL queries to filter records by multiple IDs or values</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">📋</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📋</span>
                                 <h5>SQL IN Clauses</h5>
                                 <p>Convert Excel lists to proper SQL IN format for SELECT queries</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">⚙️</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">⚙️</span>
                                 <h5>Query Building</h5>
                                 <p>Quickly generate SQL WHERE IN clauses from data lists</p>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Paste Excel column values into the input field (one per line)</li>
+                            <li>Choose your desired quote type (single, double, or none)</li>
+                            <li>Check the trim whitespace and remove empty lines options</li>
+                            <li>Click "Format" to convert to SQL IN format</li>
+                            <li>Copy or download the SQL IN clause result</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>Single quotes:</strong> Wraps values in single quotes for text data ('value1','value2')</li>
+                            <li><strong>Double quotes:</strong> Wraps values in double quotes for SQL Server ("value1","value2")</li>
+                            <li><strong>No quotes:</strong> Outputs numeric values without quotes for ID lists</li>
+                            <li><strong>Trim whitespace:</strong> Removes extra spaces from each value</li>
+                            <li><strong>Remove empty lines:</strong> Filters out blank lines automatically</li>
+                            <li><strong>Item count:</strong> Track how many values are in your SQL IN clause</li>
+                        </ul>
                     </div>
                 </div>
 

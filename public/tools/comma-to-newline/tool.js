@@ -4,12 +4,15 @@ class CommaToNewlineConverter {
         this.elements = {
             inputData: document.getElementById('inputData'),
             outputData: document.getElementById('outputData'),
+            formatBtn: document.getElementById('formatBtn'),
             clearBtn: document.getElementById('clearBtn'),
             copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
             separator: document.getElementById('separator'),
             removeQuotes: document.getElementById('removeQuotes'),
-            trimWhitespace: document.getElementById('trimWhitespace')
+            trimWhitespace: document.getElementById('trimWhitespace'),
+            itemCount: document.getElementById('itemCount'),
+            charCount: document.getElementById('charCount')
         };
 
         this.init();
@@ -20,9 +23,18 @@ class CommaToNewlineConverter {
     }
 
     setupEventListeners() {
-        this.elements.clearBtn.addEventListener('click', () => this.clear());
-        this.elements.copyBtn.addEventListener('click', () => this.copyOutput());
-        this.elements.downloadBtn.addEventListener('click', () => this.download());
+        if (this.elements.formatBtn) {
+            this.elements.formatBtn.addEventListener('click', () => this.format());
+        }
+        if (this.elements.clearBtn) {
+            this.elements.clearBtn.addEventListener('click', () => this.clear());
+        }
+        if (this.elements.copyBtn) {
+            this.elements.copyBtn.addEventListener('click', () => this.copyOutput());
+        }
+        if (this.elements.downloadBtn) {
+            this.elements.downloadBtn.addEventListener('click', () => this.download());
+        }
         
         // Auto-format on input
         this.elements.inputData.addEventListener('input', () => this.format());
@@ -36,6 +48,7 @@ class CommaToNewlineConverter {
         
         if (!input.trim()) {
             this.elements.outputData.value = '';
+            this.updateStats(0, 0);
             return;
         }
 
@@ -56,11 +69,24 @@ class CommaToNewlineConverter {
         const output = values.join('\n');
 
         this.elements.outputData.value = output;
+        
+        // Update stats
+        this.updateStats(values.length, output.length);
+    }
+
+    updateStats(items, chars) {
+        if (this.elements.itemCount) {
+            this.elements.itemCount.textContent = items;
+        }
+        if (this.elements.charCount) {
+            this.elements.charCount.textContent = chars;
+        }
     }
 
     clear() {
         this.elements.inputData.value = '';
         this.elements.outputData.value = '';
+        this.updateStats(0, 0);
         SharedUtilities.showNotification('Cleared all data', 'success');
     }
 

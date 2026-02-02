@@ -8,12 +8,14 @@ class ExcelColumnToSqlIn {
             outputData: document.getElementById('outputData'),
             formatBtn: document.getElementById('formatBtn'),
             clearBtn: document.getElementById('clearBtn'),
+            copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
             quoteType: document.getElementById('quoteType'),
             trimWhitespace: document.getElementById('trimWhitespace'),
             removeEmpty: document.getElementById('removeEmpty'),
-            inputCount: document.getElementById('inputCount'),
-            outputCount: document.getElementById('outputCount')
+            charCount: document.getElementById('charCount'),
+            outputCount: document.getElementById('outputCount'),
+            itemCount: document.getElementById('itemCount')
         };
 
         this.init();
@@ -32,24 +34,30 @@ class ExcelColumnToSqlIn {
     setupEventListeners() {
         this.elements.formatBtn.addEventListener('click', () => this.format());
         this.elements.clearBtn.addEventListener('click', () => this.clear());
+        this.elements.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.elements.downloadBtn.addEventListener('click', () => this.download());
         
+        // Real-time formatting on input with keystroke delay for auto-copy
         this.elements.inputData.addEventListener('input', () => {
             this.updateCharCount();
-            // Always format in real-time - no character limit
-            if (this.elements.inputData.value.trim().length > 0) {
-                this.formatWithoutAutoCopy();
-                this.keystrokeDelay.schedule();
-            }
+            // Always format in real-time
+            this.formatWithoutAutoCopy();
+            // Schedule auto-copy after keystroke delay
+            this.keystrokeDelay.schedule();
         });
         
-        this.elements.outputData.addEventListener('input', () => this.updateCharCount());
+        // Format when options change
+        this.elements.quoteType.addEventListener('change', () => this.formatWithoutAutoCopy());
+        this.elements.trimWhitespace.addEventListener('change', () => this.formatWithoutAutoCopy());
+        this.elements.removeEmpty.addEventListener('change', () => this.formatWithoutAutoCopy());
     }
 
     formatWithoutAutoCopy() {
         const input = this.elements.inputData.value;
         
         if (!input.trim()) {
+            this.elements.outputData.value = '';
+            this.updateCharCount();
             return;
         }
 
@@ -110,12 +118,12 @@ class ExcelColumnToSqlIn {
         // Add quotes based on type
         const quoteType = this.elements.quoteType.value;
         if (quoteType !== 'none') {
-            const quote = quoteType === 'single' ? "'" : '"';
+            const quote = quoteType === 'double' ? '"' : "'";
             lines = lines.map(line => `${quote}${line}${quote}`);
         }
 
-        // Join with comma and space, wrap in parentheses
-        const output = '(' + lines.join(',') + ')';
+        // Join with IN clause
+        const output = lines.length > 0 ? `(${lines.join(', ')})` : '';
 
         this.elements.outputData.value = output;
         this.updateCharCount();
@@ -139,13 +147,49 @@ class ExcelColumnToSqlIn {
     }
 
     updateCharCount() {
-        this.elements.inputCount.textContent = this.elements.inputData.value.length;
-        this.elements.outputCount.textContent = this.elements.outputData.value.length;
+        // Update input character count
+        const inputLength = this.elements.inputData.value.length;
+        
+        // Update output character count
+        const outputLength = this.elements.outputData.value.length;
+        this.elements.outputCount.textContent = outputLength;
+        
+        // Update item count based on current input
+        const input = this.elements.inputData.value.trim();
+        if (input.length > 0) {
+            let lines = input.split('\n');
+            
+            // Apply the same filters that are enabled
+            if (this.elements.trimWhitespace.checked) {
+                lines = lines.map(line => line.trim());
+            }
+            
+            if (this.elements.removeEmpty.checked) {
+                lines = lines.filter(line => line.length > 0);
+            }
+            
+            this.elements.itemCount.textContent = lines.length;
+            this.elements.charCount.textContent = inputLength;
+        } else {
+            this.elements.itemCount.textContent = 0;
+            this.elements.charCount.textContent = 0;
+        }
+    }
+
+    async copyToClipboard() {
+        const output = this.elements.outputData.value;
+        
+        if (!output) {
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
+            return;
+        }
+
+        await SharedUtilities.copyToClipboard(output, 'Copied to clipboard!', 'success');
     }
 
     download() {
         const output = this.elements.outputData.value;
-        SharedUtilities.downloadAsFile(output, 'sql-in-list.sql', 'text/plain', {
+        SharedUtilities.downloadAsFile(output, 'sql-in-list.txt', 'text/plain', {
             successMessage: 'File downloaded'
         });
     }

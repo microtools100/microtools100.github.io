@@ -15,6 +15,8 @@ class QuoteCommaFormatter {
         this.clearBtn = document.getElementById('clearBtn');
         this.copyBtn = document.getElementById('copyBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
+        this.itemCount = document.getElementById('itemCount');
+        this.charCount = document.getElementById('charCount');
         this.errorMsg = document.querySelector('.error-msg');
         
         this.init();
@@ -84,6 +86,15 @@ class QuoteCommaFormatter {
             const result = lines.join(delim);
 
             this.outputData.value = result;
+            
+            // Update stats
+            if (this.itemCount) {
+                this.itemCount.textContent = lines.filter(line => line !== '').length;
+            }
+            if (this.charCount) {
+                this.charCount.textContent = result.length;
+            }
+            
             this.clearError();
         } catch (error) {
             this.showError('Formatting error: ' + error.message);
@@ -105,6 +116,12 @@ class QuoteCommaFormatter {
     clearAll() {
         this.inputData.value = '';
         this.outputData.value = '';
+        if (this.itemCount) {
+            this.itemCount.textContent = '0';
+        }
+        if (this.charCount) {
+            this.charCount.textContent = '0';
+        }
         this.clearError();
         this.inputData.focus();
     }

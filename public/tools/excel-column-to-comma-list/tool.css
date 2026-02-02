@@ -25,8 +25,8 @@
 .tool-description {
     font-size: 1.1rem;
     color: var(--text-color-secondary);
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
 }
 
 /* Two-column layout: tool content + sidebar */
@@ -48,105 +48,32 @@
     gap: 2rem;
 }
 
-/* Three-Column Layout */
-.tool-section.three-column {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
-    align-items: start;
-}
-
-.options-column,
-.input-column,
-.output-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.input-column .input-area,
-.output-column .output-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.input-column textarea,
-.output-column textarea {
-    flex: 1;
-    min-height: 320px;
-}
-
+/* Override tool-options for this tool */
 .tool-options {
-    background: var(--surface-color);
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.tool-options .section-title,
+.tool-options h3 {
+    margin-bottom: 0.75rem !important;
+    font-size: 1rem !important;
+}
+
+/* Tool Content Columns */
+.tool-content-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Input and Output Sections */
+.tool-section {
+    background: white;
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
-}
-
-.tool-options h4 {
-    margin: 0 0 1rem 0;
-    color: var(--text-color);
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.option-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.option-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.option-item label {
-    font-weight: 500;
-    font-size: 0.95rem;
-    color: var(--text-color);
-}
-
-.option-item select {
-    padding: 0.6rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    font-size: 0.9rem;
-    background: white;
-    color: var(--text-color);
-}
-
-.option-item select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-.option-item.checkbox label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    font-weight: normal;
-    font-size: 0.95rem;
-}
-
-.option-item.checkbox input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    accent-color: var(--primary-color);
-}
-
-.tool-actions-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: auto;
-}
-
-.tool-actions-vertical .action-btn {
-    width: 100%;
 }
 
 .input-group,
@@ -186,12 +113,116 @@
     outline: none;
 }
 
-.char-count {
+.hint {
     font-size: 0.8rem;
     color: var(--text-color-secondary);
     margin-top: 0.25rem;
 }
 
+/* Stats Display */
+.stats-display {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 0.75rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.25rem;
+}
+
+/* Excel Options Grid */
+.excel-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.option-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.option-item label {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.option-item select {
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: white;
+    color: var(--text-color);
+}
+
+.option-item select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.option-item.checkbox {
+    flex-direction: row;
+    align-items: center;
+}
+
+.option-item.checkbox input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.option-item.checkbox label {
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.option-item.checkbox span {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Tool Actions Horizontal */
+.tool-actions-horizontal {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tool-actions-horizontal .action-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+/* Output Actions */
 .output-actions {
     display: flex;
     gap: 0.75rem;
@@ -203,223 +234,44 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-    .tool-section.three-column {
-        grid-template-columns: 1fr 1fr 1fr;
+@media (max-width: 768px) {
+    .tool-layout {
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-}
 
-@media (max-width: 1024px) {
-    .tool-section.three-column {
-        grid-template-columns: 1fr 1fr;
+    .tool-content-columns {
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
-    .options-column {
-        grid-column: 1 / -1;
-    }
-    
-    .input-column textarea,
-    .output-column textarea {
+
+    .input-group textarea,
+    .output-group textarea {
         min-height: 250px;
     }
-}
 
-@media (max-width: 768px) {
-    .tool-section.three-column {
+    .excel-options-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.75rem;
     }
-    
-    .input-column textarea,
-    .output-column textarea {
-        min-height: 200px;
+
+    .tool-actions-horizontal {
+        gap: 0.5rem;
+    }
+
+    .tool-actions-horizontal .action-btn {
+        flex: 1 1 calc(50% - 0.25rem);
+        min-width: auto;
+        padding: 0.6rem 0.4rem;
+        font-size: 0.85rem;
+    }
+
+    .tool-actions-horizontal .action-btn:nth-child(3) {
+        flex: 1 1 calc(50% - 0.25rem);
     }
 }
 
-@media (max-width: 480px) {
-    .tool-options {
-        padding: 1rem;
-    }
-    
-    .input-column textarea,
-    .output-column textarea {
-        min-height: 150px;
-    }
+
 }
-
-/* Tool options old styles */
-
-
-.input-output-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 1.5rem 0;
-}
-
-.input-group,
-.output-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.input-group label,
-.output-group label {
-    font-weight: 500;
-    font-size: 0.95rem;
-    color: #333;
-}
-
-.input-group textarea,
-.output-group textarea {
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    resize: vertical;
-}
-
-.input-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.output-group textarea {
-    background-color: #f5f5f5;
-}
-
-.char-count {
-    font-size: 0.85rem;
-    color: #666;
-    text-align: right;
-}
-
-/* Use cases */
-.use-cases {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.use-cases h4 {
-    margin-bottom: 1.5rem;
-    font-size: 1.125rem;
-    color: var(--text-color);
-}
-
-.use-case-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.use-case {
-    background: var(--surface-color);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    text-align: center;
-}
-
-.use-case-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.use-case h5 {
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-    font-size: 1rem;
-}
-
-.use-case p {
-    font-size: 0.875rem;
-    color: var(--text-light);
-    margin-bottom: 0;
-}
-
-/* Sidebar sections */
-.related-tools,
-.formatting-guide,
-.tips {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.related-tools h4,
-.formatting-guide h4,
-.tips h4 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-    font-size: 1rem;
-}
-
-.related-tools ul,
-.formatting-guide ul,
-.tips ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.related-tools li,
-.formatting-guide li,
-.tips li {
-    margin-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    position: relative;
-    font-size: 0.95rem;
-}
-
-.related-tools li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--primary-color);
-    font-weight: bold;
-}
-
-.formatting-guide li::before,
-.tips li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--primary-color);
-    font-weight: bold;
-}
-
-.related-tools a {
-    color: var(--text-color);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.related-tools a:hover {
-    color: var(--primary-color);
-    text-decoration: underline;
-}
-
-@media (max-width: 991px) {
-    .input-output-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .use-case-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 768px) {
-    .options-grid {
-        grid-template-columns: 1fr;
-    }
-}

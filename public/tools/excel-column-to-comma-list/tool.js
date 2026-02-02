@@ -8,13 +8,15 @@ class CSVFormatter {
             outputData: document.getElementById('outputData'),
             formatBtn: document.getElementById('formatBtn'),
             clearBtn: document.getElementById('clearBtn'),
+            copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
             separator: document.getElementById('separator'),
             addQuotes: document.getElementById('addQuotes'),
             trimWhitespace: document.getElementById('trimWhitespace'),
             removeEmpty: document.getElementById('removeEmpty'),
-            inputCount: document.getElementById('inputCount'),
-            outputCount: document.getElementById('outputCount')
+            charCount: document.getElementById('charCount'),
+            outputCount: document.getElementById('outputCount'),
+            itemCount: document.getElementById('itemCount')
         };
 
         this.init();
@@ -33,25 +35,31 @@ class CSVFormatter {
     setupEventListeners() {
         this.elements.formatBtn.addEventListener('click', () => this.format());
         this.elements.clearBtn.addEventListener('click', () => this.clear());
+        this.elements.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.elements.downloadBtn.addEventListener('click', () => this.download());
         
-        // Auto-format on input for real-time conversion
+        // Real-time formatting on input with keystroke delay for auto-copy
         this.elements.inputData.addEventListener('input', () => {
             this.updateCharCount();
-            // Always format in real-time - no character limit
-            if (this.elements.inputData.value.trim().length > 0) {
-                this.formatWithoutAutoCopy();
-                this.keystrokeDelay.schedule();
-            }
+            // Always format in real-time
+            this.formatWithoutAutoCopy();
+            // Schedule auto-copy after keystroke delay
+            this.keystrokeDelay.schedule();
         });
         
-        this.elements.outputData.addEventListener('input', () => this.updateCharCount());
+        // Format when options change
+        this.elements.separator.addEventListener('change', () => this.formatWithoutAutoCopy());
+        this.elements.addQuotes.addEventListener('change', () => this.formatWithoutAutoCopy());
+        this.elements.trimWhitespace.addEventListener('change', () => this.formatWithoutAutoCopy());
+        this.elements.removeEmpty.addEventListener('change', () => this.formatWithoutAutoCopy());
     }
 
     formatWithoutAutoCopy() {
         const input = this.elements.inputData.value;
         
         if (!input.trim()) {
+            this.elements.outputData.value = '';
+            this.updateCharCount();
             return;
         }
 
@@ -74,8 +82,14 @@ class CSVFormatter {
             lines = lines.map(line => `${quote}${line}${quote}`);
         }
 
+        // Get separator and handle tab character
+        let separator = this.elements.separator.value;
+        if (separator === '\\t') {
+            separator = '\t';
+        }
+
         // Join with separator
-        const output = lines.join(this.elements.separator.value);
+        const output = lines.join(separator);
 
         this.elements.outputData.value = output;
         this.updateCharCount();
@@ -147,8 +161,33 @@ class CSVFormatter {
     }
 
     updateCharCount() {
-        this.elements.inputCount.textContent = this.elements.inputData.value.length;
-        this.elements.outputCount.textContent = this.elements.outputData.value.length;
+        // Update input character count
+        const inputLength = this.elements.inputData.value.length;
+        
+        // Update output character count
+        const outputLength = this.elements.outputData.value.length;
+        this.elements.outputCount.textContent = outputLength;
+        
+        // Update item count based on current input
+        const input = this.elements.inputData.value.trim();
+        if (input.length > 0) {
+            let lines = input.split('\n');
+            
+            // Apply the same filters that are enabled
+            if (this.elements.trimWhitespace.checked) {
+                lines = lines.map(line => line.trim());
+            }
+            
+            if (this.elements.removeEmpty.checked) {
+                lines = lines.filter(line => line.length > 0);
+            }
+            
+            this.elements.itemCount.textContent = lines.length;
+            this.elements.charCount.textContent = inputLength;
+        } else {
+            this.elements.itemCount.textContent = 0;
+            this.elements.charCount.textContent = 0;
+        }
     }
 
     async copyToClipboard() {
@@ -159,18 +198,7 @@ class CSVFormatter {
             return;
         }
 
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            await window.MicroTools.utils.copyToClipboard(output, this.elements.copyBtn);
-        } else {
-            // Fallback copy method
-            const textarea = document.createElement('textarea');
-            textarea.value = output;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            SharedUtilities.showNotification('Copied to clipboard!', 'success');
-        }
+        await SharedUtilities.copyToClipboard(output, 'Copied to clipboard!', 'success');
     }
 
     download() {

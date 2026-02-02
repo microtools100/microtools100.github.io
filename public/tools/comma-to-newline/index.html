@@ -64,53 +64,87 @@
                         <div class="tool-container">
                             <!-- Options Section -->
                             <div class="tool-options">
-                                <h3>Options</h3>
-                                <div class="options-group">
-                                    <label for="separator">Separator:</label>
-                                    <select id="separator">
-                                        <option value=",">Comma (,)</option>
-                                        <option value=";">Semicolon (;)</option>
-                                        <option value="|">Pipe (|)</option>
-                                        <option value=" ">Space</option>
-                                    </select>
+                                <h3 class="section-title">Options</h3>
+                                <div class="sql-options-grid">
+                                    <div class="option-item">
+                                        <label for="separator">Separator:</label>
+                                        <select id="separator">
+                                            <option value=",">Comma (,)</option>
+                                            <option value=";">Semicolon (;)</option>
+                                            <option value="|">Pipe (|)</option>
+                                            <option value=" ">Space</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 1.5rem; grid-column: 1 / -1;">
+                                        <div class="option-item checkbox">
+                                            <label for="removeQuotes">
+                                                <input type="checkbox" id="removeQuotes" checked>
+                                                <span>Remove surrounding quotes</span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="option-item checkbox">
+                                            <label for="trimWhitespace">
+                                                <input type="checkbox" id="trimWhitespace" checked>
+                                                <span>Trim whitespace</span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="options-group">
-                                    <label for="removeQuotes">
-                                        <input type="checkbox" id="removeQuotes" checked>
-                                        Remove surrounding quotes
-                                    </label>
-                                </div>
-                                <div class="options-group">
-                                    <label for="trimWhitespace">
-                                        <input type="checkbox" id="trimWhitespace" checked>
-                                        Trim whitespace
-                                    </label>
+                                <div class="tool-actions-horizontal">
+                                    <button class="action-btn primary" id="formatBtn">
+                                        <span>Convert</span>
+                                    </button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Input/Output Section -->
-                            <div class="tool-section">
-                                <h2>Data Conversion</h2>
-                                <div class="tool-content-columns">
-                                    <div class="input-column">
+                            <!-- Two-Column Layout for Input and Output -->
+                            <div class="tool-content-columns">
+                                <!-- Input Column -->
+                                <section class="tool-section input-column">
+                                    <div class="input-group">
+                                        <label for="inputData">Input Data</label>
                                         <div class="input-area">
-                                            <label for="inputData">Comma-Separated Data:</label>
-                                            <textarea id="inputData" placeholder="Paste comma-separated values&#10;&#10;Example:&#10;Apple, Banana, Orange"></textarea>
+                                            <textarea 
+                                                id="inputData" 
+                                                placeholder="Paste comma-separated values&#10;One per line&#10;&#10;Example:&#10;Apple, Banana, Orange"
+                                                rows="12"
+                                            ></textarea>
+                                        </div>
+                                        <div class="hint">
+                                            Maximum 10,000 characters.
                                         </div>
                                     </div>
+                                </section>
 
-                                    <div class="input-column">
-                                        <div class="input-area">
-                                            <label for="outputData">Newline-Separated Output:</label>
-                                            <textarea id="outputData" placeholder="Output will appear here&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange" readonly></textarea>
+                                <!-- Output Column -->
+                                <section class="tool-section output-column">
+                                    <div class="output-group">
+                                        <label for="outputData">Converted Result</label>
+                                        <div class="output-area">
+                                            <textarea 
+                                                id="outputData" 
+                                                placeholder="Converted output will appear here...&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange"
+                                                rows="12"
+                                                readonly
+                                            ></textarea>
+                                        </div>
+                                        <div class="stats-display">
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="itemCount">0</span>
+                                                <span class="stat-label">Items</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="charCount">0</span>
+                                                <span class="stat-label">Characters</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tool-actions">
-                                    <button class="action-btn" id="clearBtn">Clear All ×</button>
-                                    <button class="action-btn success" id="copyBtn">Copy Output 📋</button>
-                                    <button class="action-btn success" id="downloadBtn">Download ⤓</button>
-                                </div>
+                                </section>
                             </div>
 
                             <!-- Use Cases -->
@@ -138,6 +172,31 @@
                                         <p>Convert between different delimiter formats</p>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- How to Use Section -->
+                            <div class="instructions">
+                                <h3>How to Use</h3>
+                                <ol>
+                                    <li>Paste your comma-separated data into the input field</li>
+                                    <li>Select your separator type (comma, semicolon, pipe, or space)</li>
+                                    <li>Check options to remove quotes and trim whitespace as needed</li>
+                                    <li>View the newline-separated output in the output field</li>
+                                    <li>Copy the result or download it as a file</li>
+                                </ol>
+                            </div>
+
+                            <!-- How It Works Section -->
+                            <div class="formatting-guide">
+                                <h3>How It Works</h3>
+                                <ul>
+                                    <li><strong>Separator Detection:</strong> Identifies and splits data by your chosen separator</li>
+                                    <li><strong>Quote Removal:</strong> Optionally strips surrounding quotes from each value</li>
+                                    <li><strong>Whitespace Trimming:</strong> Removes leading and trailing spaces for clean data</li>
+                                    <li><strong>Line Conversion:</strong> Transforms each item into a separate line</li>
+                                    <li><strong>Empty Line Handling:</strong> Removes empty entries for cleaner output</li>
+                                    <li><strong>Format Flexibility:</strong> Supports multiple separator types in one tool</li>
+                                </ul>
                             </div>
                         </div>
                     </div>

@@ -72,118 +72,162 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
-                        <section class="tool-section three-column">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div class="excel-options-grid">
+                                <div class="option-item">
+                                    <label for="separator">Separator:</label>
+                                    <select id="separator">
+                                        <option value=",">Comma (,)</option>
+                                        <option value=";">Semicolon (;)</option>
+                                        <option value="|">Pipe (|)</option>
+                                        <option value="\t">Tab</option>
+                                        <option value=" ">Space</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="option-item">
+                                    <label for="addQuotes">Quotes:</label>
+                                    <select id="addQuotes">
+                                        <option value="none">None</option>
+                                        <option value="double">Double (")</option>
+                                        <option value="single">Single (')</option>
+                                    </select>
+                                </div>
+
+                                <div class="option-item checkbox">
+                                    <label for="trimWhitespace">
+                                        <input type="checkbox" id="trimWhitespace" checked>
+                                        <span>Trim whitespace</span>
+                                    </label>
+                                </div>
+
+                                <div class="option-item checkbox">
+                                    <label for="removeEmpty">
+                                        <input type="checkbox" id="removeEmpty" checked>
+                                        <span>Remove empty lines</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="formatBtn">
+                                    <span>Format</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">
+                                    <span>Clear</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
                             <!-- Input Column -->
-                            <div class="input-column">
+                            <section class="tool-section input-column">
                                 <div class="input-group">
-                                    <label for="inputData">Input Data:</label>
+                                    <label for="inputData">Input Data</label>
                                     <div class="input-area">
-                                        <textarea id="inputData" placeholder="Paste Excel column values&#10;One per line&#10;&#10;Example:&#10;John&#10;Jane&#10;Bob" rows="12"></textarea>
+                                        <textarea 
+                                            id="inputData" 
+                                            placeholder="Paste Excel column values...&#10;One per line&#10;&#10;Example:&#10;John&#10;Jane&#10;Bob"
+                                            rows="12"
+                                        ></textarea>
                                     </div>
-                                    <div class="char-count">
-                                        <span id="inputCount">0</span> chars
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Options Column -->
-                            <div class="options-column">
-                                <div class="tool-options">
-                                    <h4>Options</h4>
-                                    <div class="option-group">
-                                        <div class="option-item">
-                                            <label for="separator">Separator:</label>
-                                            <select id="separator">
-                                                <option value=",">Comma (,)</option>
-                                                <option value=";">Semicolon (;)</option>
-                                                <option value="|">Pipe (|)</option>
-                                                <option value="\t">Tab</option>
-                                                <option value=" ">Space</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="option-item">
-                                            <label for="addQuotes">Quotes:</label>
-                                            <select id="addQuotes">
-                                                <option value="none">None</option>
-                                                <option value="double">Double (")</option>
-                                                <option value="single">Single (')</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="option-item checkbox">
-                                            <label for="trimWhitespace">
-                                                <input type="checkbox" id="trimWhitespace" checked>
-                                                <span>Trim whitespace</span>
-                                            </label>
-                                        </div>
-
-                                        <div class="option-item checkbox">
-                                            <label for="removeEmpty">
-                                                <input type="checkbox" id="removeEmpty" checked>
-                                                <span>Remove empty lines</span>
-                                            </label>
-                                        </div>
+                                    <div class="hint">
+                                        Maximum 10,000 characters.
                                     </div>
                                 </div>
-
-                                <div class="tool-actions-vertical">
-                                    <button class="action-btn primary" id="formatBtn">
-                                        <span>Format</span>
-                                        <span>✨</span>
-                                    </button>
-                                    <button class="action-btn" id="clearBtn">
-                                        <span>Clear</span>
-                                        <span>×</span>
-                                    </button>
-                                </div>
-                            </div>
+                            </section>
 
                             <!-- Output Column -->
-                            <div class="output-column">
+                            <section class="tool-section output-column">
                                 <div class="output-group">
-                                    <label for="outputData">Formatted Output:</label>
+                                    <label for="outputData">Formatted Output</label>
                                     <div class="output-area">
-                                        <textarea id="outputData" placeholder="Result will appear here...&#10;&#10;Example:&#10;John, Jane, Bob" rows="12" readonly></textarea>
+                                        <textarea 
+                                            id="outputData" 
+                                            placeholder="Result will appear here...&#10;&#10;Example:&#10;John, Jane, Bob"
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
                                     </div>
-                                    <div class="char-count">
-                                        <span id="outputCount">0</span> chars
+                                    <div class="stats-display">
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="itemCount">0</span>
+                                            <span class="stat-label">Items</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="charCount">0</span>
+                                            <span class="stat-label">Characters</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-value" id="outputCount">0</span>
+                                            <span class="stat-label">Output Chars</span>
+                                        </div>
                                     </div>
                                     <div class="output-actions">
-                                        <button class="action-btn success" id="downloadBtn">
+                                        <button class="action-btn success" id="copyBtn">
+                                            <span>Copy</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
                                             <span>Download</span>
-                                            <span>⤓</span>
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+                        </div>
                     </div>
 
+                    <!-- Use Cases Section -->
                     <div class="use-cases">
-                        <h4>Common Use Cases:</h4>
+                        <h3>Use Cases</h3>
                         <div class="use-case-grid">
-                            <div class="use-case">
-                                <div class="use-case-icon">📊</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📊</span>
                                 <h5>Data Export</h5>
                                 <p>Convert Excel columns to CSV format for database imports</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">📝</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">📝</span>
                                 <h5>List Formatting</h5>
                                 <p>Quick format lists from spreadsheets into comma-separated values</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">🔄</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🔄</span>
                                 <h5>Data Migration</h5>
                                 <p>Prepare data for migration between systems with custom separators</p>
                             </div>
-                            <div class="use-case">
-                                <div class="use-case-icon">🎯</div>
+                            <div class="use-case-item">
+                                <span class="use-case-icon">🎯</span>
                                 <h5>Quick Format</h5>
                                 <p>Instantly format any list-like data into your desired format</p>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Paste Excel column values into the input field (one per line)</li>
+                            <li>Choose your desired separator (comma, semicolon, pipe, tab, or space)</li>
+                            <li>Select quote style if needed for special characters</li>
+                            <li>Click "Format" to convert and process your data</li>
+                            <li>Copy or download the formatted result</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>Separator options:</strong> Choose from comma, semicolon, pipe, tab, or space as delimiter</li>
+                            <li><strong>Quote handling:</strong> Optionally wrap values in single or double quotes for CSV compatibility</li>
+                            <li><strong>Trim whitespace:</strong> Removes extra spaces from each value for clean output</li>
+                            <li><strong>Remove empty lines:</strong> Filters out blank lines automatically</li>
+                            <li><strong>Item count:</strong> Track how many items are in your formatted list</li>
+                            <li><strong>Custom separators:</strong> Use tab or space for alternative list formats</li>
+                        </ul>
                     </div>
                 </div>
 

@@ -84,93 +84,110 @@
                                             <div class="format-label">camelCase</div>
                                             <div class="output-wrapper">
                                                 <code id="output-camelCase" class="output-preview">camelCase</code>
-                                                <button class="copy-btn" data-format="camelCase" title="Copy camelCase">📋</button>
+                                                <button class="copy-btn" data-format="camelCase" title="Copy camelCase">Copy</button>
                                             </div>
                                         </div>
                                         <div class="format-item">
                                             <div class="format-label">PascalCase</div>
                                             <div class="output-wrapper">
                                                 <code id="output-PascalCase" class="output-preview">PascalCase</code>
-                                                <button class="copy-btn" data-format="PascalCase" title="Copy PascalCase">📋</button>
+                                                <button class="copy-btn" data-format="PascalCase" title="Copy PascalCase">Copy</button>
                                             </div>
                                         </div>
                                         <div class="format-item">
                                             <div class="format-label">snake_case</div>
                                             <div class="output-wrapper">
                                                 <code id="output-snake_case" class="output-preview">snake_case</code>
-                                                <button class="copy-btn" data-format="snake_case" title="Copy snake_case">📋</button>
+                                                <button class="copy-btn" data-format="snake_case" title="Copy snake_case">Copy</button>
                                             </div>
                                         </div>
                                         <div class="format-item">
                                             <div class="format-label">kebab-case</div>
                                             <div class="output-wrapper">
                                                 <code id="output-kebab-case" class="output-preview">kebab-case</code>
-                                                <button class="copy-btn" data-format="kebab-case" title="Copy kebab-case">📋</button>
+                                                <button class="copy-btn" data-format="kebab-case" title="Copy kebab-case">Copy</button>
                                             </div>
                                         </div>
                                         <div class="format-item">
                                             <div class="format-label">CONSTANT_CASE</div>
                                             <div class="output-wrapper">
                                                 <code id="output-CONSTANT_CASE" class="output-preview">CONSTANT_CASE</code>
-                                                <button class="copy-btn" data-format="CONSTANT_CASE" title="Copy CONSTANT_CASE">📋</button>
+                                                <button class="copy-btn" data-format="CONSTANT_CASE" title="Copy CONSTANT_CASE">Copy</button>
                                             </div>
                                         </div>
                                         <div class="format-item">
                                             <div class="format-label">dot.case</div>
                                             <div class="output-wrapper">
                                                 <code id="output-dot.case" class="output-preview">dot.case</code>
-                                                <button class="copy-btn" data-format="dot.case" title="Copy dot.case">📋</button>
+                                                <button class="copy-btn" data-format="dot.case" title="Copy dot.case">Copy</button>
                                             </div>
                                         </div>
                                         <div class="format-item">
                                             <div class="format-label">space case</div>
                                             <div class="output-wrapper">
                                                 <code id="output-space-case" class="output-preview">space case</code>
-                                                <button class="copy-btn" data-format="space case" title="Copy space case">📋</button>
+                                                <button class="copy-btn" data-format="space case" title="Copy space case">Copy</button>
                                             </div>
                                         </div>
                                         <div class="format-item">
                                             <div class="format-label">Title Case</div>
                                             <div class="output-wrapper">
                                                 <code id="output-Title-Case" class="output-preview">Title Case</code>
-                                                <button class="copy-btn" data-format="Title Case" title="Copy Title Case">📋</button>
+                                                <button class="copy-btn" data-format="Title Case" title="Copy Title Case">Copy</button>
                                             </div>
                                         </div>
                                 </div>
                             </div>
 
-                            <!-- Use Cases -->
+                            <!-- How to Use Section -->
+                            <div class="instructions">
+                                <h3>How to Use</h3>
+                                <ol>
+                                    <li>Enter your string in any format (camelCase, snake_case, kebab-case, etc.)</li>
+                                    <li>The tool automatically converts your input to all available formats</li>
+                                    <li>View all converted outputs instantly</li>
+                                    <li>Click the copy button next to each format to copy the result</li>
+                                    <li>Use the cleared button to reset and start over</li>
+                                </ol>
+                            </div>
+
+                            <!-- Use Cases Section -->
                             <div class="use-cases">
                                 <h3>Use Cases</h3>
                                 <div class="use-case-grid">
                                     <div class="use-case-item">
+                                        <span class="use-case-icon">🔌</span>
                                         <h5>API Integration</h5>
                                         <p>Converting API response keys to programming variables</p>
                                     </div>
                                     <div class="use-case-item">
+                                        <span class="use-case-icon">🗄️</span>
                                         <h5>Database Design</h5>
                                         <p>Preparing database column names in proper format</p>
                                     </div>
                                     <div class="use-case-item">
+                                        <span class="use-case-icon">⚙️</span>
                                         <h5>Configuration</h5>
                                         <p>Generating configuration constants and environment variable names</p>
                                     </div>
                                     <div class="use-case-item">
+                                        <span class="use-case-icon">💻</span>
                                         <h5>Code Generation</h5>
                                         <p>Creating class names and function names from descriptive text</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- How to Use -->
+                            <!-- How It Works Section -->
                             <div class="formatting-guide">
-                                <h3>How to Use</h3>
+                                <h3>How It Works</h3>
                                 <ul>
-                                    <li>Enter your string in any format (camelCase, snake_case, kebab-case, etc.)</li>
-                                    <li>The tool automatically converts your input to all available formats</li>
-                                    <li>Converted outputs appear instantly</li>
-                                    <li>Click the copy button next to each format to copy the result</li>
-                                    <li><strong>Tip:</strong> The tool automatically detects and preserves word boundaries</li>
+                                    <li><strong>Word Boundary Detection:</strong> Automatically identifies word boundaries in any input format</li>
+                                    <li><strong>camelCase:</strong> First word lowercase, subsequent words capitalized with no separators</li>
+                                    <li><strong>PascalCase:</strong> All words capitalized with no separators</li>
+                                    <li><strong>snake_case:</strong> Words separated by underscores, all lowercase</li>
+                                    <li><strong>kebab-case:</strong> Words separated by hyphens, all lowercase</li>
+                                    <li><strong>Multiple Formats:</strong> Converts to 8 different case formats simultaneously</li>
                                 </ul>
                             </div>
                         </div>

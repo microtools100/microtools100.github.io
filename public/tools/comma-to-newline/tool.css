@@ -1,1 +1,266 @@
-/* Comma to Newline Converter - Uses tool-standard.css */
+/* Comma to Newline Converter - Tool-Specific Styles */
+
+:root {
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
+}
+
+/* Tool Page Layout */
+.tool-page {
+    padding: 2rem 0;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tool-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.tool-description {
+    font-size: 1.1rem;
+    color: var(--text-color-secondary);
+    max-width: 100%;
+    margin: 0;
+}
+
+/* Two-column layout: tool content + sidebar */
+.tool-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.tool-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.tool-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Override tool-options for this tool */
+.tool-options {
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.tool-options .section-title,
+.tool-options h3 {
+    margin-bottom: 0.75rem !important;
+    font-size: 1rem !important;
+}
+
+/* Tool Content Columns */
+.tool-content-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Input and Output Sections */
+.tool-section {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.input-group,
+.output-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.input-group label,
+.output-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.input-area,
+.output-area {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.input-group textarea,
+.output-group textarea {
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    padding: 1rem;
+    border: none;
+    outline: none;
+    resize: vertical;
+    background: white;
+    line-height: 1.5;
+}
+
+.input-group textarea:focus,
+.output-group textarea:focus {
+    outline: none;
+}
+
+.hint {
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+    font-style: italic;
+}
+
+/* Stats Display */
+.stats-display {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stat-value {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+}
+
+/* Options Grid */
+.sql-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.option-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.option-item label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.option-item select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: white;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.option-item.checkbox {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0;
+}
+
+.option-item.checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    cursor: pointer;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.option-item.checkbox input[type="checkbox"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+/* Action Buttons */
+.tool-actions-horizontal {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.action-btn {
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 500;
+    background: white;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: #f5f5f5;
+    border-color: #999;
+}
+
+.action-btn.primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.action-btn.primary:hover {
+    opacity: 0.9;
+}
+
+.action-btn.success {
+    background: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.action-btn.success:hover {
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .tool-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .tool-content-columns {
+        grid-template-columns: 1fr;
+    }
+    
+    .sql-options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .tool-header h1 {
+        font-size: 2rem;
+    }
+}
