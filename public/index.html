@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="/assets/css/homepage.css">
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
+    <!-- Dark Mode Script - Must load early to prevent white flash -->
+    <script src="/assets/js/dark-mode.js"></script>
+    
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
     {
@@ -54,6 +57,7 @@
                         <li><a href="#games">Games & Generators</a></li>
                     </ul>
                 </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
             </div>
         </div>

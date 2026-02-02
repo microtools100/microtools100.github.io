@@ -1,4 +1,4 @@
-/* Random Charades Generator - Standardized Tool Styles */
+﻿/* Random Charades Generator - Standardized Tool Styles */
 
 /* Override tool-options for this tool */
 .tool-options {
@@ -53,7 +53,7 @@
 
 /* Settings Section */
 .settings-section {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
@@ -109,7 +109,7 @@
 
 /* Charades Display Column */
 .charades-column {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
@@ -239,7 +239,7 @@
 
 /* Score Column */
 .score-column {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
@@ -301,7 +301,7 @@
     font-weight: 700;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
-    background: white;
+    background: var(--surface-color);
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -340,7 +340,7 @@
 
 /* Info Sections */
 .info-section {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
@@ -482,7 +482,7 @@
 
 .related-tools,
 .tool-tips {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;

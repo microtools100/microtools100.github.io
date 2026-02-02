@@ -8,6 +8,11 @@
     padding: 4rem 0;
     background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
     text-align: center;
+    transition: var(--transition);
+}
+
+html.dark-mode .hero {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0f2844 100%);
 }
 
 .hero-subtitle {
@@ -28,10 +33,17 @@
     font-size: 1rem;
     border-radius: var(--radius-lg);
     border: 2px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: var(--transition);
 }
 
 .search-box input:focus {
     border-color: var(--primary-color);
+}
+
+.search-box input::placeholder {
+    color: var(--text-light);
 }
 
 .search-box button {
@@ -45,6 +57,7 @@
     cursor: pointer;
     color: var(--text-light);
     padding: 0.5rem;
+    transition: var(--transition);
 }
 
 .search-box button:hover {
@@ -79,6 +92,7 @@
 /* Tools Sections */
 .tools-section {
     padding: 4rem 0;
+    transition: var(--transition);
 }
 
 .tools-section:nth-child(even) {
@@ -94,7 +108,7 @@
 
 .tool-card {
     display: block;
-    background: white;
+    background: var(--background-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 1.5rem;
@@ -113,7 +127,7 @@
     width: 48px;
     height: 48px;
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    color: white;
+    color: #ffffff;
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;

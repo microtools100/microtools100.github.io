@@ -568,7 +568,7 @@
     margin-top: 1.5rem;
     padding: 2rem;
     border-radius: var(--radius-sm);
-    background: white;
+    background: var(--surface-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -597,7 +597,7 @@
 
 .related-tools,
 .tool-tips {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;

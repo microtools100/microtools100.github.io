@@ -95,7 +95,7 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     font-size: 0.95rem;
-    background: white;
+    background: var(--surface-color);
     cursor: pointer;
 }
 
@@ -132,7 +132,7 @@
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
     resize: vertical;
-    background: white;
+    background: var(--surface-color);
     min-height: 250px;
 }
 
@@ -147,7 +147,7 @@
 .stat-item {
     text-align: center;
     padding: 1.5rem 1rem;
-    background: white;
+    background: var(--surface-color);
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
 }
@@ -246,7 +246,7 @@
 
 .related-tools,
 .tool-tips {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;

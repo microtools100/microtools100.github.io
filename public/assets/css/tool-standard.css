@@ -36,11 +36,12 @@
 }
 
 .tool-container {
-    background: white;
+    background: var(--background-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-md);
+    transition: var(--transition);
 }
 
 .tool-section {
@@ -103,8 +104,10 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     font-size: 0.95rem;
-    background: white;
+    background: var(--background-color);
+    color: var(--text-color);
     cursor: pointer;
+    transition: var(--transition);
 }
 
 .option-group select {
@@ -166,9 +169,10 @@
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
     resize: vertical;
-    background: white;
+    background: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+    transition: var(--transition);
 }
 
 .input-group textarea:focus,
@@ -260,8 +264,8 @@
 }
 
 .action-btn.primary {
-    background: var(--primary-color);
-    color: white;
+    background-color: var(--primary-color);
+    color: #ffffff;
     border-color: var(--primary-color);
 }
 
@@ -270,8 +274,8 @@
 }
 
 .action-btn.success {
-    background: var(--success-color);
-    color: white;
+    background-color: var(--success-color);
+    color: #ffffff;
     border-color: var(--success-color);
 }
 
@@ -409,7 +413,7 @@
 }
 
 .use-case-item {
-    background: white;
+    background: var(--background-color);
     padding: 1.5rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -463,10 +467,11 @@
 
 .related-tools,
 .tool-tips {
-    background: white;
+    background: var(--background-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
+    transition: var(--transition);
 }
 
 .related-tools h3,

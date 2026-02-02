@@ -8,6 +8,7 @@
     --surface-color: #f8fafc;
     --text-color: #1e293b;
     --text-light: #64748b;
+    --text-color-secondary: #64748b;
     --border-color: #e2e8f0;
     --success-color: #10b981;
     --warning-color: #f59e0b;
@@ -19,6 +20,26 @@
     --radius-md: 0.5rem;
     --radius-lg: 0.75rem;
     --transition: all 0.2s ease;
+}
+
+/* Dark Mode */
+html.dark-mode {
+    --primary-color: #60a5fa;
+    --primary-dark: #3b82f6;
+    --secondary-color: #94a3b8;
+    --accent-color: #60a5fa;
+    --background-color: #0f172a;
+    --surface-color: #1e293b;
+    --text-color: #f1f5f9;
+    --text-light: #cbd5e1;
+    --text-color-secondary: #cbd5e1;
+    --border-color: #334155;
+    --success-color: #34d399;
+    --warning-color: #fbbf24;
+    --error-color: #f87171;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -39,6 +60,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -125,7 +147,7 @@ a:hover {
 }
 
 .btn-secondary:hover {
-    background-color: #e2e8f0;
+    background-color: var(--border-color);
 }
 
 .btn-sm {
@@ -140,7 +162,8 @@ input, textarea, select {
     padding: 0.625rem 0.75rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    background-color: white;
+    background-color: var(--surface-color);
+    color: var(--text-color);
     transition: var(--transition);
     width: 100%;
 }
@@ -186,11 +209,13 @@ textarea {
 
 /* Header */
 .site-header {
-    background-color: white;
+    background-color: var(--background-color);
     box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .header-content {
@@ -245,6 +270,42 @@ textarea {
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--text-color);
+}
+
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.dark-mode-toggle::after {
+    content: attr(data-mode);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+}
+
+.dark-mode-toggle:hover::after {
+    opacity: 1;
+    width: auto;
+}
+
+.dark-mode-toggle:hover {
+    background-color: var(--surface-color);
 }
 
 /* Footer */
@@ -364,7 +425,7 @@ textarea {
         top: 100%;
         left: 0;
         right: 0;
-        background-color: white;
+        background-color: var(--background-color);
         box-shadow: var(--shadow-md);
         padding: 1rem;
     }

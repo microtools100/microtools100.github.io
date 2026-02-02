@@ -111,7 +111,8 @@ class MicroToolsUtils {
                 position: fixed;
                 top: 1rem;
                 right: 1rem;
-                background: white;
+                background: var(--surface-color);
+                color: var(--text-color);
                 border-left: 4px solid var(--primary-color);
                 padding: 1rem;
                 border-radius: var(--radius-md);

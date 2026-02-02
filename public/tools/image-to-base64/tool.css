@@ -67,7 +67,7 @@
 
 /* Input and Output Sections */
 .tool-section {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
@@ -148,7 +148,7 @@
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     resize: none;
-    background: white;
+    background: var(--surface-color);
     color: var(--text-color);
     border: none;
     min-height: 300px;
@@ -248,7 +248,7 @@
     padding: 0.625rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    background: white;
+    background: var(--surface-color);
     color: var(--text-color);
     font-size: 0.9rem;
     font-weight: 600;
@@ -295,7 +295,7 @@
 
 .related-tools,
 .tool-tips {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;

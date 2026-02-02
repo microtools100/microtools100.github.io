@@ -4,7 +4,7 @@
 .tool-options {
     padding: 1.25rem;
     margin-bottom: 1.5rem;
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
 }
@@ -32,7 +32,7 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     font-size: 0.95rem;
-    background: white;
+    background: var(--surface-color);
     color: var(--text-color);
 }
 
@@ -142,7 +142,7 @@
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     resize: none;
-    background: white;
+    background: var(--surface-color);
     color: var(--text-color);
     border: none;
 }
@@ -160,7 +160,7 @@
 
 .related-tools,
 .tool-tips {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
@@ -224,7 +224,7 @@
 
 /* Tool Section */
 .tool-section {
-    background: white;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.5rem;
@@ -311,7 +311,7 @@
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
     resize: vertical;
-    background: white;
+    background: var(--surface-color);
     color: var(--text-color);
     min-height: 200px;
 }

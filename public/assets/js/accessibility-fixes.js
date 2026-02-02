@@ -377,37 +377,71 @@ class AccessibilityFixes {
         const style = document.createElement('style');
         style.textContent = `
             /* Ensure sufficient contrast for important elements */
+            /* Using CSS variables to support dark mode */
             .site-header {
-                background-color: #ffffff;
-                color: #1a1a1a;
+                background-color: var(--background-color);
+                color: var(--text-color);
+            }
+            
+            html.dark-mode .site-header {
+                background-color: var(--background-color);
+                color: var(--text-color);
             }
             
             .hero {
-                background-color: #f5f5f5;
-                color: #1a1a1a;
+                background-color: var(--surface-color);
+                color: var(--text-color);
+            }
+            
+            html.dark-mode .hero {
+                background-color: var(--surface-color);
+                color: var(--text-color);
             }
             
             button, .btn {
-                background-color: #4A90E2;
+                background-color: var(--primary-color);
                 color: #ffffff;
-                border: 1px solid #4A90E2;
+                border: 1px solid var(--primary-color);
+            }
+            
+            html.dark-mode button, html.dark-mode .btn {
+                background-color: var(--primary-color);
+                color: #ffffff;
+                border: 1px solid var(--primary-color);
             }
             
             button:hover, .btn:hover {
-                background-color: #357ABD;
+                background-color: var(--primary-dark);
+                color: #ffffff;
+            }
+            
+            html.dark-mode button:hover, html.dark-mode .btn:hover {
+                background-color: var(--primary-dark);
                 color: #ffffff;
             }
             
             a {
-                color: #0066cc;
+                color: var(--primary-color);
+            }
+            
+            html.dark-mode a {
+                color: var(--primary-color);
             }
             
             a:visited {
-                color: #004399;
+                color: var(--primary-dark);
+            }
+            
+            html.dark-mode a:visited {
+                color: var(--primary-dark);
             }
             
             a:active {
-                color: #ff0000;
+                color: var(--error-color);
+            }
+            
+            html.dark-mode a:active {
+                color: var(--error-color);
             }
         `;
         document.head.appendChild(style);
