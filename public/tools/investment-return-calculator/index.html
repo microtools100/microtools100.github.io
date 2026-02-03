@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Return Calculator | Micro Tools</title>
+    <meta name="description" content="Calculate investment growth with compound interest">
+    <meta property="og:title" content="Investment Return Calculator - Micro Tools">
+    <meta property="og:description" content="Calculate your investment returns with compound interest">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is this free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free with no hidden charges."}}]}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo"><h1>Micro Tools</h1><span class="tagline">Free Online Utilities</span></a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Investment Return Calculator</h1>
+                <p class="tool-description">Calculate investment growth with compound interest</p>
+            </header>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <div class="tool-options">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn" id="clearBtn">Clear</button>
+                                <button class="action-btn" id="downloadBtn">Download</button>
+                            </div>
+                        </div>
+                        <div id="errorMsg" class="error-msg"></div>
+                        <div class="tool-content-columns">
+                            <div class="tool-section">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="input-group">
+                                        <label>Initial Investment ($)</label>
+                                        <input type="number" id="initialInvestment" placeholder="10000" value="10000" min="0" step="0.01">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Monthly Contribution ($)</label>
+                                        <input type="number" id="monthlyContribution" placeholder="500" value="500" min="0" step="0.01">
+                                    </div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="input-group">
+                                        <label>Annual Return (%)</label>
+                                        <input type="number" id="annualReturn" placeholder="8" value="8" min="0" step="0.01">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Years</label>
+                                        <input type="number" id="yearsInvest" placeholder="20" value="20" min="0" step="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tool-section quick-summary">
+                                <h3>Quick Summary</h3>
+                                <div class="summary-item">
+                                    <span class="summary-label">Final Amount</span>
+                                    <span class="summary-value" id="finalAmountQuick">$0.00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Total Invested</span>
+                                    <span class="summary-value" id="totalInvestedQuick">$0.00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Total Gains</span>
+                                    <span class="summary-value" id="totalGainsQuick">$0.00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">ROI</span>
+                                    <span class="summary-value" id="roiQuick">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="resultsSection" class="results-section" style="display: none;">
+                            <div class="results-insights" id="resultsInsights" style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(37, 99, 235, 0.05); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                                <h4>Investment Analysis</h4>
+                                <p id="insightsText" style="margin: 0; color: var(--text-light); font-size: 0.95rem;"></p>
+                            </div>
+                            <div id="yearlyTableContainer" class="schedule-section">
+                                <h3>Yearly Summary (First 12 Months + Yearly Summaries)</h3>
+                                <div id="yearlyTable" class="schedule-table"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-container" style="margin-top: 2rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>🎯 How Calculations Work</h3>
+                                <p><strong>Compound Interest:</strong> Your money earns returns not just on the initial investment, but also on previously earned gains. This "snowball effect" accelerates growth over time.</p>
+                                <p><strong>Formula:</strong> Future Value = Initial × (1 + rate/12)^months + Monthly Contribution × [((1 + rate/12)^months - 1) / (rate/12)]</p>
+                                <p><strong>The Power of Time:</strong> Investing for 20 years instead of 10 can nearly triple your returns due to compound interest.</p>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>💡 How to Use Results</h3>
+                                <ul>
+                                    <li><strong>Total Gains:</strong> Shows pure profit from investments—this is what compound interest earned for you</li>
+                                    <li><strong>ROI (Return on Investment):</strong> Percentage gain relative to money invested. 100% ROI means you doubled your money</li>
+                                    <li><strong>Final Amount:</strong> Use this for retirement, major purchases, or financial goals</li>
+                                    <li><strong>Yearly Breakdown:</strong> See how your investment compounds month-by-month and year-by-year</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>🔄 Decision Scenarios</h3>
+                                <ul>
+                                    <li><strong>Increase Monthly Contributions:</strong> Even $100 more per month dramatically increases final amount over 20+ years</li>
+                                    <li><strong>Start Earlier:</strong> Adding just 5 years can increase returns by 40-60% due to compound interest</li>
+                                    <li><strong>Higher Return Rate:</strong> Aggressive investments (8-10%) vs conservative (4-5%) make huge difference over time, but carry more risk</li>
+                                    <li><strong>Longer Timeline:</strong> Time is your most powerful tool—invest for as long as possible</li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>📊 Real-World Examples</h3>
+                                <ul>
+                                    <li><strong>Example 1:</strong> $10,000 initial + $500/month at 8% for 20 years = ~$296,000 (gains: $146,000)</li>
+                                    <li><strong>Example 2:</strong> Same inputs but only 10 years = ~$93,000 (gains: $43,000). See the time impact?</li>
+                                    <li><strong>Example 3:</strong> $10,000 initial + $100/month at 6% for 20 years = ~$84,000. Small contributions still add up!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-section" style="background: none; border: none; padding: 0; margin-top: 2rem;">
+                            <h3>⚠️ Important Notes</h3>
+                            <ul>
+                                <li>Historical stock market averages: 10% (risky), balanced funds: 6-7%, bonds: 3-5%</li>
+                                <li>This calculator does NOT account for taxes or fees—actual returns may be lower</li>
+                                <li>Past performance doesn't guarantee future results; markets fluctuate</li>
+                                <li>Start investing as early as possible to maximize compound growth</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>📋 Understanding Your Inputs</h3>
+                        <ul>
+                            <li><strong>Initial Investment:</strong> Lump sum you're starting with today</li>
+                            <li><strong>Monthly Contribution:</strong> Regular amount you add each month</li>
+                            <li><strong>Annual Return:</strong> Expected yearly investment growth rate (%), typically 5-10% for stocks, 1-3% for bonds</li>
+                            <li><strong>Years:</strong> How long you'll invest before needing the money</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>💡 Quick Tips</h3>
+                        <ul>
+                            <li>Start as early as possible—time is your biggest advantage</li>
+                            <li>Consistent contributions matter more than timing the market</li>
+                            <li>Adjust return expectations based on risk tolerance</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>

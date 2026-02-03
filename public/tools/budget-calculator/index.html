@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Calculator - Free Personal Finance Tool | Micro Tools</title>
+    <meta name="description" content="Plan and manage your budget. Track income, expenses, and savings goals easily.">
+    <meta property="og:title" content="Budget Calculator - Micro Tools">
+    <meta property="og:description" content="Plan and manage your budget with our free calculator">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is this budget calculator free?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool is completely free with no hidden charges or premium features required."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my financial data private?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all calculations happen in your browser. Your data is never sent to any server or stored anywhere."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Budget Calculator</h1>
+                <p class="tool-description">Plan and manage your budget. Track income, expenses, and see your savings potential.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <div id="errorMsg" class="error-msg"></div>
+
+                        <div class="tool-content-columns">
+                            <div class="tool-section">
+                                <div class="input-group">
+                                    <label>Monthly Income</label>
+                                    <input type="number" id="monthlyIncome" placeholder="Enter monthly income" min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Housing Expense</label>
+                                    <input type="number" id="housing" placeholder="Rent/Mortgage" min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Food & Groceries</label>
+                                    <input type="number" id="food" placeholder="Food expenses" min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Transportation</label>
+                                    <input type="number" id="transportation" placeholder="Gas, public transit, etc." min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Utilities</label>
+                                    <input type="number" id="utilities" placeholder="Electric, water, internet" min="0" step="0.01">
+                                </div>
+                            </div>
+
+                            <div class="tool-section">
+                                <div class="input-group">
+                                    <label>Insurance</label>
+                                    <input type="number" id="insurance" placeholder="Health, car, home" min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Entertainment</label>
+                                    <input type="number" id="entertainment" placeholder="Movies, hobbies, dining out" min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Subscriptions</label>
+                                    <input type="number" id="subscriptions" placeholder="Streaming services, apps" min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Personal Care</label>
+                                    <input type="number" id="personalCare" placeholder="Haircuts, gym, etc." min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Other Expenses</label>
+                                    <input type="number" id="otherExpenses" placeholder="Miscellaneous" min="0" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tool-options" style="margin-top: 1rem;">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="calculateBtn">
+                                    <span>Calculate</span>
+                                    <span>💰</span>
+                                </button>
+                                <button class="action-btn" id="clearBtn">Clear</button>
+                                <button class="action-btn" id="downloadBtn">Download</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-section">
+                            <h3>Budget Summary</h3>
+                            <div class="budget-summary">
+                                <div class="summary-row">
+                                    <span class="summary-label">Monthly Income:</span>
+                                    <span class="summary-value" id="summaryIncome">$0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Total Expenses:</span>
+                                    <span class="summary-value" id="summaryExpenses">$0.00</span>
+                                </div>
+                                <div class="summary-row highlight">
+                                    <span class="summary-label">Monthly Savings:</span>
+                                    <span class="summary-value" id="summarySavings">$0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Savings Rate:</span>
+                                    <span class="summary-value" id="summarySavingsRate">0%</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Annual Savings:</span>
+                                    <span class="summary-value" id="summaryAnnual">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tool-section">
+                            <h3>Expense Breakdown</h3>
+                            <div id="expenseChart" class="expense-chart"></div>
+                        </div>
+
+                        <div class="tool-container" style="margin-top: 2rem;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                    <h3>🎯 The 50/30/20 Rule</h3>
+                                    <p><strong>Gold Standard Budget Breakdown:</strong></p>
+                                    <ul>
+                                        <li><strong>50%</strong> → Needs (housing, food, utilities, insurance)</li>
+                                        <li><strong>30%</strong> → Wants (entertainment, dining out, hobbies)</li>
+                                        <li><strong>20%</strong> → Savings (emergency fund, retirement, investing)</li>
+                                    </ul>
+                                    <p>This tool helps you see if you're aligned with healthy spending patterns.</p>
+                                </div>
+
+                                <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                    <h3>💡 Key Metrics to Watch</h3>
+                                    <ul>
+                                        <li><strong>Savings Rate:</strong> (Monthly Savings ÷ Income) × 100. Target: 20%+</li>
+                                        <li><strong>Housing Ratio:</strong> (Housing ÷ Income). Should be ≤30% of income</li>
+                                        <li><strong>Debt-to-Income:</strong> All debt payments should be &lt;35% of gross income</li>
+                                        <li><strong>Emergency Fund:</strong> 3-6 months of expenses in savings</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                                <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                    <h3>🔍 How to Use Results</h3>
+                                    <ul>
+                                        <li><strong>Positive Remaining:</strong> You have surplus to save, invest, or spend extra</li>
+                                        <li><strong>Negative Remaining:</strong> You're spending more than earning—cut expenses or increase income</li>
+                                        <li><strong>Category Breakdown:</strong> See which categories consume most of budget</li>
+                                        <li><strong>Monthly vs Yearly:</strong> Multiply results by 12 to see annual impact</li>
+                                    </ul>
+                                </div>
+
+                                <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                    <h3>💰 Ways to Improve Savings</h3>
+                                    <ul>
+                                        <li><strong>Cut Subscriptions:</strong> Review all subscriptions; cancel unused ones (often $10-50/month each)</li>
+                                        <li><strong>Reduce Food Costs:</strong> Meal prep, shop sales, buy generic brands (10-20% savings)</li>
+                                        <li><strong>Lower Utilities:</strong> Use less energy; shop insurance rates (5-15% savings)</li>
+                                        <li><strong>Transportation:</strong> Public transit, carpool, or combine trips (10-30% savings)</li>
+                                        <li><strong>Entertainment:</strong> Free activities, discounts, streaming rotation (20-50% savings)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0; margin-top: 2rem;">
+                                <h3>⚠️ Budget Reality Checks</h3>
+                                <ul>
+                                    <li>Most people underestimate spending—track for 2-3 months for true picture</li>
+                                    <li>Include periodic expenses (car insurance every 6 months, annual subscriptions) as monthly average</li>
+                                    <li>Build emergency fund BEFORE aggressively saving/investing</li>
+                                    <li>Review budget monthly and adjust as income/expenses change</li>
+                                    <li>Small cuts accumulate: $20/month = $240/year, $50/month = $600/year</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>📋 Understanding Your Budget</h3>
+                        <ul>
+                            <li><strong>Monthly Income:</strong> Total take-home pay (after taxes)</li>
+                            <li><strong>Fixed Expenses:</strong> Housing, insurance, utilities (same each month)</li>
+                            <li><strong>Variable Expenses:</strong> Food, entertainment, transportation (can change)</li>
+                            <li><strong>Remaining:</strong> Income minus all expenses = what you can save/invest</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>💡 Quick Tips</h3>
+                        <ul>
+                            <li>Aim for 50/30/20 income split (needs/wants/savings)</li>
+                            <li>Track all spending to see where money actually goes</li>
+                            <li>Prioritize building an emergency fund first</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>

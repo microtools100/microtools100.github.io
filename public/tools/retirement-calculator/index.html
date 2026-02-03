@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retirement Calculator | Micro Tools</title>
+    <meta name="description" content="Plan your retirement and calculate retirement readiness">
+    <meta property="og:title" content="Retirement Calculator - Micro Tools">
+    <meta property="og:description" content="Calculate how much you need for retirement">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is this free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free with no hidden charges."}}]}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo"><h1>Micro Tools</h1><span class="tagline">Free Online Utilities</span></a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Retirement Calculator</h1>
+                <p class="tool-description">Plan your retirement and calculate retirement readiness</p>
+            </header>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <div class="tool-options">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn" id="clearBtn">Clear</button>
+                                <button class="action-btn" id="downloadBtn">Download</button>
+                            </div>
+                        </div>
+                        <div id="errorMsg" class="error-msg"></div>
+                        <div class="tool-content-columns">
+                            <div class="tool-section">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="input-group">
+                                        <label>Current Age</label>
+                                        <input type="number" id="currentAge" placeholder="35" value="35" min="0" step="1">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Retirement Age</label>
+                                        <input type="number" id="retirementAge" placeholder="65" value="65" min="0" step="1">
+                                    </div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="input-group">
+                                        <label>Life Expectancy</label>
+                                        <input type="number" id="lifeExpectancy" placeholder="85" value="85" min="0" step="1">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Current Savings ($)</label>
+                                        <input type="number" id="currentSavings" placeholder="100000" value="100000" min="0" step="0.01">
+                                    </div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="input-group">
+                                        <label>Annual Savings ($)</label>
+                                        <input type="number" id="annualSavings" placeholder="15000" value="15000" min="0" step="0.01">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Expected Return (%)</label>
+                                        <input type="number" id="expectedReturn" placeholder="7" value="7" min="0" step="0.01">
+                                    </div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="input-group">
+                                        <label>Annual Expenses ($)</label>
+                                        <input type="number" id="annualExpenses" placeholder="50000" value="50000" min="0" step="0.01">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Inflation Rate (%)</label>
+                                        <input type="number" id="inflationRate" placeholder="3" value="3" min="0" step="0.01">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tool-section quick-summary">
+                                <h3>Quick Summary</h3>
+                                <div class="summary-item">
+                                    <span class="summary-label">Years to Retire</span>
+                                    <span class="summary-value" id="yearsToRetireQuick">0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Retirement Savings</span>
+                                    <span class="summary-value" id="retirementSavingsQuick">$0.00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Yearly Budget</span>
+                                    <span class="summary-value" id="yearlyBudgetQuick">$0.00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Retirement Status</span>
+                                    <span class="summary-value" id="retirementStatusQuick">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="resultsContainer" class="results-section" style="display: none;">
+                            <h3>Detailed Analysis</h3>
+                            <div class="results-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                                <div class="result-card">
+                                    <label>Savings at Retirement</label>
+                                    <div class="result-value" id="savingsAtRetirement">$0.00</div>
+                                </div>
+                                <div class="result-card">
+                                    <label>Years in Retirement</label>
+                                    <div class="result-value" id="yearsInRetirement">0</div>
+                                </div>
+                                <div class="result-card">
+                                    <label>Money Runs Out At</label>
+                                    <div class="result-value" id="moneyRunsOutAge">N/A</div>
+                                </div>
+                                <div class="result-card">
+                                    <label>Shortfall / Surplus</label>
+                                    <div class="result-value" id="shortfallSurplus">$0.00</div>
+                                </div>
+                            </div>
+
+                            <div class="status-card" id="statusCard" style="margin-bottom: 1.5rem;">
+                                <div class="status-content">
+                                    <h4 id="statusTitle">Status</h4>
+                                    <p id="statusMessage">Enter your information to see your retirement readiness analysis.</p>
+                                </div>
+                            </div>
+
+                            <div class="results-insights" id="resultsInsights" style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(37, 99, 235, 0.05); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                                <h4>What This Means for You</h4>
+                                <p id="insightsText" style="margin: 0; color: var(--text-light); font-size: 0.95rem;"></p>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                    <h4>🎯 How Calculations Work</h4>
+                                    <p style="font-size: 0.9rem; line-height: 1.6;"><strong>Savings at Retirement:</strong> Your current savings grow with compound interest, plus your annual contributions keep adding to the pot. Formula: Future Value = Initial × (1 + rate)^years + Annual Contribution × growth factor.</p>
+                                    <p style="font-size: 0.9rem; line-height: 1.6; margin: 0;"><strong>Retirement Longevity:</strong> Checks if your retirement savings last until your life expectancy while withdrawing for living expenses that increase with inflation.</p>
+                                </div>
+
+                                <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                    <h4>💡 How to Use Results</h4>
+                                    <ul style="font-size: 0.9rem; line-height: 1.6; margin: 0; padding-left: 1.2rem;">
+                                        <li><strong>On Track:</strong> Your savings will support retirement—consider saving more for buffer.</li>
+                                        <li><strong>Shortfall Alert:</strong> Increase annual savings, raise retirement age, or reduce expenses.</li>
+                                        <li><strong>Impact Analysis:</strong> Try adjusting one variable to see how it affects your status.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>📋 Understanding Your Inputs</h3>
+                        <ul>
+                            <li><strong>Current Age:</strong> Your age today</li>
+                            <li><strong>Retirement Age:</strong> When you plan to retire (e.g., 65)</li>
+                            <li><strong>Life Expectancy:</strong> How long you expect to live</li>
+                            <li><strong>Current Savings:</strong> Total retirement savings you have now</li>
+                            <li><strong>Annual Savings:</strong> How much you save per year</li>
+                            <li><strong>Expected Return:</strong> Average investment return (6-8% is typical)</li>
+                            <li><strong>Annual Expenses:</strong> How much you need to spend yearly in retirement</li>
+                            <li><strong>Inflation Rate:</strong> Expected annual inflation (2-3% is typical)</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>🔄 Decision Scenarios</h3>
+                        <ul>
+                            <li><strong>Work Longer:</strong> Increase "Retirement Age" to add more saving years and fewer spending years</li>
+                            <li><strong>Save More:</strong> Boost "Annual Savings" to accumulate more capital</li>
+                            <li><strong>Spend Less:</strong> Reduce "Annual Expenses" to make your nest egg stretch further</li>
+                            <li><strong>Better Returns:</strong> Increase "Expected Return" through aggressive investing (higher risk)</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>⚠️ Important Notes</h3>
+                        <ul>
+                            <li>This is an estimate; actual results vary based on market conditions</li>
+                            <li>Consider healthcare costs—they often increase with age</li>
+                            <li>Social Security/pensions should be added to your annual expenses (as income buffer)</li>
+                            <li>Review annually and adjust as circumstances change</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>

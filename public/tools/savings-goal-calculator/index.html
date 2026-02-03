@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Goal Calculator | Micro Tools</title>
+    <meta name="description" content="Calculate savings timeline and reach your financial goals">
+    <meta property="og:title" content="Savings Goal Calculator - Micro Tools">
+    <meta property="og:description" content="Plan your savings and reach your financial goals">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is this free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free with no hidden charges."}}]}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo"><h1>Micro Tools</h1><span class="tagline">Free Online Utilities</span></a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Savings Goal Calculator</h1>
+                <p class="tool-description">Calculate savings timeline and reach your financial goals</p>
+            </header>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <div id="errorMsg" class="error-msg"></div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="input-group">
+                                <label>Current Savings ($)</label>
+                                <input type="number" id="currentSavings" placeholder="10000" min="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>Target Amount ($)</label>
+                                <input type="number" id="targetAmount" placeholder="50000" min="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>Monthly Contribution ($)</label>
+                                <input type="number" id="monthlyContribution" placeholder="500" min="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>Annual Return (%)</label>
+                                <input type="number" id="annualReturn" placeholder="5" min="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="tool-options" style="margin-bottom: 1.5rem;">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="calculateBtn"><span>Calculate</span><span>🎯</span></button>
+                                <button class="action-btn" id="clearBtn">Clear</button>
+                                <button class="action-btn" id="downloadBtn">Download</button>
+                            </div>
+                        </div>
+
+                        <div id="timelineContainer" style="display: none; margin-top: 1.5rem;">
+                            <h3>Growth Timeline</h3>
+                            <div id="timelineChart" style="width: 100%; height: 250px;"></div>
+                        </div>
+
+                        <div id="resultsSection" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-bg-secondary); border-radius: 8px;">
+                            <h2 style="margin: 0 0 1rem 0; font-size: 1.2rem;">Results</h2>
+                            <div class="results-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; margin: 0;">
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-primary);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Months to Goal</div>
+                                    <div class="result-value" id="monthsResult" style="font-size: 1rem;">0</div>
+                                </div>
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-primary);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Years to Goal</div>
+                                    <div class="result-value" id="yearsResult" style="font-size: 1rem;">0</div>
+                                </div>
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-success);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Total Amount</div>
+                                    <div class="result-value" id="totalAmountResult" style="font-size: 1rem;">$0.00</div>
+                                </div>
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-info);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Total Contributed</div>
+                                    <div class="result-value" id="totalContributedResult" style="font-size: 1rem;">$0.00</div>
+                                </div>
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-warning);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Total Interest</div>
+                                    <div class="result-value" id="totalInterestResult" style="font-size: 1rem;">$0.00</div>
+                                </div>
+                            </div>
+                            <div id="breakdownContainer" style="margin-top: 1.5rem;">
+                                <h3 style="margin: 0 0 0.75rem 0; font-size: 1rem;">Breakdown</h3>
+                                <div id="breakdownChart" style="width: 100%; height: 250px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-container" style="margin-top: 2rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>🎯 How Calculations Work</h3>
+                                <p><strong>Time to Goal:</strong> Calculates months needed to reach target with regular contributions and interest earnings.</p>
+                                <p><strong>Interest Boost:</strong> Shows free money earned from compound interest—even high-yield savings accounts add up!</p>
+                                <p style="margin: 0;"><strong>Formula:</strong> Future Value = Current Savings × (1 + rate)^periods + Monthly Contribution × [((1 + rate)^periods - 1) / rate]</p>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>💡 How to Use Results</h3>
+                                <ul style="margin: 0;">
+                                    <li><strong>Timeline:</strong> Realistic goal date helps with planning and accountability</li>
+                                    <li><strong>Total Contributed vs Final Amount:</strong> See how interest accelerates wealth building</li>
+                                    <li><strong>Impact of Different Rates:</strong> High-yield (4-5%) beats regular savings (0.01%) by hundreds annually</li>
+                                    <li><strong>What-If Scenarios:</strong> Increase monthly contributions to reach goal sooner</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>💪 Strategies to Reach Goals Faster</h3>
+                                <ul style="margin: 0;">
+                                    <li><strong>Higher Interest Account:</strong> Move to high-yield (4-5%) and earn more with zero extra effort</li>
+                                    <li><strong>Increase Monthly Amount:</strong> Even $50 more/month compounds significantly</li>
+                                    <li><strong>Automate Savings:</strong> Auto-transfer on payday = "pay yourself first"</li>
+                                    <li><strong>Cut One Expense:</strong> Skip $5 coffee daily = $150/month = $5,400/year</li>
+                                    <li><strong>Use Windfalls:</strong> Tax refunds, bonuses, gifts accelerate goals</li>
+                                    <li><strong>Side Income:</strong> Freelance gigs turbocharge timeline</li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>📊 Real-World Examples</h3>
+                                <ul style="margin: 0;">
+                                    <li><strong>Emergency Fund:</strong> $10,000 at $300/month = 33 months. With 4% interest = even faster!</li>
+                                    <li><strong>Vacation Fund:</strong> $5,000 at $100/month = 50 months. Increase to $200/month = 25 months (2x faster)</li>
+                                    <li><strong>Down Payment:</strong> $50,000 at $500/month = 100 months. With $750/month = 67 months (33 fewer months!)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-section" style="background: none; border: none; padding: 0; margin-top: 2rem;">
+                            <h3>⚠️ Important Notes</h3>
+                            <ul>
+                                <li>Current savings accounts: ~4.5-5% APY (high-yield). Regular savings: ~0.01%</li>
+                                <li>Investments can earn 6-10% but with volatility; use only if long-term (5+ years)</li>
+                                <li>Keep emergency fund in liquid savings (not investments)</li>
+                                <li>Once goal is reached, redirect savings to next goal or retirement</li>
+                                <li>Consistency matters more than one-time contributions (compound interest needs time)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>📋 Understanding Your Inputs</h3>
+                        <ul>
+                            <li><strong>Savings Goal:</strong> Target amount you want to reach</li>
+                            <li><strong>Current Savings:</strong> What you have saved so far</li>
+                            <li><strong>Monthly Contribution:</strong> How much you'll save each month</li>
+                            <li><strong>Annual Return:</strong> Interest rate (4-5% for savings, higher for investments)</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>⚡ Quick Tips</h3>
+                        <ul>
+                            <li>Use high-yield savings accounts (4.5-5%)</li>
+                            <li>Automate your monthly transfers</li>
+                            <li>Increase contributions to reach goals faster</li>
+                            <li>Track your progress monthly</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>

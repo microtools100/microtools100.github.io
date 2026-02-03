@@ -7,13 +7,62 @@
     <meta name="description" content="Test regular expressions with real-time matching. Test patterns against text and see all matches highlighted.">
     <meta property="og:title" content="Regex Tester - Micro Tools">
     <meta property="og:description" content="Test regular expressions online">
-    <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tool-standard.css">
-    <link rel="stylesheet" href="tool.css">
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="stylesheet" href="tool.css?v=202602021216">
     <!-- Dark Mode Script - Must load early -->
     <script src="/assets/js/dark-mode.js"></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
-</head>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is a regular expression?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A regular expression (regex) is a pattern used to match, find, and replace text. It's powerful for text processing and validation."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I write a regex pattern?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Regex syntax includes character classes [abc], quantifiers *, +, ?, |, anchors ^$, and groups (). Learn patterns for your specific use case."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I test my regex?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool lets you enter a regex pattern and test text to see matches in real-time."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What flags are supported?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Common flags include g (global), i (case-insensitive), m (multiline), and s (dotall), depending on the regex engine."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Where can I use regex?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Regular expressions are used in most programming languages, text editors, and search tools for pattern matching and validation."
+            }
+        }
+    ]
+}
+    </script>
+    </head>
 <body>
     <header class="site-header">
         <div class="container">
@@ -23,15 +72,7 @@
                     <span class="tagline">Free Online Utilities</span>
                 </a>
                 <nav class="main-nav">
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/#text-tools">Text Tools</a></li>
-                        <li><a href="/#data-tools">Data Tools</a></li>
-                        <li><a href="/#developer-tools">Developer Tools</a></li>
-                        <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#utilities">Utilities</a></li>
-                        <li><a href="/#games">Games & Generators</a></li>
-                    </ul>
+                    <ul></ul>
                 </nav>
                 <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -225,44 +266,8 @@
 
     <footer class="site-footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Micro Tools</h4>
-                    <p>Free online utilities for developers, writers, and content creators.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Categories</h4>
-                    <ul>
-                        <li><a href="/#text-tools">Text Tools</a></li>
-                        <li><a href="/#data-tools">Data Tools</a></li>
-                        <li><a href="/#developer-tools">Developer Tools</a></li>
-                        <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#utilities">Utilities</a></li>
-                        <li><a href="/#games">Games & Generators</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
-                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
-                        <li><a href="/tools/password-generator/">Password Generator</a></li>
-                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="/privacy.html">Privacy Policy</a></li>
-                        <li><a href="/terms.html">Terms of Service</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
-                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
-            </div>
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
         </div>
     </footer>
 
@@ -271,6 +276,10 @@
     <script src="/assets/js/accessibility-fixes.js"></script>
     <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
     <script src="tool.js"></script>
 </body>
 </html>

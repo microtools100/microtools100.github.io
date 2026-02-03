@@ -12,9 +12,9 @@
     
     <title>Word & Character Counter - Free Online Tool | Micro Tools</title>
     
-    <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tool-standard.css">
-    <link rel="stylesheet" href="tool.css">
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="stylesheet" href="tool.css?v=202602021216">
     <!-- Dark Mode Script - Must load early -->
     <script src="/assets/js/dark-mode.js"></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
@@ -37,6 +37,54 @@
         }
     }
     </script>
+        <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What statistics does this tool provide?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This tool counts words, characters, sentences, paragraphs, lines, and provides additional reading time estimates."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How is word count calculated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Words are counted based on spaces and punctuation separating them. Each space-separated group of characters is typically counted as one word."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does it count spaces as characters?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The character count shows both total characters and characters without spaces for flexibility depending on your needs."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can it analyze very long texts?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool can analyze texts of any length, making it suitable for analyzing articles, essays, books, and large documents."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is the reading time estimate accurate?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Reading time is estimated based on average reading speed (typically 200-250 words per minute), but actual reading time varies by individual."
+            }
+        }
+    ]
+}
+    </script>
 </head>
 <body>
     <header class="site-header">
@@ -47,15 +95,7 @@
                     <span class="tagline">Free Online Utilities</span>
                 </a>
                                 <nav class="main-nav">
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/#text-tools">Text Tools</a></li>
-                        <li><a href="/#data-tools">Data Tools</a></li>
-                        <li><a href="/#developer-tools">Developer Tools</a></li>
-                        <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#utilities">Utilities</a></li>
-                        <li><a href="/#games">Games & Generators</a></li>
-                    </ul>
+                    <ul></ul>
                 </nav>
                 <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
                 <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
@@ -220,44 +260,8 @@
         </div>
     </main>    <footer class="site-footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Micro Tools</h4>
-                    <p>Free online utilities for developers, writers, and content creators.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Categories</h4>
-                    <ul>
-                        <li><a href="/#text-tools">Text Tools</a></li>
-                        <li><a href="/#data-tools">Data Tools</a></li>
-                        <li><a href="/#developer-tools">Developer Tools</a></li>
-                        <li><a href="/#security-tools">Security Tools</a></li>
-                        <li><a href="/#utilities">Utilities</a></li>
-                        <li><a href="/#games">Games & Generators</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
-                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
-                        <li><a href="/tools/password-generator/">Password Generator</a></li>
-                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="/privacy.html">Privacy Policy</a></li>
-                        <li><a href="/terms.html">Terms of Service</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
-                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
-            </div>
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
         </div>
     </footer>
 
@@ -266,6 +270,10 @@
     <script src="/assets/js/accessibility-fixes.js"></script>
     <script src="/assets/js/performance-monitor.js"></script>
     <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
     <script src="tool.js"></script>
 </body>
 </html>

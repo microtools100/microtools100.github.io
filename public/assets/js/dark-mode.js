@@ -20,7 +20,6 @@ class DarkModeToggle {
         // Apply dark mode immediately before page renders
         if (shouldBeDark) {
             document.documentElement.classList.add(this.darkModeClass);
-            console.log('[Dark Mode] Applied dark mode class on init');
         }
         
         // Setup toggle button after DOM is ready
@@ -45,7 +44,6 @@ class DarkModeToggle {
     setupToggleButton() {
         const toggle = document.getElementById('darkModeToggle');
         if (!toggle) {
-            console.warn('[Dark Mode] Toggle button not found');
             return;
         }
 
@@ -59,13 +57,10 @@ class DarkModeToggle {
             e.stopPropagation();
             this.toggle();
         });
-
-        console.log('[Dark Mode] Toggle button initialized. Current mode:', isDarkMode ? 'dark' : 'light');
     }
 
     toggle() {
         const isDarkMode = document.documentElement.classList.contains(this.darkModeClass);
-        console.log('[Dark Mode] Toggle called. Current mode:', isDarkMode ? 'dark' : 'light');
         
         if (isDarkMode) {
             this.disableDarkMode();
@@ -75,8 +70,6 @@ class DarkModeToggle {
     }
 
     enableDarkMode() {
-        console.log('[Dark Mode] Enabling dark mode...');
-        
         // Update localStorage
         localStorage.setItem(this.storageKey, 'true');
         
@@ -85,15 +78,9 @@ class DarkModeToggle {
         
         // Update button
         this.updateToggleButton(true);
-        
-        console.log('[Dark Mode] Dark mode enabled');
-        console.log('[Dark Mode] classList:', document.documentElement.className);
-        console.log('[Dark Mode] localStorage:', localStorage.getItem(this.storageKey));
     }
 
     disableDarkMode() {
-        console.log('[Dark Mode] Disabling dark mode...');
-        
         // Update localStorage
         localStorage.setItem(this.storageKey, 'false');
         
@@ -102,10 +89,6 @@ class DarkModeToggle {
         
         // Update button
         this.updateToggleButton(false);
-        
-        console.log('[Dark Mode] Dark mode disabled');
-        console.log('[Dark Mode] classList:', document.documentElement.className);
-        console.log('[Dark Mode] localStorage:', localStorage.getItem(this.storageKey));
     }
 
     updateToggleButton(isDarkMode) {
@@ -119,12 +102,9 @@ class DarkModeToggle {
             toggle.setAttribute('aria-label', `Switch to ${label} mode`);
             toggle.setAttribute('title', `Switch to ${label} mode`);
             toggle.setAttribute('data-mode', label.toLowerCase());
-            
-            console.log('[Dark Mode] Button updated to:', isDarkMode ? '☀️' : '🌙', `(${label} mode)`);
         }
     }
 }
 
 // Initialize immediately - don't wait for DOMContentLoaded
 const darkModeToggle = new DarkModeToggle();
-window.darkModeToggle = darkModeToggle; // Make it globally accessible for debugging

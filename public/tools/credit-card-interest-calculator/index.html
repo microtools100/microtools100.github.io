@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Interest Calculator | Micro Tools</title>
+    <meta name="description" content="Calculate credit card payoff timeline and total interest">
+    <meta property="og:title" content="Credit Card Interest Calculator - Micro Tools">
+    <meta property="og:description" content="Calculate how long to pay off your credit card and total interest">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is this free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free with no hidden charges."}}]}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo"><h1>Micro Tools</h1><span class="tagline">Free Online Utilities</span></a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Credit Card Interest Calculator</h1>
+                <p class="tool-description">Calculate credit card payoff timeline and total interest</p>
+            </header>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <div class="tool-options">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn" id="clearBtn">Clear</button>
+                                <button class="action-btn" id="downloadBtn">Download</button>
+                            </div>
+                        </div>
+                        <div id="errorMsg" class="error-msg"></div>
+                        <div class="tool-content-columns">
+                            <div class="tool-section">
+                                <div class="input-group">
+                                    <label>Current Balance ($)</label>
+                                    <input type="number" id="currentBalance" placeholder="5000" value="5000" min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>APR (%)</label>
+                                    <input type="number" id="apr" placeholder="18.99" value="18.99" min="0" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Monthly Payment ($)</label>
+                                    <input type="number" id="monthlyPayment" placeholder="200" value="200" min="0" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="resultsSection" class="results-section" style="display: none;">
+                            <div class="results-grid">
+                                <div class="result-card">
+                                    <div class="result-label">Months to Payoff</div>
+                                    <div class="result-value" id="monthsResult">0</div>
+                                </div>
+                                <div class="result-card">
+                                    <div class="result-label">Years to Payoff</div>
+                                    <div class="result-value" id="yearsResult">0</div>
+                                </div>
+                                <div class="result-card">
+                                    <div class="result-label">Total Interest</div>
+                                    <div class="result-value" id="totalInterestResult">$0.00</div>
+                                </div>
+                                <div class="result-card">
+                                    <div class="result-label">Total Paid</div>
+                                    <div class="result-value" id="totalPaidResult">$0.00</div>
+                                </div>
+                            </div>
+                            <div id="scheduleContainer" class="schedule-section">
+                                <h3>Payment Schedule (First 12 Months + Yearly Summaries)</h3>
+                                <div id="paymentSchedule" class="schedule-table"></div>
+                            </div>
+                            <div id="chartContainer" class="chart-section">
+                                <h3>Balance Over Time</h3>
+                                <div id="balanceChart" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-container" style="margin-top: 2rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>🎯 How Calculations Work</h3>
+                                <p><strong>Daily Interest:</strong> Credit cards charge daily interest calculated as (Balance × APR / 365). This means interest compounds daily, not monthly.</p>
+                                <p><strong>Payment Split:</strong> Your payment is applied first to interest charges, then remaining amount reduces the principal.</p>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>💡 How to Use Results</h3>
+                                <ul>
+                                    <li><strong>Payoff Timeline:</strong> How long until debt-free at current payment level</li>
+                                    <li><strong>Total Interest:</strong> Total wasted on interest (not building wealth like investments)</li>
+                                    <li><strong>Total Paid:</strong> Original balance + all interest = what you actually pay</li>
+                                    <li><strong>Schedule:</strong> See how balance decreases and interest portion shrinks over time</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>⚡ The Power of Paying More</h3>
+                                <ul>
+                                    <li><strong>$5,000 at 18.99% APR:</strong><br>$200/month = 34 months + $2,716 interest<br>$300/month = 19 months + $1,379 interest (saves $1,337!)<br>$500/month = 11 months + $671 interest (saves $2,045!)</li>
+                                    <li>Even small increases ($50 more/month) slash years off and save thousands</li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>🔄 Smart Strategies</h3>
+                                <ul>
+                                    <li><strong>Pay More Than Minimum:</strong> Minimum payment is designed to maximize interest—always pay more if possible</li>
+                                    <li><strong>Balance Transfer:</strong> Move to 0% APR card if available to save interest</li>
+                                    <li><strong>Debt Payoff Plans:</strong> Avalanche (highest interest first) or Snowball (smallest balance first) methods</li>
+                                    <li><strong>Negotiate APR:</strong> Call issuer if you have good history; many will lower your rate</li>
+                                    <li><strong>Avoid New Charges:</strong> Stop charging while paying off to avoid extending payoff timeline</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-section" style="background: none; border: none; padding: 0; margin-top: 2rem;">
+                            <h3>⚠️ Reality Check</h3>
+                            <ul>
+                                <li>Credit card interest is the most expensive debt—prioritize paying this off</li>
+                                <li>High APR makes even small balances expensive ($100 at 20% APR = $20/year in interest alone)</li>
+                                <li>Minimum payments keep you in debt for years; increase payment when possible</li>
+                                <li>Pay bill IN FULL if possible to avoid interest entirely</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>📋 Understanding Your Inputs</h3>
+                        <ul>
+                            <li><strong>Current Balance:</strong> Total amount you owe on the card</li>
+                            <li><strong>APR:</strong> Annual Percentage Rate (typical range: 15-25%)</li>
+                            <li><strong>Monthly Payment:</strong> Amount you plan to pay each month</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>💡 Quick Tips</h3>
+                        <ul>
+                            <li>Pay as much as possible above the minimum</li>
+                            <li>Every extra dollar in payment saves you interest</li>
+                            <li>Focus on eliminating credit card debt first (highest interest)</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>

@@ -28,7 +28,6 @@ class AccessibilityAudit {
      * Run comprehensive accessibility audit
      */
     runAudit() {
-        console.log('🔍 Starting WCAG 2.1 AA Accessibility Audit...');
         
         this.auditPageStructure();
         this.auditHeadingHierarchy();
@@ -536,7 +535,7 @@ class AccessibilityAudit {
                     fix.target.removeAttribute(fix.value);
                 }
             } catch (e) {
-                console.error('Error applying accessibility fix:', e);
+                // Fix failed - continue with next fix
             }
         });
     }
@@ -563,15 +562,6 @@ class AccessibilityAudit {
 
         // Store report
         window.accessibilityReport = report;
-
-        // Log summary
-        console.log('📊 Accessibility Audit Report:');
-        console.log(`   Compliance Score: ${report.complianceScore}/100`);
-        console.log(`   WCAG Level: ${this.wcagLevel}`);
-        console.log(`   Errors: ${errors}`);
-        console.log(`   Warnings: ${warnings}`);
-        console.log(`   Fixes Applied: ${this.fixes.length}`);
-        console.log(`   View full report: window.accessibilityReport`);
 
         return report;
     }

@@ -1,0 +1,320 @@
+/* Hub Page Specific Styles */
+.hub-main {
+    flex: 1;
+}
+
+/* Hub Hero Section */
+.hub-hero {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    text-align: center;
+    transition: var(--transition);
+    margin-bottom: 2rem;
+}
+
+html.dark-mode .hub-hero {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0f2844 100%);
+}
+
+.hub-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.hub-hero .hub-category-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hub-hero p {
+    font-size: 1.125rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb {
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb ul {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.breadcrumb li {
+    font-size: 0.875rem;
+}
+
+.breadcrumb a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '/';
+    margin-left: 0.5rem;
+    color: var(--text-light);
+}
+
+/* Hub Category Info */
+.hub-info {
+    background: var(--surface-color);
+    border-left: 4px solid var(--primary-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+}
+
+.hub-info p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* Hub Tools Grid */
+.hub-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.hub-tool-card {
+    display: block;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.hub-tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.hub-tool-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: #ffffff;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.hub-tool-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.hub-tool-card p {
+    color: var(--text-light);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: auto;
+    padding-bottom: 1rem;
+}
+
+.hub-tool-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hub-tool-keywords {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.hub-tool-free {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--success-color);
+}
+
+/* Hub Navigation Sidebar */
+.hub-sidebar {
+    margin-bottom: 2rem;
+}
+
+.hub-sidebar h3 {
+    margin-bottom: 1rem;
+}
+
+.hub-categories-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.hub-categories-list a {
+    padding: 1rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-color);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.hub-categories-list a:hover,
+.hub-categories-list a.active {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+}
+
+/* Hub Related Tools */
+.hub-related {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    margin-top: 3rem;
+}
+
+.hub-related h2 {
+    margin-bottom: 1.5rem;
+}
+
+.hub-related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.hub-related-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--background-color);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+.hub-related-item:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.hub-related-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.hub-related-info h4 {
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+}
+
+.hub-related-info p {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+/* Empty State */
+.hub-empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: var(--surface-color);
+    border-radius: var(--radius-lg);
+}
+
+.hub-empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hub-empty-state h3 {
+    margin-bottom: 0.5rem;
+}
+
+.hub-empty-state p {
+    color: var(--text-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hub-hero {
+        padding: 2rem 0;
+    }
+    
+    .hub-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hub-hero .hub-category-icon {
+        font-size: 2.5rem;
+    }
+    
+    .hub-tools-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .hub-categories-list {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .hub-related-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .breadcrumb ul {
+        gap: 0.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hub-hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hub-hero .hub-category-icon {
+        font-size: 2rem;
+    }
+    
+    .hub-hero p {
+        font-size: 1rem;
+    }
+    
+    .hub-info {
+        padding: 1rem;
+    }
+    
+    .breadcrumb ul {
+        gap: 0.25rem;
+    }
+    
+    .breadcrumb li {
+        font-size: 0.75rem;
+    }
+}

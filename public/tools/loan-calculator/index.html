@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Calculator - Free Mortgage & Loan Payment Calculator | Micro Tools</title>
+    <meta name="description" content="Calculate loan payments and amortization schedules. Compare different loan terms and rates.">
+    <meta property="og:title" content="Loan Calculator - Micro Tools">
+    <meta property="og:description" content="Calculate loan payments with detailed amortization schedule">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How accurate is this loan calculator?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This calculator uses standard amortization formulas. Results are accurate for typical loans."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data private?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all calculations happen in your browser. Your data is never stored or sent anywhere."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Loan Calculator</h1>
+                <p class="tool-description">Calculate loan payments, total interest, and view amortization schedule.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <div class="tool-options">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn" id="clearBtn">Clear</button>
+                                <button class="action-btn" id="downloadBtn">Download</button>
+                            </div>
+                        </div>
+
+                        <div id="errorMsg" class="error-msg"></div>
+
+                        <div class="tool-content-columns">
+                            <div class="tool-section">
+                                <div class="input-group">
+                                    <label>Loan Amount ($)</label>
+                                    <input type="number" id="loanAmount" placeholder="Principal amount" min="0" step="1000">
+                                </div>
+                                <div class="input-group">
+                                    <label>Annual Interest Rate (%)</label>
+                                    <input type="number" id="interestRate" placeholder="e.g., 5.5" min="0" max="100" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label>Loan Term (Years)</label>
+                                    <input type="number" id="loanTerm" placeholder="e.g., 30" min="1" max="50" step="1">
+                                </div>
+                            </div>
+
+                            <div class="tool-section">
+                                <div class="calculation-display">
+                                    <div class="calc-item">
+                                        <span class="calc-label">Monthly Payment</span>
+                                        <span class="calc-value" id="monthlyPayment">$0.00</span>
+                                    </div>
+                                    <div class="calc-item">
+                                        <span class="calc-label">Total Interest</span>
+                                        <span class="calc-value" id="totalInterest">$0.00</span>
+                                    </div>
+                                    <div class="calc-item">
+                                        <span class="calc-label">Total Amount Paid</span>
+                                        <span class="calc-value" id="totalPaid">$0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-container">
+                        <div class="tool-section">
+                            <h3>Amortization Schedule (First 12 Months + Yearly Summaries)</h3>
+                            <div class="table-container">
+                                <table id="amortTable" class="amort-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Payment #</th>
+                                            <th>Payment</th>
+                                            <th>Principal</th>
+                                            <th>Interest</th>
+                                            <th>Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="amortBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-container" style="margin-top: 2rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>🎯 How Calculations Work</h3>
+                                <p><strong>Monthly Payment:</strong> Using amortization formula to split payment between principal and interest. Early payments are mostly interest; later payments are mostly principal.</p>
+                                <p><strong>Total Interest:</strong> Sum of all interest paid over loan life. Longer terms = more interest, even if monthly payment is lower.</p>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>💡 How to Use Results</h3>
+                                <ul>
+                                    <li><strong>Monthly Payment:</strong> Budget this amount each month</li>
+                                    <li><strong>Total Interest:</strong> Shows true cost of borrowing. A $300,000 house might cost $500,000+ with interest</li>
+                                    <li><strong>Amortization Schedule:</strong> See how each payment splits between principal and interest</li>
+                                    <li><strong>Early Payoff:</strong> See how much interest you'd save by paying extra</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>🔄 Decision Scenarios</h3>
+                                <ul>
+                                    <li><strong>Shorter vs Longer Term:</strong> 15-year mortgage saves ~60% interest vs 30-year, but monthly payment is higher</li>
+                                    <li><strong>Extra Principal Payments:</strong> Pay $100 extra/month to save years and thousands in interest</li>
+                                    <li><strong>Lower Rate Impact:</strong> 0.5% rate difference = $10,000s saved on large loans</li>
+                                    <li><strong>Refinancing:</strong> If rates drop, refinancing can save substantial interest</li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>📊 Typical Interest Rates (2024)</h3>
+                                <ul>
+                                    <li>30-year mortgage: 6-7%</li>
+                                    <li>15-year mortgage: 5.5-6.5%</li>
+                                    <li>Auto loan (new): 5-8%</li>
+                                    <li>Auto loan (used): 6-10%</li>
+                                    <li>Personal loan: 8-36%</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-section" style="background: none; border: none; padding: 0; margin-top: 2rem;">
+                            <h3>⚠️ Important Notes</h3>
+                            <ul>
+                                <li>This does NOT include property taxes, homeowners insurance, HOA fees (mortgage)</li>
+                                <li>This does NOT include car insurance, maintenance (auto loans)</li>
+                                <li>Real rate depends on credit score—higher scores get better rates</li>
+                                <li>Consider making extra payments to reduce total interest paid</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>📋 Understanding Your Inputs</h3>
+                        <ul>
+                            <li><strong>Loan Amount:</strong> Total principal borrowed</li>
+                            <li><strong>Annual Interest Rate:</strong> Yearly rate (%), varies by credit score and loan type</li>
+                            <li><strong>Loan Term:</strong> Years to repay (e.g., 30 for mortgages, 5 for cars)</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>💡 Quick Tips</h3>
+                        <ul>
+                            <li>Shorter terms save interest but require higher monthly payments</li>
+                            <li>Even small rate differences compound to big savings</li>
+                            <li>Extra principal payments dramatically reduce total interest</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>

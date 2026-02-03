@@ -509,6 +509,102 @@ const TOOLS_REGISTRY = {
       keywords: 'case converter, camelCase, snake_case, PascalCase, kebab-case, string formatter',
       priority: 0.84,
       status: 'complete'
+    },
+    {
+      id: 'budget-calculator',
+      name: 'Budget Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Plan and manage your budget. Track income, expenses, and savings goals.',
+      icon: '💰',
+      url: '/tools/budget-calculator/',
+      keywords: 'budget calculator, budget planner, expense tracker, income planner',
+      priority: 0.87,
+      status: 'complete'
+    },
+    {
+      id: 'savings-goal-calculator',
+      name: 'Savings Goal Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Calculate time to reach savings goals. See impact of regular deposits.',
+      icon: '🎯',
+      url: '/tools/savings-goal-calculator/',
+      keywords: 'savings goal, savings calculator, financial planning',
+      priority: 0.86,
+      status: 'complete'
+    },
+    {
+      id: 'loan-calculator',
+      name: 'Loan Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Calculate loan payments and amortization schedules. Compare different terms.',
+      icon: '🏦',
+      url: '/tools/loan-calculator/',
+      keywords: 'loan calculator, mortgage calculator, payment calculator',
+      priority: 0.89,
+      status: 'complete'
+    },
+    {
+      id: 'debt-payoff-calculator',
+      name: 'Debt Payoff Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Compare debt payoff strategies. Snowball vs avalanche methods.',
+      icon: '📉',
+      url: '/tools/debt-payoff-calculator/',
+      keywords: 'debt payoff, debt calculator, snowball method, debt strategy',
+      priority: 0.85,
+      status: 'complete'
+    },
+    {
+      id: 'credit-card-interest-calculator',
+      name: 'Credit Card Interest Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Calculate credit card interest and payment impact. See total payoff time.',
+      icon: '💳',
+      url: '/tools/credit-card-interest-calculator/',
+      keywords: 'credit card interest, interest calculator, apr calculator',
+      priority: 0.84,
+      status: 'complete'
+    },
+    {
+      id: 'investment-return-calculator',
+      name: 'Investment Return Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Calculate compound interest and investment returns. Project future growth.',
+      icon: '📈',
+      url: '/tools/investment-return-calculator/',
+      keywords: 'investment calculator, compound interest, return calculator, roi',
+      priority: 0.88,
+      status: 'complete'
+    },
+    {
+      id: 'retirement-calculator',
+      name: 'Retirement Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Plan for retirement. Calculate required savings and withdrawal strategies.',
+      icon: '🏖️',
+      url: '/tools/retirement-calculator/',
+      keywords: 'retirement calculator, retirement planning, pension calculator',
+      priority: 0.89,
+      status: 'complete'
+    },
+    {
+      id: 'dollar-cost-averaging-calculator',
+      name: 'Dollar-Cost Averaging Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Analyze dollar-cost averaging investment strategy. See long-term benefits.',
+      icon: '📊',
+      url: '/tools/dollar-cost-averaging-calculator/',
+      keywords: 'dollar cost averaging, dca, investment strategy, periodic investment',
+      priority: 0.83,
+      status: 'complete'
     }
   ],
 
@@ -590,6 +686,12 @@ const TOOLS_REGISTRY = {
       name: 'Time Tools',
       description: 'Time tracking and countdown tools',
       icon: '⏱️'
+    },
+    {
+      id: 'finance-tools',
+      name: 'Finance & Investment Tools',
+      description: 'Calculate and plan personal finances, investments, and debt payoff',
+      icon: '💰'
     }
   ]
 };

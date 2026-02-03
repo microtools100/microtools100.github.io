@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debt Payoff Calculator | Micro Tools</title>
+    <meta name="description" content="Compare debt payoff strategies">
+    <meta property="og:title" content="Debt Payoff Calculator - Micro Tools">
+    <meta property="og:description" content="Compare snowball vs avalanche methods">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <link rel="stylesheet" href="tool.css">
+    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is this free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free with no hidden charges."}}]}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo"><h1>Micro Tools</h1><span class="tagline">Free Online Utilities</span></a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Debt Payoff Calculator</h1>
+                <p class="tool-description">Compare Snowball vs Avalanche strategies to find the best way to eliminate your debt and save money on interest</p>
+            </header>
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <div id="errorMsg" class="error-msg"></div>
+                        <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr auto; gap: 1rem; margin-bottom: 1rem; align-items: flex-end;">
+                            <div class="input-group">
+                                <label>Debt Name</label>
+                                <input type="text" id="debtName" placeholder="e.g., Credit Card, Student Loan" />
+                            </div>
+                            <div class="input-group">
+                                <label>Amount ($)</label>
+                                <input type="number" id="debtAmount" placeholder="50000" min="0" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>Interest Rate (%)</label>
+                                <input type="number" id="debtRate" placeholder="18.99" min="0" step="0.01">
+                            </div>
+                            <button class="action-btn" id="addDebtBtn">Add Debt</button>
+                        </div>
+
+                        <div id="debtsListContainer" class="debts-list"></div>
+                        <div style="display: grid; grid-template-columns: auto 1fr; gap: 2rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-border); align-items: flex-end;">
+                            <div class="input-group" style="min-width: 250px;">
+                                <label>Total Monthly Payment ($)</label>
+                                <input type="number" id="monthlyPayment" placeholder="1000" min="0" step="0.01">
+                            </div>
+                        </div>
+                        <div class="tool-options" style="margin-top: 1rem;">
+                            <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="calculateBtn"><span>Calculate</span><span>📊</span></button>
+                                <button class="action-btn" id="clearBtn">Clear</button>
+                                <button class="action-btn" id="downloadBtn">Download</button>
+                            </div>
+                        </div>
+
+                        <div id="resultsSection" class="results-section" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-bg-secondary); border-radius: 8px;">
+                            <h2 style="margin: 0 0 0.75rem 0; font-size: 1.2rem;">Payoff Comparison</h2>
+                            <div class="results-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin: 0;">
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-primary);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Total Debt</div>
+                                    <div class="result-value" id="totalDebtValue" style="font-size: 1.1rem;">$0.00</div>
+                                </div>
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-primary);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Months to Payoff</div>
+                                    <div class="result-value" id="monthsToPayoffValue" style="font-size: 1.1rem;">0 months</div>
+                                </div>
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-success);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Snowball Interest</div>
+                                    <div class="result-value" id="totalInterestSnowballValue" style="font-size: 1.1rem;">$0.00</div>
+                                </div>
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-info);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Avalanche Interest</div>
+                                    <div class="result-value" id="totalInterestAvalancheValue" style="font-size: 1.1rem;">$0.00</div>
+                                </div>
+                                <div class="result-card" style="padding: 0.6rem; background: var(--color-bg); border-radius: 6px; border-left: 4px solid var(--color-warning);">
+                                    <div class="result-label" style="font-size: 0.75rem; margin-bottom: 0.3rem;">Interest Saved</div>
+                                    <div class="result-value" id="interestSavingsValue" style="font-size: 1.1rem;">$0.00</div>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+                                <div>
+                                    <h3 style="margin: 0 0 0.3rem 0; font-size: 1rem;">Snowball Method 📊</h3>
+                                    <p style="font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 0.5rem;">Pay smallest debts first</p>
+                                    <div style="background: var(--color-bg); border-radius: 6px; padding: 0.6rem; margin-bottom: 0.5rem;">
+                                        <div style="margin-bottom: 0.3rem;">
+                                            <div style="font-size: 0.7rem; color: var(--color-text-secondary);">Timeframe</div>
+                                            <div style="font-size: 1rem; font-weight: 700;" id="snowballMonthsValue">-</div>
+                                        </div>
+                                        <div style="margin-bottom: 0.3rem;">
+                                            <div style="font-size: 0.7rem; color: var(--color-text-secondary);">Total Interest</div>
+                                            <div style="font-size: 0.95rem; font-weight: 700; color: var(--color-warning);" id="snowballInterestValue">-</div>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 0.7rem; color: var(--color-text-secondary);">Total Paid</div>
+                                            <div style="font-size: 0.95rem; font-weight: 700;" id="snowballTotalValue">-</div>
+                                        </div>
+                                    </div>
+                                    <div id="snowballSchedule" style="max-height: 300px; overflow-y: auto;"></div>
+                                </div>
+                                <div>
+                                    <h3 style="margin: 0 0 0.3rem 0; font-size: 1rem;">Avalanche Method 💰</h3>
+                                    <p style="font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 0.5rem;">Pay highest interest first</p>
+                                    <div style="background: var(--color-bg); border-radius: 6px; padding: 0.6rem; margin-bottom: 0.5rem; border: 2px solid var(--color-success);">
+                                        <div style="margin-bottom: 0.3rem;">
+                                            <div style="font-size: 0.7rem; color: var(--color-text-secondary);">Timeframe</div>
+                                            <div style="font-size: 1rem; font-weight: 700;" id="avalancheMonthsValue">-</div>
+                                        </div>
+                                        <div style="margin-bottom: 0.3rem;">
+                                            <div style="font-size: 0.7rem; color: var(--color-text-secondary);">Total Interest</div>
+                                            <div style="font-size: 0.95rem; font-weight: 700; color: var(--color-success);" id="avalancheInterestValue">-</div>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 0.7rem; color: var(--color-text-secondary);">Total Paid</div>
+                                            <div style="font-size: 0.95rem; font-weight: 700;" id="avalancheTotalValue">-</div>
+                                        </div>
+                                    </div>
+                                    <div id="avalancheSchedule" style="max-height: 300px; overflow-y: auto;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-container" style="margin-top: 2rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>🎯 Snowball vs Avalanche</h3>
+                                <p style="font-size: 0.9rem; margin-bottom: 0.8rem;"><strong>📊 Snowball Method:</strong> Pay smallest debt first while making minimum payments on others. When smallest is paid, roll that payment to next smallest. Provides quick psychological wins and motivation.</p>
+                                <p style="font-size: 0.9rem; margin: 0;"><strong>💰 Avalanche Method:</strong> Pay highest interest rate debt first. Mathematically saves the most money on interest. Best if you're motivated purely by numbers.</p>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>💡 How to Use Results</h3>
+                                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem; line-height: 1.6;">
+                                    <li><strong>Interest Saved:</strong> Difference between Snowball and Avalanche = how much more Avalanche saves</li>
+                                    <li><strong>Timeline:</strong> Both methods pay off all debt at same time, but with different interest costs</li>
+                                    <li><strong>Why It Matters:</strong> Avalanche can save thousands in interest, but Snowball keeps you motivated</li>
+                                    <li><strong>Hybrid Approach:</strong> Use Avalanche for high-rate debt, Snowball for quick wins on smaller debts</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>💪 Smart Strategies</h3>
+                                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem; line-height: 1.6;">
+                                    <li><strong>Increase Payments:</strong> Even $100 extra/month cuts years off payoff time and saves thousands</li>
+                                    <li><strong>Balance Transfer:</strong> Move high-interest CC debt to 0% APR card if available</li>
+                                    <li><strong>Negotiate Rates:</strong> Call creditors; good payment history often gets rate reductions</li>
+                                    <li><strong>Consolidation Loan:</strong> Lower rate personal loan can replace multiple high-rate debts</li>
+                                    <li><strong>Cut Expenses:</strong> Redirect savings from budget cuts to debt payoff</li>
+                                    <li><strong>Extra Income:</strong> Side gigs, bonuses, or tax refunds all accelerate debt payoff</li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-section" style="background: none; border: none; padding: 0;">
+                                <h3>📊 Real-World Impact</h3>
+                                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Example:</strong> Three debts totaling $15,000</p>
+                                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.85rem; line-height: 1.4;">
+                                    <li>CC: $5,000 @ 22% APR</li>
+                                    <li>Car: $6,000 @ 6% APR</li>
+                                    <li>Personal: $4,000 @ 12% APR</li>
+                                    <li>Monthly Payment: $500</li>
+                                </ul>
+                                <p style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Result:</strong> Avalanche saves ~$2,000+ in interest vs Snowball</p>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-section" style="background: none; border: none; padding: 0; margin-top: 2rem;">
+                            <h3>⚠️ Critical Notes</h3>
+                            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>This assumes you make the full payment every month consistently</li>
+                                <li>No new charges added during payoff period (avoid extending debt)</li>
+                                <li>Rates shown assume fixed interest (not promotional/temporary rates)</li>
+                                <li>Once debt-free, redirect payments to emergency fund and investing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="sidebar-section">
+                        <h3>📋 Understanding Your Inputs</h3>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem; line-height: 1.6;">
+                            <li><strong>Debt Name:</strong> Label for reference (Credit Card, Car Loan, Student Loan, etc.)</li>
+                            <li><strong>Amount:</strong> Total balance owed on that debt</li>
+                            <li><strong>Interest Rate:</strong> Annual percentage rate (APR)</li>
+                            <li><strong>Monthly Payment:</strong> Total amount to allocate across all debts</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>💡 Quick Tips</h3>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem; line-height: 1.6;">
+                            <li>Avalanche saves more money mathematically</li>
+                            <li>Snowball provides psychological motivation faster</li>
+                            <li>Any extra payment accelerates debt elimination</li>
+                        </ul>
+                    </div>
+                </aside>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/accessibility-audit.js"></script>
+    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script src="/assets/js/performance-monitor.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/tools-registry.js"></script>
+    <script src="/assets/js/tool-hub-links.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
