@@ -9,6 +9,7 @@
     <meta property="og:description" content="Format and beautify SQL queries online">
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/line-numbers.css?v=202602031400">
     <link rel="stylesheet" href="tool.css?v=202602021216">
     <!-- Dark Mode Script - Must load early -->
     <script src="/assets/js/dark-mode.js"></script>
@@ -114,6 +115,7 @@
                                     <div class="input-area">
                                         <textarea 
                                             id="sqlInput" 
+                                            data-line-numbers
                                             placeholder='SELECT id, name FROM users WHERE age > 18 ORDER BY name'
                                             rows="12"
                                             spellcheck="false"
@@ -132,6 +134,7 @@
                                     <div class="output-area">
                                         <textarea 
                                             id="sqlOutput" 
+                                            data-line-numbers
                                             placeholder='SELECT&#10;  id,&#10;  name&#10;FROM users&#10;WHERE age > 18&#10;ORDER BY name'
                                             rows="12"
                                             readonly
@@ -252,6 +255,7 @@
     <script src="/assets/js/footer-injector.js"></script>
     <script src="/tools-registry.js"></script>
     <script src="/assets/js/tool-hub-links.js"></script>
+    <script src="/assets/js/line-numbers.js?v=202602031400"></script>
     <script src="tool.js"></script>
 </body>
 </html>

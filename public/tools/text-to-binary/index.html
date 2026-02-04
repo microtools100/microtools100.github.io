@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
     <link rel="stylesheet" href="tool.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/line-numbers.css?v=202602031400">
     <!-- Dark Mode Script - Must load early -->
     <script src="/assets/js/dark-mode.js"></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
@@ -152,6 +153,7 @@
                                     <div class="input-area">
                                         <textarea 
                                             id="textInput" 
+                                            data-line-numbers
                                             placeholder="Type or paste your text here...&#10;&#10;Example:&#10;Hello World"
                                             rows="12"
                                             autofocus
@@ -171,6 +173,7 @@
                                     <div class="output-area">
                                         <textarea 
                                             id="binaryOutput" 
+                                            data-line-numbers
                                             placeholder="Binary representation will appear here...&#10;&#10;Example output:&#10;01001000 01100101 01101100 01101100 01101111"
                                             rows="12"
                                             readonly
@@ -296,6 +299,7 @@
     <script src="/tools-registry.js"></script>
     <script src="/assets/js/tool-hub-links.js"></script>
     <script src="tool.js"></script>
+    <script src="/assets/js/line-numbers.js?v=202602031400"></script>
 
     <footer class="site-footer">
         <div class="container">

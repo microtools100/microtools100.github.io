@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
     <link rel="stylesheet" href="tool.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/line-numbers.css?v=202602031400">
     <!-- Dark Mode Script - Must load early -->
     <script src="/assets/js/dark-mode.js"></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
@@ -137,13 +138,13 @@
                                 <div class="input-column">
                                     <div class="input-area">
                                         <label for="inputText">Input Text</label>
-                                        <textarea id="inputText" placeholder="Paste your text here&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Apple&#10;Cherry&#10;Banana"></textarea>
+                                        <textarea id="inputText" data-line-numbers placeholder="Paste your text here&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Apple&#10;Cherry&#10;Banana"></textarea>
                                     </div>
                                 </div>
                                 <div class="output-column">
                                     <div class="input-area">
                                         <label for="outputText">Output Text</label>
-                                        <textarea id="outputText" readonly placeholder="Result will appear here..."></textarea>
+                                        <textarea id="outputText" data-line-numbers readonly placeholder="Result will appear here..."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -257,6 +258,7 @@
     <script src="/tools-registry.js"></script>
     <script src="/assets/js/tool-hub-links.js"></script>
     <script src="tool.js"></script>
+    <script src="/assets/js/line-numbers.js?v=202602031400"></script>
 </body>
 </html>
 

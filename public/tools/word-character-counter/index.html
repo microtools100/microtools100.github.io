@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
     <link rel="stylesheet" href="tool.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/line-numbers.css?v=202602031400">
     <!-- Dark Mode Script - Must load early -->
     <script src="/assets/js/dark-mode.js"></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
@@ -131,7 +132,7 @@
                         <section class="tool-section">
                             <div class="input-area">
                                 <label for="textInput">Enter Your Text</label>
-                                <textarea id="textInput" placeholder="Paste your text here&#10;&#10;Example:&#10;The quick brown fox jumps over the lazy dog. This is a sample sentence.&#10;&#10;Statistics will update automatically..."></textarea>
+                                <textarea id="textInput" data-line-numbers placeholder="Paste your text here&#10;&#10;Example:&#10;The quick brown fox jumps over the lazy dog. This is a sample sentence.&#10;&#10;Statistics will update automatically..."></textarea>
                             </div>
                         </section>
 
@@ -275,6 +276,7 @@
     <script src="/tools-registry.js"></script>
     <script src="/assets/js/tool-hub-links.js"></script>
     <script src="tool.js"></script>
+    <script src="/assets/js/line-numbers.js?v=202602031400"></script>
 </body>
 </html>
 

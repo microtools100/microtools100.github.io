@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
     <link rel="stylesheet" href="tool.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/line-numbers.css?v=202602031400">
     <!-- Dark Mode Script - Must load early -->
     <script src="/assets/js/dark-mode.js"></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
@@ -106,6 +107,7 @@
                                     <div class="input-area">
                                         <textarea 
                                             id="xmlInput" 
+                                            data-line-numbers
                                             placeholder='&lt;?xml version="1.0"?&gt;&#10;&lt;root&gt;&#10;  &lt;item&gt;value&lt;/item&gt;&#10;&lt;/root&gt;&#10;&#10;Example:&#10;&lt;?xml version="1.0"?&gt;&#10;&lt;user&gt;&#10;  &lt;name&gt;John&lt;/name&gt;&#10;  &lt;age&gt;30&lt;/age&gt;&#10;&lt;/user&gt;'
                                             rows="12"
                                             spellcheck="false"
@@ -124,6 +126,7 @@
                                     <div class="output-area">
                                         <textarea 
                                             id="jsonOutput" 
+                                            data-line-numbers
                                             placeholder='Result will appear here...&#10;&#10;Example output:&#10;{&#10;  "user": {&#10;    "name": "John",&#10;    "age": "30"&#10;  }&#10;}'
                                             rows="12"
                                             readonly
@@ -226,6 +229,7 @@
     <script src="/tools-registry.js"></script>
     <script src="/assets/js/tool-hub-links.js"></script>
     <script src="tool.js"></script>
+    <script src="/assets/js/line-numbers.js?v=202602031400"></script>
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content"></div>

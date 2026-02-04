@@ -44,32 +44,30 @@
                             </div>
                         </div>
                         <div id="errorMsg" class="error-msg"></div>
-                        <div class="tool-content-columns">
-                            <div class="tool-section">
-                                <div class="input-group">
-                                    <label>Investment Frequency</label>
-                                    <select id="investmentFrequency" style="padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 6px;">
-                                        <option value="monthly">Monthly</option>
-                                        <option value="quarterly">Quarterly</option>
-                                        <option value="yearly">Yearly</option>
-                                    </select>
-                                </div>
-                                <div class="input-group">
-                                    <label>Amount Per Period ($)</label>
-                                    <input type="number" id="amountPerPeriod" placeholder="1000" min="0" step="0.01">
-                                </div>
-                                <div class="input-group">
-                                    <label>Years</label>
-                                    <input type="number" id="investmentYears" placeholder="10" min="1" step="1">
-                                </div>
-                                <div class="input-group">
-                                    <label>Expected Annual Return (%)</label>
-                                    <input type="number" id="expectedReturn" placeholder="8" min="0" step="0.01">
-                                </div>
-                                <div class="input-group">
-                                    <label>Volatility (%)</label>
-                                    <input type="number" id="volatility" placeholder="15" min="0" step="0.01">
-                                </div>
+                        <div class="options-grid">
+                            <div class="option-item">
+                                <label>Investment Frequency</label>
+                                <select id="investmentFrequency" style="padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 6px;">
+                                    <option value="monthly">Monthly</option>
+                                    <option value="quarterly">Quarterly</option>
+                                    <option value="yearly">Yearly</option>
+                                </select>
+                            </div>
+                            <div class="option-item">
+                                <label>Amount Per Period ($)</label>
+                                <input type="number" id="amountPerPeriod" placeholder="1000" min="0" step="0.01">
+                            </div>
+                            <div class="option-item">
+                                <label>Years</label>
+                                <input type="number" id="investmentYears" placeholder="10" min="1" step="1">
+                            </div>
+                            <div class="option-item">
+                                <label>Expected Annual Return (%)</label>
+                                <input type="number" id="expectedReturn" placeholder="8" min="0" step="0.01">
+                            </div>
+                            <div class="option-item">
+                                <label>Volatility (%)</label>
+                                <input type="number" id="volatility" placeholder="15" min="0" step="0.01">
                             </div>
                         </div>
 
@@ -110,16 +108,84 @@
                                 <div id="valueChart" style="width: 100%; height: 300px;"></div>
                             </div>
                         </div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📈</span>
+                                    <h5>Market Risk Management</h5>
+                                    <p>Reduce the impact of market volatility by spreading investments over time</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">💰</span>
+                                    <h5>Disciplined Investing</h5>
+                                    <p>Maintain consistent investment strategy regardless of market conditions</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📊</span>
+                                    <h5>Compare Strategies</h5>
+                                    <p>Analyze DCA vs lump sum approaches for your investment goals</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🎓</span>
+                                    <h5>Learn Investing</h5>
+                                    <p>Understand how dollar-cost averaging impacts long-term wealth building</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Select your investment frequency (monthly, quarterly, or yearly)</li>
+                                <li>Enter the amount you plan to invest each period</li>
+                                <li>Specify the investment duration in years</li>
+                                <li>Input your expected annual return percentage</li>
+                                <li>Enter the volatility to simulate market fluctuations</li>
+                                <li>Click "Calculate" to see DCA vs lump sum comparison</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <ul>
+                                <li><strong>Dollar-Cost Averaging (DCA):</strong> Invests a fixed amount at regular intervals regardless of market price</li>
+                                <li><strong>Lump Sum Strategy:</strong> Invests the total amount at the start</li>
+                                <li><strong>Share Calculation:</strong> More shares bought when price is low, fewer when price is high</li>
+                                <li><strong>Average Cost Per Share:</strong> Typically lower than market average with DCA</li>
+                                <li><strong>Volatility Simulation:</strong> Models realistic market fluctuations to show strategy performance</li>
+                                <li><strong>Purchase History:</strong> Visual representation of how shares are accumulated over time</li>
+                                <li><strong>Strategy Comparison:</strong> Shows the pros and cons of both approaches</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
                 <aside class="tool-sidebar">
-                    <div class="sidebar-section">
-                        <h3>How It Works</h3>
-                        <p>Enter the required information and click Calculate to see your results instantly.</p>
+                    <div class="related-tools">
+                        <h4>Investment Tools</h4>
+                        <ul>
+                            <li><a href="/tools/investment-return-calculator/">Investment Return Calculator</a></li>
+                            <li><a href="/tools/savings-goal-calculator/">Savings Goal Calculator</a></li>
+                            <li><a href="/tools/retirement-calculator/">Retirement Calculator</a></li>
+                            <li><a href="/tools/budget-calculator/">Budget Calculator</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-section">
-                        <h3>Features</h3>
-                        <ul><li>Instant calculations</li><li>No signup required</li><li>Completely private</li></ul>
+
+                    <div class="tool-tips">
+                        <h4>DCA Strategy Tips</h4>
+                        <ul>
+                            <li>DCA works best in volatile markets with long time horizons</li>
+                            <li>Regular investing removes emotion from market timing</li>
+                            <li>Lower average cost per share is a key advantage of DCA</li>
+                            <li>Set up automatic investments for disciplined execution</li>
+                            <li>Consider both strategies based on your risk tolerance</li>
+                            <li>Higher volatility often makes DCA more attractive</li>
+                        </ul>
                     </div>
                 </aside>
             </div>

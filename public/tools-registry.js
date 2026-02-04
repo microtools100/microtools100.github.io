@@ -605,6 +605,18 @@ const TOOLS_REGISTRY = {
       keywords: 'dollar cost averaging, dca, investment strategy, periodic investment',
       priority: 0.83,
       status: 'complete'
+    },
+    {
+      id: 'daily-balance-interest-calculator',
+      name: 'Daily Balance Interest Calculator',
+      category: 'finance-tools',
+      categoryLabel: 'Finance & Investment Tools',
+      description: 'Calculate monthly interest earnings on your savings account with daily balance tracking. Understand how deposits throughout the month affect your interest.',
+      icon: '💵',
+      url: '/tools/daily-balance-interest-calculator/',
+      keywords: 'daily balance, savings interest, monthly interest, savings calculator, financial planning, interest calculator',
+      priority: 0.85,
+      status: 'complete'
     }
   ],
 

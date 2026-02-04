@@ -209,7 +209,7 @@
     <priority>0.85</priority>
   </url>
 
-  <!-- FINANCE & INVESTMENT TOOLS (8 tools) -->
+  <!-- FINANCE & INVESTMENT TOOLS (9 tools) -->
   <url>
     <loc>https://micro-tools-43a.pages.dev/tools/budget-calculator/</loc>
     <lastmod>2026-02-02</lastmod>
@@ -249,6 +249,11 @@
     <loc>https://micro-tools-43a.pages.dev/tools/dollar-cost-averaging-calculator/</loc>
     <lastmod>2026-02-02</lastmod>
     <priority>0.83</priority>
+  </url>
+  <url>
+    <loc>https://micro-tools-43a.pages.dev/tools/daily-balance-interest-calculator/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.85</priority>
   </url>
 
   <!-- GAME & FUN TOOLS (4 tools) -->

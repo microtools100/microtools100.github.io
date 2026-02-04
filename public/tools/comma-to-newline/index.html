@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
     <link rel="stylesheet" href="tool.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/line-numbers.css?v=202602031400">
     <!-- Dark Mode Script - Must load early -->
     <script src="/assets/js/dark-mode.js"></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
@@ -154,6 +155,7 @@
                                         <div class="input-area">
                                             <textarea 
                                                 id="inputData" 
+                                                data-line-numbers
                                                 placeholder="Paste comma-separated values&#10;One per line&#10;&#10;Example:&#10;Apple, Banana, Orange"
                                                 rows="12"
                                             ></textarea>
@@ -171,6 +173,7 @@
                                         <div class="output-area">
                                             <textarea 
                                                 id="outputData" 
+                                                data-line-numbers
                                                 placeholder="Converted output will appear here...&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange"
                                                 rows="12"
                                                 readonly
@@ -285,6 +288,7 @@
     <script src="/tools-registry.js"></script>
     <script src="/assets/js/tool-hub-links.js"></script>
     <script src="tool.js"></script>
+    <script src="/assets/js/line-numbers.js?v=202602031400"></script>
 </body>
 </html>
 

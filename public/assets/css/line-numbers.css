@@ -1,0 +1,150 @@
+/* Line Numbers Styling for Textareas */
+/* Provides code editor-like line number gutters with synchronized scrolling */
+
+.line-numbers-container {
+    display: flex;
+    position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--background-color);
+}
+
+.line-numbers-gutter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--surface-color);
+    border-right: 1px solid var(--border-color);
+    padding: 0.75rem 0;
+    min-width: 50px;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.line-numbers-gutter .line-number {
+    width: 100%;
+    text-align: right;
+    padding: 0 0.75rem;
+    min-height: 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.line-numbers-gutter .line-number:hover {
+    background: rgba(59, 130, 246, 0.05);
+    color: var(--primary-color);
+}
+
+/* Textarea styling when inside line-numbers-container */
+.line-numbers-container textarea {
+    flex: 1;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    padding: 0.75rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    resize: vertical;
+    background: var(--background-color);
+    color: var(--text-color);
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.line-numbers-container textarea:focus {
+    background: var(--background-color);
+    box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+/* Scrollbar styling for better visibility */
+.line-numbers-container textarea::-webkit-scrollbar,
+.line-numbers-gutter::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.line-numbers-container textarea::-webkit-scrollbar-track,
+.line-numbers-gutter::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.line-numbers-container textarea::-webkit-scrollbar-thumb,
+.line-numbers-gutter::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.line-numbers-container textarea::-webkit-scrollbar-thumb:hover,
+.line-numbers-gutter::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Firefox scrollbar */
+.line-numbers-container textarea {
+    scrollbar-color: var(--border-color) transparent;
+    scrollbar-width: thin;
+}
+
+.line-numbers-container textarea:hover {
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .line-numbers-gutter {
+    background: var(--surface-color);
+    border-right-color: var(--border-color);
+}
+
+body.dark-mode .line-numbers-gutter .line-number:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+body.dark-mode .line-numbers-container textarea:focus {
+    box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .line-numbers-gutter {
+        min-width: 40px;
+        padding: 0.75rem 0;
+    }
+
+    .line-numbers-gutter .line-number {
+        padding: 0 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .line-numbers-container textarea {
+        font-size: 0.85rem;
+    }
+}
+
+/* Print styles - hide line numbers when printing */
+@media print {
+    .line-numbers-gutter {
+        display: none;
+    }
+
+    .line-numbers-container {
+        border: none;
+        background: transparent;
+    }
+
+    .line-numbers-container textarea {
+        border: none;
+        padding: 0;
+        font-size: 0.9rem;
+    }
+}
