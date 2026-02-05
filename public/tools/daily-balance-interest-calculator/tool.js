@@ -146,31 +146,67 @@ Days: ${document.getElementById('simpleDaysCount').textContent}`;
         const result = this.calculateInterestWithBreakdown(dailyBalances, annualRate, daysInMonth);
 
         // Display results
-        document.getElementById('advExpectedInterest').textContent = this.formatCurrency(result.totalInterest);
-        document.getElementById('advActualInterest').textContent = bankInterest !== null ? 
-            this.formatCurrency(bankInterest) : 'N/A';
+        const expectedInterestElement = document.getElementById('advExpectedInterest');
+        if (expectedInterestElement) {
+            expectedInterestElement.textContent = this.formatCurrency(result.totalInterest);
+        }
+        
+        const actualInterestElement = document.getElementById('advActualInterest');
+        if (actualInterestElement) {
+            actualInterestElement.textContent = bankInterest !== null ? 
+                this.formatCurrency(bankInterest) : 'N/A';
+        }
         
         const difference = bankInterest !== null ? bankInterest - result.totalInterest : null;
         if (difference !== null) {
             const diffElement = document.getElementById('advDifference');
-            diffElement.textContent = this.formatCurrency(difference);
-            diffElement.style.color = difference >= 0 ? '#10b981' : '#ef4444';
+            if (diffElement) {
+                diffElement.textContent = this.formatCurrency(difference);
+                diffElement.style.color = difference >= 0 ? '#10b981' : '#ef4444';
+            }
         } else {
-            document.getElementById('advDifference').textContent = 'N/A';
+            const diffElement = document.getElementById('advDifference');
+            if (diffElement) {
+                diffElement.textContent = 'N/A';
+            }
+        }
+
+        // Calculate effective interest rate if bank interest is provided
+        const effectiveRateElement = document.getElementById('advEffectiveRate');
+        if (effectiveRateElement) {
+            if (bankInterest !== null) {
+                const effectiveRate = this.calculateEffectiveRate(bankInterest, dailyBalances, daysInMonth);
+                effectiveRateElement.textContent = effectiveRate + '%';
+            } else {
+                effectiveRateElement.textContent = 'N/A';
+            }
         }
 
         const endingBalance = openingBalance + result.totalInterest + deposits.reduce((sum, d) => sum + d.amount, 0);
-        document.getElementById('advEndingBalance').textContent = this.formatCurrency(endingBalance);
-
-        // Always populate breakdown (regardless of checkbox or bank interest)
-        document.getElementById('breakdownOutput').value = result.breakdown;
-        
-        // Show breakdown container if checked
-        if (document.getElementById('toggleBreakdown').checked) {
-            document.getElementById('dailyBreakdownContainer').style.display = 'block';
+        const endingBalanceElement = document.getElementById('advEndingBalance');
+        if (endingBalanceElement) {
+            endingBalanceElement.textContent = this.formatCurrency(endingBalance);
         }
 
-        document.getElementById('advancedResults').style.display = 'block';
+        // Always populate breakdown (regardless of checkbox or bank interest)
+        const breakdownOutput = document.getElementById('breakdownOutput');
+        if (breakdownOutput) {
+            breakdownOutput.value = result.breakdown;
+        }
+        
+        // Show breakdown container if checked
+        const toggleBreakdown = document.getElementById('toggleBreakdown');
+        if (toggleBreakdown && toggleBreakdown.checked) {
+            const breakdownContainer = document.getElementById('dailyBreakdownContainer');
+            if (breakdownContainer) {
+                breakdownContainer.style.display = 'block';
+            }
+        }
+
+        const advancedResults = document.getElementById('advancedResults');
+        if (advancedResults) {
+            advancedResults.style.display = 'block';
+        }
         this.clearError();
     }
 
@@ -323,6 +359,23 @@ Ending Balance: ${document.getElementById('advEndingBalance').textContent}`;
     clearError() {
         this.errorMsg.classList.remove('show');
         this.errorMsg.textContent = '';
+    }
+
+    calculateEffectiveRate(actualInterest, dailyBalances, daysInMonth) {
+        // Calculate the sum of daily balances (used as denominator)
+        let sumOfDailyBalances = 0;
+        for (let day = 1; day <= daysInMonth; day++) {
+            sumOfDailyBalances += dailyBalances[day];
+        }
+
+        // Effective Rate = (Actual Interest * 36500) / (Sum of Daily Balances)
+        // This reverses the formula: Interest = (Sum of Daily Balances * Rate) / 36500
+        if (sumOfDailyBalances === 0) {
+            return 'N/A';
+        }
+
+        const effectiveRate = (actualInterest * 36500) / sumOfDailyBalances;
+        return effectiveRate.toFixed(4); // Return to 4 decimal places for accuracy
     }
 
     copyToClipboard(text) {

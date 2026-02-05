@@ -9,6 +9,9 @@ class TextCompareDiff {
         this.output1 = document.getElementById('output1');
         this.output2 = document.getElementById('output2');
         this.diffStats = document.getElementById('diff-stats');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.copyBtn1 = document.getElementById('copyBtn1');
+        this.copyBtn2 = document.getElementById('copyBtn2');
         
         this.init();
     }
@@ -19,23 +22,18 @@ class TextCompareDiff {
         this.ignoreCase.addEventListener('change', () => this.compare());
         this.ignoreWhitespace.addEventListener('change', () => this.compare());
         
+        // Button listeners
+        this.clearBtn.addEventListener('click', () => this.clearAll());
+        this.copyBtn1.addEventListener('click', () => this.copyOutput(this.output1, 'Copied original text!'));
+        this.copyBtn2.addEventListener('click', () => this.copyOutput(this.output2, 'Copied modified text!'));
+        
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
     }
 
     handleKeyboardShortcuts(e) {
-        // Ctrl/Cmd+Shift+C to copy first output
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
-            e.preventDefault();
-            this.copyToClipboard(this.output1.textContent, 'Original text copied!');
-        }
-        // Ctrl/Cmd+Shift+V to copy second output
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'V') {
-            e.preventDefault();
-            this.copyToClipboard(this.output2.textContent, 'Modified text copied!');
-        }
-        // Ctrl/Cmd+Shift+K to clear all
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'K') {
+        // Escape to clear all
+        if (e.key === 'Escape') {
             e.preventDefault();
             this.clearAll();
         }
@@ -159,6 +157,23 @@ class TextCompareDiff {
         `;
 
         this.diffStats.innerHTML = html;
+    }
+
+    copyOutput(outputElement, message = 'Copied to clipboard!') {
+        const text = outputElement.textContent;
+        if (!text.trim()) {
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
+            return;
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        
+        SharedUtilities.showNotification(message, 'success');
     }
 
     copyToClipboard(text, message = 'Copied to clipboard!') {

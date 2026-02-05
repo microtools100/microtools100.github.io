@@ -332,13 +332,13 @@ const TOOLS_REGISTRY = {
     },
     {
       id: 'excel-column-to-comma-list',
-      name: 'Excel Column to Comma List',
+      name: 'Column to List Converter',
       category: 'data-converters',
       categoryLabel: 'Data Format Converters',
-      description: 'Convert Excel column data to comma-separated values.',
+      description: 'Convert column data (Excel, newline-separated, etc.) to comma-separated with customizable separators and formatting.',
       icon: '📊',
       url: '/tools/excel-column-to-comma-list/',
-      keywords: 'excel to csv, csv converter, data converter',
+      keywords: 'excel to csv, csv converter, data converter, newline to comma, column converter, list converter',
       priority: 0.85,
       status: 'complete'
     },
@@ -387,18 +387,6 @@ const TOOLS_REGISTRY = {
       icon: '⮎',
       url: '/tools/comma-to-newline/',
       keywords: 'comma to newline, data converter, text converter',
-      priority: 0.80,
-      status: 'complete'
-    },
-    {
-      id: 'newline-to-comma',
-      name: 'Newline to Comma',
-      category: 'data-converters',
-      categoryLabel: 'Data Format Converters',
-      description: 'Convert newline-separated values to comma-separated format.',
-      icon: '⮏',
-      url: '/tools/newline-to-comma/',
-      keywords: 'newline to comma, data converter, list converter',
       priority: 0.80,
       status: 'complete'
     },

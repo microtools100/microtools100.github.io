@@ -2,21 +2,14 @@
 class URLEncoderDecoder {
     constructor() {
         this.maxChars = 10000;
-        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
-        this.keystrokeDelay = null; // Keystroke delay handler
-        this.exampleText = "https://example.com/search?q=hello world&filter=status=active";
-        
         this.elements = {
             inputURL: document.getElementById('inputURL'),
             outputURL: document.getElementById('outputURL'),
             encodeMode: document.getElementById('encodeMode'),
             decodeMode: document.getElementById('decodeMode'),
-            processBtn: document.getElementById('processBtn'),
-            processBtnText: document.getElementById('processBtnText'),
             clearBtn: document.getElementById('clearBtn'),
             copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
-            exampleBtn: document.getElementById('exampleBtn'),
             inputLabel: document.getElementById('inputLabel'),
             outputLabel: document.getElementById('outputLabel'),
             errorMsg: document.querySelector('.error-msg')
@@ -29,20 +22,12 @@ class URLEncoderDecoder {
     init() {
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
-        // Initialize keystroke delay handler using global utility
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
-            () => this.executeCopy(),
-            this.autoCopyDelay
-        );
     }
 
     setupEventListeners() {
         // Mode selection
         this.elements.encodeMode.addEventListener('change', () => this.updateMode());
         this.elements.decodeMode.addEventListener('change', () => this.updateMode());
-
-        // Process button
-        this.elements.processBtn.addEventListener('click', () => this.process());
 
         // Clear button
         this.elements.clearBtn.addEventListener('click', () => this.clear());
@@ -53,16 +38,9 @@ class URLEncoderDecoder {
         // Download button
         this.elements.downloadBtn.addEventListener('click', () => this.download());
 
-        // Example button
-        if (document.getElementById('exampleBtn')) {
-            document.getElementById('exampleBtn').addEventListener('click', () => this.loadExample());
-        }
-
         // Real-time processing on input
         this.elements.inputURL.addEventListener('input', () => {
             this.processWithoutAutoCopy();
-            // Schedule auto-copy after keystroke delay
-            this.keystrokeDelay.schedule();
         });
 
         // Character limit warning
@@ -71,9 +49,7 @@ class URLEncoderDecoder {
 
     setupKeyboardShortcuts() {
         SharedUtilities.setupKeyboardShortcuts({
-            'Ctrl+Enter': () => this.process(),
-            'Escape': () => this.clear(),
-            'Ctrl+E': () => this.loadExample()
+            'Escape': () => this.clear()
         });
     }
 
@@ -81,8 +57,7 @@ class URLEncoderDecoder {
         this.isEncode = this.elements.encodeMode.checked;
         this.elements.inputLabel.textContent = this.isEncode ? 'Enter URL to Encode:' : 'Enter URL to Decode:';
         this.elements.outputLabel.textContent = this.isEncode ? 'Encoded Result:' : 'Decoded Result:';
-        this.elements.processBtnText.textContent = this.isEncode ? 'Encode URL' : 'Decode URL';
-        this.process();
+        this.processWithoutAutoCopy();
     }
 
     processWithoutAutoCopy() {

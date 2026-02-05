@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
     <meta charset="UTF-8">
     <title>Hub Page - Micro Tools</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +26,7 @@
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
     <!-- Dark Mode Script - Must load early to prevent white flash -->
-    <script src="/assets/js/dark-mode.js"></script>
+    <script defer src="/assets/js/dark-mode.js"></script>
     
     <!-- Structured Data for SEO (will be updated by hub.js) -->
     <script type="application/ld+json">
@@ -108,21 +115,21 @@
     </footer>
 
     <!-- Shared Utilities for all tools -->
-    <script src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/shared-utilities.js"></script>
     
     <!-- Performance Monitoring -->
-    <script src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
     
     <!-- Accessibility Audit & Fixes -->
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
     
-    <script src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
     
     <!-- Tools Registry - Must load before hub.js -->
-    <script src="/tools-registry.js"></script>
+    <script defer src="/tools-registry.js"></script>
     
     <!-- Hub Page JavaScript -->
-    <script src="/assets/js/hub.js"></script>
+    <script defer src="/assets/js/hub.js"></script>
 </body>
 </html>

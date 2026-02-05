@@ -4,7 +4,6 @@ class CommaToNewlineConverter {
         this.elements = {
             inputData: document.getElementById('inputData'),
             outputData: document.getElementById('outputData'),
-            formatBtn: document.getElementById('formatBtn'),
             clearBtn: document.getElementById('clearBtn'),
             copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
@@ -23,9 +22,6 @@ class CommaToNewlineConverter {
     }
 
     setupEventListeners() {
-        if (this.elements.formatBtn) {
-            this.elements.formatBtn.addEventListener('click', () => this.format());
-        }
         if (this.elements.clearBtn) {
             this.elements.clearBtn.addEventListener('click', () => this.clear());
         }

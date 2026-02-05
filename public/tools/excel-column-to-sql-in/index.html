@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Free online tool to convert Excel column data to SQL IN list format instantly. Generate ('value1','value2') format for SQL queries.">
@@ -12,11 +19,27 @@
     
     <title>Excel Column to SQL IN List - Free SQL Formatter | Micro Tools</title>
     
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
-    <link rel="stylesheet" href="tool.css?v=202602021216">
-    <!-- Dark Mode Script - Must load early -->
-    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
     <!-- Structured Data for SEO -->
@@ -135,9 +158,6 @@
                                 </div>
                             </div>
                             <div class="tool-actions-horizontal">
-                                <button class="action-btn primary" id="formatBtn">
-                                    <span>Format</span>
-                                </button>
                                 <button class="action-btn" id="clearBtn">
                                     <span>Clear</span>
                                 </button>
@@ -284,16 +304,16 @@
         </div>
     </footer>
 
-    <script src="/assets/js/shared-utilities.js"></script>
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="/assets/js/nav-injector.js"></script>
-    <script src="/assets/js/footer-injector.js"></script>
-    <script src="/tools-registry.js"></script>
-    <script src="/assets/js/tool-hub-links.js"></script>
-    <script src="tool.js"></script>
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
 </body>
 </html>
 

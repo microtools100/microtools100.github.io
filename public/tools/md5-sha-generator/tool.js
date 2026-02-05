@@ -6,9 +6,7 @@
 class MD5SHAGenerator {
     constructor() {
         this.textInput = document.getElementById('textInput');
-        this.generateBtn = document.getElementById('generateBtn');
         this.clearBtn = document.getElementById('clearBtn');
-        this.exampleBtn = document.getElementById('exampleBtn');
         this.copyAllBtn = document.getElementById('copyAllBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
         
@@ -33,14 +31,8 @@ class MD5SHAGenerator {
 
     setupEventListeners() {
         this.textInput.addEventListener('input', () => this.generateHashes());
-        if (this.generateBtn) {
-            this.generateBtn.addEventListener('click', () => this.generateHashes());
-        }
         if (this.clearBtn) {
             this.clearBtn.addEventListener('click', () => this.clearAll());
-        }
-        if (this.exampleBtn) {
-            this.exampleBtn.addEventListener('click', () => this.loadExample());
         }
         if (this.copyAllBtn) {
             this.copyAllBtn.addEventListener('click', () => this.copyAllHashes());

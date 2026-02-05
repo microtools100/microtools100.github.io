@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
     <link rel="stylesheet" href="/assets/css/homepage.css?v=202602021216">
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <!-- Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
 </head>
 <body>
     <header class="site-header">
@@ -28,6 +44,7 @@
                         <li><a href="/#games">Games & Generators</a></li>
                     </ul>
                 </nav>
+                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
             </div>
         </div>
     </header>
@@ -45,7 +62,6 @@
                 <h2>Contact Information</h2>
                 <p>For support and inquiries, please reach out through one of the following channels:</p>
                 <ul>
-                    <li><strong>Email:</strong> pulsecmms@gmail.com</li>
                     <li><strong>Website:</strong> <a href="https://micro-tools-43a.pages.dev/">micro-tools-43a.pages.dev</a></li>
                 </ul>
             </section>
@@ -115,6 +131,9 @@
     <!-- Shared Utilities for all tools -->
     <script src="/assets/js/shared-utilities.js"></script>
     
+    <!-- Footer Injector -->
+    <script src="/assets/js/footer-injector.js"></script>
+    
     <!-- Performance Monitoring -->
     <script src="/assets/js/performance-monitor.js"></script>
     
@@ -122,6 +141,7 @@
     <script src="/assets/js/accessibility-audit.js"></script>
     <script src="/assets/js/accessibility-fixes.js"></script>
 
+    <!-- Legacy utilities wrapper (deprecated - for backward compatibility only) -->
     <script src="/assets/js/utils.js"></script>
 </body>
 </html>

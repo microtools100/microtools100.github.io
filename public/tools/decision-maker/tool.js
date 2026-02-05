@@ -215,13 +215,13 @@ class DecisionMaker {
         const segmentAngle = 360 / options.length;
         
         const canvas = document.createElement('canvas');
-        canvas.width = 400;
-        canvas.height = 400;
+        canvas.width = 250;
+        canvas.height = 250;
         
         const ctx = canvas.getContext('2d');
-        const centerX = 200;
-        const centerY = 200;
-        const radius = 180;
+        const centerX = 125;
+        const centerY = 125;
+        const radius = 110;
 
         // Draw each segment
         options.forEach((option, index) => {

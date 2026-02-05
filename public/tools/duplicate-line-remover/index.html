@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Free online duplicate line remover. Remove duplicate lines from text instantly. Sort, trim, and clean your data with case sensitivity options.">
@@ -12,12 +19,28 @@
     
     <title>Duplicate Line Remover - Free Online Tool | Micro Tools</title>
     
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
-    <link rel="stylesheet" href="tool.css?v=202602021216">
-    <link rel="stylesheet" href="/assets/css/line-numbers.css?v=202602031400">
-    <!-- Dark Mode Script - Must load early -->
-    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
     <!-- Structured Data for SEO -->
@@ -150,18 +173,12 @@
                             </div>
                         </section>
 
-                        <div class="tool-actions">
-                            <button class="action-btn" id="processBtn">
-                                <span>Remove Duplicates</span>
-                                <span>✨</span>
-                            </button>
+                        <div class="tool-actions-horizontal">
                             <button class="action-btn success" id="copyBtn">
                                 <span>Copy</span>
-                                <span>📋</span>
                             </button>
                             <button class="action-btn" id="clearBtn">
                                 <span>Clear</span>
-                                <span>✕</span>
                             </button>
                         </div>
 
@@ -171,7 +188,7 @@
                             <ol>
                                 <li>Paste your text with duplicate lines into the input area</li>
                                 <li>Select your preferred options (case sensitivity, trim, sort)</li>
-                                <li>Click "Remove Duplicates" to process the text</li>
+                                <li>Duplicates are removed automatically as you type</li>
                                 <li>View the deduplicated result in the output area</li>
                                 <li>Copy the result or clear to process new text</li>
                             </ol>
@@ -248,17 +265,17 @@
         </div>
     </footer>
 
-    <script src="/assets/js/shared-utilities.js"></script>
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="/assets/js/nav-injector.js"></script>
-    <script src="/assets/js/footer-injector.js"></script>
-    <script src="/tools-registry.js"></script>
-    <script src="/assets/js/tool-hub-links.js"></script>
-    <script src="tool.js"></script>
-    <script src="/assets/js/line-numbers.js?v=202602031400"></script>
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
 </body>
 </html>
 

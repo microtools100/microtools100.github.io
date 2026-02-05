@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online tool to convert Excel column data to comma-separated values instantly. No registration needed.">
+    <meta name="description" content="Free online tool to convert column data (Excel, lists, etc.) to comma-separated values with custom separators. No registration needed.">
     <meta name="keywords" content="Excel to comma list, CSV converter, comma-separated values, data conversion, excel tool">
     <meta property="og:title" content="Excel Column to Comma List - Free Converter">
     <meta property="og:description" content="Convert Excel column values to comma-separated list instantly. Perfect for data processing and formatting.">
@@ -12,12 +19,28 @@
     
     <title>Excel Column to Comma List - Free Converter | Micro Tools</title>
     
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
     <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
-    <link rel="stylesheet" href="tool.css?v=202602021216">
-    <link rel="stylesheet" href="/assets/css/line-numbers.css?v=202602031400">
-    <!-- Dark Mode Script - Must load early -->
-    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
     <!-- Structured Data for SEO -->
@@ -99,9 +122,9 @@
     <main class="tool-page">
         <div class="container">
             <header class="tool-header">
-                <h1>Excel Column to Comma List</h1>
+                <h1>Column to List Converter</h1>
                 <p class="tool-description">
-                    Convert Excel column values to comma-separated list instantly. Paste your data and get formatted results with customizable options.
+                    Convert any column data (Excel, newline-separated lists, etc.) to formatted lists with custom separators. Paste your data and get formatted results with customizable options.
                 </p>
             </header>
 
@@ -147,9 +170,6 @@
                                 </div>
                             </div>
                             <div class="tool-actions-horizontal">
-                                <button class="action-btn primary" id="formatBtn">
-                                    <span>Format</span>
-                                </button>
                                 <button class="action-btn" id="clearBtn">
                                     <span>Clear</span>
                                 </button>
@@ -298,17 +318,17 @@
         </div>
     </footer>
 
-    <script src="/assets/js/shared-utilities.js"></script>
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="/assets/js/nav-injector.js"></script>
-    <script src="/assets/js/footer-injector.js"></script>
-    <script src="/tools-registry.js"></script>
-    <script src="/assets/js/tool-hub-links.js"></script>
-    <script src="tool.js"></script>
-    <script src="/assets/js/line-numbers.js?v=202602031400"></script>
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
 </body>
 </html>
 

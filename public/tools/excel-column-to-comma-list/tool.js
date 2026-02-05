@@ -1,12 +1,9 @@
 // CSV Formatter Tool
 class CSVFormatter {
     constructor() {
-        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
-        this.keystrokeDelay = null; // Keystroke delay handler
         this.elements = {
             inputData: document.getElementById('inputData'),
             outputData: document.getElementById('outputData'),
-            formatBtn: document.getElementById('formatBtn'),
             clearBtn: document.getElementById('clearBtn'),
             copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
@@ -25,26 +22,17 @@ class CSVFormatter {
     init() {
         this.setupEventListeners();
         this.updateCharCount();
-        // Initialize keystroke delay handler using global utility
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
-            () => this.executeCopy(),
-            this.autoCopyDelay
-        );
     }
 
     setupEventListeners() {
-        this.elements.formatBtn.addEventListener('click', () => this.format());
         this.elements.clearBtn.addEventListener('click', () => this.clear());
         this.elements.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.elements.downloadBtn.addEventListener('click', () => this.download());
         
-        // Real-time formatting on input with keystroke delay for auto-copy
+        // Real-time formatting on input
         this.elements.inputData.addEventListener('input', () => {
             this.updateCharCount();
-            // Always format in real-time
             this.formatWithoutAutoCopy();
-            // Schedule auto-copy after keystroke delay
-            this.keystrokeDelay.schedule();
         });
         
         // Format when options change

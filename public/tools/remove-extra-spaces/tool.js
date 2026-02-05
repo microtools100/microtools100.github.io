@@ -2,16 +2,12 @@
 class RemoveSpacesTool {
     constructor() {
         this.maxChars = 10000;
-        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
-        this.keystrokeDelay = null; // Keystroke delay handler
         this.exampleText = "This    is  a   sample    text  with\n\nmultiple    spaces\n  and\t\ttabs\n\nand empty lines.";
         
         this.elements = {
             input: document.getElementById('inputText'),
             output: document.getElementById('outputText'),
-            cleanBtn: document.getElementById('cleanBtn'),
             clearBtn: document.getElementById('clearBtn'),
-            exampleBtn: document.getElementById('exampleBtn'),
             copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
             spacesRemoved: document.getElementById('spacesRemoved'),
@@ -34,22 +30,11 @@ class RemoveSpacesTool {
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
         this.updateStats();
-        // Initialize keystroke delay handler using global utility
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
-            () => this.executeCopy(),
-            this.autoCopyDelay
-        );
     }
     
     setupEventListeners() {
-        // Clean button
-        this.elements.cleanBtn.addEventListener('click', () => this.cleanText());
-        
         // Clear button
         this.elements.clearBtn.addEventListener('click', () => this.clear());
-        
-        // Example button
-        this.elements.exampleBtn.addEventListener('click', () => this.loadExample());
         
         // Copy button
         this.elements.copyBtn.addEventListener('click', () => this.copyToClipboard());
@@ -57,16 +42,13 @@ class RemoveSpacesTool {
         // Download button
         this.elements.downloadBtn.addEventListener('click', () => this.download());
         
-        // Real-time cleaning on input with keystroke delay for auto-copy
+        // Real-time cleaning on input
         this.elements.input.addEventListener('input', () => {
             this.updateStats();
-            // Always clean in real-time - no character limit
             this.cleanTextWithoutAutoCopy();
-            // Schedule auto-copy after keystroke delay
-            this.keystrokeDelay.schedule();
         });
         
-        // Clean when options change
+        // Real-time cleaning when options change
         const options = [
             this.elements.removeDoubleSpaces,
             this.elements.removeTabs,
@@ -76,7 +58,7 @@ class RemoveSpacesTool {
         ];
         
         options.forEach(option => {
-            option.addEventListener('change', () => this.cleanText());
+            option.addEventListener('change', () => this.cleanTextWithoutAutoCopy());
         });
         
         // Character limit warning
@@ -85,9 +67,7 @@ class RemoveSpacesTool {
     
     setupKeyboardShortcuts() {
         SharedUtilities.setupKeyboardShortcuts({
-            'Ctrl+Enter': () => this.cleanText(),
-            'Escape': () => this.clear(),
-            'Ctrl+E': () => this.loadExample()
+            'Escape': () => this.clear()
         });
     }
     
@@ -135,61 +115,6 @@ class RemoveSpacesTool {
         }
     }
     
-    cleanText() {
-        const inputText = this.elements.input.value;
-        
-        if (!inputText.trim()) {
-            this.elements.output.value = '';
-            this.updateStats();
-            return;
-        }
-        
-        let cleanedText = inputText;
-        const originalLength = cleanedText.length;
-        
-        // Apply selected cleaning options
-        if (this.elements.normalizeLineBreaks.checked) {
-            cleanedText = cleanedText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-        }
-        
-        if (this.elements.removeTabs.checked) {
-            cleanedText = cleanedText.replace(/\t/g, ' ');
-        }
-        
-        if (this.elements.removeDoubleSpaces.checked) {
-            // Replace 2 or more spaces with single space
-            cleanedText = cleanedText.replace(/[ \t]{2,}/g, ' ');
-        }
-        
-        if (this.elements.trimLines.checked) {
-            // Trim spaces from start and end of each line
-            cleanedText = cleanedText.split('\n').map(line => line.trim()).join('\n');
-        }
-        
-        if (this.elements.removeEmptyLines.checked) {
-            // Remove lines that are empty or contain only whitespace
-            cleanedText = cleanedText.split('\n').filter(line => line.trim().length > 0).join('\n');
-        }
-        
-        // Also trim the entire text
-        cleanedText = cleanedText.trim();
-        
-        this.elements.output.value = cleanedText;
-        
-        // Update stats
-        this.updateStats();
-        
-        // Auto-copy to clipboard with a small delay to ensure DOM is ready
-        setTimeout(() => {
-            SharedUtilities.copyToClipboardSilently(cleanedText);
-            // Show success message
-            SharedUtilities.showNotification('Copied to clipboard', 'success');
-        }, 10);
-        
-        // Save to history
-        this.saveToHistory(inputText, cleanedText);
-    }
-    
     clear() {
         SharedUtilities.clearElements(
             { inputData: this.elements.input, outputData: this.elements.output },
@@ -201,12 +126,6 @@ class RemoveSpacesTool {
                 }
             }
         );
-    }
-    
-    loadExample() {
-        this.elements.input.value = this.exampleText;
-        this.cleanText();
-        SharedUtilities.showNotification('Example loaded. Try different options to see the effect.', 'info');
     }
     
     async copyToClipboard() {
@@ -294,28 +213,6 @@ class RemoveSpacesTool {
         if (count > this.maxChars) {
             SharedUtilities.showNotification(`Character limit exceeded (${this.maxChars} max). Text will be truncated.`, 'warning');
             this.elements.input.value = this.elements.input.value.substring(0, this.maxChars);
-        }
-    }
-    
-    saveToHistory(original, cleaned) {
-        try {
-            const history = JSON.parse(localStorage.getItem('spaceCleanerHistory') || '[]');
-            history.unshift({
-                original: original.substring(0, 100) + (original.length > 100 ? '...' : ''),
-                cleaned: cleaned.substring(0, 100) + (cleaned.length > 100 ? '...' : ''),
-                options: this.getOptions(),
-                timestamp: new Date().toISOString()
-            });
-            
-            // Keep only last 10 items
-            if (history.length > 10) {
-                history.pop();
-            }
-            
-            localStorage.setItem('spaceCleanerHistory', JSON.stringify(history));
-        } catch (e) {
-            // Silently fail if localStorage is full or not available
-            console.log('Could not save to history:', e);
         }
     }
     

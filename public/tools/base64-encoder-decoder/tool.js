@@ -2,21 +2,14 @@
 class Base64Tool {
     constructor() {
         this.maxChars = 10000;
-        this.autoCopyDelay = 500; // 0.5 second delay before auto-copying
-        this.keystrokeDelay = null; // Keystroke delay handler
-        this.exampleText = "Hello World!";
-        
         this.elements = {
             inputText: document.getElementById('inputText'),
             outputText: document.getElementById('outputText'),
             encodeMode: document.getElementById('encodeMode'),
             decodeMode: document.getElementById('decodeMode'),
-            processBtn: document.getElementById('processBtn'),
-            processBtnText: document.getElementById('processBtnText'),
             clearBtn: document.getElementById('clearBtn'),
             copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
-            exampleBtn: document.getElementById('exampleBtn'),
             inputLabel: document.getElementById('inputLabel'),
             outputLabel: document.getElementById('outputLabel'),
             errorMsg: document.querySelector('.error-msg')
@@ -29,20 +22,12 @@ class Base64Tool {
     init() {
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
-        // Initialize keystroke delay handler using global utility
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
-            () => this.executeCopy(),
-            this.autoCopyDelay
-        );
     }
 
     setupEventListeners() {
         // Mode selection
         this.elements.encodeMode.addEventListener('change', () => this.updateMode());
         this.elements.decodeMode.addEventListener('change', () => this.updateMode());
-
-        // Process button
-        this.elements.processBtn.addEventListener('click', () => this.process());
 
         // Clear button
         this.elements.clearBtn.addEventListener('click', () => this.clear());
@@ -53,16 +38,9 @@ class Base64Tool {
         // Download button
         this.elements.downloadBtn.addEventListener('click', () => this.download());
 
-        // Example button
-        if (this.elements.exampleBtn) {
-            this.elements.exampleBtn.addEventListener('click', () => this.loadExample());
-        }
-
         // Real-time processing on input
         this.elements.inputText.addEventListener('input', () => {
             this.processWithoutAutoCopy();
-            // Schedule auto-copy after keystroke delay
-            this.keystrokeDelay.schedule();
         });
 
         // Character limit warning
@@ -71,9 +49,7 @@ class Base64Tool {
 
     setupKeyboardShortcuts() {
         SharedUtilities.setupKeyboardShortcuts({
-            'Ctrl+Enter': () => this.process(),
-            'Escape': () => this.clear(),
-            'Ctrl+E': () => this.loadExample()
+            'Escape': () => this.clear()
         });
     }
 
@@ -81,8 +57,7 @@ class Base64Tool {
         this.isEncode = this.elements.encodeMode.checked;
         this.elements.inputLabel.textContent = this.isEncode ? 'Enter Text to Encode:' : 'Enter Base64 to Decode:';
         this.elements.outputLabel.textContent = this.isEncode ? 'Encoded Result:' : 'Decoded Result:';
-        this.elements.processBtnText.textContent = this.isEncode ? 'Encode' : 'Decode';
-        this.process();
+        this.processWithoutAutoCopy();
     }
 
     processWithoutAutoCopy() {

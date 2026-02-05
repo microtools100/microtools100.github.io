@@ -7,7 +7,6 @@ class CSVToJSON {
     constructor() {
         this.csvInput = document.getElementById('csvInput') || document.getElementById('inputText');
         this.jsonOutput = document.getElementById('jsonOutput') || document.getElementById('outputText');
-        this.convertBtn = document.getElementById('convertBtn');
         this.clearBtn = document.getElementById('clearBtn');
         this.copyBtn = document.getElementById('copyBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
@@ -18,9 +17,6 @@ class CSVToJSON {
     }
 
     init() {
-        if (this.convertBtn) {
-            this.convertBtn.addEventListener('click', () => this.convert());
-        }
         if (this.clearBtn) {
             this.clearBtn.addEventListener('click', () => this.clearAll());
         }
@@ -39,11 +35,7 @@ class CSVToJSON {
     }
 
     handleKeyboard(e) {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-            e.preventDefault();
-            this.convert();
-        }
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
+        if (e.key === 'Escape') {
             e.preventDefault();
             this.clearAll();
         }

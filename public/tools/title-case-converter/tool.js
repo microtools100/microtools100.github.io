@@ -7,44 +7,26 @@ class TitleCaseConverter {
         this.titleStyle = document.getElementById('titleStyle');
         this.preserveCase = document.getElementById('preserveCase');
         
-        // Stats
-        this.charCount = document.getElementById('charCount');
-        this.wordCount = document.getElementById('wordCount');
-        this.capitalPercent = document.getElementById('capitalPercent');
-        
         // Buttons
-        this.convertBtn = document.getElementById('convertBtn');
         this.clearBtn = document.getElementById('clearBtn');
         this.copyBtn = document.getElementById('copyBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
-        this.exampleBtn = document.getElementById('exampleBtn');
         
         this.init();
     }
 
     init() {
-        this.inputText.addEventListener('input', () => this.handleInput());
+        // Real-time conversion on input
+        this.inputText.addEventListener('input', () => this.convertText());
+        
+        // Convert when changing options
         this.titleStyle.addEventListener('change', () => this.convertText());
         this.preserveCase.addEventListener('change', () => this.convertText());
         
-        this.convertBtn.addEventListener('click', () => this.convertText());
+        // Button events
         this.clearBtn.addEventListener('click', () => this.clearAll());
         this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.downloadBtn.addEventListener('click', () => this.downloadResult());
-        this.exampleBtn.addEventListener('click', () => this.loadExample());
-        
-        // Keyboard shortcuts
-        this.inputText.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                e.preventDefault();
-                this.convertText();
-            }
-        });
-    }
-
-    handleInput() {
-        this.convertText();
-        this.updateStats();
     }
 
     convertText() {
@@ -54,7 +36,6 @@ class TitleCaseConverter {
 
         if (!text) {
             this.outputText.value = '';
-            this.updateStats();
             return;
         }
 
@@ -72,46 +53,22 @@ class TitleCaseConverter {
         }
 
         this.outputText.value = result;
-        this.updateStats();
-    }
-
-    updateStats() {
-        const output = this.outputText.value;
-        const input = this.inputText.value;
-        
-        const chars = output.length;
-        const words = output.trim() ? output.trim().split(/\s+/).length : 0;
-        
-        // Calculate percentage of capital letters
-        let capitalLetters = 0;
-        let totalLetters = 0;
-        
-        for (let char of output) {
-            if (/[a-zA-Z]/.test(char)) {
-                totalLetters++;
-                if (/[A-Z]/.test(char)) {
-                    capitalLetters++;
-                }
-            }
-        }
-        
-        const capitalPercent = totalLetters > 0 ? Math.round((capitalLetters / totalLetters) * 100) : 0;
-        
-        this.charCount.textContent = chars;
-        this.wordCount.textContent = words;
-        this.capitalPercent.textContent = capitalPercent + '%';
     }
 
     copyToClipboard() {
         const result = this.outputText.value;
-        if (result) {
-            navigator.clipboard.writeText(result).then(() => {
-                SharedUtilities.showNotification('Copied to clipboard!', 'success');
-                this.copyBtn.textContent = '✓ Copied';
-                setTimeout(() => {
-                    this.copyBtn.innerHTML = '<span>Copy</span><span>📋</span>';
-                }, 2000);
-            });
+        if (!result) {
+            SharedUtilities.showNotification('No text to copy', 'warning');
+            return;
+        }
+        
+        if (window.MicroTools?.utils?.copyToClipboard) {
+            window.MicroTools.utils.copyToClipboard(result, this.copyBtn);
+        } else {
+            // Fallback copy method
+            this.outputText.select();
+            document.execCommand('copy');
+            SharedUtilities.showNotification('Copied to clipboard!', 'success');
         }
     }
 
@@ -122,57 +79,60 @@ class TitleCaseConverter {
             return;
         }
         
-        const element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(result));
-        element.setAttribute('download', 'title-case.txt');
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-        
-        SharedUtilities.showNotification('Downloaded successfully!', 'success');
+        SharedUtilities.downloadAsFile(result, 'title-case.txt', 'text/plain', {
+            successMessage: 'Text downloaded as title-case.txt'
+        });
     }
 
     clearAll() {
-        this.inputText.value = '';
-        this.outputText.value = '';
-        this.updateStats();
-        this.inputText.focus();
-    }
-
-    loadExample() {
-        this.inputText.value = 'this is a sample heading\nhow to write better titles\napi documentation guide';
-        this.convertText();
-        this.inputText.focus();
+        SharedUtilities.clearElements(
+            { input: this.inputText, output: this.outputText },
+            { 
+                message: 'Text cleared',
+                onClear: () => {
+                    this.inputText.focus();
+                }
+            }
+        );
     }
 
     toTitleCase(text, preserveAcronyms = true) {
         // Articles, conjunctions, and prepositions to keep lowercase
         const smallWords = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'of', 'on', 'or', 'the', 'to', 'with', 'via', 'nor'];
         
-        const words = text.split(/\s+/);
+        // Split by newlines to preserve paragraph structure
+        const lines = text.split('\n');
         
-        return words.map((word, index) => {
-            // Keep acronyms if preserveAcronyms is true
-            if (preserveAcronyms && /^[A-Z]{2,}$/.test(word)) {
-                return word;
-            }
-
-            const lowerWord = word.toLowerCase();
+        return lines.map(line => {
+            // Split each line by whitespace
+            const words = line.split(/\s+/).filter(word => word.length > 0);
             
-            // First and last words are always capitalized
-            if (index === 0 || index === words.length - 1) {
+            if (words.length === 0) {
+                return '';
+            }
+            
+            return words.map((word, index) => {
+                // Keep acronyms if preserveAcronyms is true
+                if (preserveAcronyms && /^[A-Z]{2,}$/.test(word)) {
+                    return word;
+                }
+
+                const lowerWord = word.toLowerCase();
+                
+                // First and last words are always capitalized
+                if (index === 0 || index === words.length - 1) {
+                    return this.capitalizeWord(lowerWord);
+                }
+
+                // Keep small words lowercase
+                if (smallWords.includes(lowerWord)) {
+                    return lowerWord;
+                }
+
+                // Capitalize everything else
                 return this.capitalizeWord(lowerWord);
-            }
-
-            // Keep small words lowercase
-            if (smallWords.includes(lowerWord)) {
-                return lowerWord;
-            }
-
-            // Capitalize everything else
-            return this.capitalizeWord(lowerWord);
-        }).join(' ');
+            }).join(' ');
+        }).join('\n');
     }
 
     capitalizeWord(word) {

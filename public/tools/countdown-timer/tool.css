@@ -28,11 +28,21 @@
     border-radius: var(--radius-md);
 }
 
+.tool-options.time-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
 .tool-options .input-group {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 1rem;
+}
+
+.tool-options.time-inputs .input-group {
+    margin-bottom: 0;
 }
 
 .tool-options .input-group:last-child {
@@ -262,22 +272,6 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1400px) {
-    .tool-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .tool-sidebar {
-        flex-direction: row;
-        gap: 2rem;
-    }
-
-    .related-tools,
-    .tool-tips {
-        flex: 1;
-    }
-}
-
 @media (max-width: 768px) {
     .timer-text {
         font-size: 3rem;
@@ -285,6 +279,10 @@
 
     .timer-display {
         padding: 2rem 1.5rem;
+    }
+
+    .tool-options.time-inputs {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .use-case-grid {
@@ -336,42 +334,5 @@
 
     .checkbox-label {
         font-size: 0.9rem;
-    }
-}
-    color: white;
-}
-
-.info-box li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.info-box li:last-child {
-    border-bottom: none;
-}
-
-@media (max-width: 768px) {
-    .tool-container {
-        padding: 1rem;
-    }
-
-    .timer-text {
-        font-size: 2.5rem;
-    }
-
-    .input-group {
-        padding: 1.5rem;
-    }
-
-    .preset-buttons {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .button-group {
-        grid-template-columns: 1fr;
-    }
-
-    .timer-btn.pause {
-        grid-column: 1;
     }
 }

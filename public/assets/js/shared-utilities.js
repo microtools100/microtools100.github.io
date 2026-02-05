@@ -171,17 +171,10 @@ class SharedUtilities {
      * @param {string} content - Content to download
      * @param {string} filename - Filename for download
      * @param {string} type - MIME type (default: 'text/plain')
+     * @deprecated Use downloadAsFile() instead for better options
      */
     static downloadFile(content, filename, type = 'text/plain') {
-        const blob = new Blob([content], { type });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        return this.downloadAsFile(content, filename, type, { showNotification: false });
     }
 
     /**

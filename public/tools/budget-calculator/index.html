@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Calculator - Free Personal Finance Tool | Micro Tools</title>
     <meta name="description" content="Plan and manage your budget. Track income, expenses, and savings goals easily.">
     <meta property="og:title" content="Budget Calculator - Micro Tools">
     <meta property="og:description" content="Plan and manage your budget with our free calculator">
-    <link rel="stylesheet" href="/assets/css/core.css">
-    <link rel="stylesheet" href="/assets/css/tool-standard.css">
-    <link rel="stylesheet" href="tool.css">
-    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="/assets/css/combined-critical.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <script defer src="/assets/js/dark-mode.js"></script>
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     <script type="application/ld+json">
     {
@@ -248,15 +254,15 @@
         </div>
     </footer>
 
-    <script src="/assets/js/shared-utilities.js"></script>
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
-    <script src="/assets/js/performance-monitor.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="/assets/js/nav-injector.js"></script>
-    <script src="/assets/js/footer-injector.js"></script>
-    <script src="/tools-registry.js"></script>
-    <script src="/assets/js/tool-hub-links.js"></script>
-    <script src="tool.js"></script>
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
 </body>
 </html>

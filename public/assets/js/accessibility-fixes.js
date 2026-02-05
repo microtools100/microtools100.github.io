@@ -269,7 +269,9 @@ class AccessibilityFixes {
                 heading.closest('.use-cases') || 
                 heading.closest('.how-to-use') ||
                 heading.closest('.how-it-works') ||
-                heading.closest('.formatting-guide')) {
+                heading.closest('.formatting-guide') ||
+                heading.closest('.related-tools') ||
+                heading.closest('.tool-tips')) {
                 return;
             }
             
@@ -398,24 +400,24 @@ class AccessibilityFixes {
                 color: var(--text-color);
             }
             
-            button, .btn {
+            button:not(.mode-btn), .btn:not(.mode-btn) {
                 background-color: var(--primary-color);
                 color: #ffffff;
                 border: 1px solid var(--primary-color);
             }
             
-            html.dark-mode button, html.dark-mode .btn {
+            html.dark-mode button:not(.mode-btn), html.dark-mode .btn:not(.mode-btn) {
                 background-color: var(--primary-color);
                 color: #ffffff;
                 border: 1px solid var(--primary-color);
             }
             
-            button:hover, .btn:hover {
+            button:not(.mode-btn):hover, .btn:not(.mode-btn):hover {
                 background-color: var(--primary-dark);
                 color: #ffffff;
             }
             
-            html.dark-mode button:hover, html.dark-mode .btn:hover {
+            html.dark-mode button:not(.mode-btn):hover, html.dark-mode .btn:not(.mode-btn):hover {
                 background-color: var(--primary-dark);
                 color: #ffffff;
             }

@@ -2,8 +2,6 @@
 class JWTDecoder {
     constructor() {
         this.maxChars = 10000;
-        this.autoCopyDelay = 500;
-        this.keystrokeDelay = null;
         this.exampleToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjk5OTk5OTk5OTl9.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U';
         
         this.elements = {
@@ -13,9 +11,7 @@ class JWTDecoder {
             signatureOutput: document.getElementById('signatureOutput'),
             copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
-            decodeBtn: document.getElementById('decodeBtn'),
             clearBtn: document.getElementById('clearBtn'),
-            exampleBtn: document.getElementById('exampleBtn'),
             errorMsg: document.querySelector('.error-msg')
         };
 
@@ -25,10 +21,6 @@ class JWTDecoder {
     init() {
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
-            () => this.decode(),
-            this.autoCopyDelay
-        );
     }
 
     setupEventListeners() {
@@ -38,10 +30,6 @@ class JWTDecoder {
         }
 
         // Button listeners
-        if (this.elements.decodeBtn) {
-            this.elements.decodeBtn.addEventListener('click', () => this.decode());
-        }
-
         if (this.elements.copyBtn) {
             this.elements.copyBtn.addEventListener('click', () => this.copyAll());
         }
@@ -54,10 +42,6 @@ class JWTDecoder {
             this.elements.downloadBtn.addEventListener('click', () => this.download());
         }
 
-        if (this.elements.exampleBtn) {
-            this.elements.exampleBtn.addEventListener('click', () => this.loadExample());
-        }
-
         // Character limit
         if (this.elements.jwtInput) {
             this.elements.jwtInput.addEventListener('input', this.checkCharacterLimit.bind(this));
@@ -66,9 +50,7 @@ class JWTDecoder {
 
     setupKeyboardShortcuts() {
         SharedUtilities.setupKeyboardShortcuts({
-            'Ctrl+Enter': () => this.decode(),
-            'Escape': () => this.clearAll(),
-            'Ctrl+E': () => this.loadExample()
+            'Escape': () => this.clearAll()
         });
     }
 

@@ -8,11 +8,9 @@ class TextToBinaryConverter {
         this.elements = {
             textInput: document.getElementById('textInput'),
             binaryOutput: document.getElementById('binaryOutput'),
-            convertBtn: document.getElementById('convertBtn'),
             copyBtn: document.getElementById('copyBtn'),
             clearBtn: document.getElementById('clearBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
-            exampleBtn: document.getElementById('exampleBtn'),
             separatorToggle: document.getElementById('separatorToggle'),
             asciiToggle: document.getElementById('asciiToggle'),
             errorMsg: document.querySelector('.error-msg'),
@@ -26,7 +24,6 @@ class TextToBinaryConverter {
         };
 
         this.currentMode = 'textToBinary';
-        this.autoConvertTimer = null;
         this.init();
     }
 
@@ -42,10 +39,8 @@ class TextToBinaryConverter {
      * Setup main event listeners
      */
     setupEventListeners() {
-        this.elements.convertBtn.addEventListener('click', () => this.main());
         this.elements.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.elements.clearBtn.addEventListener('click', () => this.clearAll());
-        this.elements.exampleBtn.addEventListener('click', () => this.loadExample());
         
         if (this.elements.downloadBtn) {
             this.elements.downloadBtn.addEventListener('click', () => this.download());
@@ -53,7 +48,7 @@ class TextToBinaryConverter {
         
         this.elements.separatorToggle.addEventListener('change', () => this.main());
         this.elements.asciiToggle.addEventListener('change', () => this.main());
-        this.elements.textInput.addEventListener('input', () => this.autoConvert());
+        this.elements.textInput.addEventListener('input', () => this.main());
 
         // Mode selection listeners
         this.elements.modeRadios.forEach(radio => {
@@ -84,13 +79,6 @@ class TextToBinaryConverter {
         });
     }
 
-    /**
-     * Auto-convert with debounce
-     */
-    autoConvert() {
-        clearTimeout(this.autoConvertTimer);
-        this.autoConvertTimer = setTimeout(() => this.main(), 300);
-    }
 
     /**
      * Show error message

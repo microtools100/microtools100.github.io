@@ -2,8 +2,6 @@
 class RegexTester {
     constructor() {
         this.maxChars = 10000;
-        this.autoCopyDelay = 500;
-        this.keystrokeDelay = null;
         this.examplePattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}";
         this.exampleText = "contact@example.com\nuser.name@domain.org\ninvalid.email@\ntest123@test.co.uk";
         
@@ -16,9 +14,7 @@ class RegexTester {
             matchCount: document.getElementById('matchCount'),
             copyBtn: document.getElementById('copyBtn'),
             downloadBtn: document.getElementById('downloadBtn'),
-            testBtn: document.getElementById('testBtn'),
             clearBtn: document.getElementById('clearBtn'),
-            exampleBtn: document.getElementById('exampleBtn'),
             errorMsg: document.querySelector('.error-msg')
         };
 
@@ -33,10 +29,6 @@ class RegexTester {
     init() {
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
-        this.keystrokeDelay = SharedUtilities.createKeystrokeDelay(
-            () => this.executeCopy(),
-            this.autoCopyDelay
-        );
         this.updatePlaceholder();
     }
 
@@ -47,10 +39,6 @@ class RegexTester {
         this.elements.testInput.addEventListener('input', () => this.test());
 
         // Button listeners
-        if (this.elements.testBtn) {
-            this.elements.testBtn.addEventListener('click', () => this.test());
-        }
-
         if (this.elements.copyBtn) {
             this.elements.copyBtn.addEventListener('click', () => this.copyResults());
         }
@@ -63,19 +51,13 @@ class RegexTester {
             this.elements.downloadBtn.addEventListener('click', () => this.download());
         }
 
-        if (this.elements.exampleBtn) {
-            this.elements.exampleBtn.addEventListener('click', () => this.loadExample());
-        }
-
         // Character limit
         this.elements.testInput.addEventListener('input', this.checkCharacterLimit.bind(this));
     }
 
     setupKeyboardShortcuts() {
         SharedUtilities.setupKeyboardShortcuts({
-            'Ctrl+Enter': () => this.test(),
-            'Escape': () => this.clearAll(),
-            'Ctrl+E': () => this.loadExample()
+            'Escape': () => this.clearAll()
         });
     }
 

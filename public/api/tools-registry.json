@@ -1,0 +1,14 @@
+{
+  "note": "This is a template. Extract actual TOOLS_REGISTRY data from tools-registry.js and populate this file.",
+  "phase1": [
+    {
+      "id": "example-tool",
+      "name": "Example Tool",
+      "category": "category-name",
+      "description": "Tool description",
+      "url": "/tools/example-tool/",
+      "priority": 0.85
+    }
+  ],
+  "phase2": []
+}

@@ -11,7 +11,6 @@ class QuoteCommaFormatter {
         this.delimiter = document.getElementById('delimiter');
         this.trimWhitespace = document.getElementById('trimWhitespace');
         this.removeEmpty = document.getElementById('removeEmpty');
-        this.formatBtn = document.getElementById('formatBtn');
         this.clearBtn = document.getElementById('clearBtn');
         this.copyBtn = document.getElementById('copyBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
@@ -23,9 +22,6 @@ class QuoteCommaFormatter {
     }
 
     init() {
-        if (this.formatBtn) {
-            this.formatBtn.addEventListener('click', () => this.format());
-        }
         if (this.clearBtn) {
             this.clearBtn.addEventListener('click', () => this.clearAll());
         }
@@ -82,7 +78,9 @@ class QuoteCommaFormatter {
                 return quote + line + quote;
             });
 
-            const delim = this.delimiter ? this.delimiter.value : ', ';
+            let delim = this.delimiter ? this.delimiter.value : ', ';
+            // Convert literal \n string to actual newline character
+            delim = delim.replace(/\\n/g, '\n');
             const result = lines.join(delim);
 
             this.outputData.value = result;

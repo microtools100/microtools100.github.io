@@ -15,13 +15,34 @@
     
     
     
+    <!-- OPTIMIZATION: Load only critical CSS synchronously -->
     <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
-    <link rel="stylesheet" href="/assets/css/homepage.css?v=202602021216">
-    <link rel="stylesheet" href="/assets/css/hub.css?v=202602021216">
+    
+    <!-- OPTIMIZATION: Lazy load non-critical CSS files -->
+    <link rel="preload" href="/assets/css/homepage.css?v=202602021216" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/hub.css?v=202602021216" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="/assets/css/homepage.css?v=202602021216">
+        <link rel="stylesheet" href="/assets/css/hub.css?v=202602021216">
+    </noscript>
+    
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
-    <!-- Dark Mode Script - Must load early to prevent white flash -->
-    <script src="/assets/js/dark-mode.js"></script>
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <!-- This prevents render blocking while preventing FOUC (Flash of Unstyled Content) -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
     
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -912,21 +933,25 @@
         </div>
     </footer>
 
+    <!-- OPTIMIZATION: Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+
     <!-- Shared Utilities for all tools -->
-    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/shared-utilities.js" defer></script>
     
     <!-- Footer Injector -->
-    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/assets/js/footer-injector.js" defer></script>
     
-    <!-- Performance Monitoring -->
-    <script src="/assets/js/performance-monitor.js"></script>
+    <!-- OPTIMIZATION: Load non-critical scripts with defer attribute -->
+    <!-- Performance Monitoring (deferred, non-critical for render) -->
+    <script src="/assets/js/performance-monitor.js" defer></script>
     
-    <!-- Accessibility Audit & Fixes -->
-    <script src="/assets/js/accessibility-audit.js"></script>
-    <script src="/assets/js/accessibility-fixes.js"></script>
+    <!-- Accessibility Audit & Fixes (deferred, not needed for initial render) -->
+    <script src="/assets/js/accessibility-audit.js" defer></script>
+    <script src="/assets/js/accessibility-fixes.js" defer></script>
     
     <!-- Analytics Placeholder -->
-    <script>
+    <script defer>
         // Placeholder for analytics (GDPR-friendly)
         window.addEventListener('load', function() {
             // Your analytics code here (e.g., Google Analytics, Plausible, etc.)
@@ -934,17 +959,18 @@
         });
     </script>
 
-    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/utils.js" defer></script>
     
-    <!-- Navigation Injector - Must load before other scripts -->
-    <script src="/assets/js/nav-injector.js"></script>
+    <!-- Navigation Injector - With defer -->
+    <script src="/assets/js/nav-injector.js" defer></script>
     
-    <!-- Tools Registry - Must load before homepage.js -->
-    <script src="/tools-registry.js"></script>
+    <!-- Tools Registry - With defer -->
+    <script src="/tools-registry.js" defer></script>
     
-    <!-- Hub Page JavaScript -->
-    <script src="/assets/js/hub.js"></script>
+    <!-- Hub Page JavaScript - With defer -->
+    <script src="/assets/js/hub.js" defer></script>
     
-    <script src="/assets/js/homepage.js"></script>
+    <!-- Homepage JavaScript - With defer -->
+    <script src="/assets/js/homepage.js" defer></script>
 </body>
 </html>

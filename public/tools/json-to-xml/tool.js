@@ -78,15 +78,45 @@ class JSONToXML {
         }
 
         const lines = [];
+        let attributes = '';
+        let textContent = '';
+        const childElements = {};
+
+        // First pass: separate attributes, text content, and child elements
         for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
                 const value = obj[key];
-                const tagName = this.sanitizeTagName(key);
+                
+                // Handle attributes (keys starting with -)
+                if (key.startsWith('-')) {
+                    const attrName = key.substring(1);
+                    attributes += ` ${attrName}="${this.escapeXML(String(value))}"`;
+                }
+                // Handle text content (special key #text)
+                else if (key === '#text') {
+                    textContent = this.escapeXML(String(value));
+                }
+                // Regular child elements
+                else {
+                    if (!childElements[key]) {
+                        childElements[key] = [];
+                    }
+                    childElements[key].push(value);
+                }
+            }
+        }
 
+        // Second pass: generate XML for each root element
+        for (const key in childElements) {
+            const values = childElements[key];
+            const tagName = this.sanitizeTagName(key);
+
+            values.forEach(value => {
                 if (value === null) {
                     lines.push(`${indent}<${tagName} />`);
                 } else if (typeof value === 'object') {
                     if (Array.isArray(value)) {
+                        // Nested array - shouldn't happen in this context
                         value.forEach(item => {
                             if (typeof item === 'object' && item !== null) {
                                 lines.push(`${indent}<${tagName}>`);
@@ -97,21 +127,26 @@ class JSONToXML {
                             }
                         });
                     } else {
-                        lines.push(`${indent}<${tagName}>`);
+                        lines.push(`${indent}<${tagName}${attributes}>`);
                         lines.push(this.jsonToXML(value, indent + '  '));
                         lines.push(`${indent}</${tagName}>`);
                     }
                 } else {
-                    lines.push(`${indent}<${tagName}>${this.escapeXML(String(value))}</${tagName}>`);
+                    lines.push(`${indent}<${tagName}${attributes}>${this.escapeXML(String(value))}</${tagName}>`);
                 }
-            }
+            });
         }
 
         return lines.join('\n');
     }
 
     sanitizeTagName(name) {
-        return name.replace(/[^a-zA-Z0-9_-]/g, '_');
+        // Remove leading hyphens and special characters, replace with underscore
+        // XML tag names must start with letter, underscore, or colon
+        let sanitized = name.replace(/^[^a-zA-Z_:]+/, ''); // Remove invalid start characters
+        sanitized = sanitized.replace(/[^a-zA-Z0-9_:.\-]/g, '_'); // Replace invalid characters with underscore
+        // Fallback if name becomes empty
+        return sanitized || 'element';
     }
 
     escapeXML(str) {

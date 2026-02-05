@@ -8,7 +8,6 @@ class DuplicateLineRemover {
         this.trimLines = document.getElementById('trimLines');
         this.sortLines = document.getElementById('sortLines');
         
-        this.processBtn = document.getElementById('processBtn');
         this.copyBtn = document.getElementById('copyBtn');
         this.clearBtn = document.getElementById('clearBtn');
         
@@ -16,20 +15,21 @@ class DuplicateLineRemover {
     }
 
     init() {
+        // Real-time deduplication on input or option changes
         this.inputText.addEventListener('input', () => this.removeDuplicates());
         this.caseSensitive.addEventListener('change', () => this.removeDuplicates());
         this.trimLines.addEventListener('change', () => this.removeDuplicates());
         this.sortLines.addEventListener('change', () => this.removeDuplicates());
         
-        this.processBtn.addEventListener('click', () => this.removeDuplicates());
+        // Button listeners
         this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.clearBtn.addEventListener('click', () => this.clearAll());
         
-        // Keyboard shortcut: Ctrl/Cmd+Enter to process
+        // Keyboard shortcut: Escape to clear
         this.inputText.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            if (e.key === 'Escape') {
                 e.preventDefault();
-                this.removeDuplicates();
+                this.clearAll();
             }
         });
     }
