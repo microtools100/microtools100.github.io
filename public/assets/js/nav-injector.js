@@ -84,6 +84,30 @@ function injectCategoriesFooter() {
 }
 
 /**
+ * Setup mobile menu toggle functionality
+ */
+function setupMobileMenuToggle() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mainNav = document.querySelector('nav.main-nav');
+    
+    if (!mobileMenuBtn || !mainNav) return;
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        mainNav.classList.toggle('active');
+        mobileMenuBtn.setAttribute('aria-expanded', mainNav.classList.contains('active'));
+    });
+    
+    // Close menu when a nav link is clicked
+    const navLinks = mainNav.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mainNav.classList.remove('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        });
+    });
+}
+
+/**
  * Initialize navigation injection when DOM is ready
  */
 function initializeNavigation() {
@@ -91,10 +115,12 @@ function initializeNavigation() {
         document.addEventListener('DOMContentLoaded', () => {
             injectMainNavigation();
             injectCategoriesFooter();
+            setupMobileMenuToggle();
         });
     } else {
         injectMainNavigation();
         injectCategoriesFooter();
+        setupMobileMenuToggle();
     }
 }
 
