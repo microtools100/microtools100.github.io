@@ -1,6 +1,7 @@
 /**
  * JSON to YAML Converter Tool
  * Class-based implementation with keyboard shortcuts and clipboard support
+ * Uses global auto-convert and auto-copy functions
  */
 
 class JSONToYAML {
@@ -17,8 +18,21 @@ class JSONToYAML {
     }
 
     init() {
+        // Setup auto-convert: Real-time conversion as you type
+        SharedUtilities.setupAutoConvert(
+            this.jsonInput,
+            (jsonText) => this.jsonToYAML(JSON.parse(jsonText), 0),
+            this.yamlOutput,
+            this.errorMsg,
+            300
+        );
+
+        // Setup auto-copy: Automatically copy to clipboard after conversion
+        SharedUtilities.setupAutoCopy(this.yamlOutput, 500);
+
+        // Additional button handlers
         if (this.convertBtn) {
-            this.convertBtn.addEventListener('click', () => this.convert());
+            this.convertBtn.addEventListener('click', () => this.manualConvert());
         }
         if (this.clearBtn) {
             this.clearBtn.addEventListener('click', () => this.clearAll());
@@ -35,17 +49,13 @@ class JSONToYAML {
     }
 
     handleKeyboard(e) {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-            e.preventDefault();
-            this.convert();
-        }
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
             e.preventDefault();
             this.clearAll();
         }
     }
 
-    convert() {
+    manualConvert() {
         try {
             let json = this.jsonInput.value.trim();
             if (!json) {

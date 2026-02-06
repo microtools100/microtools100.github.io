@@ -133,7 +133,7 @@ class ColorPickerTool {
                     this.colorInput.value = swatch.dataset.hex;
                     this.lastValidColor = swatch.dataset.hex;
                     this.updateColorValues();
-                    window.MicroTools.utils.showNotification('Color selected', 'success');
+                    SharedUtilities.showNotification('Color selected', 'success');
                 }
             });
         }
@@ -145,7 +145,7 @@ class ColorPickerTool {
                     this.colorInput.value = swatch.dataset.hex;
                     this.lastValidColor = swatch.dataset.hex;
                     this.updateColorValues();
-                    window.MicroTools.utils.showNotification('Color selected', 'success');
+                    SharedUtilities.showNotification('Color selected', 'success');
                 }
             });
         }
@@ -237,11 +237,11 @@ class ColorPickerTool {
             if (targetElement) {
                 const text = targetElement.value || targetElement.textContent;
                 if (!text) {
-                    window.MicroTools.utils.showNotification('No text to copy', 'warning');
+                    SharedUtilities.showNotification('No text to copy', 'warning');
                     return;
                 }
                 
-                await window.MicroTools.utils.copyToClipboard(text, btn);
+                await SharedUtilities.copyToClipboard(text, 'Copied to clipboard!', 'success');
             }
         }
     }
@@ -250,7 +250,7 @@ class ColorPickerTool {
         this.colorInput.value = '#3498db';
         this.lastValidColor = '#3498db';
         this.updateColorValues();
-        window.MicroTools.utils.showNotification('Cleared', 'success');
+        SharedUtilities.showNotification('Cleared', 'success');
     }
 
     download() {
@@ -450,7 +450,7 @@ class ColorPickerTool {
             this.lastValidColor = hex;
             this.updateColorValues();
             this.clearError();
-            window.MicroTools.utils.showNotification('Color picked successfully', 'success');
+            SharedUtilities.showNotification('Color picked successfully', 'success');
         } catch (e) {
             // User canceled the eyedropper or it failed
             if (e.name !== 'NotAllowedError') {

@@ -10,6 +10,7 @@ class ReadingTimeCalculator {
         this.avgTimeEl = document.getElementById('avgTime');
         this.fastTimeEl = document.getElementById('fastTime');
         this.copyBtn = document.getElementById('copyBtn');
+        this.clearBtn = document.getElementById('clearBtn');
 
         this.init();
     }
@@ -19,6 +20,9 @@ class ReadingTimeCalculator {
         this.readingSpeedInput.addEventListener('change', () => this.calculate());
         if (this.copyBtn) {
             this.copyBtn.addEventListener('click', () => this.copyResults());
+        }
+        if (this.clearBtn) {
+            this.clearBtn.addEventListener('click', () => this.clearAll());
         }
         
         // Keyboard shortcuts
@@ -131,7 +135,7 @@ class ReadingTimeCalculator {
         this.textInput.value = '';
         this.resetResults();
         this.textInput.focus();
-        window.MicroTools?.utils?.showNotification?.('Cleared all inputs', 'info');
+        SharedUtilities.showNotification('Cleared all inputs', 'info');
     }
 }
 

@@ -147,14 +147,7 @@ class Base64Tool {
             return;
         }
 
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            await window.MicroTools.utils.copyToClipboard(text, this.elements.copyBtn);
-        } else {
-            // Fallback copy method
-            this.elements.outputText.select();
-            document.execCommand('copy');
-            SharedUtilities.showNotification('Copied to clipboard!', 'success');
-        }
+        SharedUtilities.copyToClipboard(text, 'Copied to clipboard!', 'success');
         this.clearError();
     }
 
@@ -199,7 +192,6 @@ class Base64Tool {
             localStorage.setItem('base64History', JSON.stringify(history));
         } catch (e) {
             // Silently fail if localStorage is full or not available
-            console.log('Could not save to history:', e);
         }
     }
 

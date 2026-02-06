@@ -1,6 +1,7 @@
 /**
  * XML to JSON Converter Tool
  * Class-based implementation with keyboard shortcuts and clipboard support
+ * Uses global auto-convert and auto-copy functions
  */
 
 class XMLToJSON {
@@ -17,8 +18,32 @@ class XMLToJSON {
     }
 
     init() {
+        // Setup auto-convert: Real-time conversion as you type
+        SharedUtilities.setupAutoConvert(
+            this.xmlInput,
+            (xmlText) => {
+                let xml = xmlText.replace(/<\?xml[^?]*\?>/g, '').trim();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(xml, 'text/xml');
+                
+                if (doc.getElementsByTagName('parsererror').length > 0) {
+                    throw new Error('Invalid XML format');
+                }
+                
+                const json = this.xmlToJSON(doc.documentElement);
+                return JSON.stringify(json, null, 2);
+            },
+            this.jsonOutput,
+            this.errorMsg,
+            300
+        );
+
+        // Setup auto-copy: Automatically copy to clipboard after conversion
+        SharedUtilities.setupAutoCopy(this.jsonOutput, 500);
+
+        // Additional button handlers
         if (this.convertBtn) {
-            this.convertBtn.addEventListener('click', () => this.convert());
+            this.convertBtn.addEventListener('click', () => this.manualConvert());
         }
         if (this.clearBtn) {
             this.clearBtn.addEventListener('click', () => this.clearAll());
@@ -35,17 +60,13 @@ class XMLToJSON {
     }
 
     handleKeyboard(e) {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-            e.preventDefault();
-            this.convert();
-        }
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
             e.preventDefault();
             this.clearAll();
         }
     }
 
-    convert() {
+    manualConvert() {
         try {
             let xml = this.xmlInput.value.trim();
             if (!xml) {

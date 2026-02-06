@@ -57,12 +57,10 @@ class TextLowercaseTool {
 
         // Check character limit
         if (inputText.length > this.maxChars) {
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification(
-                    `Character limit exceeded (${this.maxChars} max).`,
-                    'warning'
-                );
-            }
+            SharedUtilities.showNotification(
+                `Character limit exceeded (${this.maxChars} max).`,
+                'warning'
+            );
             this.input.value = inputText.substring(0, this.maxChars);
             return;
         }
@@ -70,6 +68,14 @@ class TextLowercaseTool {
         // Convert to lowercase
         const lowercaseText = inputText.toLowerCase();
         this.output.value = lowercaseText;
+
+        // Auto-copy to clipboard with a small delay
+        if (lowercaseText.trim()) {
+            setTimeout(() => {
+                SharedUtilities.copyToClipboardSilently(lowercaseText);
+                SharedUtilities.showNotification('Converted and copied to clipboard', 'success');
+            }, 10);
+        }
     }
 
     clearAll() {
@@ -77,65 +83,25 @@ class TextLowercaseTool {
         this.output.value = '';
         this.input.focus();
 
-        if (window.SharedUtilities?.showNotification) {
-            window.SharedUtilities.showNotification('Cleared all', 'info');
-        }
+        SharedUtilities.showNotification('Cleared all', 'info');
     }
 
     copyOutput() {
         const text = this.output.value;
 
         if (!text.trim()) {
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification('Nothing to copy', 'warning');
-            }
+            SharedUtilities.showNotification('Nothing to copy', 'warning');
             return;
         }
 
-        try {
-            // Use Clipboard API if available
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(() => {
-                    if (window.SharedUtilities?.showNotification) {
-                        window.SharedUtilities.showNotification('Copied to clipboard!', 'success');
-                    }
-                }).catch(() => {
-                    this.fallbackCopy(text);
-                });
-            } else {
-                this.fallbackCopy(text);
-            }
-        } catch (err) {
-            this.fallbackCopy(text);
-        }
-    }
-
-    fallbackCopy(text) {
-        // Fallback for older browsers
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-            document.execCommand('copy');
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification('Copied to clipboard!', 'success');
-            }
-        } catch (err) {
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification('Copy failed', 'error');
-            }
-        }
-        document.body.removeChild(textarea);
+        SharedUtilities.copyToClipboard(text, 'Copied to clipboard!', 'success');
     }
 
     download() {
         const text = this.output.value;
 
         if (!text.trim()) {
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification('Nothing to download', 'warning');
-            }
+            SharedUtilities.showNotification('Nothing to download', 'warning');
             return;
         }
 
@@ -150,13 +116,9 @@ class TextLowercaseTool {
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
 
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification('Downloaded successfully!', 'success');
-            }
+            SharedUtilities.showNotification('Downloaded successfully!', 'success');
         } catch (err) {
-            if (window.SharedUtilities?.showNotification) {
-                window.SharedUtilities.showNotification('Download failed', 'error');
-            }
+            SharedUtilities.showNotification('Download failed', 'error');
         }
     }
 }

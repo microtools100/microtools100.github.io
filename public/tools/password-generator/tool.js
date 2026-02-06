@@ -574,26 +574,7 @@ class PasswordGenerator {
     async copyPassword(password, button) {
         if (!password) return;
         
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            await window.MicroTools.utils.copyToClipboard(password, button);
-        } else {
-            // Fallback copy method
-            const textarea = document.createElement('textarea');
-            textarea.value = password;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            
-            const originalText = button.innerHTML;
-            button.innerHTML = '<span>✓</span>';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-            }, 2000);
-            
-            SharedUtilities.showNotification('Password copied to clipboard', 'success');
-        }
+        SharedUtilities.copyToClipboard(password, 'Password copied to clipboard', 'success');
     }
 
     async copyAllPasswords() {
@@ -606,19 +587,7 @@ class PasswordGenerator {
             .map((p, i) => `Password ${i + 1}: ${p.value}`)
             .join('\n');
         
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            await window.MicroTools.utils.copyToClipboard(text, this.elements.copyAllBtn);
-            SharedUtilities.showNotification('All passwords copied to clipboard', 'success');
-        } else {
-            // Fallback copy method
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            SharedUtilities.showNotification('All passwords copied to clipboard', 'success');
-        }
+        SharedUtilities.copyToClipboard(text, 'All passwords copied to clipboard', 'success');
     }
 
     downloadPasswords() {

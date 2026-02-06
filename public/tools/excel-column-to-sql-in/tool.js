@@ -31,13 +31,13 @@ class ExcelColumnToSqlIn {
         // Real-time formatting on input
         this.elements.inputData.addEventListener('input', () => {
             this.updateCharCount();
-            this.formatWithoutAutoCopy();
+            this.format();
         });
         
         // Format when options change
-        this.elements.quoteType.addEventListener('change', () => this.formatWithoutAutoCopy());
-        this.elements.trimWhitespace.addEventListener('change', () => this.formatWithoutAutoCopy());
-        this.elements.removeEmpty.addEventListener('change', () => this.formatWithoutAutoCopy());
+        this.elements.quoteType.addEventListener('change', () => this.format());
+        this.elements.trimWhitespace.addEventListener('change', () => this.format());
+        this.elements.removeEmpty.addEventListener('change', () => this.format());
     }
 
     formatWithoutAutoCopy() {

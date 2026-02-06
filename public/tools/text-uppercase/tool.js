@@ -48,6 +48,14 @@ class UppercaseTool {
         // Convert to uppercase
         const uppercaseText = inputText.toUpperCase();
         this.elements.output.value = uppercaseText;
+
+        // Auto-copy to clipboard with a small delay
+        if (uppercaseText.trim()) {
+            setTimeout(() => {
+                SharedUtilities.copyToClipboardSilently(uppercaseText);
+                SharedUtilities.showNotification('Converted and copied to clipboard', 'success');
+            }, 10);
+        }
     }
 
     clear() {
@@ -69,14 +77,7 @@ class UppercaseTool {
             return;
         }
         
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            await window.MicroTools.utils.copyToClipboard(text, this.elements.copyBtn);
-        } else {
-            // Fallback copy method
-            this.elements.output.select();
-            document.execCommand('copy');
-            SharedUtilities.showNotification('Copied to clipboard!', 'success');
-        }
+        SharedUtilities.copyToClipboard(text, 'Copied to clipboard!', 'success');
     }
     
     download() {

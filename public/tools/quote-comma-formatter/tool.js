@@ -60,6 +60,45 @@ class QuoteCommaFormatter {
         }
     }
 
+    formatWithoutAutoCopy() {
+        try {
+            let lines = this.inputData.value.split('\n');
+
+            if (this.removeEmpty && this.removeEmpty.checked) {
+                lines = lines.filter(line => line.trim() !== '');
+            }
+
+            if (this.trimWhitespace && this.trimWhitespace.checked) {
+                lines = lines.map(line => line.trim());
+            }
+
+            const quote = this.getQuote();
+            lines = lines.map(line => {
+                if (line === '') return '';
+                return quote + line + quote;
+            });
+
+            let delim = this.delimiter ? this.delimiter.value : ', ';
+            // Convert literal \n string to actual newline character
+            delim = delim.replace(/\\n/g, '\n');
+            const result = lines.join(delim);
+
+            this.outputData.value = result;
+            
+            // Update stats
+            if (this.itemCount) {
+                this.itemCount.textContent = lines.filter(line => line !== '').length;
+            }
+            if (this.charCount) {
+                this.charCount.textContent = result.length;
+            }
+            
+            this.clearError();
+        } catch (error) {
+            this.showError('Formatting error: ' + error.message);
+        }
+    }
+
     format() {
         try {
             let lines = this.inputData.value.split('\n');
@@ -94,6 +133,14 @@ class QuoteCommaFormatter {
             }
             
             this.clearError();
+
+            // Auto-copy to clipboard with a small delay
+            if (result.trim()) {
+                setTimeout(() => {
+                    SharedUtilities.copyToClipboardSilently(result);
+                    SharedUtilities.showNotification('Formatted and copied to clipboard', 'success');
+                }, 10);
+            }
         } catch (error) {
             this.showError('Formatting error: ' + error.message);
         }

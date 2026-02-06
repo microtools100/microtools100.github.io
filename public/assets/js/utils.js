@@ -40,5 +40,3 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
-
-console.warn('utils.js is deprecated. Use SharedUtilities from shared-utilities.js instead.');

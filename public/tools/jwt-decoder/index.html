@@ -35,7 +35,7 @@
     </script>
     <!-- Load full dark mode script asynchronously after page renders -->
     <script src="/assets/js/dark-mode.js" defer></script>
-    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
 
     <script type="application/ld+json">
     {
@@ -110,24 +110,12 @@
 
             <div class="tool-layout">
                 <div class="tool-main">
-                    <div class="tool-container">
-                        <!-- Tool Options -->
-                        <div class="tool-options">
-                            <h3 class="section-title">Options</h3>
-                            <div class="tool-actions-horizontal">
-                                <button class="action-btn" id="clearBtn">
-                                    <span>Clear</span>
-                                </button>
-                            </div>
-                        </div>
-
+                        <div class="tool-container">
                         <!-- Error Message Display -->
-                        <div class="error-msg"></div>
-
-                        <!-- Two-Column Layout for Input and Output -->
-                        <div class="tool-content-columns">
-                            <!-- Input Column -->
-                            <section class="tool-section input-column">
+                        <div class="error-msg"></div>                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-single-column">
+                            <!-- Input Section -->
+                            <section class="tool-section">
                                 <div class="input-group">
                                     <label for="jwtInput">JWT Token:</label>
                                     <div class="input-area">
@@ -141,24 +129,29 @@
                                     <div class="hint">
                                         Paste a JWT token to decode it. Analysis happens in your browser - no data is sent to servers.
                                     </div>
+                                    <div class="tool-actions-horizontal" style="margin-top: 12px;">
+                                        <button class="action-btn" id="clearBtn">
+                                            <span>Clear</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </section>
 
-                            <!-- Results Column -->
-                            <section class="tool-section output-column">
+                            <!-- Results Section -->
+                            <section class="tool-section">
                                 <div class="output-group">
                                     <label>Decoded Components:</label>
                                     <div class="jwt-sections">
                                         <div class="jwt-part">
-                                            <h4>Header</h4>
+                                            <div class="jwt-part-header">Header</div>
                                             <pre id="headerOutput" class="code-block">-</pre>
                                         </div>
                                         <div class="jwt-part">
-                                            <h4>Payload</h4>
+                                            <div class="jwt-part-header">Payload</div>
                                             <pre id="payloadOutput" class="code-block">-</pre>
                                         </div>
                                         <div class="jwt-part">
-                                            <h4>Signature</h4>
+                                            <div class="jwt-part-header">Signature</div>
                                             <pre id="signatureOutput" class="code-block">-</pre>
                                         </div>
                                     </div>

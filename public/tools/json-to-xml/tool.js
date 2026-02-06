@@ -1,6 +1,7 @@
 /**
  * JSON to XML Converter Tool
  * Class-based implementation with keyboard shortcuts and clipboard support
+ * Uses global auto-convert and auto-copy functions
  */
 
 class JSONToXML {
@@ -17,8 +18,21 @@ class JSONToXML {
     }
 
     init() {
+        // Setup auto-convert: Real-time conversion as you type
+        SharedUtilities.setupAutoConvert(
+            this.jsonInput,
+            (jsonText) => this.jsonToXML(JSON.parse(jsonText)),
+            this.xmlOutput,
+            this.errorMsg,
+            300
+        );
+
+        // Setup auto-copy: Automatically copy to clipboard after conversion
+        SharedUtilities.setupAutoCopy(this.xmlOutput, 500);
+
+        // Additional button handlers
         if (this.convertBtn) {
-            this.convertBtn.addEventListener('click', () => this.convert());
+            this.convertBtn.addEventListener('click', () => this.manualConvert());
         }
         if (this.clearBtn) {
             this.clearBtn.addEventListener('click', () => this.clearAll());
@@ -35,11 +49,6 @@ class JSONToXML {
     }
 
     handleKeyboard(e) {
-        // Ctrl+Enter / Cmd+Enter: Convert
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-            e.preventDefault();
-            this.convert();
-        }
         // Ctrl+Shift+L / Cmd+Shift+L: Clear
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
             e.preventDefault();
@@ -47,7 +56,7 @@ class JSONToXML {
         }
     }
 
-    convert() {
+    manualConvert() {
         try {
             let json = this.jsonInput.value.trim();
             if (!json) {

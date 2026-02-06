@@ -534,7 +534,7 @@ class CharadesGenerator {
 
         this.displayCard();
         this.updateButtons();
-        window.MicroTools.utils.showNotification(`Generated ${this.charades.length} charades!`, 'success');
+        SharedUtilities.showNotification(`Generated ${this.charades.length} charades!`, 'success');
     }
 
     displayCard() {
@@ -615,13 +615,13 @@ class CharadesGenerator {
         this.team2Pts = 0;
         this.team1Score.textContent = '0';
         this.team2Score.textContent = '0';
-        window.MicroTools.utils.showNotification('Scores reset', 'success');
+        SharedUtilities.showNotification('Scores reset', 'success');
     }
 
     startTimer() {
         const timerSeconds = parseInt(this.timerSelect.value);
         if (timerSeconds === 0) {
-            window.MicroTools.utils.showNotification('No timer selected', 'warning');
+            SharedUtilities.showNotification('No timer selected', 'warning');
             return;
         }
 
@@ -639,7 +639,7 @@ class CharadesGenerator {
             if (this.timeRemaining <= 0) {
                 clearInterval(this.timerInterval);
                 this.timerInterval = null;
-                window.MicroTools.utils.showNotification('Time\'s up!', 'warning');
+                SharedUtilities.showNotification('Time\'s up!', 'warning');
             }
         }, 1000);
     }
@@ -654,7 +654,7 @@ class CharadesGenerator {
         this.showHints = !this.showHints;
         this.showHintsBtn.textContent = this.showHints ? 'Hide Hints' : 'Show Hints';
         this.displayCard();
-        window.MicroTools.utils.showNotification(this.showHints ? 'Hints & supporting info shown' : 'Hints & supporting info hidden', 'info');
+        SharedUtilities.showNotification(this.showHints ? 'Hints & supporting info shown' : 'Hints & supporting info hidden', 'info');
     }
 
     clear() {
@@ -669,7 +669,7 @@ class CharadesGenerator {
         this.startGameBtn.disabled = false;
         this.startGameBtn.textContent = 'Start Timer';
         this.clearError();
-        window.MicroTools.utils.showNotification('Cleared', 'success');
+        SharedUtilities.showNotification('Cleared', 'success');
     }
 
     resetItems() {
@@ -684,22 +684,22 @@ class CharadesGenerator {
         this.startGameBtn.disabled = false;
         this.startGameBtn.textContent = 'Start Timer';
         this.clearError();
-        window.MicroTools.utils.showNotification('All items reset. Ready to generate again!', 'success');
+        SharedUtilities.showNotification('All items reset. Ready to generate again!', 'success');
     }
 
     copyToClipboard() {
         if (this.charades.length === 0) {
-            window.MicroTools.utils.showNotification('No charades to copy', 'warning');
+            SharedUtilities.showNotification('No charades to copy', 'warning');
             return;
         }
 
         const text = this.charades.map((c, i) => `${i + 1}. ${c.text}`).join('\n');
-        window.MicroTools.utils.copyToClipboard(text, this.copyBtn);
+        SharedUtilities.copyToClipboard(text, 'Charades copied to clipboard!', 'success');
     }
 
     download() {
         if (this.charades.length === 0) {
-            window.MicroTools.utils.showNotification('No charades to download', 'warning');
+            SharedUtilities.showNotification('No charades to download', 'warning');
             return;
         }
 
@@ -713,12 +713,12 @@ class CharadesGenerator {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        window.MicroTools.utils.showNotification('Downloaded successfully', 'success');
+        SharedUtilities.showNotification('Downloaded successfully', 'success');
     }
 
     print() {
         if (this.charades.length === 0) {
-            window.MicroTools.utils.showNotification('No charades to print', 'warning');
+            SharedUtilities.showNotification('No charades to print', 'warning');
             return;
         }
 

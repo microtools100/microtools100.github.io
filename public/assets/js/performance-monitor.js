@@ -16,7 +16,6 @@ class PerformanceMonitor {
      */
     init() {
         if (!window.PerformanceObserver) {
-            console.warn('PerformanceObserver not supported in this browser');
             return;
         }
 

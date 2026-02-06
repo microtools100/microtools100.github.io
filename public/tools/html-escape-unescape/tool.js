@@ -1,4 +1,5 @@
 // HTML Escape/Unescape Tool
+// Uses global auto-convert and auto-copy functions
 class HTMLEscapeUnescape {
     constructor() {
         this.maxChars = 10000;
@@ -20,6 +21,24 @@ class HTMLEscapeUnescape {
     }
 
     init() {
+        // Setup auto-convert: Real-time conversion as you type
+        SharedUtilities.setupAutoConvert(
+            this.elements.inputText,
+            (inputText) => {
+                if (this.isEscape) {
+                    return this.escapeHtml(inputText);
+                } else {
+                    return this.unescapeHtml(inputText);
+                }
+            },
+            this.elements.outputText,
+            this.elements.errorMsg,
+            300
+        );
+
+        // Setup auto-copy: Automatically copy to clipboard after conversion
+        SharedUtilities.setupAutoCopy(this.elements.outputText, 500);
+
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
     }
@@ -38,11 +57,6 @@ class HTMLEscapeUnescape {
         // Download button
         this.elements.downloadBtn.addEventListener('click', () => this.download());
 
-        // Real-time processing on input
-        this.elements.inputText.addEventListener('input', () => {
-            this.processWithoutAutoCopy();
-        });
-
         // Character limit warning
         this.elements.inputText.addEventListener('input', this.checkCharacterLimit.bind(this));
     }
@@ -57,30 +71,23 @@ class HTMLEscapeUnescape {
         this.isEscape = this.elements.escapeMode.checked;
         this.elements.inputLabel.textContent = this.isEscape ? 'Enter HTML to Escape:' : 'Enter HTML to Unescape:';
         this.elements.outputLabel.textContent = this.isEscape ? 'Escaped Result:' : 'Unescaped Result:';
-        this.processWithoutAutoCopy();
-    }
-
-    processWithoutAutoCopy() {
+        
+        // Re-process with new mode
         const input = this.elements.inputText.value.trim();
-
-        if (!input) {
-            this.elements.outputText.value = '';
-            this.clearError();
-            return;
-        }
-
-        try {
-            let result;
-            if (this.isEscape) {
-                result = this.escapeHtml(input);
-            } else {
-                result = this.unescapeHtml(input);
+        if (input) {
+            try {
+                let result;
+                if (this.isEscape) {
+                    result = this.escapeHtml(input);
+                } else {
+                    result = this.unescapeHtml(input);
+                }
+                this.elements.outputText.value = result;
+                this.clearError();
+            } catch (error) {
+                this.showError('Error: Invalid input detected.');
+                this.elements.outputText.value = '';
             }
-            this.elements.outputText.value = result;
-            this.clearError();
-        } catch (error) {
-            this.showError('Error: Invalid input detected.');
-            this.elements.outputText.value = '';
         }
     }
 
@@ -147,14 +154,7 @@ class HTMLEscapeUnescape {
             return;
         }
 
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            await window.MicroTools.utils.copyToClipboard(text, this.elements.copyBtn);
-        } else {
-            // Fallback copy method
-            this.elements.outputText.select();
-            document.execCommand('copy');
-            SharedUtilities.showNotification('Copied to clipboard!', 'success');
-        }
+        SharedUtilities.copyToClipboard(text, 'Copied to clipboard!', 'success');
         this.clearError();
     }
 
@@ -289,7 +289,6 @@ class HTMLEscapeUnescape {
             localStorage.setItem('htmlEscapeHistory', JSON.stringify(history));
         } catch (e) {
             // Silently fail if localStorage is full or not available
-            console.log('Could not save to history:', e);
         }
     }
 

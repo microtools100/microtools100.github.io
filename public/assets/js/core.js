@@ -12,5 +12,3 @@
  * 
  * Note: utils.js is deprecated and has been consolidated into shared-utilities.js
  */
-
-console.log('Micro Tools Platform initialized');

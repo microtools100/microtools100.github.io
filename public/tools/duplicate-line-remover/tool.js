@@ -79,6 +79,14 @@ class DuplicateLineRemover {
         const removedCount = originalCount - uniqueLines.length;
         if (removedCount > 0) {
             SharedUtilities.showNotification(`Removed ${removedCount} duplicate(s)`, 'success');
+            
+            // Auto-copy to clipboard with a small delay
+            if (result.trim()) {
+                setTimeout(() => {
+                    SharedUtilities.copyToClipboardSilently(result);
+                    SharedUtilities.showNotification('Deduplicated and copied to clipboard', 'success');
+                }, 10);
+            }
         }
     }
 

@@ -86,13 +86,7 @@ class SharedUtilities {
      * @param {number} duration - Duration in ms (default: 3000)
      */
     static showNotification(message, type = 'info', duration = 3000) {
-        // Try to use existing notification system if available
-        if (window.MicroTools?.utils?.showNotification) {
-            window.MicroTools.utils.showNotification(message, type);
-            return;
-        }
-
-        // Fallback: Create simple notification
+        // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         notification.textContent = message;
@@ -490,6 +484,118 @@ class SharedUtilities {
                 }
             }, delayMs);
         };
+    }
+
+    /**
+     * Setup real-time auto-conversion for transformation tools
+     * Monitors input and converts on each keystroke with optional debounce
+     * @param {HTMLElement} inputElement - The input field to monitor
+     * @param {Function} conversionFn - The conversion function to call with input value
+     * @param {HTMLElement} outputElement - Where to display results
+     * @param {HTMLElement} errorElement - Where to show errors (optional)
+     * @param {number} debounceMs - Debounce delay in milliseconds (default 300)
+     */
+    static setupAutoConvert(inputElement, conversionFn, outputElement, errorElement = null, debounceMs = 300) {
+        let timeout = null;
+
+        inputElement.addEventListener('input', () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+
+            timeout = setTimeout(() => {
+                const input = inputElement.value.trim();
+
+                if (!input) {
+                    outputElement.value = '';
+                    if (errorElement) {
+                        errorElement.textContent = '';
+                        errorElement.classList.remove('show');
+                    }
+                    return;
+                }
+
+                try {
+                    const result = conversionFn(input);
+                    outputElement.value = result;
+                    if (errorElement) {
+                        errorElement.textContent = '';
+                        errorElement.classList.remove('show');
+                    }
+                    // Trigger change event to notify auto-copy listener
+                    outputElement.dispatchEvent(new Event('change', { bubbles: true }));
+                } catch (error) {
+                    if (errorElement) {
+                        errorElement.textContent = error.message;
+                        errorElement.classList.add('show');
+                    }
+                    outputElement.value = '';
+                }
+            }, debounceMs);
+        });
+    }
+
+    /**
+     * Setup automatic clipboard copying after conversion
+     * Automatically copies output to clipboard after conversion completes
+     * @param {HTMLElement} outputElement - The output element to copy from
+     * @param {number} delayMs - Delay before copy in milliseconds (default 500)
+     */
+    static setupAutoCopy(outputElement, delayMs = 500) {
+        let timeout = null;
+        let lastValue = '';
+
+        // Function to perform the copy
+        const performCopy = (currentValue) => {
+            navigator.clipboard.writeText(currentValue)
+                .then(() => {
+                    SharedUtilities.showNotification('Auto-copied to clipboard', 'success');
+                })
+                .catch(() => {
+                    // Silently fail on copy error
+                });
+        };
+
+        // Create a polling mechanism to watch for changes to the value
+        // This approach avoids property descriptor conflicts
+        const observer = setInterval(() => {
+            const currentValue = outputElement.value;
+            
+            // Check if value has changed and has content
+            if (currentValue !== lastValue && currentValue && currentValue.trim()) {
+                lastValue = currentValue;
+                
+                // Clear any pending timeout
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+
+                // Schedule copy with delay
+                timeout = setTimeout(() => {
+                    performCopy(currentValue);
+                }, delayMs);
+            }
+        }, 100);
+
+        // Listen for change events (triggered programmatically)
+        outputElement.addEventListener('change', () => {
+            const currentValue = outputElement.value;
+            if (currentValue && currentValue.trim()) {
+                lastValue = currentValue;
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+                timeout = setTimeout(() => {
+                    performCopy(currentValue);
+                }, delayMs);
+            }
+        });
+
+        // Store observer ID for potential cleanup (optional)
+        if (!outputElement._autoCopyObservers) {
+            outputElement._autoCopyObservers = [];
+        }
+        outputElement._autoCopyObservers.push(observer);
     }
 
     /**

@@ -41,7 +41,7 @@
     </script>
     <!-- Load full dark mode script asynchronously after page renders -->
     <script src="/assets/js/dark-mode.js" defer></script>
-    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
     
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -147,11 +147,6 @@
                                 <input type="radio" name="mode" value="decode" id="decodeMode" class="option-checkbox">
                                 <label for="decodeMode" class="option-label">Decode from Base64</label>
                             </div>
-                            <div class="tool-actions-horizontal">
-                                <button class="action-btn" id="clearBtn">
-                                    <span>Clear</span>
-                                </button>
-                            </div>
                         </div>
 
                         <!-- Error Message Display -->
@@ -174,6 +169,11 @@
                                     </div>
                                     <div class="hint">
                                         Maximum 10,000 characters.
+                                    </div>
+                                    <div class="tool-actions-horizontal" style="margin-top: 12px;">
+                                        <button class="action-btn" id="clearBtn">
+                                            <span>Clear</span>
+                                        </button>
                                     </div>
                                 </div>
                             </section>

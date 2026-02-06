@@ -1,6 +1,7 @@
 /**
  * CSV to JSON Converter Tool
  * Class-based implementation with keyboard shortcuts and clipboard support
+ * Uses global auto-convert and auto-copy functions
  */
 
 class CSVToJSON {
@@ -10,13 +11,30 @@ class CSVToJSON {
         this.clearBtn = document.getElementById('clearBtn');
         this.copyBtn = document.getElementById('copyBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
-        this.hasHeaderRow = document.getElementById('hasHeaderRow');
+        this.hasHeaderRow = document.getElementById('hasHeaderRow'); // May be null - that's OK
         this.errorMsg = document.querySelector('.error-msg');
         
         this.init();
     }
 
     init() {
+        // Setup auto-convert: Real-time conversion as you type
+        SharedUtilities.setupAutoConvert(
+            this.csvInput,
+            (csvText) => {
+                const hasHeader = this.hasHeaderRow ? this.hasHeaderRow.checked : true; // Default to true
+                const json = this.csvToJSON(csvText, hasHeader);
+                return JSON.stringify(json, null, 2);
+            },
+            this.jsonOutput,
+            this.errorMsg,
+            300
+        );
+
+        // Setup auto-copy: Automatically copy to clipboard after conversion
+        SharedUtilities.setupAutoCopy(this.jsonOutput, 500);
+
+        // Additional button handlers
         if (this.clearBtn) {
             this.clearBtn.addEventListener('click', () => this.clearAll());
         }
@@ -27,10 +45,11 @@ class CSVToJSON {
             this.downloadBtn.addEventListener('click', () => this.downloadJSON());
         }
         
-        this.csvInput.addEventListener('input', () => this.convert());
+        // Re-convert when header option changes
         if (this.hasHeaderRow) {
-            this.hasHeaderRow.addEventListener('change', () => this.convert());
+            this.hasHeaderRow.addEventListener('change', () => this.manualConvert());
         }
+        
         this.csvInput.addEventListener('keydown', (e) => this.handleKeyboard(e));
     }
 
@@ -41,23 +60,18 @@ class CSVToJSON {
         }
     }
 
-    convert() {
+    manualConvert() {
         const csvText = this.csvInput.value.trim();
-        
-        if (!csvText) {
-            this.jsonOutput.value = '';
-            this.clearError();
-            return;
-        }
-
-        try {
-            const hasHeader = this.hasHeaderRow ? this.hasHeaderRow.checked : true;
-            const json = this.csvToJSON(csvText, hasHeader);
-            this.jsonOutput.value = JSON.stringify(json, null, 2);
-            this.clearError();
-        } catch (error) {
-            this.showError('Error parsing CSV: ' + error.message);
-            this.jsonOutput.value = '';
+        if (csvText) {
+            try {
+                const hasHeader = this.hasHeaderRow ? this.hasHeaderRow.checked : true;
+                const json = this.csvToJSON(csvText, hasHeader);
+                this.jsonOutput.value = JSON.stringify(json, null, 2);
+                this.clearError();
+            } catch (error) {
+                this.showError('Error parsing CSV: ' + error.message);
+                this.jsonOutput.value = '';
+            }
         }
     }
 

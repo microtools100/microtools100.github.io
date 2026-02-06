@@ -36,7 +36,7 @@
     </script>
     <!-- Load full dark mode script asynchronously after page renders -->
     <script src="/assets/js/dark-mode.js" defer></script>
-    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
 
     <script type="application/ld+json">
     {
@@ -106,20 +106,6 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
-                        <!-- Tool Options -->
-                        <div class="tool-options">
-                            <div class="tool-actions-horizontal">
-                                <button class="action-btn primary" id="convertBtn">
-                                    <span>Convert</span>
-                                    <span>✨</span>
-                                </button>
-                                <button class="action-btn" id="clearBtn">
-                                    <span>Clear</span>
-                                    <span>×</span>
-                                </button>
-                            </div>
-                        </div>
-
                         <!-- Error Message Display -->
                         <div class="error-msg"></div>
 
@@ -140,6 +126,16 @@
                                     </div>
                                     <div class="hint">
                                         Paste valid JSON. Maximum 50,000 characters.
+                                    </div>
+                                    <div class="tool-actions-horizontal" style="margin-top: 12px;">
+                                        <button class="action-btn primary" id="convertBtn">
+                                            <span>Convert</span>
+                                            <span>✨</span>
+                                        </button>
+                                        <button class="action-btn" id="clearBtn">
+                                            <span>Clear</span>
+                                            <span>×</span>
+                                        </button>
                                     </div>
                                 </div>
                             </section>

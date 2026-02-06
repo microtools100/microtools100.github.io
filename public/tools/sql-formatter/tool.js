@@ -1,6 +1,7 @@
 /**
  * SQL Formatter Tool
  * Formats SQL queries for better readability
+ * Uses global auto-convert and auto-copy functions
  */
 
 class SQLFormatter {
@@ -24,6 +25,18 @@ class SQLFormatter {
      * Initialize event listeners and keyboard shortcuts
      */
     init() {
+        // Setup auto-convert: Real-time conversion as you type
+        SharedUtilities.setupAutoConvert(
+            this.sqlInput,
+            (sqlText) => this.formatSQL(sqlText),
+            this.sqlOutput,
+            this.errorMsg,
+            300
+        );
+
+        // Setup auto-copy: Automatically copy to clipboard after conversion
+        SharedUtilities.setupAutoCopy(this.sqlOutput, 500);
+
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
     }
@@ -32,7 +45,9 @@ class SQLFormatter {
      * Setup main event listeners
      */
     setupEventListeners() {
-        this.formatBtn.addEventListener('click', () => this.format());
+        if (this.formatBtn) {
+            this.formatBtn.addEventListener('click', () => this.manualFormat());
+        }
         this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.clearBtn.addEventListener('click', () => this.clearAll());
         if (this.downloadBtn) {
@@ -45,11 +60,6 @@ class SQLFormatter {
      */
     setupKeyboardShortcuts() {
         this.sqlInput.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + Enter: Format
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                e.preventDefault();
-                this.format();
-            }
             // Ctrl/Cmd + Shift + L: Clear
             if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
                 e.preventDefault();
@@ -59,9 +69,9 @@ class SQLFormatter {
     }
 
     /**
-     * Format SQL query
+     * Manual format (button click)
      */
-    format() {
+    manualFormat() {
         try {
             let sql = this.sqlInput.value.trim();
             if (!sql) {

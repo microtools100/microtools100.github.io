@@ -46,7 +46,6 @@ class HomepageManager {
             { id: 'html-escape-unescape', name: 'HTML Escape/Unescape', category: 'data', url: '/tools/html-escape-unescape/' },
             { id: 'excel-column-to-sql-in', name: 'Excel Column to SQL IN List', category: 'data', url: '/tools/excel-column-to-sql-in/' },
             { id: 'comma-to-newline', name: 'Comma to Newline', category: 'data', url: '/tools/comma-to-newline/' },
-            { id: 'newline-to-comma', name: 'Newline to Comma', category: 'data', url: '/tools/newline-to-comma/' },
             
             // Conversion & Generator Tools
             { id: 'unit-converter', name: 'Unit Converter', category: 'data', url: '/tools/unit-converter/' },

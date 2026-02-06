@@ -39,6 +39,37 @@ class CommaToNewlineConverter {
         this.elements.trimWhitespace.addEventListener('change', () => this.format());
     }
 
+    formatWithoutAutoCopy() {
+        const input = this.elements.inputData.value;
+        
+        if (!input.trim()) {
+            this.elements.outputData.value = '';
+            this.updateStats(0, 0);
+            return;
+        }
+
+        let separator = this.elements.separator.value;
+        let values = input.split(separator);
+
+        // Remove quotes if enabled
+        if (this.elements.removeQuotes.checked) {
+            values = values.map(val => val.replace(/^['"]|['"]$/g, ''));
+        }
+
+        // Trim whitespace if enabled
+        if (this.elements.trimWhitespace.checked) {
+            values = values.map(val => val.trim());
+        }
+
+        // Join with newlines
+        const output = values.join('\n');
+
+        this.elements.outputData.value = output;
+        
+        // Update stats
+        this.updateStats(values.length, output.length);
+    }
+
     format() {
         const input = this.elements.inputData.value;
         
@@ -68,6 +99,14 @@ class CommaToNewlineConverter {
         
         // Update stats
         this.updateStats(values.length, output.length);
+
+        // Auto-copy to clipboard with a small delay
+        if (output.trim()) {
+            setTimeout(() => {
+                SharedUtilities.copyToClipboardSilently(output);
+                SharedUtilities.showNotification('Converted and copied to clipboard', 'success');
+            }, 10);
+        }
     }
 
     updateStats(items, chars) {

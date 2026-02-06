@@ -550,13 +550,7 @@ class SQLQueryBuilder {
             return;
         }
 
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            window.MicroTools.utils.copyToClipboard(query, this.copyBtn);
-        } else {
-            // Fallback
-            SharedUtilities.copyToClipboardSilently(query);
-            SharedUtilities.showNotification('Query copied to clipboard', 'success');
-        }
+        SharedUtilities.copyToClipboard(query, 'Query copied to clipboard', 'success');
         this.clearError();
     }
 

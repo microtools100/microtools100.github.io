@@ -1,6 +1,7 @@
 /**
  * JSON Formatter & Validator Tool
  * Class-based implementation with keyboard shortcuts and clipboard support
+ * Uses global auto-convert and auto-copy functions
  */
 
 class JSONFormatter {
@@ -25,9 +26,38 @@ class JSONFormatter {
     }
 
     init() {
+        // Setup auto-convert: Real-time conversion as you type
+        SharedUtilities.setupAutoConvert(
+            this.inputJSON,
+            (jsonText) => {
+                let parsed = JSON.parse(jsonText);
+                
+                // Sort keys if enabled (for future use)
+                if (this.sortKeys && this.sortKeys.checked) {
+                    parsed = this.sortObjectKeys(parsed);
+                }
+                
+                // Get indentation (default 2 spaces)
+                const indent = this.getIndent();
+                
+                // Format with indentation
+                return JSON.stringify(parsed, null, indent);
+            },
+            this.outputJSON,
+            this.errorMsg,
+            300
+        );
+
+        // Setup auto-copy: Automatically copy to clipboard after conversion
+        SharedUtilities.setupAutoCopy(this.outputJSON, 500);
+
         // Button event listeners
-        this.formatBtn.addEventListener('click', () => this.format());
-        this.minifyBtn.addEventListener('click', () => this.minify());
+        if (this.formatBtn) {
+            this.formatBtn.addEventListener('click', () => this.manualFormat());
+        }
+        if (this.minifyBtn) {
+            this.minifyBtn.addEventListener('click', () => this.minify());
+        }
         this.clearBtn.addEventListener('click', () => this.clearAll());
         this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.downloadBtn.addEventListener('click', () => this.downloadJSON());
@@ -40,11 +70,6 @@ class JSONFormatter {
     }
 
     handleKeyboard(e) {
-        // Ctrl+Enter / Cmd+Enter: Format
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-            e.preventDefault();
-            this.format();
-        }
         // Ctrl+Shift+L / Cmd+Shift+L: Clear
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
             e.preventDefault();
@@ -52,7 +77,7 @@ class JSONFormatter {
         }
     }
 
-    format() {
+    manualFormat() {
         try {
             const input = this.inputJSON.value.trim();
             if (!input) {

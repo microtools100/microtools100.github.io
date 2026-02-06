@@ -111,7 +111,7 @@ class RandomTeamGenerator {
         }
 
         this.displayTeams();
-        window.MicroTools.utils.showNotification(`Generated ${this.teams.length} teams!`, 'success');
+        SharedUtilities.showNotification(`Generated ${this.teams.length} teams!`, 'success');
     }
 
     divideByCount(members, count) {
@@ -177,16 +177,16 @@ class RandomTeamGenerator {
 
     copyToClipboard() {
         if (this.teams.length === 0) {
-            window.MicroTools.utils.showNotification('No teams to copy', 'warning');
+            SharedUtilities.showNotification('No teams to copy', 'warning');
             return;
         }
 
-        window.MicroTools.utils.copyToClipboard(this.currentTeamsText, this.copyBtn);
+        SharedUtilities.copyToClipboard(this.currentTeamsText, 'Teams copied to clipboard!', 'success');
     }
 
     download() {
         if (this.teams.length === 0) {
-            window.MicroTools.utils.showNotification('No teams to download', 'warning');
+            SharedUtilities.showNotification('No teams to download', 'warning');
             return;
         }
 
@@ -200,12 +200,12 @@ class RandomTeamGenerator {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        window.MicroTools.utils.showNotification('Downloaded successfully', 'success');
+        SharedUtilities.showNotification('Downloaded successfully', 'success');
     }
 
     print() {
         if (this.teams.length === 0) {
-            window.MicroTools.utils.showNotification('No teams to print', 'warning');
+            SharedUtilities.showNotification('No teams to print', 'warning');
             return;
         }
 
@@ -241,7 +241,7 @@ class RandomTeamGenerator {
         this.currentTeamsText = '';
         this.teamsOutput.innerHTML = '';
         this.clearError();
-        window.MicroTools.utils.showNotification('Cleared', 'success');
+        SharedUtilities.showNotification('Cleared', 'success');
     }
 
     showError(message) {

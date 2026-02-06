@@ -5,7 +5,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//www.google-analytics.com">
-    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
     <link rel="prefetch" href="/tools/json-formatter/">
 
     <meta charset="UTF-8">
@@ -35,8 +34,9 @@
     </script>
     <!-- Load full dark mode script asynchronously after page renders -->
     <script src="/assets/js/dark-mode.js" defer></script>
-    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script defer src="/assets/js/shared-utilities.js"></script>
 
     <script type="application/ld+json">
     {
@@ -114,14 +114,6 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
-                        <!-- Tool Options -->
-                        <div class="tool-options">
-                            <div class="tool-actions-horizontal">
-                                <button class="action-btn primary" id="generateBtn">Generate</button>
-                                <button class="action-btn" id="clearBtn">Clear</button>
-                            </div>
-                        </div>
-
                         <!-- Error Message Display -->
                         <div class="error-msg"></div>
 
@@ -141,6 +133,10 @@
                                     </div>
                                     <div class="hint">
                                         Enter any text or URL. QR codes are generated in real-time.
+                                    </div>
+                                    <div class="tool-actions-horizontal" style="margin-top: 12px;">
+                                        <button class="action-btn primary" id="generateBtn">Generate</button>
+                                        <button class="action-btn" id="clearBtn">Clear</button>
                                     </div>
                                 </div>
 

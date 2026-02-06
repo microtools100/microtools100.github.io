@@ -45,7 +45,7 @@ class RemoveSpacesTool {
         // Real-time cleaning on input
         this.elements.input.addEventListener('input', () => {
             this.updateStats();
-            this.cleanTextWithoutAutoCopy();
+            this.cleanText();
         });
         
         // Real-time cleaning when options change
@@ -58,7 +58,7 @@ class RemoveSpacesTool {
         ];
         
         options.forEach(option => {
-            option.addEventListener('change', () => this.cleanTextWithoutAutoCopy());
+            option.addEventListener('change', () => this.cleanText());
         });
         
         // Character limit warning
@@ -71,6 +71,55 @@ class RemoveSpacesTool {
         });
     }
     
+    cleanText() {
+        const inputText = this.elements.input.value;
+        
+        if (!inputText.trim()) {
+            this.elements.output.value = '';
+            this.updateStats();
+            return;
+        }
+
+        const options = this.getOptions();
+        let text = inputText;
+
+        // Remove double spaces if enabled
+        if (options.removeDoubleSpaces) {
+            text = text.replace(/ {2,}/g, ' ');
+        }
+
+        // Remove tabs if enabled
+        if (options.removeTabs) {
+            text = text.replace(/\t+/g, ' ');
+        }
+
+        // Normalize line breaks if enabled
+        if (options.normalizeLineBreaks) {
+            text = text.replace(/\r\n|\r/g, '\n');
+        }
+
+        // Trim lines if enabled
+        if (options.trimLines) {
+            text = text.split('\n').map(line => line.trim()).join('\n');
+        }
+
+        // Remove empty lines if enabled
+        if (options.removeEmptyLines) {
+            text = text.split('\n').filter(line => line.trim() !== '').join('\n');
+        }
+
+        this.elements.output.value = text;
+        this.updateStats();
+
+        // Auto-copy to clipboard with a small delay
+        if (text.trim()) {
+            setTimeout(() => {
+                SharedUtilities.copyToClipboardSilently(text);
+                SharedUtilities.showNotification('Extra spaces removed and copied to clipboard', 'success');
+            }, 10);
+        }
+    }
+
     cleanTextWithoutAutoCopy() {
         const inputText = this.elements.input.value;
         
@@ -136,14 +185,7 @@ class RemoveSpacesTool {
             return;
         }
         
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            await window.MicroTools.utils.copyToClipboard(text, this.elements.copyBtn);
-        } else {
-            // Fallback copy method
-            this.elements.output.select();
-            document.execCommand('copy');
-            SharedUtilities.showNotification('Copied to clipboard!', 'success');
-        }
+        SharedUtilities.copyToClipboard(text, 'Copied to clipboard!', 'success');
         this.clearError();
     }
     

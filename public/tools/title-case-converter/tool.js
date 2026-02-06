@@ -53,6 +53,14 @@ class TitleCaseConverter {
         }
 
         this.outputText.value = result;
+
+        // Auto-copy to clipboard with a small delay
+        if (result.trim()) {
+            setTimeout(() => {
+                SharedUtilities.copyToClipboardSilently(result);
+                SharedUtilities.showNotification('Converted and copied to clipboard', 'success');
+            }, 10);
+        }
     }
 
     copyToClipboard() {
@@ -62,14 +70,7 @@ class TitleCaseConverter {
             return;
         }
         
-        if (window.MicroTools?.utils?.copyToClipboard) {
-            window.MicroTools.utils.copyToClipboard(result, this.copyBtn);
-        } else {
-            // Fallback copy method
-            this.outputText.select();
-            document.execCommand('copy');
-            SharedUtilities.showNotification('Copied to clipboard!', 'success');
-        }
+        SharedUtilities.copyToClipboard(result, 'Copied to clipboard!', 'success');
     }
 
     downloadResult() {

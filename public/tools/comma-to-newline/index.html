@@ -41,7 +41,7 @@
     </script>
     <!-- Load full dark mode script asynchronously after page renders -->
     <script src="/assets/js/dark-mode.js" defer></script>
-    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
 
     <script type="application/ld+json">
     {
@@ -159,11 +159,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tool-actions-horizontal">
-                                    <button class="action-btn" id="clearBtn">
-                                        <span>Clear</span>
-                                    </button>
-                                </div>
                             </div>
 
                             <!-- Two-Column Layout for Input and Output -->
@@ -182,6 +177,11 @@
                                         </div>
                                         <div class="hint">
                                             Maximum 10,000 characters.
+                                        </div>
+                                        <div class="tool-actions-horizontal" style="margin-top: 12px;">
+                                            <button class="action-btn" id="clearBtn">
+                                                <span>Clear</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </section>
@@ -208,6 +208,11 @@
                                                 <span class="stat-value" id="charCount">0</span>
                                                 <span class="stat-label">Characters</span>
                                             </div>
+                                        </div>
+                                        <div class="output-actions">
+                                            <button class="action-btn success" id="copyBtn">
+                                                <span>Copy</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </section>
@@ -272,7 +277,6 @@
                         <div class="related-tools">
                             <h4>Related Tools</h4>
                             <ul>
-                                <li><a href="/tools/newline-to-comma/">Newline to Comma</a></li>
                                 <li><a href="/tools/excel-column-to-comma-list/">Excel to Comma</a></li>
                                 <li><a href="/tools/quote-comma-formatter/">Quote Formatter</a></li>
                             </ul>
