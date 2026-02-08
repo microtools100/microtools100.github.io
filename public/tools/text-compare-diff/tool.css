@@ -1,11 +1,10 @@
-﻿/* Text Compare and Diff Tool Styles */
+﻿/* Text Compare and Diff Tool - Tool-Specific Overrides Only */
 
 /* Diff Results Layout */
 .diff-results {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 1.5rem;
+    gap: 1.5rem;
 }
 
 .diff-results > div {
@@ -91,6 +90,13 @@
     color: #999;
     font-style: italic;
     background: var(--surface-color);
+}
+
+/* Output Actions */
+.output-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
 }
 
 /* Responsive Design for Diff */

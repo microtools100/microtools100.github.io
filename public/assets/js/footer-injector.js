@@ -12,12 +12,13 @@ const footerConfig = {
             title: 'Categories',
             type: 'links',
             links: [
-                { label: 'Text Tools', href: '/#text-tools' },
+                { label: 'Text & Content', href: '/#text-content' },
+                { label: 'Math & Calculators', href: '/#math-calculators' },
                 { label: 'Data Tools', href: '/#data-tools' },
                 { label: 'Developer Tools', href: '/#developer-tools' },
-                { label: 'Security Tools', href: '/#security-tools' },
-                { label: 'Utilities', href: '/#utilities' },
-                { label: 'Games & Generators', href: '/#games' }
+                { label: 'Finance Tools', href: '/#finance-tools' },
+                { label: 'Office & Time', href: '/#office-time' },
+                { label: 'Utilities', href: '/#utilities' }
             ]
         },
         {

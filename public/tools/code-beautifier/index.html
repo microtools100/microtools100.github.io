@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Format and beautify HTML, CSS, and JavaScript code with proper indentation and line breaks.">
+    <meta name="keywords" content="code beautifier, code formatter, prettify code, code formatting, indentation">
+    <meta property="og:title" content="Code Beautifier - Format & Prettify Code">
+    <meta property="og:description" content="Beautify your code with proper indentation and formatting.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Code Beautifier - Format & Prettify Code | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Code Beautifier",
+      "description": "Format and beautify HTML, CSS, and JavaScript code",
+      "url": "https://microtools.dev/tools/code-beautifier/",
+      "applicationCategory": "DeveloperApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What's the difference between Minifier and Beautifier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Minifier removes formatting to reduce size; Beautifier adds formatting for readability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can beautifier fix syntax errors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, it only formats code. It won't fix syntax errors in the code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What indent size should I use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2 spaces is common for web development; 4 spaces is traditional. Both are equally valid."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will beautifier add documentation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, it only reformats code. Comments are preserved but not added."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I beautify multiple languages at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Process each language separately for the best formatting results."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Code Beautifier</h1>
+                <p class="tool-description">
+                    Format your code with proper indentation and line breaks for better readability.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Options Section -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                                <div class="option-group" style="margin: 0;">
+                                    <label for="codeType">Code Type:</label>
+                                    <select id="codeType">
+                                        <option value="html">HTML</option>
+                                        <option value="css">CSS</option>
+                                        <option value="js">JavaScript</option>
+                                    </select>
+                                </div>
+                                <div class="option-group" style="margin: 0;">
+                                    <label for="indentSize">Indent Size:</label>
+                                    <input type="number" id="indentSize" value="2" min="1" max="8" style="width: 60px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputCode">Paste Code:</label>
+                                    <div class="input-area">
+                                        <textarea id="inputCode" placeholder="Paste your HTML, CSS, or JavaScript code here..." rows="20"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button id="beautifyBtn" class="action-btn primary">Beautify Code</button>
+                                    <button id="clearBtn" class="action-btn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputCode">Formatted Code:</label>
+                                    <div class="output-area">
+                                        <textarea id="outputCode" readonly placeholder="Your formatted code will appear here..." rows="20"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button id="copyBtn" class="action-btn success">Copy Results</button>
+                                    <button id="downloadBtn" class="action-btn success">Download</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/html-css-js-minifier/">HTML/CSS/JS Minifier</a></li>
+                            <li><a href="/tools/json-diff-tool/">JSON Diff Tool</a></li>
+                            <li><a href="/tools/http-status-code-lookup/">HTTP Status Lookup</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Developer Tips</h4>
+                        <ul>
+                            <li>Beautifying makes code easier to review and debug</li>
+                            <li>Standard indentation improves readability</li>
+                            <li>Essential before code reviews and documentation</li>
+                            <li>Helps new team members understand the codebase</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📖</span>
+                        <h5>Code Review</h5>
+                        <p>Format minified code for easier review and understanding.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔍</span>
+                        <h5>Debugging</h5>
+                        <p>Beautify code to identify issues more easily.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📚</span>
+                        <h5>Code Documentation</h5>
+                        <p>Format code snippets for documentation and tutorials.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">✨</span>
+                        <h5>Onboarding</h5>
+                        <p>Make code readable for new team members.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Paste Code:</strong> Enter minified or poorly formatted code</li>
+                    <li><strong>Select Language:</strong> Choose HTML, CSS, or JavaScript</li>
+                    <li><strong>Set Indent:</strong> Choose spaces per indentation level</li>
+                    <li><strong>Beautify:</strong> Click to format the code</li>
+                </ol>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Indentation Addition:</strong> Proper nesting and indentation applied</li>
+                    <li><strong>Line Breaking:</strong> Separates code into logical lines</li>
+                    <li><strong>Syntax Awareness:</strong> Understands language-specific syntax</li>
+                    <li><strong>Configurable Spacing:</strong> Choose indent size (2, 4 spaces, etc)</li>
+                    <li><strong>Readability Enhancement:</strong> Makes code easier to understand</li>
+                    <li><strong>Functionality Preservation:</strong> Code behavior unchanged</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

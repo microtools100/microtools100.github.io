@@ -2,8 +2,8 @@
 class HomepageManager {
     constructor() {
         // Get tools dynamically from TOOLS_REGISTRY if available, otherwise use fallback
-        if (typeof TOOLS_REGISTRY !== 'undefined' && TOOLS_REGISTRY.phase1 && TOOLS_REGISTRY.phase2) {
-            this.allTools = [...TOOLS_REGISTRY.phase1, ...TOOLS_REGISTRY.phase2];
+        if (typeof TOOLS_REGISTRY !== 'undefined' && TOOLS_REGISTRY.phase1 && TOOLS_REGISTRY.phase2 && TOOLS_REGISTRY.phase3) {
+            this.allTools = [...TOOLS_REGISTRY.phase1, ...TOOLS_REGISTRY.phase2, ...TOOLS_REGISTRY.phase3];
         } else {
             // Fallback to hardcoded list if registry not loaded
             this.allTools = this.getFallbackTools();
@@ -190,7 +190,14 @@ class HomepageManager {
     updateToolCount() {
         const countElement = document.getElementById('toolCountStat');
         if (countElement) {
-            countElement.textContent = this.tools.length;
+            // Count actual tool cards displayed on the page (excluding hub cards)
+            const toolCards = document.querySelectorAll('.tool-card');
+            // Filter out hub cards by checking if href contains '/tools/hub/'
+            const actualTools = Array.from(toolCards).filter(card => {
+                const href = card.getAttribute('href');
+                return href && !href.includes('/tools/hub/');
+            });
+            countElement.textContent = actualTools.length;
         }
     }
 

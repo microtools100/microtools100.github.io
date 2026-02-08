@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Look up HTTP status codes and understand their meanings. Reference guide for all 1xx, 2xx, 3xx, 4xx, and 5xx codes.">
+    <meta name="keywords" content="http status codes, http codes, status code reference, 404, 500, 200">
+    <meta property="og:title" content="HTTP Status Code Lookup - Reference Guide">
+    <meta property="og:description" content="Comprehensive HTTP status code reference guide with meanings and explanations.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>HTTP Status Code Lookup - Reference Guide | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "HTTP Status Code Lookup",
+        "description": "Look up and understand HTTP status codes",
+        "url": "https://microtools.cc/tools/http-status-code-lookup/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What are HTTP status codes?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Three-digit codes that indicate the result of an HTTP request (success, error, redirect, etc.)."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What do 2xx, 3xx, 4xx, 5xx codes mean?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2xx=Success, 3xx=Redirect, 4xx=Client Error, 5xx=Server Error."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What's the most common 404 error?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "404 means the requested resource was not found on the server."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, this is a reference tool with no data processing or storage."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I search for status codes?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, search by code number or description to find information quickly."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>HTTP Status Code Lookup</h1>
+                <p class="tool-description">
+                    Reference guide for all HTTP status codes and their meanings.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Options Section -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Search & Filter</h3>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <div class="option-group" style="margin: 0; flex: 1; min-width: 200px;">
+                                    <label for="searchCode">Search Code or Category:</label>
+                                    <input type="text" id="searchCode" placeholder="e.g., 404, 500, or 'Not Found'" style="width: 100%;">
+                                </div>
+                                <div class="option-group" style="margin: 0; flex: 1; min-width: 200px;">
+                                    <label for="filterCategory">Filter by Category:</label>
+                                    <select id="filterCategory" style="width: 100%;">
+                                        <option value="">All Categories</option>
+                                        <option value="1">1xx - Informational</option>
+                                        <option value="2">2xx - Success</option>
+                                        <option value="3">3xx - Redirection</option>
+                                        <option value="4">4xx - Client Error</option>
+                                        <option value="5">5xx - Server Error</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="statusCodesContainer"></div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/json-diff-tool/">JSON Diff Tool</a></li>
+                            <li><a href="/tools/code-beautifier/">Code Beautifier</a></li>
+                            <li><a href="/tools/html-css-js-minifier/">HTML/CSS/JS Minifier</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Developer Tips</h4>
+                        <ul>
+                            <li>2xx codes indicate successful requests</li>
+                            <li>4xx codes are client errors (bad request)</li>
+                            <li>5xx codes are server errors</li>
+                            <li>3xx codes handle redirects and caching</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔧</span>
+                        <h5>Web Development</h5>
+                        <p>Understand HTTP status codes returned by APIs and servers.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🐛</span>
+                        <h5>Debugging</h5>
+                        <p>Quickly look up error codes when troubleshooting requests.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📊</span>
+                        <h5>API Testing</h5>
+                        <p>Verify correct status codes in API responses.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🎓</span>
+                        <h5>Learning</h5>
+                        <p>Understand HTTP standards and response codes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Code:</strong> Type or select an HTTP status code (e.g., 404)</li>
+                    <li><strong>Search:</strong> Tool displays instant matching results</li>
+                    <li><strong>Read Description:</strong> Understand what the code means</li>
+                    <li><strong>Learn Causes:</strong> See common reasons for that status</li>
+                </ol>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Code Recognition:</strong> Identifies numeric or text status codes</li>
+                    <li><strong>Instant Lookup:</strong> Real-time search as you type</li>
+                    <li><strong>Detailed Explanations:</strong> Full description of each status</li>
+                    <li><strong>Category Organization:</strong> Grouped by code family (1xx, 2xx, etc)</li>
+                    <li><strong>Common Causes:</strong> Lists typical reasons for each status</li>
+                    <li><strong>Quick Reference:</strong> Browse all codes by category</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>What does each status code number range mean?</h4>
+                    <p>1xx = informational, 2xx = success, 3xx = redirect, 4xx = client error, 5xx = server error.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is 404 the most common error?</h4>
+                    <p>Yes, 404 (Not Found) is very common, but 403 (Forbidden) and 500 are also frequent.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What's the difference between 301 and 302 redirects?</h4>
+                    <p>301 is permanent redirect; 302 is temporary redirect.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I see all status codes at once?</h4>
+                    <p>Yes, scroll through the full list or filter by category.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Are there custom status codes?</h4>
+                    <p>No, HTTP status codes are standardized by RFC specifications.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

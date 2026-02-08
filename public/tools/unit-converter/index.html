@@ -125,21 +125,8 @@
 
                         <!-- Converter Grid -->
                         <div class="converter-grid">
-                            <div class="converter-input">
-                                <div class="input-group">
-                                    <label for="inputValue">Value</label>
-                                    <input type="number" id="inputValue" placeholder="Enter value" step="any" autofocus>
-                                </div>
-                            </div>
-
-                            <div class="converter-output">
-                                <div class="output-group">
-                                    <label for="outputValue">Result</label>
-                                    <input type="number" id="outputValue" readonly placeholder="Result will appear here">
-                                </div>
-                            </div>
-
-                            <div class="units-row">
+                            <!-- Units Row (Top) -->
+                            <div class="units-row-top">
                                 <div class="unit-select-group">
                                     <label for="fromUnit">From Unit</label>
                                     <select id="fromUnit"></select>
@@ -148,6 +135,23 @@
                                 <div class="unit-select-group">
                                     <label for="toUnit">To Unit</label>
                                     <select id="toUnit"></select>
+                                </div>
+                            </div>
+
+                            <!-- Input and Output Row (Bottom) -->
+                            <div class="input-output-row">
+                                <div class="converter-input">
+                                    <div class="input-group">
+                                        <label for="inputValue">Value</label>
+                                        <input type="number" id="inputValue" placeholder="Enter value" step="any" autofocus>
+                                    </div>
+                                </div>
+
+                                <div class="converter-output">
+                                    <div class="output-group">
+                                        <label for="outputValue">Result</label>
+                                        <input type="number" id="outputValue" readonly placeholder="Result will appear here">
+                                    </div>
                                 </div>
                             </div>
                         </div>

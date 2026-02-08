@@ -114,6 +114,24 @@
             <div class="tool-layout">
                 <div class="tool-main">
                     <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">QR Code Options</h3>
+                            <div class="option-group">
+                                <label for="sizeInput">QR Code Size (px):</label>
+                                <input type="number" id="sizeInput" min="100" max="500" value="200" step="50">
+                            </div>
+                            <div class="option-group">
+                                <label for="errorCorrection">Error Correction:</label>
+                                <select id="errorCorrection">
+                                    <option value="L">Low (7%)</option>
+                                    <option value="M" selected>Medium (15%)</option>
+                                    <option value="Q">Quartile (25%)</option>
+                                    <option value="H">High (30%)</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <!-- Error Message Display -->
                         <div class="error-msg"></div>
 
@@ -122,7 +140,7 @@
                             <!-- Input Column -->
                             <section class="tool-section input-column">
                                 <div class="input-group">
-                                    <label for="inputText">Enter Text or URL</label>
+                                    <label for="inputText">Enter Text or URL:</label>
                                     <div class="input-area">
                                         <textarea 
                                             id="inputText" 
@@ -132,29 +150,16 @@
                                             autofocus></textarea>
                                     </div>
                                     <div class="hint">
-                                        Enter any text or URL. QR codes are generated in real-time.
-                                    </div>
-                                    <div class="tool-actions-horizontal" style="margin-top: 12px;">
-                                        <button class="action-btn primary" id="generateBtn">Generate</button>
-                                        <button class="action-btn" id="clearBtn">Clear</button>
+                                        Enter any text or URL. QR codes are generated instantly.
                                     </div>
                                 </div>
 
-                                <h3 class="section-title">Options</h3>
-                                <div class="tool-options-inline">
-                                    <div class="option-group">
-                                        <label for="sizeInput">QR Code Size (px):</label>
-                                        <input type="number" id="sizeInput" min="100" max="500" value="200" step="50">
-                                    </div>
-                                    <div class="option-group">
-                                        <label for="errorCorrection">Error Correction:</label>
-                                        <select id="errorCorrection">
-                                            <option value="L">Low (7%)</option>
-                                            <option value="M" selected>Medium (15%)</option>
-                                            <option value="Q">Quartile (25%)</option>
-                                            <option value="H">High (30%)</option>
-                                        </select>
-                                    </div>
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="generateBtn">Generate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
                                 </div>
                             </section>
 
@@ -165,9 +170,12 @@
                                     <div class="output-area qr-preview-area">
                                         <div id="qrContainer" class="qr-container"></div>
                                     </div>
-                                    <div class="output-actions">
-                                        <button class="action-btn success" id="downloadBtn">Download</button>
-                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="downloadBtn">
+                                        <span>Download</span>
+                                    </button>
                                 </div>
                             </section>
                         </div>

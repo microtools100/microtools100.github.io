@@ -305,7 +305,7 @@ class DecisionMaker {
     }
 
     showResult(result) {
-        // Add delay to ensure wheel animation completes fully
+        // Add minimal delay to ensure wheel animation completes fully
         setTimeout(() => {
             this.resultText.textContent = result;
             this.resultDisplay.style.display = 'block';
@@ -314,7 +314,7 @@ class DecisionMaker {
             this.resultDisplay.style.transition = 'opacity 0.5s ease';
             // Force reflow to trigger animation
             void this.resultDisplay.offsetHeight;
-        }, 600);
+        }, 150);
     }
 
     getColors(count) {

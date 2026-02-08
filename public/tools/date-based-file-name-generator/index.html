@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate standardized file names with dates. Add dates to file names automatically.">
+    <meta name="keywords" content="date file name generator, file name with date, date prefix, date suffix">
+    <title>Date-Based File Name Generator - Free Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Date-Based File Name Generator",
+        "description": "Generate file names with date prefixes or suffixes",
+        "url": "https://microtools.cc/tools/date-based-file-name-generator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Why add dates to file names?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Date-based naming makes files easy to sort chronologically and identify versions."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What date formats are available?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "YYYY-MM-DD, MM-DD-YYYY, DD-MM-YYYY, and other customizable formats."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use custom dates?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, select any date you want for the file name prefix or suffix."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What's the best date format for file sorting?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "YYYY-MM-DD format allows automatic chronological sorting in most systems."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Date-Based File Name Generator</h1>
+                <p class="tool-description">Add dates to file names for automatic organization</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Date Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Date Options</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="option-group">
+                                    <label for="selectDate">Select Date:</label>
+                                    <input type="date" id="selectDate">
+                                </div>
+                                <div class="option-group">
+                                    <label for="dateFormat">Date Format:</label>
+                                    <select id="dateFormat">
+                                        <option value="YYYY-MM-DD">2024-02-07</option>
+                                        <option value="DD-MM-YYYY">07-02-2024</option>
+                                        <option value="MM-DD-YYYY">02-07-2024</option>
+                                        <option value="YYYYMMDD">20240207</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; margin: 0; white-space: nowrap;">
+                                    <input type="radio" name="position" value="prefix" checked>
+                                    <span>Add as prefix</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; margin: 0; white-space: nowrap;">
+                                    <input type="radio" name="position" value="suffix">
+                                    <span>Add as suffix</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="fileNames">File Names (one per line):</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="fileNames" 
+                                            placeholder="report.pdf&#10;document.docx"
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter one file name per line. Extensions will be preserved.
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="generateBtn">Generate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputNames">Generated Names:</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputNames" 
+                                            placeholder="Generated file names will appear here..."
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Output</button>
+                                    <button class="action-btn success" id="downloadBtn">Download</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/bulk-file-name-generator/">Bulk File Name Generator</a></li>
+                            <li><a href="/tools/file-name-case-converter/">File Name Case Converter</a></li>
+                            <li><a href="/tools/remove-special-characters-from-filenames/">Remove Special Characters</a></li>
+                            <li><a href="/">All File Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Date Naming Tips</h4>
+                        <ul>
+                            <li>Use ISO format (YYYY-MM-DD) for natural chronological sorting</li>
+                            <li>Date-based names help track file versions automatically</li>
+                            <li>Backup files are easier to manage with date prefixes</li>
+                            <li>Archive files benefit from date suffixes for organization</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📅</span>
+                        <h5>Automatic Backup Naming</h5>
+                        <p>Create timestamped backup files with current date.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📸</span>
+                        <h5>Photo Organization</h5>
+                        <p>Sort photos chronologically with date-based names.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📝</span>
+                        <h5>Report Documentation</h5>
+                        <p>Create dated versions of reports and documents.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📊</span>
+                        <h5>Archive Management</h5>
+                        <p>Track file creation date through filename format.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Select Date Format:</strong> Choose your preferred date format (YYYY-MM-DD, DD-MM-YYYY, etc.)</li>
+                    <li><strong>Choose Position:</strong> Add date as prefix or suffix to filename</li>
+                    <li><strong>Enter Base Filename:</strong> The core filename without extension</li>
+                    <li><strong>Generate:</strong> Click generate to create the dated filename</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Current Date Insertion:</strong> Automatically uses today's date for naming</li>
+                    <li><strong>Multiple Formats:</strong> ISO, US, EU, and custom date formats available</li>
+                    <li><strong>Position Control:</strong> Add date before or after the base filename</li>
+                    <li><strong>Extension Preservation:</strong> File extensions preserved correctly</li>
+                    <li><strong>Sortable Results:</strong> Date-based names sort chronologically naturally</li>
+                    <li><strong>Real-time Preview:</strong> See result before generating</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>Can I use past or future dates?</h4>
+                    <p>This version uses the current date; manually edit the date in results for other dates.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What's the best date format for sorting?</h4>
+                    <p>ISO format (YYYY-MM-DD) sorts chronologically in alphabetical order.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Will the extension be preserved?</h4>
+                    <p>Yes, your file extension is always maintained in the generated name.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I add time as well as date?</h4>
+                    <p>Current version supports date only; you can manually add time to results.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is this tool secure?</h4>
+                    <p>Yes, all processing happens locally in your browser.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

@@ -42,6 +42,21 @@
     padding: 1.5rem;
 }
 
+/* Units Row (Top) */
+.units-row-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+/* Input and Output Row (Bottom) */
+.input-output-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
 .converter-input,
 .converter-output {
     display: flex;
@@ -76,13 +91,6 @@
 
 .output-group input {
     background: var(--surface-color);
-}
-
-.units-row {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 1rem;
-    align-items: flex-end;
 }
 
 .unit-select-group {

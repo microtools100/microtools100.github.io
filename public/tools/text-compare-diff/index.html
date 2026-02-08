@@ -125,7 +125,7 @@
                         <div class="tool-container">
                             <!-- Options Section -->
                             <div class="tool-options">
-                                <h3>Comparison Options</h3>
+                                <h3 class="section-title">Comparison Options</h3>
                                 <div class="option-group">
                                     <label for="ignoreCase">
                                         <input type="checkbox" id="ignoreCase">
@@ -142,22 +142,26 @@
 
                             <!-- Input Section -->
                             <div class="tool-section">
-                                <h2>Input Texts</h2>
+                                <h3>Input Texts</h3>
                                 <div class="tool-content-columns">
                                     <div class="input-column">
-                                        <div class="input-area">
+                                        <div class="input-group">
                                             <label for="text1">Original Text</label>
-                                            <textarea id="text1" data-line-numbers placeholder="Paste first text here&#10;&#10;Example:&#10;The quick brown fox&#10;jumps over the lazy dog"></textarea>
+                                            <div class="input-area">
+                                                <textarea id="text1" data-line-numbers placeholder="Paste first text here&#10;&#10;Example:&#10;The quick brown fox&#10;jumps over the lazy dog"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="input-column">
-                                        <div class="input-area">
+                                        <div class="input-group">
                                             <label for="text2">Modified Text</label>
-                                            <textarea id="text2" data-line-numbers placeholder="Paste second text here&#10;&#10;Example:&#10;The fast brown fox&#10;jumps over the lazy cat"></textarea>
+                                            <div class="input-area">
+                                                <textarea id="text2" data-line-numbers placeholder="Paste second text here&#10;&#10;Example:&#10;The fast brown fox&#10;jumps over the lazy cat"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tool-actions-horizontal">
+                                <div class="tool-actions">
                                     <button class="action-btn" id="clearBtn">
                                         <span>Clear</span>
                                     </button>
@@ -166,7 +170,7 @@
 
                             <!-- Stats Section -->
                             <div class="tool-section">
-                                <h2>Comparison Statistics</h2>
+                                <h3>Comparison Statistics</h3>
                                 <div class="stats-display" id="diff-stats">
                                     <!-- Stats will be populated by JavaScript -->
                                 </div>
@@ -174,7 +178,7 @@
 
                             <!-- Results Section -->
                             <div class="tool-section">
-                                <h2>Comparison Results</h2>
+                                <h3>Comparison Results</h3>
                                 <div class="diff-results">
                                     <div>
                                         <h3>Original</h3>

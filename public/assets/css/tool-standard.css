@@ -374,6 +374,7 @@
 .use-cases,
 .how-to-use,
 .how-it-works,
+.faq-section,
 .formatting-guide {
     background: var(--surface-color) !important;
     padding: 1rem !important;
@@ -391,6 +392,11 @@
 .how-to-use h4,
 .how-it-works h3,
 .how-it-works h4,
+.character-comparison h3,
+.character-comparison h4,
+.faq-section h2,
+.faq-section h3,
+.faq-section h4,
 .formatting-guide h2,
 .formatting-guide h3,
 .formatting-guide h4 {
@@ -436,6 +442,33 @@
 
 .formatting-guide strong {
     color: var(--primary-color) !important;
+}
+
+/* FAQ Section */
+.faq-item {
+    margin-bottom: 1rem !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.faq-item:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+.faq-item h4 {
+    color: var(--text-color) !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    margin: 0 0 0.5rem 0 !important;
+}
+
+.faq-item p {
+    color: var(--text-color) !important;
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
 }
 
 /* Use Cases Section */

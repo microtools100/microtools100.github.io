@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashtag Formatter - Format & Organize Hashtags | Micro Tools</title>
+    <meta name="description" content="Format and organize your hashtags. Convert to single line or grouped format for social media posts.">
+    <meta name="keywords" content="hashtag formatter, hashtag organizer, social media hashtags, instagram hashtags">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Hashtag Formatter">
+    <meta property="og:description" content="Format and organize hashtags for social media posts.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Hashtag Formatter",
+        "description": "Format and organize hashtags for social media",
+        "url": "https://microtools.cc/tools/hashtag-formatter/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How many hashtags should I use?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Instagram: 10-30 per post. Twitter: 1-3. TikTok: 3-5 main hashtags recommended."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Should hashtags be on separate lines?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, separate lines improve readability and engagement on most platforms."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I mix hashtags and regular text?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, the formatter handles mixed content and extracts/organizes hashtags."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does capitalization matter for hashtags?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "CamelCase hashtags are more readable but lowercase works just as well."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Hashtag Formatter</h1>
+                <p class="tool-description">Format and organize hashtags for social media posts.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+
+                    <!-- Options Section -->
+                    <div class="tool-options">
+                        <h3 class="section-title">Options</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
+                            <div class="option-group" style="margin: 0;">
+                                <label style="display: block; margin-bottom: 1rem; font-weight: 500;">Format:</label>
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="format" value="single" checked style="width: 20px; height: 20px; cursor: pointer;">
+                                        <label style="font-size: 0.9rem; margin: 0; text-align: center; cursor: pointer;">Single Line</label>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="format" value="multi" style="width: 20px; height: 20px; cursor: pointer;">
+                                        <label style="font-size: 0.9rem; margin: 0; text-align: center; cursor: pointer;">One Per Line</label>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="format" value="grouped" style="width: 20px; height: 20px; cursor: pointer;">
+                                        <label style="font-size: 0.9rem; margin: 0; text-align: center; cursor: pointer;">Grouped</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-group" style="margin: 0;">
+                                <label style="display: block; margin-bottom: 1rem; font-weight: 500;">Settings:</label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; margin: 0; cursor: pointer;">
+                                    <input type="checkbox" id="removeDuplicates" checked> 
+                                    <span>Remove Duplicates</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Two-Column Layout for Input and Output -->
+                    <div class="tool-content-columns">
+                        <!-- Input Column -->
+                        <section class="tool-section input-column">
+                            <div class="input-group">
+                                <label for="inputHashtags">Enter Hashtags:</label>
+                                <div class="input-area">
+                                    <textarea id="inputHashtags" placeholder="Enter hashtags (with or without #) separated by spaces, commas, or new lines..." rows="15"></textarea>
+                                </div>
+                                <div class="hint">
+                                    Hashtags can be separated by spaces, commas, or on new lines
+                                </div>
+                            </div>
+
+                            <div class="tool-actions">
+                                <button id="formatBtn" class="action-btn primary">Format Hashtags</button>
+                                <button id="clearBtn" class="action-btn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- Output Column -->
+                        <section class="tool-section output-column">
+                            <div class="output-group">
+                                <label for="outputHashtags">Formatted Hashtags:</label>
+                                <div class="output-area">
+                                    <textarea id="outputHashtags" readonly placeholder="Formatted output will appear here..." rows="15"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="tool-actions">
+                                <button id="copyBtn" class="action-btn success">Copy Results</button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="tool-sidebar">
+                <div class="related-tools">
+                    <h4>Related Tools</h4>
+                    <ul>
+                        <li><a href="/tools/caption-line-break-formatter/">Caption Line Break</a></li>
+                        <li><a href="/tools/whatsapp-text-formatter/">WhatsApp Text Formatter</a></li>
+                        <li><a href="/tools/invisible-character-generator/">Invisible Characters</a></li>
+                        <li><a href="/">All Social Media Tools</a></li>
+                    </ul>
+                </div>
+
+                <div class="tool-tips">
+                    <h4>Social Media Tips</h4>
+                    <ul>
+                        <li>Remove duplicate hashtags for cleaner posts</li>
+                        <li>Consistent formatting improves discoverability</li>
+                        <li>Use 5-10 hashtags per Instagram post</li>
+                        <li>Organize hashtags by category or campaign</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+        <div class="use-cases">
+            <h4>Use Cases</h4>
+            <div class="use-case-grid">
+                <div class="use-case-item">
+                    <span class="use-case-icon">📱</span>
+                    <h5>Social Media Optimization</h5>
+                    <p>Format hashtags for Twitter, Instagram, and TikTok.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">🔍</span>
+                    <h5>Hashtag Cleanup</h5>
+                    <p>Remove duplicates and format inconsistent hashtags.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">📊</span>
+                    <h5>Content Marketing</h5>
+                    <p>Organize hashtags for better discoverability.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">✨</span>
+                    <h5>Campaign Management</h5>
+                    <p>Standardize hashtags across multiple posts.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Use</h3>
+            <ol>
+                <li><strong>Enter Hashtags:</strong> Paste your hashtags (with or without #)</li>
+                <li><strong>Select Format:</strong> Choose vertical, inline, or other formats</li>
+                <li><strong>Process:</strong> Click to organize hashtags</li>
+                <li><strong>Copy Result:</strong> Use the formatted hashtags</li>
+            </ol>
+        </div>
+
+        <div class="formatting-guide">
+            <h3>How It Works</h3>
+            <ul>
+                <li><strong>Hash Symbol Addition:</strong> Automatically adds # to hashtags missing it</li>
+                <li><strong>Duplicate Removal:</strong> Eliminates repeated hashtags</li>
+                <li><strong>Format Options:</strong> Vertical stacking or inline formatting</li>
+                <li><strong>Whitespace Handling:</strong> Removes extra spaces and newlines</li>
+                <li><strong>Case Preservation:</strong> Maintains original hashtag capitalization</li>
+                <li><strong>Platform Optimization:</strong> Format for specific social platforms</li>
+            </ul>
+        </div>
+
+        <div class="faq-section">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <h4>What's the difference between vertical and inline formats?</h4>
+                <p>Vertical places each hashtag on a new line; inline puts them all on one line.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Does it preserve hashtag capitalization?</h4>
+                <p>Yes, original capitalization is maintained (e.g., #SocialMedia stays as is).</p>
+            </div>
+            <div class="faq-item">
+                <h4>How many hashtags is too many?</h4>
+                <p>Platform-dependent: Twitter ~5-10, Instagram up to 30, TikTok 3-5 recommended.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Will it remove hashtags with numbers?</h4>
+                <p>No, hashtags with numbers are preserved (#2024Goals works perfectly).</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I add new hashtags to the list?</h4>
+                <p>Yes, just include them in the input and the tool will format them.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

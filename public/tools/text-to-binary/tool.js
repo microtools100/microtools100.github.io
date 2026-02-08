@@ -84,11 +84,7 @@ class TextToBinaryConverter {
      * Show error message
      */
     showError(message) {
-        this.elements.errorMsg.textContent = message;
-        this.elements.errorMsg.classList.add('show');
-        setTimeout(() => {
-            this.elements.errorMsg.classList.remove('show');
-        }, 4000);
+        SharedUtilities.showError(this.elements.errorMsg, message);
     }
 
     /**
@@ -204,16 +200,14 @@ class TextToBinaryConverter {
      * Load example data
      */
     loadExample() {
-        if (this.currentMode === 'textToBinary') {
-            const example = 'Hello World';
-            this.elements.textInput.value = example;
-        } else {
-            const example = '01001000 01100101 01101100 01101100 01101111 00100000 01010111 01101111 01110010 01101100 01100100';
-            this.elements.textInput.value = example;
-        }
-        this.elements.textInput.focus();
-        this.main();
-        SharedUtilities.showNotification('Example loaded!', 'success');
+        const exampleText = this.currentMode === 'textToBinary' 
+            ? 'Hello World'
+            : '01001000 01100101 01101100 01101100 01101111 00100000 01010111 01101111 01110010 01101100 01100100';
+        
+        SharedUtilities.loadExample(this.elements.textInput, exampleText, () => {
+            this.main();
+            SharedUtilities.showNotification('Example loaded!', 'success');
+        });
     }
 
     /**

@@ -273,10 +273,7 @@ class RemoveSpacesTool {
     }
 
     showError(message) {
-        if (this.elements.errorMsg) {
-            this.elements.errorMsg.textContent = message;
-            this.elements.errorMsg.classList.add('show');
-        }
+        SharedUtilities.showError(this.elements.errorMsg, message);
     }
 
     clearError() {

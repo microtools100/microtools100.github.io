@@ -182,10 +182,7 @@ class XMLToJSON {
     }
 
     showError(message) {
-        if (this.errorMsg) {
-            this.errorMsg.textContent = message;
-            this.errorMsg.classList.add('show');
-        }
+        SharedUtilities.showError(this.errorMsg, message);
     }
 
     clearError() {

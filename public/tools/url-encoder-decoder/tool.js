@@ -132,9 +132,10 @@ class URLEncoderDecoder {
     }
 
     loadExample() {
-        this.elements.inputURL.value = this.exampleText;
-        this.process();
-        SharedUtilities.showNotification('Example loaded. Try different modes to see the effect.', 'info');
+        SharedUtilities.loadExample(this.elements.inputURL, this.exampleText, () => {
+            this.process();
+            SharedUtilities.showNotification('Example loaded. Try different modes to see the effect.', 'info');
+        });
     }
 
     async copyToClipboard() {
@@ -202,10 +203,7 @@ class URLEncoderDecoder {
     }
 
     showError(message) {
-        if (this.elements.errorMsg) {
-            this.elements.errorMsg.textContent = message;
-            this.elements.errorMsg.classList.add('show');
-        }
+        SharedUtilities.showError(this.elements.errorMsg, message);
     }
 
     clearError() {

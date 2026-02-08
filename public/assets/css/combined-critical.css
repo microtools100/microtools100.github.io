@@ -32,10 +32,10 @@
 
 /* Dark Mode */
 html.dark-mode {
-    --primary-color: #60a5fa;
-    --primary-dark: #3b82f6;
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
     --secondary-color: #94a3b8;
-    --accent-color: #60a5fa;
+    --accent-color: #3b82f6;
     --background-color: #0f172a;
     --surface-color: #1e293b;
     --text-color: #f1f5f9;
@@ -1296,6 +1296,29 @@ html.dark-mode .category-hub-link {
 
     .stat-label {
         font-size: 0.7rem;
+    }
+}
+
+/* Notification Animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
     }
 }
 

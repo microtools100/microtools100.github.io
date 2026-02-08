@@ -697,6 +697,137 @@ class SharedUtilities {
     }
 
     /**
+     * Format a date to a readable string
+     * @param {Date} date - Date to format
+     * @param {string} format - Format style: 'long' (e.g., "January 15, 2024"), 'short' (1/15/2024), 'iso' (2024-01-15)
+     * @returns {string} Formatted date string
+     */
+    static formatDate(date, format = 'long') {
+        if (!(date instanceof Date) || isNaN(date)) {
+            return 'Invalid date';
+        }
+
+        if (format === 'iso') {
+            return date.toISOString().split('T')[0];
+        }
+
+        if (format === 'short') {
+            return date.toLocaleDateString('en-US');
+        }
+
+        // 'long' format (default)
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    /**
+     * Format a number with optional thousands separator and currency
+     * @param {number} num - Number to format
+     * @param {Object} options - Formatting options
+     * @param {boolean} options.thousands - Add thousands separator (default: false)
+     * @param {boolean} options.currency - Format as currency (default: false)
+     * @param {string} options.currencyCode - Currency code (default: 'USD')
+     * @param {number} options.decimals - Number of decimal places (default: auto)
+     * @returns {string} Formatted number
+     */
+    static formatNumber(num, options = {}) {
+        const {
+            thousands = false,
+            currency = false,
+            currencyCode = 'USD',
+            decimals = null
+        } = options;
+
+        if (currency) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: currencyCode,
+                minimumFractionDigits: decimals || 2,
+                maximumFractionDigits: decimals || 2
+            }).format(num);
+        }
+
+        if (decimals !== null) {
+            num = parseFloat(num.toFixed(decimals));
+        }
+
+        if (thousands) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        return num.toString();
+    }
+
+    /**
+     * Display error message in an element with auto-dismiss
+     * @param {HTMLElement} element - Element to display error in
+     * @param {string} message - Error message to display
+     * @param {number} duration - How long to show error in milliseconds (default: 4000)
+     * @param {string} className - CSS class name (default: 'show')
+     */
+    static showError(element, message, duration = 4000, className = 'show') {
+        if (!element) return;
+
+        element.textContent = message;
+        element.classList.add(className);
+
+        setTimeout(() => {
+            element.classList.remove(className);
+        }, duration);
+    }
+
+    /**
+     * Load example text into an input element and trigger callback
+     * @param {HTMLElement} inputElement - Input element to populate
+     * @param {string} exampleText - Example text to load
+     * @param {Function} callback - Function to call after loading example (e.g., convert or refresh)
+     */
+    static loadExample(inputElement, exampleText, callback = null) {
+        if (!inputElement) return;
+
+        inputElement.value = exampleText;
+
+        // Trigger input event to update dependent elements
+        inputElement.dispatchEvent(new Event('input', { bubbles: true }));
+
+        // Call optional callback
+        if (callback && typeof callback === 'function') {
+            callback();
+        }
+
+        // Focus the input
+        inputElement.focus();
+    }
+
+    /**
+     * Validate regex pattern and return validation result
+     * @param {string} pattern - Regex pattern to validate
+     * @param {string} flags - Regex flags (e.g., 'g', 'i', 'gi')
+     * @returns {Object} { valid: boolean, error: string|null, regex: RegExp|null }
+     */
+    static validateRegex(pattern, flags = '') {
+        try {
+            const regex = new RegExp(pattern, flags);
+            return { valid: true, error: null, regex };
+        } catch (error) {
+            return { valid: false, error: error.message, regex: null };
+        }
+    }
+
+    /**
+     * Validate email address
+     * @param {string} email - Email address to validate
+     * @returns {boolean} True if valid email format
+     */
+    static validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    /**
      * Setup keyboard shortcuts for a tool
      * @param {Object} shortcuts - Keyboard shortcuts configuration
      * @example

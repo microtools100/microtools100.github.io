@@ -42,9 +42,32 @@ class DarkModeToggle {
     }
 
     setupToggleButton() {
-        const toggle = document.getElementById('darkModeToggle');
+        let toggle = document.getElementById('darkModeToggle');
+        
+        // If toggle button doesn't exist, inject it into the header
         if (!toggle) {
-            return;
+            const header = document.querySelector('.site-header');
+            const headerContent = document.querySelector('.header-content');
+            
+            if (headerContent) {
+                // Create the toggle button
+                toggle = document.createElement('button');
+                toggle.id = 'darkModeToggle';
+                toggle.className = 'dark-mode-toggle';
+                toggle.setAttribute('aria-label', 'Toggle dark mode');
+                toggle.setAttribute('title', 'Toggle dark mode');
+                toggle.textContent = '🌙';
+                
+                // Insert before the mobile menu button if it exists, otherwise append
+                const mobileMenuBtn = headerContent.querySelector('.mobile-menu-btn');
+                if (mobileMenuBtn) {
+                    mobileMenuBtn.parentNode.insertBefore(toggle, mobileMenuBtn);
+                } else {
+                    headerContent.appendChild(toggle);
+                }
+            } else {
+                return;
+            }
         }
 
         // Set initial button text and label

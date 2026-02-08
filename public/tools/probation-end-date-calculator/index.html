@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate probation end date and employee confirmation date from start date.">
+    <meta name="keywords" content="probation calculator, probation end date, confirmation date, employee onboarding">
+    <title>Probation End Date Calculator - Free Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Probation End Date Calculator",
+        "description": "Calculate probation period end date",
+        "url": "https://microtools.cc/tools/probation-end-date-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is a probation period?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A probation period is the initial trial phase when starting a new job, typically 3-6 months."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What happens at the end of probation?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Employment may be confirmed or terminated based on performance reviews during probation."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can probation be extended?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, some employers extend probation if performance needs improvement."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Are weekends included in probation period?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, probation periods include all calendar days unless specified as working days."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Probation End Date Calculator</h1>
+                <p class="tool-description">Calculate your confirmation date based on probation period</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="startDate">Start Date:</label>
+                                    <div class="input-area">
+                                        <input type="date" id="startDate">
+                                    </div>
+                                    <div class="hint">
+                                        Date when probation period begins
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="probationMonths">Probation Duration (Months):</label>
+                                    <div class="input-area">
+                                        <input type="number" id="probationMonths" placeholder="e.g., 6" min="1" max="24">
+                                    </div>
+                                    <div class="hint">
+                                        Duration of probation period in months
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Results:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Confirmation Date:</span>
+                                                <strong id="confirmationDate">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Days in Probation:</span>
+                                                <strong id="dayCount">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Status:</span>
+                                                <strong id="status">—</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/notice-period-calculator/">Notice Period Calculator</a></li>
+                            <li><a href="/tools/overtime-hours-calculator/">Overtime Hours Calculator</a></li>
+                            <li><a href="/tools/shift-allowance-calculator/">Shift Allowance Calculator</a></li>
+                            <li><a href="/">All HR & Employment Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>HR Tips</h4>
+                        <ul>
+                            <li>Common durations: 3, 6, or 12 months</li>
+                            <li>Schedule probation reviews in advance</li>
+                            <li>Track milestone dates for new hires</li>
+                            <li>Essential for employee onboarding process</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">👤</span>
+                        <h5>New Employees</h5>
+                        <p>Track when probation period ends and confirmation begins.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📋</span>
+                        <h5>HR Management</h5>
+                        <p>Schedule probation review meetings in advance.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📅</span>
+                        <h5>Contract Planning</h5>
+                        <p>Calculate confirmation dates for employment contracts.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">⚖️</span>
+                        <h5>Legal Compliance</h5>
+                        <p>Ensure probation follows employment law requirements.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Joining Date:</strong> The date when employment starts</li>
+                    <li><strong>Enter Probation Duration:</strong> Period length (usually 3 or 6 months)</li>
+                    <li><strong>Choose Unit:</strong> Days, weeks, or months</li>
+                    <li><strong>Calculate:</strong> Get the confirmation date instantly</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Date Calculation:</strong> Adds probation duration to joining date</li>
+                    <li><strong>Flexible Units:</strong> Works with days, weeks, or months</li>
+                    <li><strong>Accurate Results:</strong> Accounts for calendar days and weekends</li>
+                    <li><strong>Status Display:</strong> Shows days remaining in probation</li>
+                    <li><strong>Clear Timeline:</strong> Easy reference for confirmation dates</li>
+                    <li><strong>Shareable Results:</strong> Copy dates for HR and employee records</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>What is a probation period?</h4>
+                    <p>A probation period is the initial trial phase when starting a new job, typically 3-6 months.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What happens at the end of probation?</h4>
+                    <p>Employment may be confirmed or terminated based on performance reviews during probation.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can probation be extended?</h4>
+                    <p>Yes, some employers extend probation if performance needs improvement.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Are weekends included in probation period?</h4>
+                    <p>Yes, probation periods include all calendar days unless specified as working days.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

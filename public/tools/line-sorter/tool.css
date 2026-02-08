@@ -1,0 +1,65 @@
+/* Line Sorter Tool - Custom Styles */
+
+.tool-options {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    margin: 2rem 0;
+}
+
+.option-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.option-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin: 0;
+    cursor: pointer;
+}
+
+.option-group input[type="checkbox"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.option-group select {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--surface-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.tool-options h3 {
+    width: 100%;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .tool-options {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .option-group {
+        width: 100%;
+    }
+
+    .option-group select {
+        width: 100%;
+    }
+}

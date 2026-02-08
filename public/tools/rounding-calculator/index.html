@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Round numbers to any decimal place with multiple rounding methods. Format numbers for display.">
+    <meta name="keywords" content="rounding calculator, decimal formatter, round numbers, number rounding, number formatter">
+    <title>Rounding & Decimal Formatter - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Rounding & Decimal Formatter",
+        "description": "Round numbers and format decimals",
+        "url": "https://microtools.cc/tools/rounding-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What are the different rounding methods?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Standard rounding uses half-up method. Floor rounds down, Ceiling rounds up, Truncate removes decimals."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "When should I use each rounding method?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Standard for general use, Floor for conservative estimates, Ceiling for safety margins, Truncate for counting."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I round negative numbers?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, the calculator works with positive and negative numbers."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What's the maximum number of decimal places?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can round to any number of decimal places, or to the nearest whole number, tens, hundreds, etc."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Rounding & Decimal Formatter</h1>
+                <p class="tool-description">Round numbers to any decimal place with multiple rounding methods</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Options Section -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                <div class="input-group">
+                                    <label for="decimalPlaces">Decimal Places:</label>
+                                    <input type="number" id="decimalPlaces" value="2" min="0" max="15">
+                                </div>
+                                <div class="input-group">
+                                    <label for="roundingMethod">Rounding Method:</label>
+                                    <select id="roundingMethod">
+                                        <option value="round">Round</option>
+                                        <option value="ceil">Ceil (Up)</option>
+                                        <option value="floor">Floor (Down)</option>
+                                        <option value="trunc">Truncate</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; margin: 0; white-space: nowrap;">
+                                    <input type="checkbox" id="addThousands">
+                                    <span>Add Commas</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; margin: 0; white-space: nowrap;">
+                                    <input type="checkbox" id="currencyFormat">
+                                    <span>Currency ($)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputNumbers">Input Numbers:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="inputNumbers" 
+                                            placeholder="Enter numbers one per line or comma-separated...&#10;12.3456&#10;98.7654&#10;45.123" 
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter numbers one per line or comma-separated
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="formatBtn">Format Numbers</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputNumbers">Formatted Output:</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputNumbers" 
+                                            placeholder="Your formatted numbers will appear here..." 
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Output</button>
+                                    <button class="action-btn success" id="downloadBtn">Download</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/percentage-calculator/">Percentage Calculator</a></li>
+                            <li><a href="/tools/average-calculator/">Average Calculator</a></li>
+                            <li><a href="/tools/ratio-calculator/">Ratio Calculator</a></li>
+                            <li><a href="/">All Calculator Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Calculation Tips</h4>
+                        <ul>
+                            <li>Choose the rounding method that fits your needs</li>
+                            <li>Currency formatting includes comma separators</li>
+                            <li>Truncate removes decimals without rounding up</li>
+                            <li>Batch process multiple numbers at once</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💰</span>
+                        <h5>Financial Calculations</h5>
+                        <p>Round prices and monetary amounts to the nearest cent or dollar.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📊</span>
+                        <h5>Data Analysis</h5>
+                        <p>Format decimal numbers for reports and presentations.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔬</span>
+                        <h5>Scientific Notation</h5>
+                        <p>Round measurements and experimental results to meaningful precision.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📈</span>
+                        <h5>Statistics</h5>
+                        <p>Format percentages and statistical values for clarity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Numbers:</strong> Paste or enter numbers (one per line or comma-separated)</li>
+                    <li><strong>Select Rounding Method:</strong> Choose from Standard, Floor, Ceiling, or Truncate</li>
+                    <li><strong>Set Decimal Places:</strong> Specify how many decimal places to keep</li>
+                    <li><strong>Apply Formatting:</strong> Click Format Numbers to see results</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Standard Rounding:</strong> Uses half-up method (0.5 rounds up)</li>
+                    <li><strong>Floor Rounding:</strong> Always rounds down to lower value</li>
+                    <li><strong>Ceiling Rounding:</strong> Always rounds up to higher value</li>
+                    <li><strong>Truncation:</strong> Removes decimals without rounding</li>
+                    <li><strong>Batch Processing:</strong> Format multiple numbers at once</li>
+                    <li><strong>Easy Export:</strong> Copy results or download as file</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>What are the different rounding methods?</h4>
+                    <p>Standard rounding uses half-up method. Floor rounds down, Ceiling rounds up, Truncate removes decimals.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>When should I use each rounding method?</h4>
+                    <p>Standard for general use, Floor for conservative estimates, Ceiling for safety margins, Truncate for counting.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I round negative numbers?</h4>
+                    <p>Yes, the calculator works with positive and negative numbers.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What's the maximum number of decimal places?</h4>
+                    <p>You can round to any number of decimal places, or to the nearest whole number, tens, hundreds, etc.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

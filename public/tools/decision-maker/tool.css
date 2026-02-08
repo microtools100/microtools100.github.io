@@ -147,7 +147,7 @@
 .result-text {
     font-size: 1.8rem;
     font-weight: bold;
-    color: white;
+    color: var(--text-color);
     min-height: 2.5rem;
     display: flex;
     align-items: center;

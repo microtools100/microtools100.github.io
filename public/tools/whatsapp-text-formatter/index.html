@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Text Formatter - Bold, Italic, Strikethrough | Micro Tools</title>
+    <meta name="description" content="Format text for WhatsApp with bold, italic, strikethrough, and monospace styles. Copy and paste directly to WhatsApp.">
+    <meta name="keywords" content="whatsapp text formatter, whatsapp bold, whatsapp italic, text formatting">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="WhatsApp Text Formatter">
+    <meta property="og:description" content="Format your text for WhatsApp with bold, italic, and other styles.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "WhatsApp Text Formatter",
+      "description": "Format text for WhatsApp with styles",
+      "url": "https://microtools.dev/tools/whatsapp-text-formatter/",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do WhatsApp formats work on other platforms?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most formats (bold, italic, strikethrough) work on Telegram and Signal too."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I combine multiple formats?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, apply bold+italic, bold+strikethrough, or other combinations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does formatting work in group chats?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, WhatsApp formatting works in individual chats and group messages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is monospace used for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Monospace is ideal for sharing code snippets or technical information."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will all recipients see the formatting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, all WhatsApp users will see your formatted text correctly."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>WhatsApp Text Formatter</h1>
+                <p class="tool-description">Format your text with WhatsApp styles and copy directly.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+
+                    <!-- Options Section -->
+                    <div class="tool-options">
+                        <h3 class="section-title">Format Buttons</h3>
+                        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                            <button id="boldBtn" class="format-btn" title="Bold" style="padding: 0.75rem 1.25rem; font-size: 1rem; font-weight: 600; background-color: #007bff; color: white; border: none; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <strong>B</strong>
+                            </button>
+                            <button id="italicBtn" class="format-btn" title="Italic" style="padding: 0.75rem 1.25rem; font-size: 1rem; font-weight: 600; background-color: #17a2b8; color: white; border: none; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <em>I</em>
+                            </button>
+                            <button id="strikethroughBtn" class="format-btn" title="Strikethrough" style="padding: 0.75rem 1.25rem; font-size: 1rem; font-weight: 600; background-color: #28a745; color: white; border: none; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <s>S</s>
+                            </button>
+                            <button id="monospaceBtn" class="format-btn" title="Monospace" style="padding: 0.75rem 1.25rem; font-size: 1rem; font-weight: 600; background-color: #6c757d; color: white; border: none; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <code>M</code>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Two-Column Layout for Input and Output -->
+                    <div class="tool-content-columns">
+                        <!-- Input Column -->
+                        <section class="tool-section input-column">
+                            <div class="input-group">
+                                <label for="inputText">Enter Text:</label>
+                                <div class="input-area">
+                                    <textarea id="inputText" placeholder="Type your text here..." rows="15"></textarea>
+                                </div>
+                                <div class="hint">
+                                    Click format buttons above to style your text
+                                </div>
+                            </div>
+
+                            <div class="tool-actions">
+                                <button id="copyBtn" class="action-btn primary">Copy Formatted Text</button>
+                                <button id="clearBtn" class="action-btn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- Output Column -->
+                        <section class="tool-section output-column">
+                            <div class="output-group">
+                                <label>Formatted Output:</label>
+                                <div class="output-area" style="padding: 1rem; min-height: 200px; overflow-wrap: break-word; line-height: 1.6;">
+                                    <div id="output" style="white-space: pre-wrap; word-break: break-all;"></div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="tool-sidebar">
+                <div class="related-tools">
+                    <h4>Related Tools</h4>
+                    <ul>
+                        <li><a href="/tools/caption-line-break-formatter/">Caption Line Break</a></li>
+                        <li><a href="/tools/hashtag-formatter/">Hashtag Formatter</a></li>
+                        <li><a href="/tools/invisible-character-generator/">Invisible Characters</a></li>
+                        <li><a href="/">All Social Media Tools</a></li>
+                    </ul>
+                </div>
+
+                <div class="tool-tips">
+                    <h4>Social Media Tips</h4>
+                    <ul>
+                        <li>Bold emphasizes key points in messages</li>
+                        <li>Monospace formatting shows code or data clearly</li>
+                        <li>Strikethrough adds humor or shows corrections</li>
+                        <li>Combine formats for professional communication</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+        <div class="use-cases">
+            <h4>Use Cases</h4>
+            <div class="use-case-grid">
+                <div class="use-case-item">
+                    <span class="use-case-icon">💬</span>
+                    <h5>Professional Messages</h5>
+                    <p>Format business communications with emphasis and style.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">✉️</span>
+                    <h5>Important Announcements</h5>
+                    <p>Highlight key information in group messages.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">📝</span>
+                    <h5>Code Sharing</h5>
+                    <p>Format code snippets in monospace for clarity.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">✨</span>
+                    <h5>Visual Enhancement</h5>
+                    <p>Make messages more engaging and readable.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Use</h3>
+            <ol>
+                <li><strong>Type or Paste Text:</strong> Enter your message content</li>
+                <li><strong>Select Formatting:</strong> Click buttons for bold, italic, strikethrough, or monospace</li>
+                <li><strong>Preview:</strong> See formatted text in real-time</li>
+                <li><strong>Copy to WhatsApp:</strong> Copy and paste into WhatsApp</li>
+            </ol>
+        </div>
+
+        <div class="formatting-guide">
+            <h3>How It Works</h3>
+            <ul>
+                <li><strong>One-Click Formatting:</strong> Buttons apply WhatsApp syntax automatically</li>
+                <li><strong>Multiple Formats:</strong> Bold, italic, strikethrough, monospace options</li>
+                <li><strong>Combined Formatting:</strong> Apply multiple formats to same text</li>
+                <li><strong>Live Preview:</strong> See results immediately in the editor</li>
+                <li><strong>Copy Ready:</strong> Formatted text ready to paste into WhatsApp</li>
+                <li><strong>No External Tools:</strong> Everything happens in your browser</li>
+            </ul>
+        </div>
+
+        <div class="faq-section">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <h4>Do WhatsApp text formats work on other platforms?</h4>
+                <p>Most formats (bold, italic, strikethrough) work on Telegram and Signal too.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I combine multiple formats on the same text?</h4>
+                <p>Yes, you can apply bold+italic, bold+strikethrough, or other combinations.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Does the formatting work in group chats?</h4>
+                <p>Yes, WhatsApp formatting works in individual chats and group messages.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What is monospace used for?</h4>
+                <p>Monospace is ideal for sharing code snippets or technical information.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Will the formatting show for all recipients?</h4>
+                <p>Yes, all WhatsApp users will see the formatted text correctly.</p>
+            </div>
+        </div>
+    </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

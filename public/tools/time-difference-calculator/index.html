@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate time duration between two times. Find hours, minutes, seconds elapsed.">
+    <meta name="keywords" content="time difference calculator, time duration, elapsed time, hours calculator">
+    <title>Time Difference Calculator - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Time Difference Calculator",
+        "description": "Calculate time difference between two times",
+        "url": "https://microtools.cc/tools/time-difference-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I calculate time difference?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Subtract the start time from the end time: Difference = End Time - Start Time"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does it handle times across midnight?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, if start time is later than end time, it automatically assumes next day."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I exclude breaks?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, subtract break duration from the result for net working time."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What time format is supported?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "24-hour and 12-hour (AM/PM) formats are both supported."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Time Difference Calculator</h1>
+                <p class="tool-description">Calculate duration between two times</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="startTime">Start Time:</label>
+                                    <div class="input-area">
+                                        <input type="time" id="startTime">
+                                    </div>
+                                    <div class="hint">
+                                        Beginning time
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="endTime">End Time:</label>
+                                    <div class="input-area">
+                                        <input type="time" id="endTime">
+                                    </div>
+                                    <div class="hint">
+                                        Ending time
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Duration:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Hours:</span>
+                                                <strong id="hours">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Minutes:</span>
+                                                <strong id="minutes">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Total:</span>
+                                                <strong id="totalTime">—</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/shift-hours-calculator/">Shift Hours Calculator</a></li>
+                            <li><a href="/tools/weekly-working-hours-calculator/">Weekly Working Hours</a></li>
+                            <li><a href="/tools/multiple-time-adder/">Multiple Time Adder</a></li>
+                            <li><a href="/">All Time & Shift Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Time Management Tips</h4>
+                        <ul>
+                            <li>Handles 12-hour and 24-hour time formats</li>
+                            <li>Automatically accounts for AM/PM transitions</li>
+                            <li>Perfect for calculating work shift durations</li>
+                            <li>Breaks down results into hours, minutes, and seconds</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">⏱️</span>
+                        <h5>Work Shift Duration</h5>
+                        <p>Calculate total hours worked in a shift.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🚗</span>
+                        <h5>Travel Time</h5>
+                        <p>Calculate journey duration between two times.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🎬</span>
+                        <h5>Event Duration</h5>
+                        <p>Calculate length of meetings, events, or activities.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📞</span>
+                        <h5>Call Duration</h5>
+                        <p>Calculate phone call or meeting length.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Start Time:</strong> When the activity began</li>
+                    <li><strong>Enter End Time:</strong> When the activity ended</li>
+                    <li><strong>Select Time Format:</strong> 12-hour or 24-hour format</li>
+                    <li><strong>Calculate:</strong> Get the duration instantly</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Simple Subtraction:</strong> Subtracts start time from end time</li>
+                    <li><strong>Midnight Handling:</strong> Automatically adjusts for times crossing midnight</li>
+                    <li><strong>Format Flexibility:</strong> Supports 12-hour (AM/PM) and 24-hour formats</li>
+                    <li><strong>Multiple Units:</strong> Shows result in hours, minutes, and seconds</li>
+                    <li><strong>Instant Results:</strong> Real-time calculation as you change times</li>
+                    <li><strong>Easy Copying:</strong> Copy results for records or reports</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>How do I calculate time difference?</h4>
+                    <p>Subtract the start time from the end time: Difference = End Time - Start Time</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Does it handle times across midnight?</h4>
+                    <p>Yes, if start time is later than end time, it automatically assumes next day.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I exclude breaks?</h4>
+                    <p>Yes, subtract break duration from the result for net working time.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What time format is supported?</h4>
+                    <p>24-hour and 12-hour (AM/PM) formats are both supported.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

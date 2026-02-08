@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate overtime hours worked. Determine how many hours exceed the standard work schedule.">
+    <meta name="keywords" content="overtime calculator, overtime hours, work hours calculator, extra hours">
+    <title>Overtime Hours Calculator - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Overtime Hours Calculator",
+        "description": "Calculate overtime hours and earnings",
+        "url": "https://microtools.cc/tools/overtime-hours-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is overtime?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Overtime is hours worked beyond the standard 40 hours per week, typically paid at a higher rate."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What's the overtime pay multiplier?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually 1.5x (time-and-a-half) or 2x (double time). Check your employment contract for exact rates."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I calculate overtime earnings?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Overtime Pay = (Overtime Hours × Hourly Rate) × Multiplier"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do I need to pay taxes on overtime?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, overtime pay is subject to income tax and other deductions like regular pay."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Overtime Hours Calculator</h1>
+                <p class="tool-description">Calculate how many hours exceed your standard work schedule</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="totalHours">Total Hours Worked:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="totalHours" placeholder="e.g., 45" step="0.5">
+                                    </div>
+                                    <div class="hint">
+                                        Enter total hours worked in this period
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="standardHours">Standard Hours per Day/Week:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="standardHours" placeholder="e.g., 40" step="0.5">
+                                    </div>
+                                    <div class="hint">
+                                        Enter your standard working hours
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Results:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Overtime Hours:</span>
+                                                <strong id="overtimeHours">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Regular Hours:</span>
+                                                <strong id="regularHours">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Total Hours:</span>
+                                                <strong id="totalResult">—</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/shift-hours-calculator/">Shift Hours Calculator</a></li>
+                            <li><a href="/tools/shift-allowance-calculator/">Shift Allowance Calculator</a></li>
+                            <li><a href="/tools/attendance-percentage-calculator/">Attendance Percentage</a></li>
+                            <li><a href="/">All HR & Employment Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>HR Tips</h4>
+                        <ul>
+                            <li>Set standard working hours as baseline</li>
+                            <li>Track overtime for payroll and compensation</li>
+                            <li>Follow local labor laws for overtime rates</li>
+                            <li>Useful for HR management and billing</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">👷</span>
+                        <h5>Manufacturing</h5>
+                        <p>Track worker overtime hours and overtime compensation.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🏥</span>
+                        <h5>Healthcare</h5>
+                        <p>Manage nurse and staff overtime schedules.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📊</span>
+                        <h5>Payroll</h5>
+                        <p>Calculate overtime pay for salary processing.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🚚</span>
+                        <h5>Logistics</h5>
+                        <p>Track delivery driver overtime hours.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Total Hours Worked:</strong> Total hours for the pay period</li>
+                    <li><strong>Enter Standard Hours:</strong> Regular working hours (usually 40)</li>
+                    <li><strong>Enter Hourly Rate:</strong> Your regular hourly wage</li>
+                    <li><strong>Set Overtime Multiplier:</strong> 1.5x or 2x depending on your contract</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Overtime Calculation:</strong> Subtracts standard hours from total hours worked</li>
+                    <li><strong>Pay Multiplier:</strong> Applies time-and-a-half or double-time rate to overtime</li>
+                    <li><strong>Total Compensation:</strong> Shows regular pay plus overtime pay</li>
+                    <li><strong>Hourly Breakdown:</strong> Displays overtime hours separately</li>
+                    <li><strong>Instant Results:</strong> Real-time calculation as you enter values</li>
+                    <li><strong>Easy Reporting:</strong> Copy results for payroll or HR systems</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>What is overtime?</h4>
+                    <p>Overtime is hours worked beyond the standard 40 hours per week, typically paid at a higher rate.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What's the overtime pay multiplier?</h4>
+                    <p>Usually 1.5x (time-and-a-half) or 2x (double time). Check your employment contract for exact rates.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How do I calculate overtime earnings?</h4>
+                    <p>Overtime Pay = (Overtime Hours × Hourly Rate) × Multiplier</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Do I need to pay taxes on overtime?</h4>
+                    <p>Yes, overtime pay is subject to income tax and other deductions like regular pay.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

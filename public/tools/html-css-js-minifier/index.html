@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Minify HTML, CSS, and JavaScript code. Remove comments and whitespace to reduce file size and improve page load times.">
+    <meta name="keywords" content="minifier, html minifier, css minifier, javascript minifier, code compression, remove comments">
+    <meta property="og:title" content="HTML/CSS/JS Minifier - Compress Code">
+    <meta property="og:description" content="Minify HTML, CSS, and JavaScript code instantly. Remove comments and unnecessary whitespace.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>HTML/CSS/JS Minifier - Compress Code | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "HTML/CSS/JS Minifier",
+      "description": "Minify HTML, CSS, and JavaScript code",
+      "url": "https://microtools.dev/tools/html-css-js-minifier/",
+      "applicationCategory": "DeveloperApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is code minification?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Minification removes unnecessary characters from code (comments, whitespace) without affecting functionality."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will minified code break?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, minified code maintains full functionality. Only formatting is removed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much size reduction can I expect?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typically 30-50% reduction depending on the original code's structure and comments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I minify all languages at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can minify each language (HTML, CSS, JavaScript) separately for best results."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is minification the same as encryption?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, minification is compression for performance, not encryption for security."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>HTML/CSS/JS Minifier</h1>
+                <p class="tool-description">
+                    Minify your code to reduce file size and improve page load performance.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Options Section -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                                <div class="option-group" style="margin: 0;">
+                                    <label for="codeType">Code Type:</label>
+                                    <select id="codeType">
+                                        <option value="html">HTML</option>
+                                        <option value="css">CSS</option>
+                                        <option value="js">JavaScript</option>
+                                    </select>
+                                </div>
+                                <div class="option-group" style="margin: 0; display: flex; align-items: center;">
+                                    <label style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+                                        <input type="checkbox" id="removeLineBreaks" checked> Remove Line Breaks
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputCode">Paste Code:</label>
+                                    <div class="input-area">
+                                        <textarea id="inputCode" placeholder="Paste your HTML, CSS, or JavaScript code here..." rows="20"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button id="minifyBtn" class="action-btn primary">Minify Code</button>
+                                    <button id="clearBtn" class="action-btn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputCode">Minified Code:</label>
+                                    <div class="output-area">
+                                        <textarea id="outputCode" readonly placeholder="Your minified code will appear here..." rows="20"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button id="copyBtn" class="action-btn success">Copy Results</button>
+                                    <button id="downloadBtn" class="action-btn success">Download</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/code-beautifier/">Code Beautifier</a></li>
+                            <li><a href="/tools/json-diff-tool/">JSON Diff Tool</a></li>
+                            <li><a href="/tools/http-status-code-lookup/">HTTP Status Lookup</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Developer Tips</h4>
+                        <ul>
+                            <li>Minification reduces file sizes and improves performance</li>
+                            <li>Keep original files for debugging and future edits</li>
+                            <li>Test minified code before deploying to production</li>
+                            <li>Use for CSS, JavaScript, and HTML optimization</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">⚡</span>
+                        <h5>Website Performance</h5>
+                        <p>Reduce file sizes to improve page load speed.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🚀</span>
+                        <h5>Production Builds</h5>
+                        <p>Optimize code for production deployment.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📱</span>
+                        <h5>Mobile Optimization</h5>
+                        <p>Reduce bandwidth usage for mobile users.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💾</span>
+                        <h5>File Size Reduction</h5>
+                        <p>Compress code assets before deployment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Paste Code:</strong> Enter HTML, CSS, or JavaScript code</li>
+                    <li><strong>Select Type:</strong> Choose the code language type</li>
+                    <li><strong>Configure Options:</strong> Choose minification settings</li>
+                    <li><strong>Minify:</strong> Click to process and download result</li>
+                </ol>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Comment Removal:</strong> Deletes all comments from code</li>
+                    <li><strong>Whitespace Elimination:</strong> Removes unnecessary spaces and newlines</li>
+                    <li><strong>Code Compression:</strong> Collapses multi-line code to single lines</li>
+                    <li><strong>Syntax Preservation:</strong> Maintains code functionality</li>
+                    <li><strong>Smart Parsing:</strong> Handles different language syntax correctly</li>
+                    <li><strong>File Size Reduction:</strong> Achieves 30-50% file size savings</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

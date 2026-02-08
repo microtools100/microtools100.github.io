@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Find the current tool in registry
     const allTools = [
         ...TOOLS_REGISTRY.phase1,
-        ...TOOLS_REGISTRY.phase2
+        ...TOOLS_REGISTRY.phase2,
+        ...TOOLS_REGISTRY.phase3
     ];
     
     const currentTool = allTools.find(tool => tool.id === currentToolId);

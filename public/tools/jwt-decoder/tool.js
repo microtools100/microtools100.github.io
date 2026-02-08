@@ -166,9 +166,10 @@ class JWTDecoder {
     }
 
     loadExample() {
-        this.elements.jwtInput.value = this.exampleToken;
-        this.decode();
-        SharedUtilities.showNotification('Example JWT loaded. You can modify it to test decoding.', 'info');
+        SharedUtilities.loadExample(this.elements.jwtInput, this.exampleToken, () => {
+            this.decode();
+            SharedUtilities.showNotification('Example JWT loaded. You can modify it to test decoding.', 'info');
+        });
     }
 
     clearOutputs() {
@@ -207,10 +208,7 @@ class JWTDecoder {
     }
 
     showError(message) {
-        if (this.elements.errorMsg) {
-            this.elements.errorMsg.textContent = message;
-            this.elements.errorMsg.classList.add('show');
-        }
+        SharedUtilities.showError(this.elements.errorMsg, message);
     }
 
     clearError() {

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate working days between two dates, excluding weekends and holidays. Perfect for project planning.">
+    <meta name="keywords" content="working days calculator, business days, days calculator, project deadline, working days">
+    <title>Working Days Calculator - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Working Days Calculator",
+        "description": "Calculate working days excluding weekends and holidays",
+        "url": "https://microtools.cc/tools/working-days-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What counts as a working day?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Monday through Friday (excluding holidays if specified)."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I exclude holidays?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Check Include Holidays option and add dates you want to exclude."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does it count the start and end date?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, both start and end dates are included in the count."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I export the results?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, copy results to use in your applications."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Working Days Calculator</h1>
+                <p class="tool-description">Calculate business days between dates, excluding weekends and holidays</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Options Section -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                                <div style="display: flex; align-items: center;">
+                                    <label for="includeHolidays" style="display: flex; align-items: center; gap: 0.5rem; margin: 0; white-space: nowrap;">
+                                        <input type="checkbox" id="includeHolidays">
+                                        <span>Include Holidays</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="startDate">Start Date:</label>
+                                    <div class="input-area">
+                                        <input type="date" id="startDate">
+                                    </div>
+                                    <div class="hint">
+                                        Select the beginning date for calculation
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="endDate">End Date:</label>
+                                    <div class="input-area">
+                                        <input type="date" id="endDate">
+                                    </div>
+                                    <div class="hint">
+                                        Select the ending date for calculation
+                                    </div>
+                                </div>
+
+                                <div class="input-group" id="holidaysGroup" style="display:none;">
+                                    <label for="holidays">Holidays (YYYY-MM-DD):</label>
+                                    <div class="input-area">
+                                        <textarea id="holidays" placeholder="2024-01-01, 2024-07-04, 2024-12-25" rows="4"></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter dates comma-separated or one per line
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Results:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Working Days:</span>
+                                                <strong id="workingDays">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Weekend Days:</span>
+                                                <strong id="weekendDays">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Total Days:</span>
+                                                <strong id="totalDays">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Holidays Excluded:</span>
+                                                <strong id="holidayCount">—</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/time-difference-calculator/">Time Difference Calculator</a></li>
+                            <li><a href="/tools/shift-hours-calculator/">Shift Hours Calculator</a></li>
+                            <li><a href="/tools/weekly-working-hours-calculator/">Weekly Working Hours</a></li>
+                            <li><a href="/">All Time & Shift Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Calculation Tips</h4>
+                        <ul>
+                            <li>Add public holidays for accurate calculations</li>
+                            <li>Weekends automatically excluded from count</li>
+                            <li>Perfect for project planning and deadlines</li>
+                            <li>Includes detailed breakdown of holiday impacts</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📅</span>
+                        <h5>Project Deadlines</h5>
+                        <p>Calculate realistic project timelines by counting only working days.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">⏰</span>
+                        <h5>Payment Processing</h5>
+                        <p>Determine actual processing times excluding weekends and holidays.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📋</span>
+                        <h5>HR Planning</h5>
+                        <p>Calculate work schedules and attendance periods accurately.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💼</span>
+                        <h5>Business Operations</h5>
+                        <p>Track business days for contract timelines and deliverables.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Select Start Date:</strong> Choose the beginning date for your calculation</li>
+                    <li><strong>Select End Date:</strong> Choose the ending date for your calculation</li>
+                    <li><strong>Add Holidays (Optional):</strong> List holidays in YYYY-MM-DD format, separated by commas</li>
+                    <li><strong>Calculate:</strong> Click the Calculate button to see working days breakdown</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Business Days Count:</strong> Counts Monday through Friday only</li>
+                    <li><strong>Weekend Exclusion:</strong> Automatically excludes Saturdays and Sundays</li>
+                    <li><strong>Holiday Support:</strong> Optionally exclude custom holidays from the count</li>
+                    <li><strong>Detailed Breakdown:</strong> Shows working days, weekend days, and total days</li>
+                    <li><strong>Both Dates Included:</strong> Includes both the start and end dates in calculations</li>
+                    <li><strong>Instant Results:</strong> Real-time calculation with clear results display</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>What counts as a working day?</h4>
+                    <p>A working day is Monday through Friday. Saturday and Sunday are not counted as working days.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How do I exclude holidays?</h4>
+                    <p>Check the Include Holidays option and add dates in YYYY-MM-DD format (e.g., 2024-01-01). Separate multiple dates with commas.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Does it count the start and end date?</h4>
+                    <p>Yes, both the start date and end date are included in the working days count.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser. Your data is never sent to our servers or stored anywhere.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I export the results?</h4>
+                    <p>Yes, you can copy the results using the Copy Results button and paste them into your documents or applications.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

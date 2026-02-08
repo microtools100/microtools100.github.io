@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caption Line Break Formatter - Add Breaks to Text | Micro Tools</title>
+    <meta name="description" content="Format captions and text by automatically adding line breaks after sentences, emojis, and periods.">
+    <meta name="keywords" content="caption formatter, line breaks, text formatter, social media captions">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Caption Line Break Formatter">
+    <meta property="og:description" content="Format your captions with automatic line breaks.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Caption Line Break Formatter",
+        "description": "Format captions with automatic line breaks",
+        "url": "https://microtools.cc/tools/caption-line-break-formatter/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Why format captions with line breaks?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Better readability on social media and fits within character/display limits."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What character limit should I use?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Instagram captions: 2,200 chars. Twitter: 280. Adjust based on platform."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I customize line break positions?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, adjust the character limit per line in the tool settings."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Will it preserve my hashtags?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, hashtags are preserved and can be kept on the same or separate lines."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Caption Line Break Formatter</h1>
+                <p class="tool-description">Automatically add line breaks to your captions for better readability.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+
+                    <!-- Options Section -->
+                    <div class="tool-options">
+                        <h3 class="section-title">Options</h3>
+                        <div class="option-group" style="margin: 0;">
+                            <label>Break Type:</label>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 400px;">
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                    <input type="radio" name="breakType" value="period" checked style="width: 20px; height: 20px; cursor: pointer;">
+                                    <label style="font-size: 0.9rem; margin: 0; text-align: center;">After Period</label>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                    <input type="radio" name="breakType" value="emoji" style="width: 20px; height: 20px; cursor: pointer;">
+                                    <label style="font-size: 0.9rem; margin: 0; text-align: center;">After Emoji</label>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                    <input type="radio" name="breakType" value="both" style="width: 20px; height: 20px; cursor: pointer;">
+                                    <label style="font-size: 0.9rem; margin: 0; text-align: center;">Both</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Two-Column Layout for Input and Output -->
+                    <div class="tool-content-columns">
+                        <!-- Input Column -->
+                        <section class="tool-section input-column">
+                            <div class="input-group">
+                                <label for="inputCaption">Enter Caption:</label>
+                                <div class="input-area">
+                                    <textarea id="inputCaption" placeholder="Paste your caption here..." rows="15"></textarea>
+                                </div>
+                                <div class="hint">
+                                    Paste your caption text
+                                </div>
+                            </div>
+
+                            <div class="tool-actions">
+                                <button id="formatBtn" class="action-btn primary">Format Caption</button>
+                                <button id="clearBtn" class="action-btn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- Output Column -->
+                        <section class="tool-section output-column">
+                            <div class="output-group">
+                                <label for="outputCaption">Formatted Caption:</label>
+                                <div class="output-area">
+                                    <textarea id="outputCaption" readonly placeholder="Formatted output will appear here..." rows="15"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="tool-actions">
+                                <button id="copyBtn" class="action-btn success">Copy Results</button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="tool-sidebar">
+                <div class="related-tools">
+                    <h4>Related Tools</h4>
+                    <ul>
+                        <li><a href="/tools/whatsapp-text-formatter/">WhatsApp Text Formatter</a></li>
+                        <li><a href="/tools/hashtag-formatter/">Hashtag Formatter</a></li>
+                        <li><a href="/tools/invisible-character-generator/">Invisible Characters</a></li>
+                        <li><a href="/">All Social Media Tools</a></li>
+                    </ul>
+                </div>
+
+                <div class="tool-tips">
+                    <h4>Social Media Tips</h4>
+                    <ul>
+                        <li>Break after emojis for visual interest</li>
+                        <li>Short lines improve mobile readability</li>
+                        <li>Perfect for Instagram and TikTok captions</li>
+                        <li>Increases engagement with better formatting</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+        <div class="use-cases">
+            <h4>Use Cases</h4>
+            <div class="use-case-grid">
+                <div class="use-case-item">
+                    <span class="use-case-icon">📱</span>
+                    <h5>Social Media Posts</h5>
+                    <p>Format long captions for Instagram, Twitter, and social platforms.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">💬</span>
+                    <h5>Video Captions</h5>
+                    <p>Break captions into readable lines for YouTube and videos.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">📸</span>
+                    <h5>Photo Descriptions</h5>
+                    <p>Format photo descriptions with proper line breaks.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">🎬</span>
+                    <h5>Content Organization</h5>
+                    <p>Improve readability of any text-based content.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Use</h3>
+            <ol>
+                <li><strong>Paste Caption:</strong> Enter your text or caption</li>
+                <li><strong>Choose Break Points:</strong> Select where to break (after sentences, emojis, etc)</li>
+                <li><strong>Process:</strong> Click to format the caption</li>
+                <li><strong>Copy Result:</strong> Use the formatted caption</li>
+            </ol>
+        </div>
+
+        <div class="formatting-guide">
+            <h3>How It Works</h3>
+            <ul>
+                <li><strong>Sentence Detection:</strong> Identifies periods and sentence endings</li>
+                <li><strong>Emoji Recognition:</strong> Detects emojis and adds breaks after them</li>
+                <li><strong>Smart Breaks:</strong> Maintains readability with proper spacing</li>
+                <li><strong>Flexible Options:</strong> Choose different breaking strategies</li>
+                <li><strong>Preserves Content:</strong> All text and emojis remain intact</li>
+                <li><strong>Real-time Output:</strong> Instant formatting preview</li>
+            </ul>
+        </div>
+
+        <div class="faq-section">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <h4>Where exactly are line breaks added?</h4>
+                <p>Breaks are added after sentences, emojis, and other break points you select.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Does it work with all emojis?</h4>
+                <p>Yes, it recognizes standard Unicode emojis and adds breaks appropriately.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I customize break points?</h4>
+                <p>Yes, you can choose which types of breaks to apply (sentences, emojis, etc).</p>
+            </div>
+            <div class="faq-item">
+                <h4>Will formatting work on all platforms?</h4>
+                <p>Yes, standard line breaks work across social media and most platforms.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I undo the formatting?</h4>
+                <p>Yes, the original caption remains; you choose what to copy.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

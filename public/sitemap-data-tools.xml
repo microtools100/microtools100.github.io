@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- DATA TOOLS -->
+  <url>
+    <loc>https://micro-tools-43a.pages.dev/tools/excel-column-to-comma-list/</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://micro-tools-43a.pages.dev/tools/excel-column-to-sql-in/</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://micro-tools-43a.pages.dev/tools/csv-to-json/</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://micro-tools-43a.pages.dev/tools/json-to-csv/</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://micro-tools-43a.pages.dev/tools/json-to-xml/</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://micro-tools-43a.pages.dev/tools/xml-to-json/</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+  <url>
+    <loc>https://micro-tools-43a.pages.dev/tools/json-to-yaml/</loc>
+    <lastmod>2026-02-08</lastmod>
+  </url>
+
+</urlset>

@@ -141,9 +141,10 @@ SHA-512: ${this.currentHashes.sha512 || '-'}`;
     }
 
     loadExample() {
-        this.textInput.value = 'Hello World';
-        this.generateHashes();
-        SharedUtilities.showNotification('Example loaded', 'info');
+        SharedUtilities.loadExample(this.textInput, 'Hello World', () => {
+            this.generateHashes();
+            SharedUtilities.showNotification('Example loaded', 'info');
+        });
     }
 
     downloadHashes() {

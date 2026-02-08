@@ -44,24 +44,27 @@
                     <div class="tool-container">
                         <div class="tool-options">
                             <div class="tool-actions-horizontal">
+                                <button class="action-btn primary" id="calculateBtn">Calculate</button>
                                 <button class="action-btn" id="clearBtn">Clear</button>
                                 <button class="action-btn" id="downloadBtn">Download</button>
                             </div>
                         </div>
                         <div id="errorMsg" class="error-msg"></div>
                         <div class="tool-content-columns">
-                            <div class="tool-section">
-                                <div class="input-group">
-                                    <label>Current Balance ($)</label>
-                                    <input type="number" id="currentBalance" placeholder="5000" value="5000" min="0" step="0.01">
-                                </div>
-                                <div class="input-group">
-                                    <label>APR (%)</label>
-                                    <input type="number" id="apr" placeholder="18.99" value="18.99" min="0" step="0.01">
-                                </div>
-                                <div class="input-group">
-                                    <label>Monthly Payment ($)</label>
-                                    <input type="number" id="monthlyPayment" placeholder="200" value="200" min="0" step="0.01">
+                            <div class="tool-section input-section">
+                                <div class="input-fields-row">
+                                    <div class="input-group">
+                                        <label>Current Balance ($)</label>
+                                        <input type="number" id="currentBalance" placeholder="5000" min="0" step="0.01">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>APR (%)</label>
+                                        <input type="number" id="apr" placeholder="18.99" min="0" step="0.01">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Monthly Payment ($)</label>
+                                        <input type="number" id="monthlyPayment" placeholder="200" min="0" step="0.01">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +79,8 @@
                                     <div class="result-label">Years to Payoff</div>
                                     <div class="result-value" id="yearsResult">0</div>
                                 </div>
+                            </div>
+                            <div class="results-grid">
                                 <div class="result-card">
                                     <div class="result-label">Total Interest</div>
                                     <div class="result-value" id="totalInterestResult">$0.00</div>

@@ -230,6 +230,126 @@ const TOOLS_REGISTRY = {
       keywords: 'unit converter, convert units, length converter, weight converter',
       priority: 0.88,
       status: 'not-started'
+    },
+    {
+      id: 'text-summarizer',
+      name: 'Text Summarizer',
+      category: 'text-analysis',
+      categoryLabel: 'Text Analysis Tools',
+      description: 'Reduce long text into concise summaries by extracting key sentences automatically.',
+      icon: '📄',
+      url: '/tools/text-summarizer/',
+      keywords: 'text summarizer, summarize text, content summary, text reduction, key sentences',
+      priority: 0.87,
+      status: 'complete'
+    },
+    {
+      id: 'line-sorter',
+      name: 'Line Sorter',
+      category: 'text-formatting',
+      categoryLabel: 'Text Formatting Tools',
+      description: 'Sort text lines alphabetically in ascending (A-Z) or descending (Z-A) order.',
+      icon: '🔤',
+      url: '/tools/line-sorter/',
+      keywords: 'line sorter, sort text, alphabetical sort, text organizer, list sorter',
+      priority: 0.80,
+      status: 'complete'
+    },
+    {
+      id: 'line-numbering',
+      name: 'Line Numbering Tool',
+      category: 'text-formatting',
+      categoryLabel: 'Text Formatting Tools',
+      description: 'Add line numbers to your text with customizable formatting and numbering styles.',
+      icon: '1️⃣',
+      url: '/tools/line-numbering/',
+      keywords: 'line numbering, line numbers, text formatter, code formatter',
+      priority: 0.78,
+      status: 'not-started'
+    },
+    {
+      id: 'percentage-calculator',
+      name: 'Percentage Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate percentage change, increase, and decrease between two values.',
+      icon: '%️',
+      url: '/tools/percentage-calculator/',
+      keywords: 'percentage calculator, percentage change, percentage increase, percentage decrease',
+      priority: 0.90,
+      status: 'not-started'
+    },
+    {
+      id: 'average-calculator',
+      name: 'Average & Weighted Average Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate simple average, weighted average, and median values from a dataset.',
+      icon: '📊',
+      url: '/tools/average-calculator/',
+      keywords: 'average calculator, weighted average, mean, median, statistics',
+      priority: 0.85,
+      status: 'not-started'
+    },
+    {
+      id: 'ratio-calculator',
+      name: 'Ratio Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Simplify ratios to their lowest terms and scale proportions easily.',
+      icon: '::',
+      url: '/tools/ratio-calculator/',
+      keywords: 'ratio calculator, simplify ratio, scale ratio, proportion calculator',
+      priority: 0.83,
+      status: 'not-started'
+    },
+    {
+      id: 'unit-price-calculator',
+      name: 'Unit Price Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate the price per unit to compare product values and find the best deals.',
+      icon: '💵',
+      url: '/tools/unit-price-calculator/',
+      keywords: 'unit price calculator, price per unit, cost comparison, unit cost',
+      priority: 0.86,
+      status: 'not-started'
+    },
+    {
+      id: 'discount-calculator',
+      name: 'Discount Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate discounted prices with percentage or fixed amount discounts.',
+      icon: '🏷️',
+      url: '/tools/discount-calculator/',
+      keywords: 'discount calculator, sale price, percent off, price reduction',
+      priority: 0.87,
+      status: 'not-started'
+    },
+    {
+      id: 'rounding-calculator',
+      name: 'Rounding & Decimal Formatter',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Round numbers to any decimal place with multiple rounding methods.',
+      icon: '🔢',
+      url: '/tools/rounding-calculator/',
+      keywords: 'rounding calculator, decimal formatter, round numbers, number formatter',
+      priority: 0.82,
+      status: 'not-started'
+    },
+    {
+      id: 'working-days-calculator',
+      name: 'Working Days Calculator',
+      category: 'time-tools',
+      categoryLabel: 'Time Tools',
+      description: 'Calculate business days between dates, excluding weekends and holidays.',
+      icon: '📅',
+      url: '/tools/working-days-calculator/',
+      keywords: 'working days calculator, business days, days calculator, project deadline',
+      priority: 0.84,
+      status: 'not-started'
     }
   ],
   
@@ -608,90 +728,595 @@ const TOOLS_REGISTRY = {
     }
   ],
 
+  phase3: [
+    // File Tools (4)
+    {
+      id: 'bulk-file-name-generator',
+      name: 'Bulk File Name Generator',
+      category: 'file-tools',
+      categoryLabel: 'File Management Tools',
+      description: 'Generate bulk file names with prefix, suffix, and automatic numbering.',
+      icon: '📁',
+      url: '/tools/bulk-file-name-generator/',
+      keywords: 'file name generator, bulk rename, file naming, batch naming',
+      priority: 0.80,
+      status: 'complete'
+    },
+    {
+      id: 'remove-special-characters-from-filenames',
+      name: 'Remove Special Characters from Filenames',
+      category: 'file-tools',
+      categoryLabel: 'File Management Tools',
+      description: 'Remove special characters and invalid symbols from file names while preserving extensions.',
+      icon: '🧹',
+      url: '/tools/remove-special-characters-from-filenames/',
+      keywords: 'filename cleaner, remove special characters, file name sanitizer',
+      priority: 0.78,
+      status: 'complete'
+    },
+    {
+      id: 'file-name-case-converter',
+      name: 'File Name Case Converter',
+      category: 'file-tools',
+      categoryLabel: 'File Management Tools',
+      description: 'Convert file names to different case formats: lowercase, UPPERCASE, Title Case, camelCase, snake_case.',
+      icon: '🔄',
+      url: '/tools/file-name-case-converter/',
+      keywords: 'file name converter, case converter, filename formatter, batch case conversion',
+      priority: 0.77,
+      status: 'complete'
+    },
+    {
+      id: 'date-based-file-name-generator',
+      name: 'Date-Based File Name Generator',
+      category: 'file-tools',
+      categoryLabel: 'File Management Tools',
+      description: 'Add date prefixes or suffixes to file names in multiple date formats.',
+      icon: '📅',
+      url: '/tools/date-based-file-name-generator/',
+      keywords: 'file name generator, date prefix, date suffix, file naming',
+      priority: 0.76,
+      status: 'complete'
+    },
+    // Text/Content Tools (3 additional)
+    {
+      id: 'duplicate-word-remover',
+      name: 'Duplicate Word Remover',
+      category: 'text-formatting',
+      categoryLabel: 'Text Formatting Tools',
+      description: 'Remove consecutive duplicate words from text. Keep text clean with case sensitivity options.',
+      icon: '🔄',
+      url: '/tools/duplicate-word-remover/',
+      keywords: 'duplicate remover, duplicate words, text cleaner, word deduplicator',
+      priority: 0.74,
+      status: 'complete'
+    },
+    {
+      id: 'text-repeater',
+      name: 'Text Repeater',
+      category: 'text-formatting',
+      categoryLabel: 'Text Formatting Tools',
+      description: 'Repeat text multiple times with custom separators (newlines, tabs, commas).',
+      icon: '🔁',
+      url: '/tools/text-repeater/',
+      keywords: 'text repeater, repeat text, duplicate text, text multiplier',
+      priority: 0.71,
+      status: 'complete'
+    },
+    {
+      id: 'remove-empty-lines',
+      name: 'Remove Empty Lines',
+      category: 'text-formatting',
+      categoryLabel: 'Text Formatting Tools',
+      description: 'Remove blank and empty lines from text. Keep only content-filled lines.',
+      icon: '🗑️',
+      url: '/tools/remove-empty-lines/',
+      keywords: 'remove empty lines, blank line remover, text cleaner, line filter',
+      priority: 0.73,
+      status: 'complete'
+    },
+    // Math/Calculator Tools (7)
+    {
+      id: 'percentage-calculator',
+      name: 'Percentage Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate percentage changes, increases, and decreases. Find what percent X is of Y.',
+      icon: '📊',
+      url: '/tools/percentage-calculator/',
+      keywords: 'percentage calculator, percent calculator, percentage change, percentage increase',
+      priority: 0.88,
+      status: 'complete'
+    },
+    {
+      id: 'average-calculator',
+      name: 'Average Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate average, weighted average, median, and mode. Analyze your data quickly.',
+      icon: '📈',
+      url: '/tools/average-calculator/',
+      keywords: 'average calculator, mean calculator, average formula, weighted average',
+      priority: 0.82,
+      status: 'complete'
+    },
+    {
+      id: 'ratio-calculator',
+      name: 'Ratio Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Simplify ratios to lowest terms. Scale ratios up or down.',
+      icon: '⚖️',
+      url: '/tools/ratio-calculator/',
+      keywords: 'ratio calculator, simplify ratio, ratio converter, proportion calculator',
+      priority: 0.79,
+      status: 'complete'
+    },
+    {
+      id: 'unit-price-calculator',
+      name: 'Unit Price Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate unit price and compare costs between different package sizes.',
+      icon: '💰',
+      url: '/tools/unit-price-calculator/',
+      keywords: 'unit price, price calculator, cost comparison, value calculator',
+      priority: 0.81,
+      status: 'complete'
+    },
+    {
+      id: 'discount-calculator',
+      name: 'Discount Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate discounts, sale prices, and stacked discounts. See final savings.',
+      icon: '💳',
+      url: '/tools/discount-calculator/',
+      keywords: 'discount calculator, discount percentage, sale price, price reduction',
+      priority: 0.84,
+      status: 'complete'
+    },
+    {
+      id: 'rounding-calculator',
+      name: 'Rounding Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Round numbers using different methods: round, ceil, floor, truncate. Format as currency or thousands separator.',
+      icon: '🔢',
+      url: '/tools/rounding-calculator/',
+      keywords: 'rounding calculator, round number, ceil, floor, decimal rounding',
+      priority: 0.75,
+      status: 'complete'
+    },
+    {
+      id: 'working-days-calculator',
+      name: 'Working Days Calculator',
+      category: 'math-tools',
+      categoryLabel: 'Math & Calculator Tools',
+      description: 'Calculate working days between dates. Exclude weekends and holidays.',
+      icon: '📅',
+      url: '/tools/working-days-calculator/',
+      keywords: 'working days calculator, business days, date calculator, holiday calculator',
+      priority: 0.80,
+      status: 'complete'
+    },
+    // Office/HR Tools (5)
+    {
+      id: 'overtime-hours-calculator',
+      name: 'Overtime Hours Calculator',
+      category: 'hr-tools',
+      categoryLabel: 'Office & HR Tools',
+      description: 'Calculate overtime hours and earnings. Track regular and overtime separately.',
+      icon: '⏰',
+      url: '/tools/overtime-hours-calculator/',
+      keywords: 'overtime calculator, work hours, payroll, overtime hours',
+      priority: 0.82,
+      status: 'complete'
+    },
+    {
+      id: 'attendance-percentage-calculator',
+      name: 'Attendance Percentage Calculator',
+      category: 'hr-tools',
+      categoryLabel: 'Office & HR Tools',
+      description: 'Calculate attendance percentage based on present and total working days.',
+      icon: '✅',
+      url: '/tools/attendance-percentage-calculator/',
+      keywords: 'attendance calculator, attendance percentage, presence calculator',
+      priority: 0.78,
+      status: 'complete'
+    },
+    {
+      id: 'notice-period-calculator',
+      name: 'Notice Period Calculator',
+      category: 'hr-tools',
+      categoryLabel: 'Office & HR Tools',
+      description: 'Calculate notice period end dates with weekend exclusion option.',
+      icon: '📝',
+      url: '/tools/notice-period-calculator/',
+      keywords: 'notice period calculator, resignation date, last working day',
+      priority: 0.75,
+      status: 'complete'
+    },
+    {
+      id: 'probation-end-date-calculator',
+      name: 'Probation End Date Calculator',
+      category: 'hr-tools',
+      categoryLabel: 'Office & HR Tools',
+      description: 'Calculate probation period end dates and confirmation dates.',
+      icon: '📋',
+      url: '/tools/probation-end-date-calculator/',
+      keywords: 'probation calculator, probation period, employment dates',
+      priority: 0.73,
+      status: 'complete'
+    },
+    {
+      id: 'shift-allowance-calculator',
+      name: 'Shift Allowance Calculator',
+      category: 'hr-tools',
+      categoryLabel: 'Office & HR Tools',
+      description: 'Calculate shift allowance based on number of shifts and allowance rate.',
+      icon: '💵',
+      url: '/tools/shift-allowance-calculator/',
+      keywords: 'shift allowance, shift pay, shift calculator, allowance calculator',
+      priority: 0.72,
+      status: 'complete'
+    },
+    // Time/Shift Tools (4)
+    {
+      id: 'time-difference-calculator',
+      name: 'Time Difference Calculator',
+      category: 'time-tools',
+      categoryLabel: 'Time Tools',
+      description: 'Calculate time difference between two times. Get results in hours and minutes.',
+      icon: '⏱️',
+      url: '/tools/time-difference-calculator/',
+      keywords: 'time difference, time calculator, duration calculator, time duration',
+      priority: 0.81,
+      status: 'complete'
+    },
+    {
+      id: 'shift-hours-calculator',
+      name: 'Shift Hours Calculator',
+      category: 'time-tools',
+      categoryLabel: 'Time Tools',
+      description: 'Calculate actual working hours by subtracting break time from shift duration.',
+      icon: '🕒',
+      url: '/tools/shift-hours-calculator/',
+      keywords: 'shift hours calculator, work hours, shift duration, break calculator',
+      priority: 0.79,
+      status: 'complete'
+    },
+    {
+      id: 'weekly-working-hours-calculator',
+      name: 'Weekly Working Hours Calculator',
+      category: 'time-tools',
+      categoryLabel: 'Time Tools',
+      description: 'Calculate total and average working hours for a full week.',
+      icon: '📊',
+      url: '/tools/weekly-working-hours-calculator/',
+      keywords: 'weekly hours, work hours calculator, total hours, average hours',
+      priority: 0.76,
+      status: 'complete'
+    },
+    {
+      id: 'multiple-time-adder',
+      name: 'Multiple Time Adder',
+      category: 'time-tools',
+      categoryLabel: 'Time Tools',
+      description: 'Add multiple time durations together. Supports various time formats.',
+      icon: '➕',
+      url: '/tools/multiple-time-adder/',
+      keywords: 'time adder, add times, total time, time duration calculator',
+      priority: 0.74,
+      status: 'complete'
+    },
+    // Developer Tools (4)
+    {
+      id: 'html-css-js-minifier',
+      name: 'HTML/CSS/JS Minifier',
+      category: 'developer-tools',
+      categoryLabel: 'Developer Tools',
+      description: 'Minify HTML, CSS, and JavaScript code. Remove comments and whitespace to reduce file size.',
+      icon: '🗜️',
+      url: '/tools/html-css-js-minifier/',
+      keywords: 'minifier, code minifier, minify html, minify css, minify javascript',
+      priority: 0.90,
+      status: 'complete'
+    },
+    {
+      id: 'code-beautifier',
+      name: 'Code Beautifier',
+      category: 'developer-tools',
+      categoryLabel: 'Developer Tools',
+      description: 'Format and beautify HTML, CSS, and JavaScript code with proper indentation.',
+      icon: '✨',
+      url: '/tools/code-beautifier/',
+      keywords: 'code beautifier, code formatter, prettify code, format code',
+      priority: 0.88,
+      status: 'complete'
+    },
+    {
+      id: 'json-diff-tool',
+      name: 'JSON Diff Tool',
+      category: 'developer-tools',
+      categoryLabel: 'Developer Tools',
+      description: 'Compare two JSON objects and see all differences highlighted.',
+      icon: '🔍',
+      url: '/tools/json-diff-tool/',
+      keywords: 'json diff, json compare, json difference, json comparison',
+      priority: 0.86,
+      status: 'complete'
+    },
+    {
+      id: 'http-status-code-lookup',
+      name: 'HTTP Status Code Lookup',
+      category: 'developer-tools',
+      categoryLabel: 'Developer Tools',
+      description: 'Reference guide for HTTP status codes. Search and understand all status codes.',
+      icon: '🔗',
+      url: '/tools/http-status-code-lookup/',
+      keywords: 'http status codes, status code reference, 404 error, 500 error',
+      priority: 0.87,
+      status: 'complete'
+    },
+    // Social Media Tools (4)
+    {
+      id: 'whatsapp-text-formatter',
+      name: 'WhatsApp Text Formatter',
+      category: 'social-media-tools',
+      categoryLabel: 'Social Media Tools',
+      description: 'Format text for WhatsApp with bold, italic, strikethrough, and monospace styles.',
+      icon: '💬',
+      url: '/tools/whatsapp-text-formatter/',
+      keywords: 'whatsapp formatter, whatsapp bold, whatsapp italic, text formatting',
+      priority: 0.85,
+      status: 'complete'
+    },
+    {
+      id: 'invisible-character-generator',
+      name: 'Invisible Character Generator',
+      category: 'social-media-tools',
+      categoryLabel: 'Social Media Tools',
+      description: 'Generate invisible Unicode characters like zero-width space for copying.',
+      icon: '👻',
+      url: '/tools/invisible-character-generator/',
+      keywords: 'invisible characters, zero-width space, unicode characters, invisible text',
+      priority: 0.79,
+      status: 'complete'
+    },
+    {
+      id: 'caption-line-break-formatter',
+      name: 'Caption Line Break Formatter',
+      category: 'social-media-tools',
+      categoryLabel: 'Social Media Tools',
+      description: 'Automatically add line breaks to captions for better readability on social media.',
+      icon: '📱',
+      url: '/tools/caption-line-break-formatter/',
+      keywords: 'caption formatter, line breaks, social media captions, text formatter',
+      priority: 0.81,
+      status: 'complete'
+    },
+    {
+      id: 'hashtag-formatter',
+      name: 'Hashtag Formatter',
+      category: 'social-media-tools',
+      categoryLabel: 'Social Media Tools',
+      description: 'Format and organize hashtags. Convert to single line, one per line, or grouped format.',
+      icon: '#️⃣',
+      url: '/tools/hashtag-formatter/',
+      keywords: 'hashtag formatter, hashtag organizer, instagram hashtags, social media hashtags',
+      priority: 0.83,
+      status: 'complete'
+    },
+    // Engagement Tool (1)
+    {
+      id: 'random-icebreaker-generator',
+      name: 'Random Icebreaker Generator',
+      category: 'engagement-tools',
+      categoryLabel: 'Engagement Tools',
+      description: 'Generate random icebreaker questions for team building and social events.',
+      icon: '🎯',
+      url: '/tools/random-icebreaker-generator/',
+      keywords: 'icebreaker questions, conversation starters, team building, random questions',
+      priority: 0.75,
+      status: 'complete'
+    }
+  ],
+
+  // Main categories for navigation and homepage
+  mainCategories: [
+    {
+      id: 'text-content',
+      name: 'Text & Content Tools',
+      description: 'Convert, analyze, format, and manipulate text. Case converters, summarizers, formatters, and more.',
+      icon: '📝',
+      url: '/tools/hub/text-content/'
+    },
+    {
+      id: 'math-calculators',
+      name: 'Math & Calculators',
+      description: 'Calculate percentages, averages, ratios, discounts, and more. All your math needs in one place.',
+      icon: '🧮',
+      url: '/tools/hub/math-calculators/'
+    },
+    {
+      id: 'data-tools',
+      name: 'Data Tools',
+      description: 'Convert, format, and transform data. JSON, XML, SQL, encoding, and more.',
+      icon: '📊',
+      url: '/tools/hub/data-tools/'
+    },
+    {
+      id: 'developer-tools',
+      name: 'Developer Tools',
+      description: 'Code formatting, minification, testing, hash generation, and HTTP utilities.',
+      icon: '💻',
+      url: '/tools/hub/developer-tools/'
+    },
+    {
+      id: 'finance-tools',
+      name: 'Finance Tools',
+      description: 'Budget planning, loan calculations, investment analysis, and financial planning.',
+      icon: '💰',
+      url: '/tools/hub/finance-tools/'
+    },
+    {
+      id: 'office-time',
+      name: 'Office & Time Tools',
+      description: 'HR calculators, time tracking, scheduling, and office management tools.',
+      icon: '⏱️',
+      url: '/tools/hub/office-time/'
+    },
+    {
+      id: 'utilities',
+      name: 'Utilities & More',
+      description: 'File management, social media formatters, password generators, and more.',
+      icon: '⚙️',
+      url: '/tools/hub/utilities/'
+    }
+  ],
+
+  // Sub-categories for organizational structure (used by hub pages)
   categories: [
+    // Text & Content Sub-categories
     {
       id: 'text-case-tools',
       name: 'Text Case Tools',
+      parentId: 'text-content',
       description: 'Convert text between different case formats',
       icon: '📝'
     },
     {
       id: 'text-analysis',
       name: 'Text Analysis Tools',
+      parentId: 'text-content',
       description: 'Analyze and get insights from your text',
       icon: '📊'
     },
     {
       id: 'text-formatting',
       name: 'Text Formatting Tools',
+      parentId: 'text-content',
       description: 'Format and clean your text',
       icon: '✏️'
     },
+    // Math & Calculators (no sub-categories needed)
+    {
+      id: 'math-tools',
+      name: 'Math & Calculators',
+      parentId: 'math-calculators',
+      description: 'Calculate percentages, averages, ratios, and more',
+      icon: '🧮'
+    },
+    // Data Tools Sub-categories
     {
       id: 'encoding-tools',
       name: 'Encoding Tools',
+      parentId: 'data-tools',
       description: 'Encode, decode, and encrypt data',
       icon: '🔐'
     },
     {
       id: 'json-tools',
       name: 'JSON Tools',
+      parentId: 'data-tools',
       description: 'Work with JSON data',
       icon: '{}'
     },
     {
       id: 'data-converters',
       name: 'Data Format Converters',
+      parentId: 'data-tools',
       description: 'Convert between data formats',
       icon: '📈'
     },
     {
       id: 'sql-tools',
       name: 'SQL Tools',
+      parentId: 'data-tools',
       description: 'SQL formatting and query building',
       icon: '🔍'
     },
     {
       id: 'conversion-tools',
       name: 'Conversion Tools',
+      parentId: 'data-tools',
       description: 'Convert units, colors, and formats',
       icon: '🔄'
     },
-    {
-      id: 'password-tools',
-      name: 'Password Tools',
-      description: 'Password generation and security checking',
-      icon: '🔑'
-    },
-    {
-      id: 'random-generators',
-      name: 'Random Generators',
-      description: 'Generate random values and decisions',
-      icon: '🎲'
-    },
+    // Developer Tools Sub-categories
     {
       id: 'testing-tools',
       name: 'Testing Tools',
+      parentId: 'developer-tools',
       description: 'Tools for developers and testers',
       icon: '🧪'
     },
     {
       id: 'hash-generators',
       name: 'Hash Generators',
+      parentId: 'developer-tools',
       description: 'Generate hashes and checksums',
       icon: '#'
     },
-    {
-      id: 'time-tools',
-      name: 'Time Tools',
-      description: 'Time tracking and countdown tools',
-      icon: '⏱️'
-    },
+    // Finance Tools (no sub-categories needed)
     {
       id: 'finance-tools',
       name: 'Finance & Investment Tools',
+      parentId: 'finance-tools',
       description: 'Calculate and plan personal finances, investments, and debt payoff',
       icon: '💰'
+    },
+    // Office & Time Sub-categories
+    {
+      id: 'time-tools',
+      name: 'Time Tools',
+      parentId: 'office-time',
+      description: 'Time tracking and calculation tools',
+      icon: '⏱️'
+    },
+    {
+      id: 'hr-tools',
+      name: 'Office & HR Tools',
+      parentId: 'office-time',
+      description: 'Tools for HR management and office tasks',
+      icon: '👔'
+    },
+    // Utilities Sub-categories
+    {
+      id: 'file-tools',
+      name: 'File Management Tools',
+      parentId: 'utilities',
+      description: 'Tools for generating and managing file names',
+      icon: '📁'
+    },
+    {
+      id: 'password-tools',
+      name: 'Password Tools',
+      parentId: 'utilities',
+      description: 'Password generation and security checking',
+      icon: '🔑'
+    },
+    {
+      id: 'random-generators',
+      name: 'Random Generators',
+      parentId: 'utilities',
+      description: 'Generate random values and decisions',
+      icon: '🎲'
+    },
+    {
+      id: 'social-media-tools',
+      name: 'Social Media Tools',
+      parentId: 'utilities',
+      description: 'Tools for formatting content for social media platforms',
+      icon: '📱'
+    },
+    {
+      id: 'engagement-tools',
+      name: 'Engagement Tools',
+      parentId: 'utilities',
+      description: 'Tools for team engagement and activities',
+      icon: '🎯'
     }
   ]
 };

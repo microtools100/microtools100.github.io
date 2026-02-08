@@ -141,9 +141,10 @@ class HTMLEscapeUnescape {
     }
 
     loadExample() {
-        this.elements.inputText.value = this.exampleText;
-        this.process();
-        SharedUtilities.showNotification('Example loaded. Try different modes to see the effect.', 'info');
+        SharedUtilities.loadExample(this.elements.inputText, this.exampleText, () => {
+            this.process();
+            SharedUtilities.showNotification('Example loaded. Try different modes to see the effect.', 'info');
+        });
     }
 
     async copyToClipboard() {

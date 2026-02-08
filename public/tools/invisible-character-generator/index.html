@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invisible Character Generator - Zero-Width Characters | Micro Tools</title>
+    <meta name="description" content="Generate invisible Unicode characters like zero-width space, zero-width joiner, and zero-width non-joiner for copying.">
+    <meta name="keywords" content="invisible characters, zero-width space, unicode characters, invisible text">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Invisible Character Generator">
+    <meta property="og:description" content="Generate and copy invisible Unicode characters instantly.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Invisible Character Generator",
+      "description": "Generate invisible Unicode characters",
+      "url": "https://microtools.dev/tools/invisible-character-generator/",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are invisible characters truly invisible?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, they have zero width or are special Unicode characters not displayed visibly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can someone detect these characters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, with tools like code editors or special character detectors."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's a Zero-Width Space?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A character that acts like a space but takes no width, useful for word breaking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I mix different invisible characters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, combine multiple invisible characters for unique signatures."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will invisible characters work in all applications?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most applications support them, but some may filter or remove invisible characters."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Invisible Character Generator</h1>
+                <p class="tool-description">Generate and copy invisible Unicode characters.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+
+                    <div id="charactersContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;"></div>
+                </div>
+            </div>
+
+            <aside class="tool-sidebar">
+                <div class="related-tools">
+                    <h4>Related Tools</h4>
+                    <ul>
+                        <li><a href="/tools/whatsapp-text-formatter/">WhatsApp Text Formatter</a></li>
+                        <li><a href="/tools/caption-line-break-formatter/">Caption Line Break</a></li>
+                        <li><a href="/tools/hashtag-formatter/">Hashtag Formatter</a></li>
+                        <li><a href="/">All Social Media Tools</a></li>
+                    </ul>
+                </div>
+
+                <div class="tool-tips">
+                    <h4>Social Media Tips</h4>
+                    <ul>
+                        <li>Zero-width characters are truly invisible but present</li>
+                        <li>Perfect for unique signatures in usernames</li>
+                        <li>Can be combined for custom character patterns</li>
+                        <li>Detectible by code editors and special character tools</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+        <div class="use-cases">
+            <h4>Use Cases</h4>
+            <div class="use-case-grid">
+                <div class="use-case-item">
+                    <span class="use-case-icon">🔐</span>
+                    <h5>Hidden Watermarking</h5>
+                    <p>Add invisible markers to track text distribution.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">🎭</span>
+                    <h5>Account Security</h5>
+                    <p>Create unique identifiers in passwords.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">📱</span>
+                    <h5>Text Obfuscation</h5>
+                    <p>Hide content in plain sight for fun.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">✍️</span>
+                    <h5>Document Metadata</h5>
+                    <p>Embed hidden information in documents.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Use</h3>
+            <ol>
+                <li><strong>Choose Character:</strong> Select an invisible character type</li>
+                <li><strong>Copy Character:</strong> Click the copy button</li>
+                <li><strong>Paste Anywhere:</strong> Paste into text, passwords, or documents</li>
+                <li><strong>Combine Multiple:</strong> Mix different invisible characters</li>
+            </ol>
+        </div>
+
+        <div class="formatting-guide">
+            <h3>What Happens When You Paste?</h3>
+            <p><strong>The invisible character appears to be nothing</strong> — but it's actually there! Here are real examples:</p>
+            <ul>
+                <li><strong>Example 1 (Username):</strong> Paste zero-width space into "myusername" → It looks like "myusername" but contains a hidden character that makes it unique</li>
+                <li><strong>Example 2 (WhatsApp):</strong> Paste into a message → The recipient sees empty space or no visible change, but the character is transmitted</li>
+                <li><strong>Example 3 (Password):</strong> Paste into password field → You won't see it, but it's counted in the password length and makes it stronger</li>
+                <li><strong>Example 4 (Document):</strong> Paste into a document → No visible mark, but if someone copies the text and pastes it into a code editor, they'll see the hidden character</li>
+            </ul>
+            <p><strong>Key Point:</strong> These characters are invisible to the human eye but are 100% present in the text. They won't appear in WhatsApp, emails, or documents visually, but they're there.</p>
+        </div>
+
+        <div class="formatting-guide">
+            <h3>How It Works</h3>
+            <p><strong>These are special Unicode characters</strong> designed to be invisible or have minimal visual impact. Here's what each type does:</p>
+            <ul>
+                <li><strong>Zero-Width Characters:</strong> Occupy no visual space but are present in text</li>
+                <li><strong>Unicode Support:</strong> Uses standard Unicode invisible characters defined by the Unicode Standard</li>
+                <li><strong>Copy-Paste Ready:</strong> Characters copied to clipboard instantly - no conversion needed</li>
+                <li><strong>Multiple Types:</strong> Different invisible character options available for different use cases</li>
+                <li><strong>No Modification:</strong> Text content remains unchanged visually when you paste them</li>
+                <li><strong>Browser Compatible:</strong> Works across all modern browsers without any additional software</li>
+            </ul>
+            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                <strong>Technical Note:</strong> All invisible characters are valid Unicode characters. When copied and pasted, they transfer as part of the text but remain invisible to most applications.
+            </p>
+        </div>
+
+        <div class="formatting-guide">
+            <h3>Character Types Explained</h3>
+            <p><strong>There are 6 different invisible character types</strong> available in this tool, each with a specific purpose and behavior. Here's what makes each one unique:</p>
+            <ul>
+                <li><strong>Zero-Width Space (U+200B):</strong> The most common invisible character. Takes up zero pixels but allows word breaks. Best for watermarking and unique identifiers. <em>Example: "hello​world" looks identical to "helloworld" but contains an invisible space between the words.</em></li>
+                <li><strong>Zero-Width Joiner (U+200D):</strong> Joins characters together invisibly (used in emoji composition). Prevents text from breaking across lines where zero-width space would allow it. <em>Example: Used in emojis like 👨‍👩‍👧‍👦 (family) where invisible joiners combine multiple emoji characters.</em></li>
+                <li><strong>Zero-Width Non-Joiner (U+200C):</strong> Opposite of joiner - prevents joining (used in scripts like Arabic, Persian). Keeps letters separate when they would normally connect. <em>Example: In Arabic, prevents cursive connection between letters that normally flow together.</em></li>
+                <li><strong>Word Joiner (U+2060):</strong> Prevents word breaks - acts like a non-breaking space but completely invisible. Keeps words glued together without showing a space. <em>Example: "hello⁠world" stays together as one unit on narrow screens instead of breaking to two lines.</em></li>
+                <li><strong>Soft Hyphen (U+00AD):</strong> Invisible hyphen that shows only if text wraps to next line. Useful for suggesting where long words should break when displayed on narrow screens. <em>Example: "su­per­cali­fragilis­ticex­pia­lidocious" - hyphens only appear if the word needs to break.</em></li>
+                <li><strong>Non-Breaking Space (U+00A0):</strong> A space that looks like a regular space but prevents line breaks. Slightly visible (looks like a space) but prevents unwanted word wrapping. Less invisible than others. <em>Example: "$500" keeps the dollar sign and number together instead of breaking "$" and "500" on separate lines.</em></li>
+            </ul>
+            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                <strong>Quick Guide:</strong> For most uses (watermarking, passwords, unique identifiers), use <strong>Zero-Width Space</strong>. For preventing line breaks, use <strong>Word Joiner</strong>. For language-specific text joining, use <strong>Zero-Width Joiner/Non-Joiner</strong>.
+            </p>
+        </div>
+
+        <div class="faq-section">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <h4>Are these characters truly invisible?</h4>
+                <p>Yes, they have zero width or are special Unicode characters not displayed visibly.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can someone detect these characters?</h4>
+                <p>Yes, with tools like code editors or special character detectors.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What's a Zero-Width Space?</h4>
+                <p>A character that acts like a space but takes no width, useful for word breaking.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I mix different invisible characters?</h4>
+                <p>Yes, you can combine multiple invisible characters for unique signatures.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Will these work in all applications?</h4>
+                <p>Most applications support them, but some may filter or remove invisible characters.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

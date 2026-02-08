@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compare and highlight differences between two JSON objects. Identify added, removed, and modified properties.">
+    <meta name="keywords" content="json diff, json compare, json difference, json comparison tool">
+    <meta property="og:title" content="JSON Diff Tool - Compare JSON">
+    <meta property="og:description" content="Compare two JSON objects and see the differences highlighted.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>JSON Diff Tool - Compare JSON | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "JSON Diff Tool",
+      "description": "Compare and highlight differences between two JSON objects",
+      "url": "https://microtools.dev/tools/json-diff-tool/",
+      "applicationCategory": "DeveloperApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does order matter in JSON objects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, JSON object property order doesn't matter for comparison. Only content is compared."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it compare arrays?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, arrays are compared and the tool shows additions, removals, and value changes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if the JSON is invalid?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tool shows an error message. Ensure both JSONs are properly formatted."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the comparison case-sensitive?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, both keys and values are case-sensitive in the comparison."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I compare large files?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, the tool handles large files within browser memory limits."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>JSON Diff Tool</h1>
+                <p class="tool-description">
+                    Compare two JSON objects and identify all differences.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Two-Column Layout for Input -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column 1 -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="json1">JSON 1:</label>
+                                    <div class="input-area">
+                                        <textarea id="json1" placeholder="Paste first JSON here..." rows="20"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button id="compareBtn" class="action-btn primary">Compare</button>
+                                    <button id="clearBtn" class="action-btn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Input Column 2 -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="json2">JSON 2:</label>
+                                    <div class="input-area">
+                                        <textarea id="json2" placeholder="Paste second JSON here..." rows="20"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button id="clearBtn2" class="action-btn" style="visibility: hidden;">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Results Section -->
+                        <div id="diffResults" style="display:none;">
+                            <div class="output-group" style="margin-top: 2rem;">
+                                <label>Differences:</label>
+                                <div class="output-area">
+                                    <textarea id="diffOutput" readonly rows="15"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="tool-actions">
+                                <button id="copyBtn" class="action-btn success">Copy Results</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/code-beautifier/">Code Beautifier</a></li>
+                            <li><a href="/tools/html-css-js-minifier/">HTML/CSS/JS Minifier</a></li>
+                            <li><a href="/tools/http-status-code-lookup/">HTTP Status Lookup</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Developer Tips</h4>
+                        <ul>
+                            <li>Perfect for comparing API responses and test data</li>
+                            <li>Handles deeply nested JSON structures</li>
+                            <li>Color-coded output shows added, removed, and modified</li>
+                            <li>Essential for data migration and API testing</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔍</span>
+                        <h5>API Response Comparison</h5>
+                        <p>Compare JSON responses from different API versions.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📝</span>
+                        <h5>Configuration Changes</h5>
+                        <p>Track changes in configuration files.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🧪</span>
+                        <h5>Testing</h5>
+                        <p>Verify expected vs actual JSON in tests.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📊</span>
+                        <h5>Data Migration</h5>
+                        <p>Identify differences during data transformation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Paste First JSON:</strong> Enter the original JSON object</li>
+                    <li><strong>Paste Second JSON:</strong> Enter the JSON to compare</li>
+                    <li><strong>Compare:</strong> Click to find differences</li>
+                    <li><strong>Review Results:</strong> See added, removed, and modified properties</li>
+                </ol>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Deep Comparison:</strong> Compares all nested properties and values</li>
+                    <li><strong>Property Addition Detection:</strong> Shows new keys in second JSON</li>
+                    <li><strong>Property Removal Detection:</strong> Shows keys removed from first JSON</li>
+                    <li><strong>Value Change Tracking:</strong> Highlights modified property values</li>
+                    <li><strong>Nested Object Support:</strong> Handles complex nested structures</li>
+                    <li><strong>Color-Coded Output:</strong> Visual distinction between changes</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>Can it compare arrays in JSON?</h4>
+                    <p>Yes, it handles arrays and shows additions, removals, and value changes.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What if the JSON is invalid?</h4>
+                        <p>The tool will show an error message; ensure both JSONs are properly formatted.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Does order matter in JSON objects?</h4>
+                    <p>No, JSON object property order doesn't matter; only content is compared.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I compare large JSON files?</h4>
+                    <p>Yes, the tool handles large files limited by browser memory.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is the comparison case-sensitive?</h4>
+                    <p>Yes, both keys and values are case-sensitive in the comparison.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

@@ -185,16 +185,14 @@ class UUIDGenerator {
     }
 
     loadExample() {
-        this.elements.countInput.value = 5;
-        this.generate();
-        SharedUtilities.showNotification('Generated 5 example UUIDs. Try different formats!', 'info');
+        SharedUtilities.loadExample(this.elements.countInput, '5', () => {
+            this.generate();
+            SharedUtilities.showNotification('Generated 5 example UUIDs. Try different formats!', 'info');
+        });
     }
 
     showError(message) {
-        if (this.elements.errorMsg) {
-            this.elements.errorMsg.textContent = message;
-            this.elements.errorMsg.classList.add('show');
-        }
+        SharedUtilities.showError(this.elements.errorMsg, message);
     }
 
     clearError() {

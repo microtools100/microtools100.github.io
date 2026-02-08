@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate the price per unit to compare product values. Find the best deals by comparing unit prices.">
+    <meta name="keywords" content="unit price calculator, price per unit, cost per unit, price comparison, unit cost">
+    <title>Unit Price Calculator - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Unit Price Calculator",
+        "description": "Calculate price per unit for price comparisons",
+        "url": "https://microtools.cc/tools/unit-price-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Why should I calculate unit price?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Unit price helps you find the best value and avoid overpaying."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I compare two products?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Calculate the unit price for each and compare the results."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use this for bulk buying?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, it helps you determine if buying in bulk saves money."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What units can I use?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Any units work - ounces, grams, items, etc."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Unit Price Calculator</h1>
+                <p class="tool-description">Calculate cost per unit and compare product values</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Options Section -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                <div class="input-group">
+                                    <label for="unitPreset">Unit Type:</label>
+                                    <select id="unitPreset">
+                                        <option value="custom">Custom</option>
+                                        <optgroup label="Weight">
+                                            <option value="oz">Ounces (oz)</option>
+                                            <option value="lb">Pounds (lb)</option>
+                                            <option value="g">Grams (g)</option>
+                                            <option value="kg">Kilograms (kg)</option>
+                                        </optgroup>
+                                        <optgroup label="Volume">
+                                            <option value="ml">Milliliters (ml)</option>
+                                            <option value="l">Liters (l)</option>
+                                            <option value="fl oz">Fluid Ounces (fl oz)</option>
+                                            <option value="cup">Cups</option>
+                                        </optgroup>
+                                        <optgroup label="Count">
+                                            <option value="unit">Units</option>
+                                            <option value="item">Items</option>
+                                            <option value="piece">Pieces</option>
+                                        </optgroup>
+                                        <optgroup label="Other">
+                                            <option value="meter">Meters (m)</option>
+                                            <option value="foot">Feet (ft)</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="input-group" id="customUnitGroup" style="display:none;">
+                                    <label for="customUnit">Custom Unit:</label>
+                                    <input type="text" id="customUnit" placeholder="e.g., oz, lb, kg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="totalPrice">Total Price:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="totalPrice" placeholder="e.g., 12.99" step="0.01">
+                                    </div>
+                                    <div class="hint">
+                                        Enter the total cost of the package
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="quantity">Quantity:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="quantity" placeholder="e.g., 10" step="any">
+                                    </div>
+                                    <div class="hint">
+                                        Enter how many units are in the package
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Unit Price:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Price:</span>
+                                                <strong id="unitPrice">$0.00</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Per:</span>
+                                                <strong id="unitDisplay">unit</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Comparison Section -->
+                        <section class="tool-section" style="margin-top: 1.5rem;">
+                            <h3 class="section-title">Compare (Optional)</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                <div class="input-group">
+                                    <label for="comparePrice">Price 2:</label>
+                                    <input type="number" id="comparePrice" placeholder="e.g., 18.99" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label for="compareQuantity">Qty 2:</label>
+                                    <input type="number" id="compareQuantity" placeholder="e.g., 15" step="any">
+                                </div>
+                            </div>
+                        </section>
+
+                        <div id="comparisonResults" style="display:none; margin-top: 1rem; padding: 1.5rem; background: var(--surface-color); border-radius: var(--radius-md);">
+                            <div class="result-group">
+                                <label>Price Comparison:</label>
+                                <div class="result-box">
+                                    <div class="result-line">
+                                        <span>Product 1:</span>
+                                        <strong id="product1UnitPrice">$0.00</strong>
+                                    </div>
+                                    <div class="result-line">
+                                        <span>Product 2:</span>
+                                        <strong id="product2UnitPrice">$0.00</strong>
+                                    </div>
+                                    <div class="result-line">
+                                        <span>Best Value:</span>
+                                        <strong id="bestValue">—</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/discount-calculator/">Discount Calculator</a></li>
+                            <li><a href="/tools/percentage-calculator/">Percentage Calculator</a></li>
+                            <li><a href="/tools/average-calculator/">Average Calculator</a></li>
+                            <li><a href="/">All Calculator Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Calculation Tips</h4>
+                        <ul>
+                            <li>Compare different package sizes objectively</li>
+                            <li>Always divide to get per-unit or per-ounce cost</li>
+                            <li>Great for bulk vs. regular price comparisons</li>
+                            <li>Helps identify the best value option</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🛒</span>
+                        <h5>Grocery Shopping</h5>
+                        <p>Compare prices between bulk and regular packages to get the best deal.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📦</span>
+                        <h5>Wholesale Buying</h5>
+                        <p>Determine true cost savings when buying in bulk quantities.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💰</span>
+                        <h5>Budget Planning</h5>
+                        <p>Make informed purchasing decisions to reduce your overall expenses.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🏪</span>
+                        <h5>Retail Comparison</h5>
+                        <p>Compare products from different brands and stores instantly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Total Price:</strong> Input the total cost of the product package</li>
+                    <li><strong>Enter Quantity:</strong> Specify how many units are in the package</li>
+                    <li><strong>Add Unit Type:</strong> Optional - specify the measurement (oz, lb, kg, etc.)</li>
+                    <li><strong>View Result:</strong> Get the price per unit instantly</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Simple Calculation:</strong> Divides total price by quantity for accurate unit cost</li>
+                    <li><strong>Instant Results:</strong> Real-time calculation as you enter values</li>
+                    <li><strong>Unit Type Support:</strong> Works with any measurement system (ounces, grams, etc.)</li>
+                    <li><strong>Comparison Feature:</strong> Compare two products side-by-side to find better value</li>
+                    <li><strong>Easy Copying:</strong> Copy results to use elsewhere</li>
+                    <li><strong>Mobile Friendly:</strong> Works on all devices for shopping on-the-go</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>Why should I calculate unit price?</h4>
+                    <p>Unit price helps you find the best value and avoid overpaying. Products with better per-unit pricing offer better value even if the total price seems higher.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How do I compare two products?</h4>
+                    <p>Enter the first product details, then use the Compare section to add a second product. The calculator will show which product offers better value.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I use this for bulk buying?</h4>
+                    <p>Yes, it's perfect for bulk buying decisions. You can compare the per-unit cost of buying in bulk versus regular packages.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser. Your data is never sent to our servers or stored anywhere.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What units can I use?</h4>
+                    <p>Any units work - ounces, grams, pounds, kilograms, items, etc. Enter whatever unit makes sense for your comparison.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

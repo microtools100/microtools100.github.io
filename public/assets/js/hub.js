@@ -5,6 +5,7 @@ class HubPage {
         this.tools = [];
         this.category = null;
         this.allCategories = [];
+        this.allMainCategories = [];
         this.init();
     }
 
@@ -12,11 +13,31 @@ class HubPage {
         // Get all tools and categories from registry
         const allTools = [
             ...TOOLS_REGISTRY.phase1,
-            ...TOOLS_REGISTRY.phase2
+            ...TOOLS_REGISTRY.phase2,
+            ...TOOLS_REGISTRY.phase3
         ];
         
         this.allCategories = TOOLS_REGISTRY.categories;
+        this.allMainCategories = TOOLS_REGISTRY.mainCategories;
+        
+        // Support both main category IDs and sub-category IDs
         this.category = this.allCategories.find(cat => cat.id === this.categoryId);
+        
+        // If not found in sub-categories, look in main categories
+        if (!this.category && this.allMainCategories) {
+            const mainCat = this.allMainCategories.find(cat => cat.id === this.categoryId);
+            if (mainCat) {
+                // For main category pages, show all tools from that category's sub-categories
+                const subCategoryIds = this.allCategories
+                    .filter(cat => cat.parentId === this.categoryId)
+                    .map(cat => cat.id);
+                this.tools = allTools.filter(tool => subCategoryIds.includes(tool.category));
+                this.category = mainCat;
+            }
+        } else {
+            // For sub-category pages, show tools in that specific category
+            this.tools = allTools.filter(tool => tool.category === this.categoryId);
+        }
         
         // Filter tools for this category
         this.tools = allTools.filter(tool => tool.category === this.categoryId);
@@ -97,9 +118,9 @@ class HubPage {
     }
 
     renderCategoryLinks() {
-        if (this.allCategories.length === 0) return '';
+        if (this.allMainCategories.length === 0) return '';
 
-        const categoriesHtml = this.allCategories.map(cat => {
+        const categoriesHtml = this.allMainCategories.map(cat => {
             const isActive = cat.id === this.categoryId ? 'active' : '';
             const link = cat.id === 'home' ? '/' : `/tools/hub/${cat.id}/`;
             return `<a href="${link}" class="${isActive}" title="${cat.description}">${cat.icon} ${cat.name}</a>`;
@@ -119,16 +140,21 @@ class HubPage {
         // Get tools from related categories (other than current)
         const allTools = [
             ...TOOLS_REGISTRY.phase1,
-            ...TOOLS_REGISTRY.phase2
+            ...TOOLS_REGISTRY.phase2,
+            ...TOOLS_REGISTRY.phase3
         ];
 
-        const relatedCategories = this.allCategories
+        const relatedCategories = this.allMainCategories
             .filter(cat => cat.id !== this.categoryId)
             .slice(0, 4);
 
         const relatedHtml = relatedCategories.map(cat => {
-            const toolsInCat = allTools.filter(t => t.category === cat.id);
-            const link = cat.id === 'home' ? '/' : `/tools/hub/${cat.id}/`;
+            // Count all tools in this main category
+            const subCategoryIds = this.allCategories
+                .filter(subCat => subCat.parentId === cat.id)
+                .map(subCat => subCat.id);
+            const toolsInCat = allTools.filter(t => subCategoryIds.includes(t.category));
+            const link = cat.url || `/tools/hub/${cat.id}/`;
             return `
                 <a href="${link}" class="hub-related-item">
                     <span class="hub-related-icon">${cat.icon}</span>

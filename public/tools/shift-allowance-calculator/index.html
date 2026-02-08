@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate shift allowance based on number of shifts and allowance rate.">
+    <meta name="keywords" content="shift allowance calculator, shift pay, allowance calculator, shift compensation">
+    <title>Shift Allowance Calculator - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Shift Allowance Calculator",
+        "description": "Calculate shift allowance and shift pay",
+        "url": "https://microtools.cc/tools/shift-allowance-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is shift allowance?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Shift allowance is extra pay for working nights, weekends, or unusual hours."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How is shift allowance calculated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually a percentage of base salary or fixed amount added for shift work hours."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does shift allowance count towards pension?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It varies by employer. Check your employment contract or HR policy."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What shift patterns qualify for allowance?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Night shifts, evening shifts, weekend shifts, or rotating shifts typically qualify."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Shift Allowance Calculator</h1>
+                <p class="tool-description">Calculate your total shift allowance</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="shiftCount">Number of Shifts:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="shiftCount" placeholder="e.g., 20" min="0" step="0.5">
+                                    </div>
+                                    <div class="hint">
+                                        Total number of shifts worked
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="allowanceRate">Allowance per Shift:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="allowanceRate" placeholder="e.g., 50" min="0" step="0.01">
+                                    </div>
+                                    <div class="hint">
+                                        Amount per shift (currency)
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Results:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Total Allowance:</span>
+                                                <strong id="totalAllowance">$0.00</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Shifts Count:</span>
+                                                <strong id="shiftsDisplay">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Rate per Shift:</span>
+                                                <strong id="rateDisplay">$0.00</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/overtime-hours-calculator/">Overtime Hours Calculator</a></li>
+                            <li><a href="/tools/shift-hours-calculator/">Shift Hours Calculator</a></li>
+                            <li><a href="/tools/attendance-percentage-calculator/">Attendance Percentage</a></li>
+                            <li><a href="/">All HR & Employment Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>HR Tips</h4>
+                        <ul>
+                            <li>Different rates for different shift types</li>
+                            <li>Night and weekend shifts typically have higher rates</li>
+                            <li>Perfect for payroll processing and compensation</li>
+                            <li>Ensures fair compensation for shift work</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🌙</span>
+                        <h5>Night Shift Work</h5>
+                        <p>Calculate allowance for night shift employment.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📍</span>
+                        <h5>Weekend Shifts</h5>
+                        <p>Compute pay for Saturday and Sunday work.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💼</span>
+                        <h5>Payroll Processing</h5>
+                        <p>Include shift allowance in salary calculations.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🏢</span>
+                        <h5>HR Management</h5>
+                        <p>Manage shift allowance across staff schedules.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Number of Shifts:</strong> Total shifts worked in the period</li>
+                    <li><strong>Enter Allowance Rate:</strong> Pay per shift</li>
+                    <li><strong>Optional - Base Salary:</strong> Add base salary for total comp</li>
+                    <li><strong>Calculate:</strong> Get total shift allowance instantly</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Shift Counting:</strong> Multiplies number of shifts by allowance rate</li>
+                    <li><strong>Flexible Rates:</strong> Supports different rates for different shift types</li>
+                    <li><strong>Salary Integration:</strong> Combines with base salary if provided</li>
+                    <li><strong>Period Flexibility:</strong> Calculate for any time period</li>
+                    <li><strong>Instant Results:</strong> Real-time calculation as you enter values</li>
+                    <li><strong>Tax Calculation:</strong> Helps estimate tax impact on allowance</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>What is shift allowance?</h4>
+                    <p>Shift allowance is extra pay for working nights, weekends, or unusual hours.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How is shift allowance calculated?</h4>
+                    <p>Usually a percentage of base salary or fixed amount added for shift work hours.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Does shift allowance count towards pension?</h4>
+                    <p>It varies by employer. Check your employment contract or HR policy.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What shift patterns qualify for allowance?</h4>
+                    <p>Night shifts, evening shifts, weekend shifts, or rotating shifts typically qualify.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Repeat text multiple times with custom separators. Perfect for creating patterns and templates.">
+    <meta name="keywords" content="text repeater, repeat text, text duplicator, repeat tool, duplicate text">
+    <title>Text Repeater - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Text Repeater",
+        "description": "Repeat text multiple times with custom separator",
+        "url": "https://microtools.cc/tools/text-repeater/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What's a text repeater used for?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Quickly duplicate text for testing, filling spaces, or creating patterns."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use custom separators?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, add any separator like comma, newline, pipe, or custom string."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What's the maximum repeat count?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Depends on your text length, but typically hundreds to thousands of repetitions."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I copy the result?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, use the Copy button to quickly copy all repeated text."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Text Repeater</h1>
+                <p class="tool-description">Repeat text multiple times with optional separators</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Repetition Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Repetition Options</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="option-group">
+                                    <label for="repeatCount">Number of Times:</label>
+                                    <input type="number" id="repeatCount" value="3" min="1" max="1000">
+                                </div>
+                                <div class="option-group">
+                                    <label for="separatorPreset">Separator Preset:</label>
+                                    <select id="separatorPreset">
+                                        <option value="space">Space</option>
+                                        <option value="newline">Newline</option>
+                                        <option value="tab">Tab</option>
+                                        <option value="comma">Comma</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="option-group">
+                                <label for="separator">Custom Separator:</label>
+                                <input type="text" id="separator" placeholder="Enter custom separator" value=" ">
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="textInput">Text to Repeat:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="textInput" 
+                                            placeholder="Enter text..."
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter the text you want to repeat multiple times.
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="repeatBtn">Repeat Text</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputText">Result:</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputText" 
+                                            placeholder="Repeated text will appear here..."
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Output</button>
+                                    <button class="action-btn success" id="downloadBtn">Download</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/duplicate-word-remover/">Duplicate Word Remover</a></li>
+                            <li><a href="/tools/remove-empty-lines/">Remove Empty Lines</a></li>
+                            <li><a href="/tools/text-summarizer/">Text Summarizer</a></li>
+                            <li><a href="/">All Text Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Repetition Tips</h4>
+                        <ul>
+                            <li>Use newline separator for creating numbered lists</li>
+                            <li>Use comma separator for CSV-like formats</li>
+                            <li>Tab separator works well for spreadsheet import</li>
+                            <li>Great for generating test data patterns</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔄</span>
+                        <h5>Data Generation</h5>
+                        <p>Create test datasets or fill templates with repeated content.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📋</span>
+                        <h5>List Creation</h5>
+                        <p>Generate lists with repeated items for testing or samples.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🎨</span>
+                        <h5>Pattern Generation</h5>
+                        <p>Create repeating patterns for design or content testing.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🧪</span>
+                        <h5>Batch Testing</h5>
+                        <p>Generate test data for applications and quality assurance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Text:</strong> Input the content you want to repeat</li>
+                    <li><strong>Set Repetitions:</strong> Enter how many times to repeat (up to 1000)</li>
+                    <li><strong>Choose Separator:</strong> Select delimiter between repetitions</li>
+                    <li><strong>Generate:</strong> Click to create the repeated text</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Text Repetition:</strong> Duplicates content exact number of times</li>
+                    <li><strong>Custom Separators:</strong> Add custom text between repetitions</li>
+                    <li><strong>Newline Support:</strong> Use \n for newlines between copies</li>
+                    <li><strong>Tab Support:</strong> Use \t for tab indentation</li>
+                    <li><strong>No Limit Separator:</strong> Option to join without separators</li>
+                    <li><strong>Instant Output:</strong> Real-time preview of results</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>What's the maximum number of repetitions?</h4>
+                    <p>The tool allows up to 1000 repetitions to prevent performance issues.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I use special characters as separators?</h4>
+                    <p>Yes, any text works as a separator, including special characters.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How do I add line breaks between repetitions?</h4>
+                    <p>Use "\n" (backslash-n) as your separator for newlines.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I repeat very long text?</h4>
+                    <p>Yes, though results with high repetitions may be very large.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is the output copied to clipboard automatically?</h4>
+                    <p>No, you manually copy the result, but there's a convenient copy button.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

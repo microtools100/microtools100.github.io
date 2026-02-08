@@ -93,10 +93,28 @@ html.dark-mode .hero {
 .tools-section {
     padding: 4rem 0;
     transition: var(--transition);
+    scroll-margin-top: 80px;
 }
 
 .tools-section:nth-child(even) {
     background-color: var(--surface-color);
+}
+
+/* Subsections within tools sections */
+.tools-section .subsection {
+    margin-bottom: 3rem;
+}
+
+.tools-section .subsection:last-child {
+    margin-bottom: 0;
+}
+
+.tools-section .subsection > h4 {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--primary-color);
 }
 
 .tools-grid {

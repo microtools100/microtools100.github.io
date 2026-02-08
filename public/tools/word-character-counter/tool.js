@@ -131,9 +131,8 @@ class WordCharacterCounter {
     }
 
     loadExample() {
-        this.textInput.value = 'The quick brown fox jumps over the lazy dog. This is a sample sentence. Statistics will update automatically as you type or paste text.';
-        this.updateStats();
-        this.textInput.focus();
+        const exampleText = 'The quick brown fox jumps over the lazy dog. This is a sample sentence. Statistics will update automatically as you type or paste text.';
+        SharedUtilities.loadExample(this.textInput, exampleText, () => this.updateStats());
     }
 }
 

@@ -99,22 +99,22 @@ class TextCompareDiff {
         diffResult.forEach((item) => {
             switch (item.type) {
                 case 'same':
-                    html1 += `<div class="line same-line"><span class="line-num">${lineNum1}</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
-                    html2 += `<div class="line same-line"><span class="line-num">${lineNum2}</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
+                    html1 += `<div class="line same-line"><span class="line-num">${lineNum1}</span><pre>${SharedUtilities.escapeHTML(item.content)}</pre></div>`;
+                    html2 += `<div class="line same-line"><span class="line-num">${lineNum2}</span><pre>${SharedUtilities.escapeHTML(item.content)}</pre></div>`;
                     lineNum1++;
                     lineNum2++;
                     break;
                 case 'remove':
-                    html1 += `<div class="line remove-line"><span class="line-num">-</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
+                    html1 += `<div class="line remove-line"><span class="line-num">-</span><pre>${SharedUtilities.escapeHTML(item.content)}</pre></div>`;
                     lineNum1++;
                     break;
                 case 'add':
-                    html2 += `<div class="line add-line"><span class="line-num">+</span><pre>${this.escapeHtml(item.content)}</pre></div>`;
+                    html2 += `<div class="line add-line"><span class="line-num">+</span><pre>${SharedUtilities.escapeHTML(item.content)}</pre></div>`;
                     lineNum2++;
                     break;
                 case 'modify':
-                    html1 += `<div class="line modify-line"><span class="line-num">${lineNum1}</span><pre>${this.escapeHtml(item.content1)}</pre></div>`;
-                    html2 += `<div class="line modify-line"><span class="line-num">${lineNum2}</span><pre>${this.escapeHtml(item.content2)}</pre></div>`;
+                    html1 += `<div class="line modify-line"><span class="line-num">${lineNum1}</span><pre>${SharedUtilities.escapeHTML(item.content1)}</pre></div>`;
+                    html2 += `<div class="line modify-line"><span class="line-num">${lineNum2}</span><pre>${SharedUtilities.escapeHTML(item.content2)}</pre></div>`;
                     lineNum1++;
                     lineNum2++;
                     break;
@@ -166,30 +166,7 @@ class TextCompareDiff {
             return;
         }
 
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        
-        SharedUtilities.showNotification(message, 'success');
-    }
-
-    copyToClipboard(text, message = 'Copied to clipboard!') {
-        if (!text.trim()) {
-            SharedUtilities.showNotification('Nothing to copy', 'warning');
-            return;
-        }
-
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        
-        SharedUtilities.showNotification(message, 'success');
+        SharedUtilities.copyToClipboard(text, message, 'success');
     }
 
     clearAll() {
@@ -200,17 +177,6 @@ class TextCompareDiff {
         this.diffStats.innerHTML = '';
         this.text1.focus();
         SharedUtilities.showNotification('Cleared all inputs', 'info');
-    }
-
-    escapeHtml(text) {
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-        return text.replace(/[&<>"']/g, m => map[m]);
     }
 }
 

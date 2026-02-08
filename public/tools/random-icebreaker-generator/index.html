@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Icebreaker Generator - Get Conversation Starters | Micro Tools</title>
+    <meta name="description" content="Generate random icebreaker questions to start interesting conversations. Perfect for meetings, team building, and social events.">
+    <meta name="keywords" content="icebreaker questions, conversation starters, team building, random questions">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Random Icebreaker Generator">
+    <meta property="og:description" content="Generate random icebreaker questions to spark interesting conversations.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/assets/css/core.css">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css">
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Random Icebreaker Generator",
+      "description": "Generate random icebreaker questions",
+      "url": "https://microtools.dev/tools/random-icebreaker-generator/",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many icebreaker questions are available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tool includes over 100 unique icebreaker questions covering various categories and difficulty levels."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I customize the questions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This version uses the built-in question bank. You can copy any generated question and modify it for your needs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are good uses for an icebreaker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Icebreakers are perfect for team meetings, networking events, classroom activities, social gatherings, and job interviews."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often do questions repeat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With over 100 questions, repetition is rare but possible. The larger the database, the less frequent the repeats."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a history feature?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, the tool tracks recently generated icebreakers during your session for reference."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Random Icebreaker Generator</h1>
+                <p class="tool-description">Generate random icebreaker questions to spark interesting conversations.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+
+                    <!-- Options Section -->
+                    <div class="tool-options">
+                        <h3 class="section-title">Options</h3>
+                        <div class="option-group" style="margin: 0;">
+                            <label for="categoryFilter">Category:</label>
+                            <select id="categoryFilter" style="width: 100%; max-width: 250px;">
+                                <option value="">All Categories</option>
+                                <option value="fun">Fun</option>
+                                <option value="professional">Professional</option>
+                                <option value="creative">Creative</option>
+                                <option value="random">Random</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Result Display -->
+                    <div class="tool-content-columns" style="margin: 2rem 0;">
+                        <section class="tool-section" style="flex: 1;">
+                            <div id="icebreaker-display" style="padding: 2rem; background: var(--surface-color); border: 2px solid var(--primary-color); border-radius: 8px; min-height: 200px; display: flex; align-items: center; justify-content: center; text-align: center;">
+                                <p style="color: var(--text-secondary); font-size: 1.1em; margin: 0;">Click the button to generate your first icebreaker</p>
+                            </div>
+
+                            <div class="tool-actions" style="margin-top: 1.5rem;">
+                                <button id="generateBtn" class="action-btn primary">Generate Icebreaker</button>
+                                <button id="copyBtn" class="action-btn success">Copy</button>
+                                <button id="clearBtn" class="action-btn">
+                                    <span>Clear</span>
+                                    <span>×</span>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- History Section -->
+                    <div id="history" style="margin-top: 2rem; padding: 1rem; background: var(--surface-color); border-radius: 4px; display: none;">
+                        <h3>History:</h3>
+                        <div id="historyList" style="max-height: 200px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="tool-sidebar">
+                <div class="related-tools">
+                    <h4>Related Tools</h4>
+                    <ul>
+                        <li><a href="/tools/whatsapp-text-formatter/">WhatsApp Text Formatter</a></li>
+                        <li><a href="/tools/caption-line-break-formatter/">Caption Line Break</a></li>
+                        <li><a href="/tools/hashtag-formatter/">Hashtag Formatter</a></li>
+                        <li><a href="/">All Engagement Tools</a></li>
+                    </ul>
+                </div>
+
+                <div class="tool-tips">
+                    <h4>Engagement Tips</h4>
+                    <ul>
+                        <li>Perfect for breaking awkward silences</li>
+                        <li>Encourages authentic group conversations</li>
+                        <li>Works great for team building and networking</li>
+                        <li>Add to your game night or party for fun</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+        <div class="use-cases">
+            <h4>Use Cases</h4>
+            <div class="use-case-grid">
+                <div class="use-case-item">
+                    <span class="use-case-icon">👥</span>
+                    <h5>Team Building</h5>
+                    <p>Break the ice at team meetings and company events.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">🎤</span>
+                    <h5>Networking Events</h5>
+                    <p>Start conversations at professional gatherings.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">🎓</span>
+                    <h5>Classroom Activities</h5>
+                    <p>Engage students and encourage participation.</p>
+                </div>
+                <div class="use-case-item">
+                    <span class="use-case-icon">🎉</span>
+                    <h5>Social Gatherings</h5>
+                    <p>Keep parties and game nights lively and fun.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Use</h3>
+            <ol>
+                <li><strong>Click Generate:</strong> Press the button to get a random icebreaker</li>
+                <li><strong>Read Question:</strong> Review the icebreaker question</li>
+                <li><strong>Copy if Needed:</strong> Use the copy button to save it</li>
+                <li><strong>Ask Others:</strong> Use in your group or event</li>
+            </ol>
+        </div>
+
+        <div class="formatting-guide">
+            <h3>How It Works</h3>
+            <ul>
+                <li><strong>Random Selection:</strong> Picks from a curated list of icebreaker questions</li>
+                <li><strong>Variety:</strong> Questions span different categories and difficulty levels</li>
+                <li><strong>Thoughtful Questions:</strong> Designed to encourage meaningful conversations</li>
+                <li><strong>History Tracking:</strong> Remembers recently generated icebreakers</li>
+                <li><strong>Copy Functionality:</strong> Easy sharing of selected questions</li>
+                <li><strong>Instant Generation:</strong> New questions on every click</li>
+            </ul>
+        </div>
+
+        <div class="faq-section">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <h4>Can I see the history of generated icebreakers?</h4>
+                <p>Yes, the history section shows recently generated questions during your session.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Are the same questions repeated often?</h4>
+                <p>The tool has a large question bank; repetition is rare but possible.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I customize or add my own questions?</h4>
+                <p>This version uses the built-in question bank; custom questions are not supported.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What age group are these questions for?</h4>
+                <p>Questions range from professional to casual; suitable for teens to adults.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How many questions are in the database?</h4>
+                <p>The tool includes 100+ unique icebreaker questions.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+    <script src="/assets/js/shared-utilities.js"></script>
+    <script src="/assets/js/dark-mode.js"></script>
+    <script src="/assets/js/footer-injector.js"></script>
+    <script src="/assets/js/nav-injector.js"></script>
+    <script src="tool.js"></script>
+</body>
+</html>
