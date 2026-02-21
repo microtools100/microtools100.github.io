@@ -9,7 +9,8 @@ class VersionComparison {
         this.showStats = document.getElementById('showStats');
         this.resultsOutput = document.getElementById('resultsOutput');
         this.statsContainer = document.getElementById('stats-container');
-        
+        this.LINE_LEVEL_THRESHOLD = 0.5; // Show line-level diff if > 50% of words are different
+
         this.clearAllBtn = document.getElementById('clearAllBtn');
         this.copyResultsBtn = document.getElementById('copyResultsBtn');
         
@@ -441,39 +442,110 @@ class VersionComparison {
                     removedCount++;
                     lineHtml = `<div class="result-line line-removed" data-type="removed"><span class="char-removed" style="text-decoration: line-through;">${this.escapeHTML(item.content)}</span></div>`;
                     break;
-
                 case 'modified':
                     modifiedCount++;
+                    
+                    // Calculate what percentage of words are different
                     const wordDiff = this.getWordDifferences(item.original, item.updated);
-                    let formattedLine = '';
+                    let totalWords = 0;
+                    let changedWords = 0;
                     
                     for (let word of wordDiff) {
                         if (word.type === 'same') {
-                            formattedLine += this.escapeHTML(word.word) + ' ';
-                        } else if (word.type === 'removed') {
-                            formattedLine += `<span class="char-removed">${this.escapeHTML(word.word)}</span> `;
-                        } else if (word.type === 'added') {
-                            formattedLine += `<span class="char-added">${this.escapeHTML(word.word)}</span> `;
-                        } else if (word.type === 'modified-word') {
-                            // For individual words that changed, show character-level diff
-                            let charHighlight = '';
-                            for (let char of word.charDiff) {
-                                const escapedChar = this.escapeHTML(char.char);
-                                if (char.type === 'same') {
-                                    charHighlight += escapedChar;
-                                } else if (char.type === 'removed') {
-                                    charHighlight += `<span class="char-removed">${escapedChar}</span>`;
-                                } else if (char.type === 'added') {
-                                    charHighlight += `<span class="char-added">${escapedChar}</span>`;
-                                }
-                            }
-                            formattedLine += charHighlight + ' ';
+                            totalWords++;
+                        } else if (word.type === 'removed' || word.type === 'added' || word.type === 'modified-word') {
+                            totalWords++;
+                            changedWords++;
                         }
                     }
-
-                    lineHtml = `<div class="result-line line-modified" data-type="modified">${formattedLine.trim()}</div>`;
-                    break;
-            }
+                    
+                    const changePercentage = totalWords > 0 ? changedWords / totalWords : 0;
+                    
+                    // Decide whether to show word-level or line-level diff
+                    if (changePercentage > this.LINE_LEVEL_THRESHOLD) {
+                        // Show line-level diff (old version vs new version)
+                        let oldLineHtml = '';
+                        let newLineHtml = '';
+                        
+                        // Process old version words
+                        for (let word of wordDiff) {
+                            if (word.type === 'same' || word.type === 'removed' || word.type === 'modified-word') {
+                                if (word.type === 'modified-word') {
+                                    // For modified words in old version, show them as removed
+                                    let charHighlight = '';
+                                    for (let char of word.charDiff) {
+                                        const escapedChar = this.escapeHTML(char.char);
+                                        if (char.type === 'same' || char.type === 'removed') {
+                                            charHighlight += `<span class="char-removed">${escapedChar}</span>`;
+                                        }
+                                    }
+                                    oldLineHtml += charHighlight + ' ';
+                                } else if (word.type === 'removed') {
+                                    oldLineHtml += `<span class="char-removed">${this.escapeHTML(word.word)}</span> `;
+                                } else {
+                                    oldLineHtml += this.escapeHTML(word.word) + ' ';
+                                }
+                            }
+                        }
+                        
+                        // Process new version words
+                        for (let word of wordDiff) {
+                            if (word.type === 'same' || word.type === 'added' || word.type === 'modified-word') {
+                                if (word.type === 'modified-word') {
+                                    // For modified words in new version, show them as added
+                                    let charHighlight = '';
+                                    for (let char of word.charDiff) {
+                                        const escapedChar = this.escapeHTML(char.char);
+                                        if (char.type === 'same' || char.type === 'added') {
+                                            charHighlight += `<span class="char-added">${escapedChar}</span>`;
+                                        }
+                                    }
+                                    newLineHtml += charHighlight + ' ';
+                                } else if (word.type === 'added') {
+                                    newLineHtml += `<span class="char-added">${this.escapeHTML(word.word)}</span> `;
+                                } else {
+                                    newLineHtml += this.escapeHTML(word.word) + ' ';
+                                }
+                            }
+                        }
+                        
+                        lineHtml = `<div class="result-line line-modified" data-type="modified">
+                            <div class="line-diff-container">
+                                <div class="old-version-line"><span class="diff-label">Old:</span> ${oldLineHtml.trim()}</div>
+                                <div class="new-version-line"><span class="diff-label">New:</span> ${newLineHtml.trim()}</div>
+                            </div>
+                        </div>`;
+                    } else {
+                        // Show word-level diff (current behavior)
+                        let formattedLine = '';
+                        
+                        for (let word of wordDiff) {
+                            if (word.type === 'same') {
+                                formattedLine += this.escapeHTML(word.word) + ' ';
+                            } else if (word.type === 'removed') {
+                                formattedLine += `<span class="char-removed">${this.escapeHTML(word.word)}</span> `;
+                            } else if (word.type === 'added') {
+                                formattedLine += `<span class="char-added">${this.escapeHTML(word.word)}</span> `;
+                            } else if (word.type === 'modified-word') {
+                                // For individual words that changed, show character-level diff
+                                let charHighlight = '';
+                                for (let char of word.charDiff) {
+                                    const escapedChar = this.escapeHTML(char.char);
+                                    if (char.type === 'same') {
+                                        charHighlight += escapedChar;
+                                    } else if (char.type === 'removed') {
+                                        charHighlight += `<span class="char-removed">${escapedChar}</span>`;
+                                    } else if (char.type === 'added') {
+                                        charHighlight += `<span class="char-added">${escapedChar}</span>`;
+                                    }
+                                }
+                                formattedLine += charHighlight + ' ';
+                            }
+                        }
+                        
+                        lineHtml = `<div class="result-line line-modified" data-type="modified">${formattedLine.trim()}</div>`;
+                    }
+                    break;            }
 
             html += lineHtml;
         }
