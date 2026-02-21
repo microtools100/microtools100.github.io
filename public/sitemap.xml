@@ -132,11 +132,7 @@
     <lastmod>2026-02-08</lastmod>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://micro-tools-43a.pages.dev/tools/text-compare-diff/</loc>
-    <lastmod>2026-02-08</lastmod>
-    <priority>0.6</priority>
-  </url>
+  <!-- text-compare-diff removed -->
   <url>
     <loc>https://micro-tools-43a.pages.dev/tools/duplicate-line-remover/</loc>
     <lastmod>2026-02-08</lastmod>

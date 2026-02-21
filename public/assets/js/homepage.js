@@ -22,7 +22,6 @@ class HomepageManager {
             
             // Text Formatting Tools
             { id: 'remove-extra-spaces', name: 'Remove Extra Spaces', category: 'text', url: '/tools/remove-extra-spaces/' },
-            { id: 'text-compare-diff', name: 'Text Compare & Diff', category: 'text', url: '/tools/text-compare-diff/' },
             { id: 'duplicate-line-remover', name: 'Duplicate Line Remover', category: 'text', url: '/tools/duplicate-line-remover/' },
             { id: 'string-case-converter', name: 'String Case Converter', category: 'text', url: '/tools/string-case-converter/' },
             

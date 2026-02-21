@@ -30,10 +30,7 @@
     <loc>https://micro-tools-43a.pages.dev/tools/reading-time-calculator/</loc>
     <lastmod>2026-02-08</lastmod>
   </url>
-  <url>
-    <loc>https://micro-tools-43a.pages.dev/tools/text-compare-diff/</loc>
-    <lastmod>2026-02-08</lastmod>
-  </url>
+  <!-- text-compare-diff removed -->
   <url>
     <loc>https://micro-tools-43a.pages.dev/tools/duplicate-line-remover/</loc>
     <lastmod>2026-02-08</lastmod>

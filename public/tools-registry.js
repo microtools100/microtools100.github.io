@@ -64,17 +64,7 @@ const TOOLS_REGISTRY = {
       status: 'in-progress'
     },
     {
-      id: 'text-compare-diff',
-      name: 'Text Compare & Diff',
-      category: 'text-formatting',
-      categoryLabel: 'Text Formatting Tools',
-      description: 'Compare two texts side-by-side and highlight differences. Find changes instantly.',
-      icon: '🔀',
-      url: '/tools/text-compare-diff/',
-      keywords: 'text compare, diff, difference finder, text comparison',
-      priority: 0.80,
-      status: 'not-started'
-    },
+      /* text-compare-diff removed from registry */
     {
       id: 'duplicate-line-remover',
       name: 'Duplicate Line Remover',
@@ -1119,6 +1109,19 @@ const TOOLS_REGISTRY = {
       url: '/tools/random-icebreaker-generator/',
       keywords: 'icebreaker questions, conversation starters, team building, random questions',
       priority: 0.75,
+      status: 'complete'
+    },
+    // Data Tools (1)
+    {
+      id: 'text-compare',
+      name: 'Text Compare Tool',
+      category: 'data-converters',
+      categoryLabel: 'Data Converters',
+      description: 'Compare two texts and highlight added, removed, and modified lines with word and character-level diffs. Runs locally in your browser.',
+      icon: '📊',
+      url: '/text-compare/',
+      keywords: 'text compare, text diff, compare texts, document diff, inline diff',
+      priority: 0.78,
       status: 'complete'
     }
   ],
