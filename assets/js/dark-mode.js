@@ -30,7 +30,8 @@ class DarkModeToggle {
         }
 
         // Listen for system preference changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = (e) => {
             if (!localStorage.getItem(this.storageKey)) {
                 if (e.matches) {
                     this.enableDarkMode();
@@ -38,6 +39,62 @@ class DarkModeToggle {
                     this.disableDarkMode();
                 }
             }
-        });
+        };
 
+        if (typeof mql.addEventListener === 'function') {
+            mql.addEventListener('change', handleChange);
+        } else if (typeof mql.addListener === 'function') {
+            mql.addListener(handleChange);
+        }
+
+
+    setupToggleButton() {
+        this.button = document.getElementById('darkModeToggle');
+        if (!this.button) return;
+
+        // Initialize UI state based on current class
+        const enabled = document.documentElement.classList.contains(this.darkModeClass);
+        this.updateToggleUI(enabled);
+
+        // Toggle on click
+        this.button.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            this.toggle();
+        });
+    }
+
+    toggle() {
+        const enabled = document.documentElement.classList.toggle(this.darkModeClass);
+        try {
+            localStorage.setItem(this.storageKey, enabled ? 'true' : 'false');
+        } catch (e) {
+            // Storage may be unavailable in some contexts; fail silently
+        }
+        this.updateToggleUI(enabled);
+    }
+
+    enableDarkMode() {
+        document.documentElement.classList.add(this.darkModeClass);
+        try { localStorage.setItem(this.storageKey, 'true'); } catch (e) {}
+        this.updateToggleUI(true);
+    }
+
+    disableDarkMode() {
+        document.documentElement.classList.remove(this.darkModeClass);
+        try { localStorage.setItem(this.storageKey, 'false'); } catch (e) {}
+        this.updateToggleUI(false);
+    }
+
+    updateToggleUI(isDark) {
+        if (!this.button) return;
+        // Swap simple emoji icon and aria-pressed for accessibility
+        this.button.textContent = isDark ? '☀️' : '🌙';
+        this.button.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    }
         
+
+
+// Instantiate the toggle so it runs on load
+new DarkModeToggle();
+
+
