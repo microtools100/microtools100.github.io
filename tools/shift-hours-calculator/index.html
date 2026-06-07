@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate total shift hours minus break time. Determine actual work hours.">
+    <meta name="keywords" content="shift hours calculator, work hours, shift duration, break calculator">
+    <title>Shift Hours Calculator - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Shift Hours Calculator",
+        "description": "Calculate work hours minus breaks",
+        "url": "https://microtools.github.io/tools/shift-hours-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I calculate shift hours?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Shift Hours = End Time - Start Time - Break Time"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Should breaks be included in shift hours?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, paid breaks should be included but unpaid breaks should be excluded."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I handle multiple breaks?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Add all break durations together and subtract from total shift time."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does it handle shifts across midnight?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, if you work past midnight, the calculator automatically adjusts."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Shift Hours Calculator</h1>
+                <p class="tool-description">Calculate work hours including break time</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="startTime">Start Time:</label>
+                                    <div class="input-area">
+                                        <input type="time" id="startTime">
+                                    </div>
+                                    <div class="hint">
+                                        Shift start time
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="endTime">End Time:</label>
+                                    <div class="input-area">
+                                        <input type="time" id="endTime">
+                                    </div>
+                                    <div class="hint">
+                                        Shift end time
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="breakMinutes">Break Duration (minutes):</label>
+                                    <div class="input-area">
+                                        <input type="number" id="breakMinutes" placeholder="e.g., 30" min="0">
+                                    </div>
+                                    <div class="hint">
+                                        Unpaid break time
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Results:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Total Duration:</span>
+                                                <strong id="totalDuration">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Break Time:</span>
+                                                <strong id="breakDisplay">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Work Hours:</span>
+                                                <strong id="workHours">—</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/time-difference-calculator/">Time Difference Calculator</a></li>
+                            <li><a href="/tools/weekly-working-hours-calculator/">Weekly Working Hours</a></li>
+                            <li><a href="/tools/multiple-time-adder/">Multiple Time Adder</a></li>
+                            <li><a href="/">All Time & Shift Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Time Management Tips</h4>
+                        <ul>
+                            <li>Account for breaks and lunch times accurately</li>
+                            <li>Perfect for tracking hourly employee hours</li>
+                            <li>Handles overnight shifts across dates</li>
+                            <li>Useful for payroll and HR compliance</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">👷</span>
+                        <h5>Hourly Employee</h5>
+                        <p>Track actual working hours for payroll accuracy.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🏢</span>
+                        <h5>HR Compliance</h5>
+                        <p>Monitor shift duration for labor law compliance.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">⏰</span>
+                        <h5>Time Tracking</h5>
+                        <p>Calculate billable hours for client projects.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💼</span>
+                        <h5>Shift Planning</h5>
+                        <p>Plan employee schedules with accurate hours.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Start Time:</strong> When the shift begins</li>
+                    <li><strong>Enter End Time:</strong> When the shift ends</li>
+                    <li><strong>Enter Break Duration:</strong> Minutes/hours of unpaid break</li>
+                    <li><strong>Calculate:</strong> Get actual working hours</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Time Calculation:</strong> Subtracts breaks from total shift time</li>
+                    <li><strong>Multiple Breaks:</strong> Add all break times together</li>
+                    <li><strong>Midnight Shifts:</strong> Handles overnight shifts automatically</li>
+                    <li><strong>Flexible Input:</strong> Enter breaks in hours or minutes</li>
+                    <li><strong>Accurate Results:</strong> Shows net working time only</li>
+                    <li><strong>Payroll Ready:</strong> Copy results directly to payroll system</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>How do I calculate shift hours?</h4>
+                    <p>Shift Hours = End Time - Start Time - Break Time</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Should breaks be included in shift hours?</h4>
+                    <p>No, paid breaks should be included but unpaid breaks should be excluded.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How do I handle multiple breaks?</h4>
+                    <p>Add all break durations together and subtract from total shift time.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Does it handle shifts across midnight?</h4>
+                    <p>Yes, if you work past midnight, the calculator automatically adjusts.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

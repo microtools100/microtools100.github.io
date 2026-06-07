@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online random charades generator. Generate random words and phrases for charades game. Perfect for parties, family game nights, and icebreakers.">
+    <meta name="keywords" content="charades generator, random charades, party game, word generator, game night, icebreaker">
+    <meta property="og:title" content="Random Charades Generator - Free Party Game Tool">
+    <meta property="og:description" content="Generate random charades words and phrases instantly. Perfect for parties, family gatherings, and game nights. No registration needed.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Random Charades Generator - Free Party Game Tool | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Random Charades Generator",
+        "description": "Free online tool to generate random charades words and phrases for party games",
+        "url": "https://microtools.github.io/tools/charades-random/",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+        <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is this tool free?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool is completely free with no hidden charges or premium features required."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data private?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all processing happens in your browser. Your data is never sent to any server or stored anywhere."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do I need to create an account?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No account needed. This tool works immediately without any registration or login required."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does it work offline?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, once the page is loaded, this tool works completely offline without internet connection."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Random Charades Generator</h1>
+                <p class="tool-description">
+                    Generate random charades words and phrases instantly. Perfect for parties, family game nights, icebreakers, and team-building activities.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Error Message Display -->
+                        <div class="error-msg" id="errorMsg"></div>
+
+                        <!-- Settings Section -->
+                        <div class="settings-section">
+                            <h3>Game Settings</h3>
+                            <div class="settings-grid">
+                                <div class="setting-item">
+                                    <label for="category">Category:</label>
+                                    <select id="category">
+                                        <option value="mixed">Mixed (All Categories)</option>
+                                        <option value="movies">Movies & TV Shows</option>
+                                        <option value="books">Books & Literature</option>
+                                        <option value="songs">Songs & Music</option>
+                                        <option value="celebrities">Celebrities & People</option>
+                                        <option value="actions">Actions & Activities</option>
+                                        <option value="objects">Objects & Things</option>
+                                        <option value="places">Places & Locations</option>
+                                        <option value="animals">Animals & Nature</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item">
+                                    <label for="difficulty">Difficulty:</label>
+                                    <select id="difficulty">
+                                        <option value="easy">Easy (1-2 words)</option>
+                                        <option value="medium" selected>Medium (2-3 words)</option>
+                                        <option value="hard">Hard (3+ words)</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item">
+                                    <label for="count">Number of Charades:</label>
+                                    <input type="range" id="count" min="1" max="50" value="10">
+                                    <div class="range-display"><span id="countValue">10</span> charades</div>
+                                </div>
+                                <div class="setting-item">
+                                    <label for="timer">Timer (seconds):</label>
+                                    <select id="timer">
+                                        <option value="0">No timer</option>
+                                        <option value="30">30 seconds</option>
+                                        <option value="60" selected>60 seconds</option>
+                                        <option value="90">90 seconds</option>
+                                        <option value="120">120 seconds</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Generate/Clear Buttons -->
+                        <div class="tool-options buttons-with-hints">
+                            <div class="button-group">
+                                <button class="action-btn primary" id="generateBtn" title="Creates a new list of unique charades. Used items won't repeat in this session.">
+                                    <span>Generate</span>
+                                </button>
+                                <small class="button-hint-text">Creates a new list of unique charades</small>
+                            </div>
+                            <div class="button-group">
+                                <button class="action-btn" id="clearBtn" title="Clears the current charades display without resetting the pool of used items.">
+                                    <span>Clear</span>
+                                </button>
+                                <small class="button-hint-text">Clears current display (items stay locked)</small>
+                            </div>
+                            <div class="button-group">
+                                <button class="action-btn" id="resetItemsBtn" title="Returns all items to the pool so you can generate them again. Start fresh.">
+                                    <span>Reset Items</span>
+                                </button>
+                                <small class="button-hint-text">Returns all items to the pool</small>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="tool-content-columns">
+                            <!-- Left Column: Current Charade -->
+                            <section class="tool-section charades-column">
+                                <div class="output-group">
+                                    <label>Current Charade:</label>
+                                    <div class="charade-display" id="charadesOutput">
+                                        <div class="empty-state">
+                                            <h4>No charades generated yet</h4>
+                                            <p>Click "Generate" to start!</p>
+                                        </div>
+                                    </div>
+                                    <div class="charade-info">
+                                        <div class="info-item">
+                                            <span class="label">Progress:</span>
+                                            <span class="value" id="currentIndex">0/0</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="label">Timer:</span>
+                                            <span class="value" id="timerDisplay">--:--</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-controls">
+                                        <button class="action-btn" id="prevCardBtn" disabled>← Previous</button>
+                                        <button class="action-btn primary" id="nextCardBtn" disabled>Next →</button>
+                                    </div>
+                                    <div class="game-controls-row">
+                                        <button class="action-btn" id="startGameBtn">Start Timer</button>
+                                        <button class="action-btn" id="skipBtn">Skip</button>
+                                        <button class="action-btn" id="showHintsBtn">Hints</button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Right Column: Score Keeper & Controls -->
+                            <section class="tool-section score-column">
+                                <h3>Team Scores</h3>
+                                <div class="score-container">
+                                    <div class="team-card team-1">
+                                        <div class="team-header">Team 1</div>
+                                        <div class="team-score-display" id="team1Score">0</div>
+                                        <div class="score-buttons">
+                                            <button class="score-btn minus" id="team1Remove">−</button>
+                                            <button class="score-btn plus" id="team1Add">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="team-card team-2">
+                                        <div class="team-header">Team 2</div>
+                                        <div class="team-score-display" id="team2Score">0</div>
+                                        <div class="score-buttons">
+                                            <button class="score-btn minus" id="team2Remove">−</button>
+                                            <button class="score-btn plus" id="team2Add">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="action-btn secondary" id="resetScoresBtn">Reset Scores</button>
+                            </section>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="tool-actions">
+                            <button class="action-btn success copy-btn" id="copyBtn">
+                                <span>Copy</span>
+                            </button>
+                            <button class="action-btn" id="downloadBtn">
+                                <span>Download</span>
+                            </button>
+                            <button class="action-btn" id="printBtn">
+                                <span>Print</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <section class="info-section">
+                        <h3>How to Play Charades</h3>
+                        <div class="steps-grid">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <h4>Divide into Teams</h4>
+                                <p>Split players into two or more teams of equal size.</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <h4>Generate Charades</h4>
+                                <p>Use this tool to generate random words and phrases.</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <h4>Act it Out</h4>
+                                <p>One player acts out the charade without speaking or mouthing words.</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <h4>Guess & Score</h4>
+                                <p>Team guesses correctly before time runs out to score points.</p>
+                            </div>
+                        </div>
+
+                        <div class="rules-box">
+                            <h4>⚠️ Charades Rules</h4>
+                            <ul>
+                                <li><strong>No Talking:</strong> You cannot speak or mouth words</li>
+                                <li><strong>No Props:</strong> Act using only your body</li>
+                                <li><strong>Time Limit:</strong> Use the timer to keep pace</li>
+                                <li><strong>Categories:</strong> Respect category hints when available</li>
+                                <li><strong>Gestures:</strong> Use standard signals (movie camera, open book, etc.)</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- How It Works Section -->
+                    <section class="info-section">
+                        <h3>How It Works</h3>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <div class="tip-icon">🎯</div>
+                                <h4>Syllable Strategy</h4>
+                                <p>Hold up fingers to show the number of syllables, then act each one separately.</p>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">📚</div>
+                                <h4>Category Signals</h4>
+                                <p>Use standard signals: open book (literature), crank camera (movie), microphone (song).</p>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">⏱️</div>
+                                <h4>Time Management</h4>
+                                <p>Start broad then get specific. Skip tough ones and come back later.</p>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">👥</div>
+                                <h4>Team Communication</h4>
+                                <p>Teammates should call out guesses continuously to spark connections.</p>
+                            </div>
+                        </div>
+
+                        <div class="variations-box">
+                            <h4>Game Variations</h4>
+                            <ul>
+                                <li><strong>Reverse Charades:</strong> Team acts, one person guesses</li>
+                                <li><strong>Speed Charades:</strong> 30-second rounds, no timer between rounds</li>
+                                <li><strong>Themed Charades:</strong> Pick one category for entire game</li>
+                                <li><strong>Kids Charades:</strong> Use Easy difficulty with animals/simple actions</li>
+                                <li><strong>Movie Marathon:</strong> Movies-only category with famous scenes</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/password-generator/">Password Generator</a></li>
+                            <li><a href="/tools/decision-maker/">Decision Maker</a></li>
+                            <li><a href="/">All Game Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Quick Tips</h4>
+                        <ul>
+                            <li>Start with simple words before complex phrases</li>
+                            <li>Use hand signals to indicate syllables and categories</li>
+                            <li>Adjust difficulty based on player experience</li>
+                            <li>Use 60-second timer for best pacing</li>
+                            <li>Keep track of scores with the score keeper</li>
+                            <li>Mix categories for more variety</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+</body>
+</html>

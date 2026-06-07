@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate percentage change, increase, and decrease between two values. Free online percentage calculator with real-time results.">
+    <meta name="keywords" content="percentage calculator, percentage change, percentage increase, percentage decrease, growth rate, price change">
+    <meta property="og:title" content="Percentage Calculator - Calculate Changes and Growth">
+    <meta property="og:description" content="Quickly calculate percentage changes, increases, and decreases between any two values with instant results.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Percentage Calculator - Free Online Tool | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Percentage Calculator",
+        "description": "Calculate percentage changes, increases, and decreases between values",
+        "url": "https://microtools.github.io/tools/percentage-calculator/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I calculate percentage change?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Enter the original value and new value. The calculator will compute the percentage change using the formula: ((New - Original) / Original) × 100"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What's the difference between percentage change and percentage increase?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Percentage change is the relative change from the original value. A positive result indicates an increase, while a negative result indicates a decrease."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use this for discounts?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, you can calculate discount percentages by entering the original price and the discounted price to see the percentage reduction."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all calculations are performed locally in your browser. Your data is never sent to any server."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I calculate multiple percentages at once?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This calculator processes one calculation at a time, but you can perform multiple calculations by entering different values sequentially."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Percentage Calculator</h1>
+                <p class="tool-description">Calculate percentage change, increase, and decrease between values</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Input Section -->
+                        <section class="tool-section">
+                            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                                <div class="input-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                                    <label for="originalValue">Original Value:</label>
+                                    <input type="number" id="originalValue" placeholder="Enter original value" step="any">
+                                </div>
+                                <div class="input-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                                    <label for="newValue">New Value:</label>
+                                    <input type="number" id="newValue" placeholder="Enter new value" step="any">
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Results Section -->
+                        <section class="tool-section" style="padding: 1rem;">
+                            <h3 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-color);">Results</h3>
+                            <div class="result-box" style="background: var(--surface-color); padding: 0.75rem; border-radius: var(--radius-md); border-left: 4px solid var(--primary-color);">
+                                <div class="result-line" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                                    <span style="font-weight: 500; font-size: 0.85rem;">Percentage Change:</span>
+                                    <strong id="percentageResult" style="color: var(--primary-color); font-size: 1rem;">0%</strong>
+                                </div>
+                                <div class="result-line" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                                    <span style="font-weight: 500; font-size: 0.85rem;">Absolute Difference:</span>
+                                    <strong id="differenceResult" style="color: var(--primary-color); font-size: 1rem;">0</strong>
+                                </div>
+                                <div class="result-line" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
+                                    <span style="font-weight: 500; font-size: 0.85rem;">Change Type:</span>
+                                    <strong id="typeResult" style="color: var(--primary-color); font-size: 1rem;">—</strong>
+                                </div>
+                            </div>
+                            <div class="tool-actions" style="margin-top: 0.75rem;">
+                                <button class="action-btn success" id="copyBtn">Copy Results</button>
+                            </div>
+                        </section>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📊</span>
+                                    <h5>Sales Analysis</h5>
+                                    <p>Track sales growth and revenue changes month-over-month</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">💰</span>
+                                    <h5>Price Comparisons</h5>
+                                    <p>Calculate discounts and price increases for shopping decisions</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📈</span>
+                                    <h5>Investment Returns</h5>
+                                    <p>Determine investment growth and portfolio performance</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📉</span>
+                                    <h5>Market Trends</h5>
+                                    <p>Analyze stock price changes and market fluctuations</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li><strong>Enter Original Value:</strong> Input the starting or initial value in the first field</li>
+                                <li><strong>Enter New Value:</strong> Input the ending or final value in the second field</li>
+                                <li><strong>Instant Calculation:</strong> The calculator automatically computes results as you type</li>
+                                <li><strong>Review Results:</strong> Check the percentage change, absolute difference, and change type (increase/decrease/no change)</li>
+                                <li><strong>Copy Results:</strong> Click the copy button to copy your results to clipboard</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <p><strong>The Percentage Calculator uses mathematical formulas</strong> to determine the percentage change between two values. Here's the process:</p>
+                            <ul>
+                                <li><strong>Input Validation:</strong> The calculator checks that both values are entered and that the original value is not zero</li>
+                                <li><strong>Difference Calculation:</strong> Subtracts the original value from the new value to get the absolute difference</li>
+                                <li><strong>Percentage Formula:</strong> Divides the difference by the original value and multiplies by 100 to get the percentage</li>
+                                <li><strong>Change Detection:</strong> Determines if the change is an increase (positive), decrease (negative), or no change (zero)</li>
+                                <li><strong>Real-Time Updates:</strong> Results update instantly as you enter or change values</li>
+                                <li><strong>Precision Display:</strong> Shows results with two decimal places for accuracy</li>
+                            </ul>
+                            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                                <strong>Key Formula:</strong> Percentage Change = ((New Value - Original Value) / Original Value) × 100
+                            </p>
+                        </div>
+
+                        <!-- Understanding Results Section -->
+                        <div class="formatting-guide">
+                            <h3>Understanding the Results</h3>
+                            <p><strong>Each result tells you something different about the change</strong>:</p>
+                            <ul>
+                                <li><strong>Percentage Change:</strong> Shows the relative change as a percentage. A positive number means an increase, negative means a decrease. <em>Example: +25% means 25% increase.</em></li>
+                                <li><strong>Absolute Difference:</strong> Shows the actual numerical difference between the two values. <em>Example: If original is 100 and new is 125, the difference is 25.</em></li>
+                                <li><strong>Change Type:</strong> Clearly indicates whether the value increased, decreased, or stayed the same. <em>Example: "Increase", "Decrease", or "No Change".</em></li>
+                            </ul>
+                            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                                <strong>Important Note:</strong> A 50% increase is NOT the same as a 50% decrease. If you increase by 50%, you go from 100 to 150. If you then decrease by 50%, you go to 75, not back to 100.
+                            </p>
+                        </div>
+
+                        <!-- Practical Examples Section -->
+                        <div class="formatting-guide">
+                            <h3>Practical Examples</h3>
+                            <p><strong>Here are real-world examples to help you understand percentage changes</strong>:</p>
+                            <ul>
+                                <li><strong>Sales Growth:</strong> Original sales: $1,000, New sales: $1,250 → Result: +25% increase</li>
+                                <li><strong>Price Discount:</strong> Original price: $80, Discounted price: $60 → Result: -25% decrease</li>
+                                <li><strong>Stock Price Change:</strong> Original: $100, New: $110 → Result: +10% increase</li>
+                                <li><strong>Population Change:</strong> Original: 50,000 people, New: 48,500 people → Result: -3% decrease</li>
+                                <li><strong>Test Score Improvement:</strong> Original: 70%, New: 85% → Result: +21.43% increase</li>
+                            </ul>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <div class="faq-section">
+                            <h3>Frequently Asked Questions</h3>
+                            <div class="faq-item">
+                                <h4>How do I calculate percentage change?</h4>
+                                <p>Enter the original value and new value. The calculator uses the formula: ((New - Original) / Original) × 100 to compute the percentage change instantly.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>What does a negative percentage mean?</h4>
+                                <p>A negative percentage indicates a decrease from the original value. For example, -20% means the value decreased by 20% from the original amount.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Can I use this for calculating discounts?</h4>
+                                <p>Yes! Enter the original price as the first value and the discounted price as the second value. The negative result shows the discount percentage.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>What if the original value is zero?</h4>
+                                <p>The calculator returns 0% because a percentage change cannot be calculated when the original value is zero (division by zero). You need a non-zero starting value.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Can I use decimal or fractional values?</h4>
+                                <p>Yes, the calculator supports any decimal values. For example, you can enter 10.5 or 0.75. Results will be calculated accurately with decimal precision.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Is my data private?</h4>
+                                <p>Completely! All calculations happen in your browser. Your values are never sent to any server or stored anywhere.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/average-calculator/">Average Calculator</a></li>
+                            <li><a href="/tools/ratio-calculator/">Ratio Calculator</a></li>
+                            <li><a href="/tools/discount-calculator/">Discount Calculator</a></li>
+                            <li><a href="/tools/investment-return-calculator/">Investment Return Calculator</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Calculation Tips</h4>
+                        <ul>
+                            <li>Useful for growth tracking and trend analysis</li>
+                            <li>Handles both increases and decreases seamlessly</li>
+                            <li>Perfect for financial and statistical data</li>
+                            <li>Results shown as positive or negative values</li>
+                            <li>Works with any numeric values including decimals</li>
+                            <li>Instant results as you type for quick calculations</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

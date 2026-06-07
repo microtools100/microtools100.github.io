@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online URL encoder and decoder. Instantly encode and decode URLs for safe sharing and data transmission.">
+    <meta name="keywords" content="URL encoder, URL decoder, encode URL, decode URL, percent encoding">
+    <meta property="og:title" content="URL Encoder/Decoder - Free Online Tool">
+    <meta property="og:description" content="Instantly encode and decode URLs. Perfect for sharing links safely and handling special characters.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>URL Encoder/Decoder - Free Tool | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "URL Encoder/Decoder",
+        "description": "Free online tool to encode and decode URLs",
+        "url": "https://microtools.github.io/tools/url-encoder-decoder/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+        <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is URL encoding?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "URL encoding converts special characters into a format that can be safely transmitted in URLs. For example, a space becomes %20."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "When do I need to encode URLs?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "URL encoding is necessary when you want to include special characters or spaces in URL query parameters and form submissions."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data safe?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all encoding and decoding happens locally in your browser. Nothing is sent to any server."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What characters get encoded?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Spaces, special characters, and non-ASCII characters are encoded. Safe characters like letters and numbers are left unchanged."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I encode entire URLs?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, you can encode full URLs or just specific parts. The tool intelligently handles the encoding appropriately."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>URL Encoder/Decoder</h1>
+                <p class="tool-description">
+                    Instantly encode and decode URLs. Perfect for sharing links safely and handling special characters in web addresses.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Operation</h3>
+                            <div class="options-grid">
+                                <!-- Mode Selection -->
+                                <input type="radio" name="mode" value="encode" id="encodeMode" class="option-checkbox" checked>
+                                <label for="encodeMode" class="option-label">Encode URL</label>
+                                <input type="radio" name="mode" value="decode" id="decodeMode" class="option-checkbox">
+                                <label for="decodeMode" class="option-label">Decode URL</label>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputURL" id="inputLabel">Enter URL to Encode:</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="inputURL" 
+                                            placeholder="Paste URL or text to encode...&#10;&#10;Example:&#10;hello world?name=john"
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Maximum 10,000 characters.
+                                    </div>
+                                    <div class="tool-actions-horizontal" style="margin-top: 12px;">
+                                        <button class="action-btn" id="clearBtn">
+                                            <span>Clear</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputURL" id="outputLabel">Encoded Result:</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputURL" 
+                                            placeholder="Result will appear here...&#10;&#10;Example (encoded):&#10;hello%20world%3Fname%3Djohn"
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success" id="copyBtn">
+                                            <span>Copy</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Use Cases Section -->
+                    <div class="use-cases">
+                        <h3>Use Cases</h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-item">
+                                <h5>Share Links</h5>
+                                <p>Encode URLs with special characters for safe sharing</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>Query Strings</h5>
+                                <p>Encode parameters for URL query strings</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>Email Links</h5>
+                                <p>Format URLs for email signatures and messages</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>Debugging</h5>
+                                <p>Decode URLs to inspect parameters and values</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Select "Encode" to convert URLs or "Decode" to revert encoded URLs</li>
+                            <li>Paste your URL or encoded text into the input field</li>
+                            <li>The result is generated automatically as you type</li>
+                            <li>Copy the result or download it as a text file</li>
+                            <li>Use the "Example" button to see how the tool works</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>Encode:</strong> Converts special characters in URLs to percent-encoded format (e.g., space becomes %20)</li>
+                            <li><strong>Decode:</strong> Converts percent-encoded characters back to their original form</li>
+                            <li><strong>Common Encodings:</strong>
+                                <ul>
+                                    <li>Space → %20</li>
+                                    <li>@ → %40</li>
+                                    <li>= → %3D</li>
+                                    <li>& → %26</li>
+                                    <li># → %23</li>
+                                    <li>/ → %2F</li>
+                                </ul>
+                            </li>
+                            <li><strong>Real-time processing:</strong> Results are updated instantly as you type</li>
+                            <li><strong>Bidirectional:</strong> Easily switch between encode and decode modes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/quote-comma-formatter/">Quote Formatter</a></li>
+                            <li><a href="/tools/html-escape-unescape/">HTML Escape/Unescape</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>URL Encoding Tips</h4>
+                        <ul>
+                            <li>Encode URLs before sending them via email to ensure compatibility</li>
+                            <li>Decode URLs to inspect and debug query parameters</li>
+                            <li>Always encode query string values with special characters</li>
+                            <li>Test URLs after decoding to verify they work correctly</li>
+                            <li>Click "Example" to see a live demonstration</li>
+                            <li>Maximum 10,000 characters for each operation</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

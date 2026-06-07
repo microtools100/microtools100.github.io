@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Add line numbers to text with customizable formatting and numbering styles. Perfect for code and documents. No signup required.">
+    <meta name="keywords" content="line numbering, line numbers, text formatter, code formatter, add line numbers, number lines">
+    <meta property="og:title" content="Line Numbering Tool - Add Numbers to Text Lines">
+    <meta property="og:description" content="Quickly add customizable line numbers to your text with multiple format styles and numbering options.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Line Numbering Tool - Free Online Tool | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Line Numbering Tool",
+        "description": "Add customizable line numbers to your text with multiple format options",
+        "url": "https://microtools.github.io/tools/line-numbering/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I add line numbers to my text?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Paste your text into the input area, select your preferred format style, adjust numbering options, and click 'Add Line Numbers'. Your numbered text will appear instantly in the output area."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What numbering formats are available?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The tool supports four formats: dot style (1.), parenthesis style (1)), bracket style [1], and colon style (1:)."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I start numbering from a different number?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, you can set any starting number including 0 or negative numbers. Simply enter your desired start number in the options."
+            }
+        }
+    ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Line Numbering Tool</h1>
+                <p class="tool-description">Add line numbers to your text with customizable formatting and styles</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Numbering Options</h3>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                                <div class="option-group" style="flex: 0 1 auto; margin-bottom: 0;">
+                                    <label for="numberFormat">Format:</label>
+                                    <select id="numberFormat">
+                                        <option value="period">1. Text</option>
+                                        <option value="paren">1) Text</option>
+                                        <option value="bracket">[1] Text</option>
+                                        <option value="colon">1: Text</option>
+                                    </select>
+                                </div>
+                                <div class="option-group" style="flex: 0 1 auto; margin-bottom: 0;">
+                                    <label for="startNumber">Start:</label>
+                                    <input type="number" id="startNumber" value="1" min="0" style="width: 80px;">
+                                </div>
+                                <div class="option-group" style="flex: 0 1 auto; margin-bottom: 0;">
+                                    <label for="padding">Padding:</label>
+                                    <input type="number" id="padding" value="1" min="1" max="5" style="width: 80px;">
+                                </div>
+                                <div class="option-group" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0;">
+                                    <label><input type="checkbox" id="skipEmpty"> Skip Empty Lines</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputText">Enter your text:</label>
+                                    <div class="input-area">
+                                        <textarea id="inputText" placeholder="Enter your text here...&#10;&#10;Example:&#10;First line&#10;Second line&#10;Third line" rows="12" autofocus></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter multiple lines of text. Each line will be numbered independently.
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="addNumbersBtn">Add Line Numbers</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputText">Numbered output:</label>
+                                    <div class="output-area">
+                                        <textarea id="outputText" placeholder="Your numbered text will appear here...&#10;&#10;Example output:&#10;1. First line&#10;2. Second line&#10;3. Third line" rows="12" readonly></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">
+                                        <span>Copy Output</span>
+                                    </button>
+                                    <button class="action-btn success" id="downloadBtn">
+                                        <span>Download</span>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">💻</span>
+                                    <h5>Code Documentation</h5>
+                                    <p>Add line numbers to code snippets for referencing</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📝</span>
+                                    <h5>Writing & Editing</h5>
+                                    <p>Number lines for manuscript editing and feedback</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📋</span>
+                                    <h5>Lists & Instructions</h5>
+                                    <p>Create numbered lists and step-by-step guides</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📄</span>
+                                    <h5>Documents & Reports</h5>
+                                    <p>Format documents and legal texts with line numbers</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li><strong>Paste Your Text:</strong> Copy and paste multiple lines of text into the input field</li>
+                                <li><strong>Choose Format Style:</strong> Select your preferred numbering format (dot, parenthesis, bracket, or colon)</li>
+                                <li><strong>Set Starting Number:</strong> Enter the number you want to start with (default is 1)</li>
+                                <li><strong>Configure Options:</strong> Adjust padding for zero-filled numbers and toggle skip empty lines</li>
+                                <li><strong>Click Add Line Numbers:</strong> The tool instantly processes and displays your numbered text</li>
+                                <li><strong>Copy or Download:</strong> Copy to clipboard or download as a text file</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <p><strong>Line Numbering Tool adds sequential numbers to each line</strong> of your text with full customization. Here's the complete process:</p>
+                            <ul>
+                                <li><strong>Text Parsing:</strong> The tool splits your input into individual lines using line break characters</li>
+                                <li><strong>Empty Line Detection:</strong> Identifies and optionally skips blank lines based on your preference</li>
+                                <li><strong>Number Generation:</strong> Creates sequential numbers starting from your specified number</li>
+                                <li><strong>Padding Application:</strong> Optionally pads numbers with leading zeros (e.g., 001, 002, 003) based on padding setting</li>
+                                <li><strong>Format Application:</strong> Applies your selected format style to combine numbers with text</li>
+                                <li><strong>Output Creation:</strong> Reconstructs the text with numbered lines preserving original content</li>
+                            </ul>
+                            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                                <strong>Key Feature:</strong> The tool preserves the exact content of each line while only adding numbers. Special characters, spacing, and formatting within lines remain unchanged.
+                            </p>
+                        </div>
+
+                        <!-- Number Format Explained -->
+                        <div class="formatting-guide">
+                            <h3>Understanding Number Formats</h3>
+                            <p><strong>Choose the format style that best suits your needs</strong>. Each style presents numbers differently:</p>
+                            <ul>
+                                <li><strong>Dot Style (1.):</strong> Classic format with period after number. Most common for documents and lists. <em>Example: "1. First item", "2. Second item"</em></li>
+                                <li><strong>Parenthesis Style (1)):</strong> Number followed by closing parenthesis. Often used for ordered lists and instructions. <em>Example: "1) First step", "2) Second step"</em></li>
+                                <li><strong>Bracket Style [1]:</strong> Number enclosed in square brackets. Great for references and code comments. <em>Example: "[1] Reference text", "[2] Another reference"</em></li>
+                                <li><strong>Colon Style (1:):</strong> Colon after number for technical documentation. Professional for logs and specifications. <em>Example: "1: Configuration", "2: Setup"</em></li>
+                            </ul>
+                            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                                <strong>Pro Tip:</strong> Use dot style for general documents, parenthesis for instructions, brackets for code comments, and colon for technical logs.
+                            </p>
+                        </div>
+
+                        <!-- Options Explained -->
+                        <div class="formatting-guide">
+                            <h3>Numbering Options Explained</h3>
+                            <p><strong>Customize your line numbering with these powerful options</strong>:</p>
+                            <ul>
+                                <li><strong>Start Number:</strong> Define what number to begin with. Default is 1, but you can use 0, negative numbers, or any starting point. <em>Example: Start from 0 for programming contexts.</em></li>
+                                <li><strong>Padding Width:</strong> Add leading zeros to make all numbers the same width. Useful for aligning numbered items. <em>Example: Padding 3 gives "001. Text", "002. Text", "003. Text"</em></li>
+                                <li><strong>Skip Empty Lines:</strong> When enabled, blank lines stay blank without numbers. When disabled, empty lines are numbered. <em>Example: Skip 2 blank lines in a document to keep formatting clean.</em></li>
+                            </ul>
+                            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                                <strong>Quick Guide:</strong> For most uses, use default format (dot style), start from 1, no padding, and enable skip empty lines.
+                            </p>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <div class="faq-section">
+                            <h3>Frequently Asked Questions</h3>
+                            <div class="faq-item">
+                                <h4>Can I start numbering from 0 or negative numbers?</h4>
+                                <p>Yes! You can enter any number as the start value, including 0, negative numbers, or any other value you need.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>What does padding do?</h4>
+                                <p>Padding adds leading zeros to numbers to make them all the same width. For example, with padding of 3, numbers become 001, 002, 003 instead of 1, 2, 3.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Will the original text content be changed?</h4>
+                                <p>No, only numbers are added. The original text in each line remains exactly the same, including spacing and special characters.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>What happens to empty lines?</h4>
+                                <p>With "Skip Empty Lines" enabled, blank lines stay blank. Disabled, empty lines also get numbers (though they'll appear as "1. " with no text).</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Can I use this for code?</h4>
+                                <p>Yes! The tool is perfect for adding line numbers to code snippets. Use bracket style [1] or colon style (1:) for clean code formatting.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Is my data private?</h4>
+                                <p>Completely! All processing happens in your browser. Your text is never sent to any server or stored anywhere.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/line-sorter/">Line Sorter</a></li>
+                            <li><a href="/tools/remove-empty-lines/">Remove Empty Lines</a></li>
+                            <li><a href="/tools/duplicate-line-remover/">Duplicate Line Remover</a></li>
+                            <!-- Text Compare/Diff removed -->
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Numbering Tips</h4>
+                        <ul>
+                            <li>Use dot style (1.) for general documents and lists</li>
+                            <li>Use parenthesis (1)) for instructions and ordered lists</li>
+                            <li>Use brackets [1] for code comments and references</li>
+                            <li>Use colon (1:) for technical logs and specifications</li>
+                            <li>Enable padding to align numbers with leading zeros</li>
+                            <li>Skip empty lines to keep document formatting clean</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+</body>
+</html>

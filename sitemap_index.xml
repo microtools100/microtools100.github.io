@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://microtools.github.io/sitemap-main.xml</loc>
+    <lastmod>2026-02-08</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://microtools.github.io/sitemap-text-tools.xml</loc>
+    <lastmod>2026-02-08</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://microtools.github.io/sitemap-math-tools.xml</loc>
+    <lastmod>2026-02-08</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://microtools.github.io/sitemap-data-tools.xml</loc>
+    <lastmod>2026-02-08</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://microtools.github.io/sitemap-developer-tools.xml</loc>
+    <lastmod>2026-02-08</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://microtools.github.io/sitemap-finance-tools.xml</loc>
+    <lastmod>2026-02-08</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://microtools.github.io/sitemap-office-time-tools.xml</loc>
+    <lastmod>2026-02-08</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://microtools.github.io/sitemap-utilities.xml</loc>
+    <lastmod>2026-02-08</lastmod>
+  </sitemap>
+</sitemapindex>

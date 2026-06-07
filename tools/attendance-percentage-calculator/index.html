@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate attendance percentage. Track presence rate from present and total days.">
+    <meta name="keywords" content="attendance calculator, attendance percentage, presence rate, attendance tracker">
+    <title>Attendance Percentage Calculator - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Attendance Percentage Calculator",
+        "description": "Calculate attendance and presence percentage",
+        "url": "https://microtools.github.io/tools/attendance-percentage-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How is attendance percentage calculated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Attendance % = (Days Present / Total Days) × 100"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What counts as present?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Days worked or attended. Absences, leaves, and sick days should not be counted as present."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I handle partial attendance?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Half-day absences can be calculated as 0.5 days. Enter decimal values in the calculator."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What minimum attendance is required?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Typically 75% for schools/colleges and varies by employer. Check your organization's policy."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Attendance Percentage Calculator</h1>
+                <p class="tool-description">Calculate your attendance rate as a percentage</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="presentDays">Days Present:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="presentDays" placeholder="e.g., 18" min="0">
+                                    </div>
+                                    <div class="hint">
+                                        Enter days you were present
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="totalDays">Total Days:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="totalDays" placeholder="e.g., 20" min="1">
+                                    </div>
+                                    <div class="hint">
+                                        Enter total working days in period
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Results:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Attendance %:</span>
+                                                <strong id="percentage">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Days Absent:</span>
+                                                <strong id="absentDays">—</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Status:</span>
+                                                <strong id="status">—</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/overtime-hours-calculator/">Overtime Hours Calculator</a></li>
+                            <li><a href="/tools/notice-period-calculator/">Notice Period Calculator</a></li>
+                            <li><a href="/tools/probation-end-date-calculator/">Probation End Date</a></li>
+                            <li><a href="/">All HR & Employment Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>HR Tips</h4>
+                        <ul>
+                            <li>Common requirement: 75% minimum attendance</li>
+                            <li>Perfect for school and workplace tracking</li>
+                            <li>Identify attendance patterns easily</li>
+                            <li>Useful for compliance and reporting</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🏫</span>
+                        <h5>School & College</h5>
+                        <p>Track student attendance against minimum requirements.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💼</span>
+                        <h5>Employee Tracking</h5>
+                        <p>Monitor workplace attendance and absences.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🏥</span>
+                        <h5>Healthcare Monitoring</h5>
+                        <p>Track patient visits and follow-up appointments.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📋</span>
+                        <h5>Compliance</h5>
+                        <p>Meet regulatory attendance requirements.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Days Present:</strong> Total days attended or present</li>
+                    <li><strong>Enter Total Days:</strong> Total days in the period</li>
+                    <li><strong>Optional - Threshold:</strong> Set minimum attendance requirement</li>
+                    <li><strong>Calculate:</strong> Click Calculate to see percentage and status</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Percentage Calculation:</strong> Divides days present by total days and multiplies by 100</li>
+                    <li><strong>Decimal Support:</strong> Handles half-days with decimal values</li>
+                    <li><strong>Status Check:</strong> Compares attendance against minimum threshold</li>
+                    <li><strong>Detailed Breakdown:</strong> Shows present days, absent days, and percentage</li>
+                    <li><strong>Instant Results:</strong> Real-time calculation as you change values</li>
+                    <li><strong>Easy Copying:</strong> Copy results to use in reports</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>How is attendance percentage calculated?</h4>
+                    <p>Attendance % = (Days Present / Total Days) × 100</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What counts as present?</h4>
+                    <p>Days worked or attended. Absences, leaves, and sick days should not be counted as present.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How do I handle partial attendance?</h4>
+                    <p>Half-day absences can be calculated as 0.5 days. Enter decimal values in the calculator.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What minimum attendance is required?</h4>
+                    <p>Typically 75% for schools/colleges and varies by employer. Check your organization's policy.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

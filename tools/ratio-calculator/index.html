@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simplify ratios and scale proportions easily. Calculate simplified ratios and compare values proportionally.">
+    <meta name="keywords" content="ratio calculator, simplify ratio, scale ratio, proportion calculator, ratio simplifier">
+    <title>Ratio Calculator - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Ratio Calculator",
+        "description": "Simplify and scale ratios",
+        "url": "https://microtools.github.io/tools/ratio-calculator/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I simplify a ratio?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Find the GCD of all numbers and divide each by it."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What does 2:4:6 simplify to?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2:4:6 simplifies to 1:2:3 by dividing by 2."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use decimals in ratios?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, the calculator handles decimal values."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What is the practical use of ratios?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ratios are used in cooking, design, construction, and many other fields."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Ratio Calculator</h1>
+                <p class="tool-description">Simplify ratios and scale proportions with ease</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Options Section -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Options</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                <div class="input-group">
+                                    <label for="scaleBy">Scale By:</label>
+                                    <input type="number" id="scaleBy" value="1" step="any" placeholder="1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Results -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="ratioA">First Number:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="ratioA" placeholder="e.g., 12" step="any">
+                                    </div>
+                                    <div class="hint">
+                                        Enter the first number of your ratio
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="ratioB">Second Number:</label>
+                                    <div class="input-area">
+                                        <input type="number" id="ratioB" placeholder="e.g., 8" step="any">
+                                    </div>
+                                    <div class="hint">
+                                        Enter the second number of your ratio
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="calculateBtn">Calculate</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label>Results:</label>
+                                    <div class="output-area" style="padding: 1rem;">
+                                        <div class="result-box">
+                                            <div class="result-line">
+                                                <span>Simplified:</span>
+                                                <strong id="simplifiedRatio">0:0</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Fraction:</span>
+                                                <strong id="ratioFraction">0/0</strong>
+                                            </div>
+                                            <div class="result-line">
+                                                <span>Scaled:</span>
+                                                <strong id="scaledRatio">0:0</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Results</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/percentage-calculator/">Percentage Calculator</a></li>
+                            <li><a href="/tools/average-calculator/">Average Calculator</a></li>
+                            <li><a href="/tools/unit-price-calculator/">Unit Price Calculator</a></li>
+                            <li><a href="/">All Calculator Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Calculation Tips</h4>
+                        <ul>
+                            <li>Simplification reduces ratio to lowest terms</li>
+                            <li>Scale factor allows proportional adjustments</li>
+                            <li>Great for ingredient and recipe scaling</li>
+                            <li>Useful in design and layout proportions</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📊</span>
+                        <h5>Simplifying Ratios</h5>
+                        <p>Reduce complex ratios to their simplest form</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔧</span>
+                        <h5>Scale Conversions</h5>
+                        <p>Scale up or down ratios for proportional calculations</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">⚖️</span>
+                        <h5>Recipe Adjustments</h5>
+                        <p>Adjust recipe ingredients based on ratio calculations</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🏗️</span>
+                        <h5>Construction & Design</h5>
+                        <p>Calculate dimensions and proportions</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Section -->
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li>Enter your first number in the first input</li>
+                    <li>Enter your second number in the second input</li>
+                    <li>See the simplified ratio instantly</li>
+                    <li>Set a scale factor to proportionally increase the ratio</li>
+                </ol>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>GCD Calculation:</strong> Finds greatest common divisor to simplify</li>
+                    <li><strong>Ratio Simplification:</strong> Reduces all parts by the GCD</li>
+                    <li><strong>Proportional Values:</strong> Shows scaled versions of the ratio</li>
+                    <li><strong>Multiple Formats:</strong> Displays results in different notations</li>
+                    <li><strong>Real-time Processing:</strong> Updates instantly as you enter values</li>
+                    <li><strong>Browser-Based:</strong> All calculations performed locally</li>
+                </ul>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>How do I simplify a ratio?</h4>
+                    <p>Find the GCD of all numbers and divide each by it.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What does 2:4:6 simplify to?</h4>
+                    <p>2:4:6 simplifies to 1:2:3 by dividing by 2.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I use decimals in ratios?</h4>
+                    <p>Yes, the calculator handles decimal values.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data stored?</h4>
+                    <p>No, all processing is done locally in your browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What is the practical use of ratios?</h4>
+                    <p>Ratios are used in cooking, design, construction, and many other fields.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

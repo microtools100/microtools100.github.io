@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free daily balance savings account interest calculator. Calculate monthly interest earned on savings with daily balance tracking and deposit management.">
+    <meta name="keywords" content="savings interest calculator, daily balance, interest earnings, savings account, financial calculator, monthly interest">
+    <meta property="og:title" content="Daily Balance Interest Calculator - Free Financial Tool">
+    <meta property="og:description" content="Calculate monthly interest earnings on your savings account with daily balance tracking and deposit management.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>Daily Balance Interest Calculator - Free Online Tool | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Dark Mode Script - Must load early but async to not block render -->
+    <script async src="/assets/js/dark-mode.js"></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Daily Balance Interest Calculator",
+        "description": "Free online tool to calculate monthly interest earnings on savings accounts with daily balance tracking",
+        "url": "https://microtools.github.io/tools/daily-balance-interest-calculator/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How is daily balance interest calculated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Daily interest is calculated as: (Daily Balance × Annual Interest Rate) / 365. This is summed for each day of the month to get total monthly interest."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does this tool handle leap years?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, the calculator automatically detects leap years and uses 366 days for leap year calculations and 365 for regular years."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I add multiple deposits?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, in Advanced Mode you can add multiple deposits with different dates. Each deposit affects the daily balance from that date forward."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data private?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all calculations happen in your browser. Your data is never sent to any server or stored anywhere."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What rounding rules are used?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We use bank-style rounding (round half up) to match most financial institutions. Interest is rounded to 2 decimal places."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Daily Balance Interest Calculator</h1>
+                <p class="tool-description">Calculate monthly interest earnings on your savings account with daily balance tracking. Understand how deposits throughout the month affect your interest.</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Mode Toggle -->
+                        <div class="mode-selector">
+                            <h3 class="section-title">Mode</h3>
+                            <div class="mode-buttons">
+                                <button class="mode-btn active" data-mode="simple">Simple Mode</button>
+                                <button class="mode-btn" data-mode="advanced">Advanced Mode</button>
+                            </div>
+                        </div>
+
+                        <!-- SIMPLE MODE -->
+                        <div id="simpleMode" class="mode-content">
+                            <section class="tool-options">
+                                <h3 class="section-title">Account Details</h3>
+                                <div class="options-grid">
+                                    <div class="option-item">
+                                        <label for="simpleOpeningBalance">Opening Balance ($):</label>
+                                        <input type="number" id="simpleOpeningBalance" placeholder="0.00" min="0" step="0.01">
+                                    </div>
+                                    <div class="option-item">
+                                        <label for="simpleAnnualRate">Annual Interest Rate (%):</label>
+                                        <input type="number" id="simpleAnnualRate" placeholder="2.5" min="0" step="0.01">
+                                    </div>
+                                </div>
+
+                                <div class="options-grid">
+                                    <div class="option-item">
+                                        <label for="simpleMonth">Month & Year:</label>
+                                        <input type="month" id="simpleMonth">
+                                    </div>
+                                    <div class="option-item">
+                                        <label for="simpleCompounding">Compounding:</label>
+                                        <select id="simpleCompounding">
+                                            <option value="daily">Daily</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions-horizontal">
+                                    <button class="action-btn primary" id="simpleCalculateBtn">
+                                        <span>Calculate Interest</span>
+                                        <span>💰</span>
+                                    </button>
+                                    <button class="action-btn" id="simpleClearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Simple Results -->
+                            <section id="simpleResults" class="tool-section results-section" style="display: none;">
+                                <h3 class="section-title">Results</h3>
+                                <div class="results-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">Total Interest Earned</span>
+                                        <span class="result-value" id="simpleInterestEarned">$0.00</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">Ending Balance</span>
+                                        <span class="result-value" id="simpleEndingBalance">$0.00</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">Daily Average Balance</span>
+                                        <span class="result-value" id="simpleDailyAverage">$0.00</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">Days in Period</span>
+                                        <span class="result-value" id="simpleDaysCount">0</span>
+                                    </div>
+                                </div>
+                                <div class="result-actions">
+                                    <button class="action-btn success" id="simpleCopyBtn">
+                                        <span>Copy Results</span>
+                                        <span>📋</span>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- ADVANCED MODE -->
+                        <div id="advancedMode" class="mode-content" style="display: none;">
+                            <section class="tool-options">
+                                <h3 class="section-title">Account Details</h3>
+                                <div class="options-grid">
+                                    <div class="option-item">
+                                        <label for="advOpeningBalance">Opening Balance ($):</label>
+                                        <input type="number" id="advOpeningBalance" placeholder="0.00" min="0" step="0.01">
+                                    </div>
+                                    <div class="option-item">
+                                        <label for="advAnnualRate">Annual Interest Rate (%):</label>
+                                        <input type="number" id="advAnnualRate" placeholder="2.5" min="0" step="0.01">
+                                    </div>
+                                </div>
+
+                                <div class="options-grid">
+                                    <div class="option-item">
+                                        <label for="advMonth">Month & Year:</label>
+                                        <input type="month" id="advMonth">
+                                    </div>
+                                    <div class="option-item">
+                                        <label for="advCompounding">Compounding:</label>
+                                        <select id="advCompounding">
+                                            <option value="daily">Daily</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Deposits Table -->
+                            <section class="tool-section">
+                                <h3 class="section-title">Deposits During Month</h3>
+                                <div class="deposits-table-wrapper">
+                                    <table class="deposits-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Deposit Amount ($)</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="depositsTableBody">
+                                            <tr class="deposit-row">
+                                                <td><input type="date" class="deposit-date" value=""></td>
+                                                <td><input type="number" class="deposit-amount" placeholder="0.00" min="0" step="0.01"></td>
+                                                <td><button class="btn-remove-deposit" title="Remove this deposit">×</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button class="action-btn secondary" id="addDepositBtn">
+                                    <span>+ Add Deposit</span>
+                                </button>
+                            </section>
+
+                            <!-- Optional: Bank Interest -->
+                            <section class="tool-section">
+                                <h3 class="section-title">Verification (Optional)</h3>
+                                <div class="options-grid">
+                                    <div class="option-item">
+                                        <label for="advBankInterest">Interest Credited by Bank ($):</label>
+                                        <input type="number" id="advBankInterest" placeholder="0.00" min="0" step="0.01">
+                                    </div>
+                                </div>
+                                <p class="hint">Enter the actual interest credited by your bank. This will calculate the effective interest rate and compare it with your expected rate.</p>
+                            </section>
+
+                            <!-- Advanced Controls -->
+                            <section class="tool-options">
+                                <div class="tool-actions-horizontal">
+                                    <button class="action-btn primary" id="advCalculateBtn">
+                                        <span>Calculate Interest</span>
+                                        <span>💰</span>
+                                    </button>
+                                    <button class="action-btn" id="advClearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Advanced Results -->
+                            <section id="advancedResults" class="tool-section results-section" style="display: none;">
+                                <h3 class="section-title">Calculation Results</h3>
+                                <div class="results-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">Expected Interest</span>
+                                        <span class="result-value" id="advExpectedInterest">$0.00</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">Bank Interest</span>
+                                        <span class="result-value" id="advActualInterest">$0.00</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">Difference (Gain/Loss)</span>
+                                        <span class="result-value" id="advDifference">$0.00</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">Effective Interest Rate*</span>
+                                        <span class="result-value" id="advEffectiveRate">N/A</span>
+                                    </div>
+                                </div>
+                                <p class="hint" style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-color-secondary);">
+                                    *Effective Interest Rate is calculated only when "Interest Credited by Bank" is provided. It shows the actual annual rate implied by the interest amount you received.
+                                </p>
+
+                                <!-- Breakdown Toggle -->
+                                <div class="option-item checkbox" style="margin-top: 1.5rem;">
+                                    <label for="toggleBreakdown">
+                                        <input type="checkbox" id="toggleBreakdown">
+                                        <span>Show Daily Breakdown</span>
+                                    </label>
+                                </div>
+
+                                <!-- Daily Breakdown -->
+                                <div id="dailyBreakdownContainer" style="display: none; margin-top: 1.5rem;">
+                                    <h4>Daily Interest Breakdown</h4>
+                                    <div class="breakdown-table-wrapper">
+                                        <textarea id="breakdownOutput" data-line-numbers readonly rows="15" style="font-family: monospace; font-size: 12px;"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="result-actions">
+                                    <button class="action-btn success" id="advCopyBtn">
+                                        <span>Copy Results</span>
+                                        <span>📋</span>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🏦</span>
+                                    <h5>Verify Bank Interest</h5>
+                                    <p>Check if your bank calculated interest correctly for the month</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">💡</span>
+                                    <h5>Plan Deposits</h5>
+                                    <p>Understand how deposits during the month affect your interest earnings</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📊</span>
+                                    <h5>Compare Accounts</h5>
+                                    <p>Calculate potential earnings for different savings accounts side by side</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🎓</span>
+                                    <h5>Learn Finance</h5>
+                                    <p>Understand how daily balance interest works with real examples</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Choose between Simple Mode (basic calculation) or Advanced Mode (with deposits)</li>
+                                <li>Enter your opening balance and annual interest rate</li>
+                                <li>Select the month and year you want to calculate interest for</li>
+                                <li>In Advanced Mode, add deposits with dates to track daily balance changes</li>
+                                <li>Click "Calculate Interest" to see your results and daily breakdown</li>
+                                <li>Optionally enter bank interest to verify and compare calculations</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <ul>
+                                <li><strong>Simple Mode:</strong> Assumes constant balance throughout the month - calculates interest based on daily rate</li>
+                                <li><strong>Advanced Mode:</strong> Tracks daily balance changes from deposits throughout the month</li>
+                                <li><strong>Daily Interest Formula:</strong> Daily Interest = (Daily Balance × Annual Rate) ÷ 365</li>
+                                <li><strong>Leap Year Handling:</strong> Automatically adjusts for leap years when necessary</li>
+                                <li><strong>Bank Verification:</strong> Compare your calculated interest against actual bank credit</li>
+                                <li><strong>Daily Breakdown:</strong> View line-by-line report showing each day's balance and interest accrual</li>
+                                <li><strong>Copy Results:</strong> Easily copy or export calculations for records</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Finance Tools</h4>
+                        <ul>
+                            <li><a href="/tools/savings-goal-calculator/">Savings Goal Calculator</a></li>
+                            <li><a href="/tools/investment-return-calculator/">Investment Return Calculator</a></li>
+                            <li><a href="/tools/loan-calculator/">Loan Calculator</a></li>
+                            <li><a href="/tools/budget-calculator/">Budget Calculator</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Interest Calculation Tips</h4>
+                        <ul>
+                            <li>Use Simple Mode for quick estimates with steady balances</li>
+                            <li>Switch to Advanced Mode when deposits are made during the month</li>
+                            <li>Enter deposits on the exact date they were made for accuracy</li>
+                            <li>Compare results with your bank statement to verify calculations</li>
+                            <li>Higher rates and earlier deposits earn more interest</li>
+                            <li>Daily breakdown shows which deposits had the most impact</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js?v=202602031400"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

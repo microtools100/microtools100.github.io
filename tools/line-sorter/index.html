@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online line sorter tool. Sort text lines alphabetically in ascending (A-Z) or descending (Z-A) order. No login required.">
+    <meta name="keywords" content="line sorter, sort text, alphabetical sort, text organizer, list sorter, sort lines">
+    <meta property="og:title" content="Line Sorter - Sort Text Lines Alphabetically">
+    <meta property="og:description" content="Sort text lines A-Z or Z-A with options to remove empty lines and toggle case sensitivity.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Line Sorter - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Line Sorter",
+        "description": "Free online tool to sort text lines alphabetically",
+        "url": "https://microtools.github.io/tools/line-sorter/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I sort lines alphabetically?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Paste or type your text into the input area, select your sort order (A-Z or Z-A), and click Sort Lines. The sorted result will appear in the output area."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I sort with case sensitivity?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, you can toggle case-sensitive sorting. When enabled, uppercase letters come before lowercase letters."
+            }
+        }
+    ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Line Sorter</h1>
+                <p class="tool-description">Sort text lines alphabetically in ascending or descending order</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Sort Options</h3>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                                <div class="option-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                                    <label for="sortOrder">Sort Order:</label>
+                                    <select id="sortOrder">
+                                        <option value="asc">A-Z (Ascending)</option>
+                                        <option value="desc">Z-A (Descending)</option>
+                                    </select>
+                                </div>
+                                <div class="option-group" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0;">
+                                    <label><input type="checkbox" id="caseSensitive"> Case Sensitive</label>
+                                </div>
+                                <div class="option-group" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0;">
+                                    <label><input type="checkbox" id="removeEmpty" checked> Remove Empty Lines</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputText">Enter text to sort:</label>
+                                    <div class="input-area">
+                                        <textarea id="inputText" placeholder="Enter text with multiple lines...&#10;&#10;Example:&#10;zebra&#10;apple&#10;banana" rows="12" autofocus></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter multiple lines of text. Each line will be sorted independently.
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="sortBtn">Sort Lines</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputText">Sorted text:</label>
+                                    <div class="output-area">
+                                        <textarea id="outputText" placeholder="Your sorted text will appear here...&#10;&#10;Example output:&#10;apple&#10;banana&#10;zebra" rows="12" readonly></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">
+                                        <span>Copy Output</span>
+                                    </button>
+                                    <button class="action-btn success" id="downloadBtn">
+                                        <span>Download</span>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📋</span>
+                                    <h5>Contact Lists</h5>
+                                    <p>Sort names alphabetically for easy lookup</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">📚</span>
+                                    <h5>Word Lists</h5>
+                                    <p>Organize vocabulary or dictionary words</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🗂️</span>
+                                    <h5>Data Organization</h5>
+                                    <p>Arrange unordered data in alphabetical order</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">✓</span>
+                                    <h5>Task Lists</h5>
+                                    <p>Sort to-do items or checklist items</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li><strong>Paste Your Text:</strong> Copy and paste multiple lines of text or type them directly into the input field</li>
+                                <li><strong>Choose Sort Order:</strong> Select whether you want to sort A-Z (ascending) or Z-A (descending)</li>
+                                <li><strong>Select Options:</strong> Toggle case sensitivity and whether to remove empty lines</li>
+                                <li><strong>Click Sort Lines:</strong> Press the button to sort your text</li>
+                                <li><strong>Copy or Download:</strong> Copy the result to clipboard or download as a text file</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <p><strong>Line Sorter uses alphabetical comparison</strong> to organize your text. Here's the complete process:</p>
+                            <ul>
+                                <li><strong>Line Detection:</strong> The tool splits your text into individual lines based on line breaks (Enter/Return key)</li>
+                                <li><strong>Empty Line Removal:</strong> If enabled, removes any blank or whitespace-only lines before sorting</li>
+                                <li><strong>Case Handling:</strong> By default, sorting is case-insensitive (A and a are treated equally). Enable case-sensitive mode to differentiate them</li>
+                                <li><strong>Alphabetical Comparison:</strong> Sorts lines using locale-aware alphabetical order for accurate results in multiple languages</li>
+                                <li><strong>Sort Order:</strong> Applies ascending (A-Z) or descending (Z-A) order based on your selection</li>
+                                <li><strong>Output Generation:</strong> Combines sorted lines back together with line breaks preserved</li>
+                            </ul>
+                            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                                <strong>Key Feature:</strong> The tool preserves the exact content of each line while only changing their order. Whitespace and special characters are maintained.
+                            </p>
+                        </div>
+
+                        <!-- Sort Options Explained -->
+                        <div class="formatting-guide">
+                            <h3>Understanding Sort Options</h3>
+                            <p><strong>Customize your sorting behavior</strong> with these powerful options:</p>
+                            <ul>
+                                <li><strong>A-Z (Ascending):</strong> Sorts lines in alphabetical order from A to Z. Most commonly used for organizing lists in natural order. <em>Example: "apple, banana, cherry" stays in that order.</em></li>
+                                <li><strong>Z-A (Descending):</strong> Sorts lines in reverse alphabetical order from Z to A. Useful for reverse listings or reverse chronological organization. <em>Example: "apple, banana, cherry" becomes "cherry, banana, apple".</em></li>
+                                <li><strong>Case Sensitive:</strong> When disabled (default), treats uppercase and lowercase letters as equivalent (A = a). When enabled, uppercase letters come before lowercase letters in the sort order. <em>Example: Case-sensitive: "Apple, apple" → Case-insensitive: "apple, Apple".</em></li>
+                                <li><strong>Remove Empty Lines:</strong> When enabled (default), strips out any blank lines from your input before sorting. Disabled if you want to preserve empty lines. <em>Example: With 3 blank lines mixed in, they'll be removed to keep your list clean.</em></li>
+                            </ul>
+                            <p style="margin-top: 1rem; padding: 1rem; background-color: var(--surface-color); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                                <strong>Pro Tip:</strong> Most sorting needs use the default settings (A-Z, case-insensitive, remove empty lines). Only customize if you have specific sorting requirements.
+                            </p>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <div class="faq-section">
+                            <h3>Frequently Asked Questions</h3>
+                            <div class="faq-item">
+                                <h4>What's the difference between case-sensitive and case-insensitive sorting?</h4>
+                                <p>Case-insensitive (default) treats "Apple" and "apple" as equivalent. Case-sensitive sorting places all uppercase letters before lowercase letters (A-Z before a-z).</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Will sorting change the content of each line?</h4>
+                                <p>No, sorting only changes the order of lines. The text within each line remains completely unchanged.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>What happens to whitespace and special characters?</h4>
+                                <p>Whitespace and special characters are preserved exactly as they are. Only the line order changes, not the content.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Can I sort lines with numbers?</h4>
+                                <p>Yes, but note that alphabetical sorting treats numbers as characters. For example, "10" comes before "2" in alphabetical order. For numeric sorting, remove the numbers and sort separately.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Does the tool work with multiple languages?</h4>
+                                <p>Yes! Line Sorter uses locale-aware sorting that works with different languages and character sets including accented characters.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h4>Is my data private?</h4>
+                                <p>Completely! All sorting happens in your browser. Your text is never sent to any server or stored anywhere.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/duplicate-line-remover/">Duplicate Line Remover</a></li>
+                            <li><a href="/tools/remove-empty-lines/">Remove Empty Lines</a></li>
+                            <li><a href="/tools/word-character-counter/">Word & Character Counter</a></li>
+                            <!-- Text Compare/Diff removed -->
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Sorting Tips</h4>
+                        <ul>
+                            <li>Default settings work for most sorting needs (A-Z, case-insensitive)</li>
+                            <li>Use case-sensitive sorting to differentiate uppercase and lowercase</li>
+                            <li>Enable "Remove Empty Lines" to clean up your data automatically</li>
+                            <li>Works with names, words, URLs, file paths, and more</li>
+                            <li>Alphabetical sorting treats numbers as characters (10 before 2)</li>
+                            <li>Supports multiple languages and special characters</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+</body>
+</html>

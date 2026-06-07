@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online string case converter. Convert between camelCase, snake_case, PascalCase, kebab-case, and more. No login required, 100% browser-based.">
+    <meta name="keywords" content="case converter, camelCase, snake_case, PascalCase, kebab-case, string formatter, code formatting">
+    <meta property="og:title" content="String Case Converter - Free Online Tool">
+    <meta property="og:description" content="Convert strings between different naming conventions. Perfect for developers and programmers. No registration needed.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>String Case Converter - Free Online Tool | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "String Case Converter",
+        "description": "Free online tool to convert strings between different naming conventions",
+        "url": "https://microtools.github.io/tools/string-case-converter/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
+        <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is this tool free?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool is completely free with no hidden charges or premium features required."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data private?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all processing happens in your browser. Your data is never sent to any server or stored anywhere."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do I need to create an account?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No account needed. This tool works immediately without any registration or login required."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does it work offline?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, once the page is loaded, this tool works completely offline without internet connection."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <div class="tool-page">
+                <div class="tool-header">
+                    <h1>String Case Converter</h1>
+                    <p class="tool-description">Convert strings between different naming conventions: camelCase, snake_case, PascalCase, kebab-case, and more. Perfect for developers and programmers.</p>
+                </div>
+
+                <div class="tool-layout">
+                    <div class="tool-main">
+                        <div class="tool-container">
+                            <!-- Input Section -->
+                            <div class="tool-section">
+                                <h2>Input String</h2>
+                                <div class="input-area">
+                                    <label for="inputString">Enter your string:</label>
+                                    <textarea id="inputString" placeholder="Enter your string here (e.g., hello-world or HelloWorld)"></textarea>
+                                </div>
+                                <div class="tool-actions">
+                                    <button class="action-btn" id="clearBtn">Clear All ✕</button>
+                                </div>
+                            </div>
+
+                            <!-- Output Formats -->
+                            <div class="tool-section">
+                                <h2>Output Formats</h2>
+                                <div class="options-grid">
+                                        <div class="format-item">
+                                            <div class="format-label">camelCase</div>
+                                            <div class="output-wrapper">
+                                                <code id="output-camelCase" class="output-preview">camelCase</code>
+                                                <button class="copy-btn" data-format="camelCase" title="Copy camelCase">Copy</button>
+                                            </div>
+                                        </div>
+                                        <div class="format-item">
+                                            <div class="format-label">PascalCase</div>
+                                            <div class="output-wrapper">
+                                                <code id="output-PascalCase" class="output-preview">PascalCase</code>
+                                                <button class="copy-btn" data-format="PascalCase" title="Copy PascalCase">Copy</button>
+                                            </div>
+                                        </div>
+                                        <div class="format-item">
+                                            <div class="format-label">snake_case</div>
+                                            <div class="output-wrapper">
+                                                <code id="output-snake_case" class="output-preview">snake_case</code>
+                                                <button class="copy-btn" data-format="snake_case" title="Copy snake_case">Copy</button>
+                                            </div>
+                                        </div>
+                                        <div class="format-item">
+                                            <div class="format-label">kebab-case</div>
+                                            <div class="output-wrapper">
+                                                <code id="output-kebab-case" class="output-preview">kebab-case</code>
+                                                <button class="copy-btn" data-format="kebab-case" title="Copy kebab-case">Copy</button>
+                                            </div>
+                                        </div>
+                                        <div class="format-item">
+                                            <div class="format-label">CONSTANT_CASE</div>
+                                            <div class="output-wrapper">
+                                                <code id="output-CONSTANT_CASE" class="output-preview">CONSTANT_CASE</code>
+                                                <button class="copy-btn" data-format="CONSTANT_CASE" title="Copy CONSTANT_CASE">Copy</button>
+                                            </div>
+                                        </div>
+                                        <div class="format-item">
+                                            <div class="format-label">dot.case</div>
+                                            <div class="output-wrapper">
+                                                <code id="output-dot.case" class="output-preview">dot.case</code>
+                                                <button class="copy-btn" data-format="dot.case" title="Copy dot.case">Copy</button>
+                                            </div>
+                                        </div>
+                                        <div class="format-item">
+                                            <div class="format-label">space case</div>
+                                            <div class="output-wrapper">
+                                                <code id="output-space-case" class="output-preview">space case</code>
+                                                <button class="copy-btn" data-format="space case" title="Copy space case">Copy</button>
+                                            </div>
+                                        </div>
+                                        <div class="format-item">
+                                            <div class="format-label">Title Case</div>
+                                            <div class="output-wrapper">
+                                                <code id="output-Title-Case" class="output-preview">Title Case</code>
+                                                <button class="copy-btn" data-format="Title Case" title="Copy Title Case">Copy</button>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <!-- How to Use Section -->
+                            <div class="instructions">
+                                <h3>How to Use</h3>
+                                <ol>
+                                    <li>Enter your string in any format (camelCase, snake_case, kebab-case, etc.)</li>
+                                    <li>The tool automatically converts your input to all available formats</li>
+                                    <li>View all converted outputs instantly</li>
+                                    <li>Click the copy button next to each format to copy the result</li>
+                                    <li>Use the cleared button to reset and start over</li>
+                                </ol>
+                            </div>
+
+                            <!-- Use Cases Section -->
+                            <div class="use-cases">
+                                <h3>Use Cases</h3>
+                                <div class="use-case-grid">
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">🔌</span>
+                                        <h5>API Integration</h5>
+                                        <p>Converting API response keys to programming variables</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">🗄️</span>
+                                        <h5>Database Design</h5>
+                                        <p>Preparing database column names in proper format</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">⚙️</span>
+                                        <h5>Configuration</h5>
+                                        <p>Generating configuration constants and environment variable names</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">💻</span>
+                                        <h5>Code Generation</h5>
+                                        <p>Creating class names and function names from descriptive text</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- How It Works Section -->
+                            <div class="formatting-guide">
+                                <h3>How It Works</h3>
+                                <ul>
+                                    <li><strong>Word Boundary Detection:</strong> Automatically identifies word boundaries in any input format</li>
+                                    <li><strong>camelCase:</strong> First word lowercase, subsequent words capitalized with no separators</li>
+                                    <li><strong>PascalCase:</strong> All words capitalized with no separators</li>
+                                    <li><strong>snake_case:</strong> Words separated by underscores, all lowercase</li>
+                                    <li><strong>kebab-case:</strong> Words separated by hyphens, all lowercase</li>
+                                    <li><strong>Multiple Formats:</strong> Converts to 8 different case formats simultaneously</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="tool-sidebar">
+                        <div class="related-tools">
+                            <h4>Related Tools</h4>
+                            <ul>
+                                <li><a href="/tools/text-uppercase/">Text Uppercase Converter</a></li>
+                                <li><a href="/tools/text-lowercase/">Text Lowercase Converter</a></li>
+                                <li><a href="/tools/title-case-converter/">Title Case Converter</a></li>
+                                <li><a href="/tools/text-to-binary/">Text to Binary Converter</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-tips">
+                            <h4>Quick Tips</h4>
+                            <ul>
+                                <li>Supports 8 different case formats</li>
+                                <li>Automatic word boundary detection</li>
+                                <li>Numbers handled intelligently</li>
+                                <li>One-click copy for each format</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-content"></div>
+                <div class="footer-bottom"></div>
+            </div>
+        </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+</body>
+</html>

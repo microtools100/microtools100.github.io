@@ -1,0 +1,619 @@
+﻿/* Random Charades Generator - Standardized Tool Styles */
+
+/* Override tool-options for this tool */
+.tool-options {
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.buttons-with-hints {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+/* Button Group (button + hint text below) */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    text-align: center;
+}
+
+.button-group .action-btn {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+/* Button Hint Text */
+.button-hint-text {
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    line-height: 1.3;
+    word-wrap: break-word;
+}
+
+/* Error Message */
+.error-msg {
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: var(--radius-md);
+    color: #c33;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.error-msg.show {
+    display: block;
+}
+
+/* Settings Section */
+.settings-section {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.settings-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.setting-item label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.setting-item select,
+.setting-item input[type="range"] {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.range-display {
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Tool Content Columns */
+.tool-content-columns {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Charades Display Column */
+.charades-column {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.output-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.output-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.charade-display {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.charade-display.empty-state {
+    flex-direction: column;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-state h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+
+.charade-text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    word-break: break-word;
+}
+
+.charade-hint {
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+.charade-supporting-hint {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: var(--surface-color);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    line-height: 1.5;
+}
+
+.charade-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--surface-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.info-item .label {
+    font-weight: 500;
+    color: var(--text-color-secondary);
+}
+
+.info-item .value {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.card-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.card-controls .action-btn {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+}
+
+.game-controls-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.game-controls-row .action-btn {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+}
+
+/* Score Column */
+.score-column {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.score-column h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.score-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.team-card {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    text-align: center;
+}
+
+.team-card.team-1 {
+    border-color: #3498db;
+}
+
+.team-card.team-2 {
+    border-color: #e74c3c;
+}
+
+.team-header {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.team-score-display {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0.5rem 0;
+}
+
+.score-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.score-btn {
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--surface-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.score-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.score-btn.minus {
+    color: #e74c3c;
+}
+
+.score-btn.plus {
+    color: #27ae60;
+}
+
+#resetScoresBtn {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+/* Tool Actions */
+.tool-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.tool-actions .action-btn {
+    flex: 1;
+    min-width: 100px;
+}
+
+/* Info Sections */
+.info-section {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.info-section h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+/* Steps Grid */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.step {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.step h4 {
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.step p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+    line-height: 1.5;
+}
+
+/* Rules and Variations Boxes */
+.rules-box,
+.variations-box {
+    background: var(--surface-color);
+    border-left: 4px solid var(--primary-color);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.rules-box h4,
+.variations-box h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+}
+
+.rules-box ul,
+.variations-box ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    list-style: disc;
+}
+
+.rules-box li,
+.variations-box li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.rules-box li:last-child,
+.variations-box li:last-child {
+    margin-bottom: 0;
+}
+
+/* Tips Grid */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.tip-card {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.tip-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.tip-card h4 {
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.tip-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+    line-height: 1.5;
+}
+
+/* Sidebar */
+.tool-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+}
+
+.related-tools,
+.tool-tips {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.related-tools h4,
+.tool-tips h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.related-tools ul,
+.tool-tips ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.related-tools li,
+.tool-tips li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.related-tools li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.tool-tips li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.related-tools li:last-child,
+.tool-tips li:last-child {
+    margin-bottom: 0;
+}
+
+.related-tools a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.related-tools a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .buttons-with-hints {
+        grid-template-columns: 1fr;
+    }
+
+    .button-group {
+        align-items: stretch;
+        text-align: left;
+    }
+
+    .button-group .action-btn {
+        width: 100%;
+    }
+
+    .tool-content-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .score-container {
+        grid-template-columns: 1fr;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-controls,
+    .score-buttons {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .related-tools,
+    .tool-tips {
+        width: 100%;
+    }
+
+    .tool-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tool-actions-horizontal {
+        flex-direction: column;
+    }
+
+    .tool-actions-horizontal .action-btn {
+        width: 100%;
+    }
+
+    .charade-text {
+        font-size: 1.5rem;
+    }
+
+    .settings-section {
+        padding: 1rem;
+    }
+
+    .info-section {
+        padding: 1rem;
+    }
+}

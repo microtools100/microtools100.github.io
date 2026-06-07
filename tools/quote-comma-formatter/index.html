@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tool to add quotes and custom delimiters to column values instantly. Perfect for data formatting and SQL queries.">
+    <meta name="keywords" content="quote formatter, delimiter, quote values, data formatting, column formatter">
+    <meta property="og:title" content="Quote & Comma Formatter - Free Data Formatter">
+    <meta property="og:description" content="Add quotes and custom delimiters to column values instantly. Perfect for SQL queries and data processing.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Quote & Comma Formatter - Free Data Formatter | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "Quote & Comma Formatter",
+        "description": "Free online tool to add quotes and delimiters to column values",
+        "url": "https://microtools.github.io/tools/quote-comma-formatter/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
+        <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is this tool free?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool is completely free with no hidden charges or premium features required."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data private?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all processing happens in your browser. Your data is never sent to any server or stored anywhere."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do I need to create an account?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No account needed. This tool works immediately without any registration or login required."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does it work offline?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, once the page is loaded, this tool works completely offline without internet connection."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-main">
+        <div class="container">
+            <div class="tool-page">
+                <div class="tool-header">
+                    <h1>Quote & Comma Formatter</h1>
+                    <p class="tool-description">Add quotes and custom delimiters to column values instantly. Perfect for SQL queries, API calls, and data processing.</p>
+                </div>
+
+                <div class="tool-layout">
+                    <div class="tool-main">
+                        <div class="tool-container">
+                            <!-- Tool Options -->
+                            <div class="tool-options">
+                                <h3 class="section-title">Options</h3>
+                                <div class="sql-options-grid">
+                                    <div class="option-item">
+                                        <label for="quoteType">Quote Type:</label>
+                                        <select id="quoteType">
+                                            <option value="single">Single (')</option>
+                                            <option value="double">Double (")</option>
+                                            <option value="backtick">Backticks (`)</option>
+                                            <option value="none">None</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="option-item">
+                                        <label for="delimiter">Delimiter:</label>
+                                        <select id="delimiter">
+                                            <option value=", ">Comma & Space (,)</option>
+                                            <option value=",">Comma (,)</option>
+                                            <option value="; ">Semicolon & Space (;)</option>
+                                            <option value=";">Semicolon (;)</option>
+                                            <option value=" | ">Pipe & Space (|)</option>
+                                            <option value="|">Pipe (|)</option>
+                                            <option value="\n">Newline</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 1.5rem; grid-column: 1 / -1;">
+                                        <div class="option-item checkbox">
+                                            <label for="trimWhitespace">
+                                                <input type="checkbox" id="trimWhitespace" checked>
+                                                <span>Trim whitespace</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="option-item checkbox">
+                                            <label for="removeEmpty">
+                                                <input type="checkbox" id="removeEmpty" checked>
+                                                <span>Remove empty lines</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Two-Column Layout for Input and Output -->
+                            <div class="tool-content-columns">
+                                <!-- Input Column -->
+                                <section class="tool-section input-column">
+                                    <div class="input-group">
+                                        <label for="inputData">Input Data</label>
+                                        <div class="input-area">
+                                            <textarea 
+                                                id="inputData" 
+                                                data-line-numbers
+                                                placeholder="Paste values one per line&#10;One per line&#10;&#10;Example:&#10;Apple&#10;Banana&#10;Orange"
+                                                rows="12"
+                                            ></textarea>
+                                        </div>
+                                        <div class="hint">
+                                            Maximum 10,000 characters.
+                                        </div>
+                                        <div class="tool-actions-horizontal" style="margin-top: 12px;">
+                                            <button class="action-btn" id="clearBtn">
+                                                <span>Clear</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- Output Column -->
+                                <section class="tool-section output-column">
+                                    <div class="output-group">
+                                        <label for="outputData">Formatted Result</label>
+                                        <div class="output-area">
+                                            <textarea 
+                                                id="outputData" 
+                                                data-line-numbers
+                                                placeholder="Formatted output will appear here...&#10;&#10;Example:&#10;'Apple', 'Banana', 'Orange'"
+                                                rows="12"
+                                                readonly
+                                            ></textarea>
+                                        </div>
+                                        <div class="stats-display">
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="itemCount">0</span>
+                                                <span class="stat-label">Items</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-value" id="charCount">0</span>
+                                                <span class="stat-label">Characters</span>
+                                            </div>
+                                        </div>
+                                        <div class="output-actions">
+                                            <button class="action-btn success" id="copyBtn">
+                                                <span>Copy</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <!-- Use Cases -->
+                            <div class="use-cases">
+                                <h3>Use Cases</h3>
+                                <div class="use-case-grid">
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">🗄️</span>
+                                        <h5>SQL Queries</h5>
+                                        <p>Format values for SQL IN clauses and WHERE conditions</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">🔌</span>
+                                        <h5>API Calls</h5>
+                                        <p>Prepare data for API parameters and request bodies</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">📋</span>
+                                        <h5>Data Import</h5>
+                                        <p>Format lists for safe data import into systems</p>
+                                    </div>
+                                    <div class="use-case-item">
+                                        <span class="use-case-icon">✏️</span>
+                                        <h5>Code Generation</h5>
+                                        <p>Quickly generate formatted data for code snippets</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- How to Use Section -->
+                            <div class="instructions">
+                                <h3>How to Use</h3>
+                                <ol>
+                                    <li>Paste your values into the input field (one per line)</li>
+                                    <li>Select your preferred quote type (single, double, backticks, or none)</li>
+                                    <li>Choose your delimiter (comma, semicolon, pipe, or newline)</li>
+                                    <li>Configure additional options (trim whitespace, remove empty lines)</li>
+                                    <li>Copy the formatted output or download as a file</li>
+                                </ol>
+                            </div>
+
+                            <!-- How It Works Section -->
+                            <div class="formatting-guide">
+                                <h3>How It Works</h3>
+                                <ul>
+                                    <li><strong>Quote Types:</strong> Wraps each value with single quotes, double quotes, backticks, or no quotes</li>
+                                    <li><strong>Delimiters:</strong> Joins values with comma, semicolon, pipe, or newline separator</li>
+                                    <li><strong>Trimming:</strong> Removes leading and trailing whitespace from each value</li>
+                                    <li><strong>Empty Removal:</strong> Optionally filters out empty or blank lines</li>
+                                    <li><strong>Copy & Download:</strong> Easily copy to clipboard or download as a text file</li>
+                                    <li><strong>Real-time Preview:</strong> See formatted output as you adjust options</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="tool-sidebar">
+                        <div class="related-tools">
+                            <h4>Related Tools</h4>
+                            <ul>
+                                <li><a href="/tools/excel-column-to-comma-list/">Excel to Comma List</a></li>
+                                <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                                <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-tips">
+                            <h4>Quick Tips</h4>
+                            <ul>
+                                <li>Use single quotes for SQL</li>
+                                <li>Double quotes for JSON-compatible format</li>
+                                <li>Backticks for MySQL identifiers</li>
+                                <li>Trim whitespace to clean data</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>
+
+
+
+
+

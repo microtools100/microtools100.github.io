@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online color picker tool. Convert between HEX, RGB, HSL formats. Generate color palettes and explore color harmony.">
+    <meta name="keywords" content="color picker, color converter, hex to rgb, color palette, color generator">
+    <meta property="og:title" content="Color Picker - Convert Between HEX, RGB, HSL">
+    <meta property="og:description" content="Pick colors and convert between HEX, RGB, HSL formats. Generate palettes and color harmonies instantly.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>Color Picker - Free Online Tool | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Color Picker",
+        "description": "Free online tool to pick colors and convert between HEX, RGB, and HSL formats",
+        "url": "https://microtools.github.io/tools/color-picker/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+        <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What color formats does this tool support?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This tool typically supports HEX, RGB, RGBA, HSL, and sometimes other color formats for maximum flexibility."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I paste a color code?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, you can paste any color code and it will be recognized and converted to other formats automatically."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I use the color picker?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Click to open the color picker, select your color from the palette, and the values are instantly converted to all formats."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I generate random colors?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, most color pickers have a random color generation feature for inspiration or testing."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is this tool free?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this is a completely free tool with no limitations on usage or downloads."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-content">Text & Content</a></li>
+                        <li><a href="/#math-calculators">Math & Calculators</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#finance-tools">Finance Tools</a></li>
+                        <li><a href="/#office-time">Office & Time</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                    </ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>Color Picker</h1>
+                <p class="tool-description">
+                    Pick colors and convert between HEX, RGB, and HSL formats. Generate color palettes and explore color harmonies.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Tool Options -->
+                        <div class="tool-options">
+                            <button class="action-btn primary" id="downloadBtn">
+                                <span>Download Palette</span>
+                            </button>
+                            <button class="action-btn" id="clearBtn">
+                                <span>Clear</span>
+                            </button>
+                        </div>
+
+                        <!-- Error Message Display -->
+                        <div class="error-msg" id="errorMsg"></div>
+
+                        <!-- Tool Content -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="input-column">
+                                <!-- Color Selection Section -->
+                                <div class="section">
+                                    <h3>Color Selection</h3>
+                                    <div class="color-picker-wrapper">
+                                        <input type="color" id="colorInput" value="#3498db">
+                                        <div id="colorPreview" class="color-preview"></div>
+                                    </div>
+                                    <div class="eyedropper-section">
+                                        <button class="eyedropper-btn" id="eyedropperBtn" title="Pick color from screen">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                <path d="M17.7 8.3a4 4 0 0 0-5.66-.06L2.5 17.95A3 3 0 0 0 5 22h9c1.66 0 3-1.34 3-3v-2"/>
+                                                <circle cx="19" cy="5" r="2.5" fill="currentColor"/>
+                                            </svg>
+                                        </button>
+                                        <span class="eyedropper-text">Use the eyedropper button to identify colors from anywhere on your screen</span>
+                                    </div>
+                                </div>
+
+                                <!-- RGB Sliders Section -->
+                                <div class="section">
+                                    <h3>RGB Sliders</h3>
+                                    <div class="rgb-slider-group">
+                                        <div class="slider-control">
+                                            <label for="redSlider">Red</label>
+                                            <input type="range" id="redSlider" min="0" max="255" value="52">
+                                            <span class="slider-value" id="redValue">52</span>
+                                        </div>
+                                        <div class="slider-control">
+                                            <label for="greenSlider">Green</label>
+                                            <input type="range" id="greenSlider" min="0" max="255" value="152">
+                                            <span class="slider-value" id="greenValue">152</span>
+                                        </div>
+                                        <div class="slider-control">
+                                            <label for="blueSlider">Blue</label>
+                                            <input type="range" id="blueSlider" min="0" max="255" value="219">
+                                            <span class="slider-value" id="blueValue">219</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Manual Color Input Section -->
+                                <div class="section">
+                                    <h3>Manual Color Input</h3>
+                                    <div class="input-fields-grid">
+                                        <div class="input-field">
+                                            <label for="hexInput">HEX:</label>
+                                            <input type="text" id="hexInput" placeholder="#3498db" value="#3498db">
+                                        </div>
+                                        <div class="input-field">
+                                            <label for="rgbInput">RGB:</label>
+                                            <input type="text" id="rgbInput" placeholder="rgb(52, 152, 219)" value="rgb(52, 152, 219)">
+                                        </div>
+                                        <div class="input-field">
+                                            <label for="hslInput">HSL:</label>
+                                            <input type="text" id="hslInput" placeholder="hsl(204, 70%, 53%)" value="hsl(204, 70%, 53%)">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Color Formats Section -->
+                                <div class="section">
+                                    <h3>Color Formats</h3>
+                                    <div class="color-formats-grid">
+                                        <div class="format-group">
+                                            <label for="hexValue">HEX:</label>
+                                            <input type="text" id="hexValue" readonly>
+                                            <button class="action-btn success copy-btn" data-target="hexValue">
+                                                <span>Copy</span>
+                                            </button>
+                                        </div>
+                                        <div class="format-group">
+                                            <label for="rgbValue">RGB:</label>
+                                            <input type="text" id="rgbValue" readonly>
+                                            <button class="action-btn success copy-btn" data-target="rgbValue">
+                                                <span>Copy</span>
+                                            </button>
+                                        </div>
+                                        <div class="format-group">
+                                            <label for="hslValue">HSL:</label>
+                                            <input type="text" id="hslValue" readonly>
+                                            <button class="action-btn success copy-btn" data-target="hslValue">
+                                                <span>Copy</span>
+                                            </button>
+                                        </div>
+                                        <div class="format-group">
+                                            <label for="hsvValue">HSV:</label>
+                                            <input type="text" id="hsvValue" readonly>
+                                            <button class="action-btn success copy-btn" data-target="hsvValue">
+                                                <span>Copy</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="output-column">
+                                <!-- Shades & Tints Section -->
+                                <div class="section">
+                                    <h3>Shades & Tints</h3>
+                                    <div class="shades-grid" id="shadesGrid"></div>
+                                </div>
+
+                                <!-- Color Harmony Section -->
+                                <div class="section">
+                                    <h3>Color Harmony</h3>
+                                    <div class="harmony-grid" id="harmonyGrid"></div>
+                                </div>
+
+                                <!-- Contrast Checker Section -->
+                                <div class="section">
+                                    <h3>Contrast Checker</h3>
+                                    <div class="contrast-inputs">
+                                        <div class="contrast-input">
+                                            <label for="bgColor">Background Color:</label>
+                                            <input type="color" id="bgColor" value="#ffffff">
+                                        </div>
+                                        <div class="contrast-result" id="contrastResult"></div>
+                                    </div>
+                                    <div class="contrast-preview" id="contrastPreview">
+                                        <p>Sample text for contrast preview</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Use Cases Section -->
+                    <div class="use-cases">
+                        <h3>Use Cases</h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-item">
+                                <h5>Web Design</h5>
+                                <p>Pick perfect colors for your web design and get all format codes instantly</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>Color Conversion</h5>
+                                <p>Convert between HEX, RGB, HSL, and HSV color formats easily</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>Harmony Generator</h5>
+                                <p>Explore complementary, analogous, and triadic color combinations</p>
+                            </div>
+                            <div class="use-case-item">
+                                <h5>Accessibility Check</h5>
+                                <p>Check color contrast ratios to ensure accessible designs</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="instructions">
+                        <h3>How to Use</h3>
+                        <ol>
+                            <li>Use the color picker input to select a color or adjust RGB sliders</li>
+                            <li>Enter specific color values in HEX, RGB, or HSL format</li>
+                            <li>View all color formats and copy any value with one click</li>
+                            <li>Explore color harmonies and complementary colors below</li>
+                            <li>Check contrast ratios with the contrast checker</li>
+                            <li>Download your complete color palette</li>
+                        </ol>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="formatting-guide">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li><strong>Color Picker:</strong> Click the color input to open your system color picker</li>
+                            <li><strong>RGB Sliders:</strong> Adjust red, green, and blue values (0-255 each)</li>
+                            <li><strong>Format Conversion:</strong> Automatically converts between HEX, RGB, HSL, and HSV</li>
+                            <li><strong>Shades & Tints:</strong> Generates lighter and darker variations of your color</li>
+                            <li><strong>Color Harmony:</strong> Shows complementary, analogous, and triadic colors</li>
+                            <li><strong>Contrast Checker:</strong> Calculates WCAG contrast ratios for accessibility</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                            <li><a href="/tools/csv-to-json/">CSV to JSON</a></li>
+                            <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Tips</h4>
+                        <ul>
+                            <li>RGB values range from 0 to 255 for each color component</li>
+                            <li>HEX codes are 6-character codes starting with # symbol</li>
+                            <li>HSL is useful for adjusting lightness and saturation independently</li>
+                            <li>WCAG AA standard requires contrast ratio of at least 4.5:1</li>
+                            <li>Use contrast checker to ensure your colors are accessible</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online JSON formatter and validator. Instantly beautify, minify, validate and format JSON with syntax highlighting.">
+    <meta name="keywords" content="JSON formatter, JSON validator, JSON beautifier, JSON minifier, format JSON">
+    <meta property="og:title" content="JSON Formatter & Validator - Free JSON Tools">
+    <meta property="og:description" content="Instantly format, validate, and beautify JSON. With syntax highlighting and minification options.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    
+    <title>JSON Formatter & Validator - Free Tool | Micro Tools</title>
+    
+    <!-- OPTIMIZATION: Load critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <!-- CRITICAL: Tool layout CSS -->
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <link rel="preload" href="/assets/css/line-numbers.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="tool.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <!-- Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "JSON Formatter & Validator",
+        "description": "Free online tool to format, validate and beautify JSON",
+        "url": "https://microtools.github.io/tools/json-formatter/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+        <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is JSON formatting?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "JSON formatting makes JSON code readable by adding proper indentation and line breaks. It helps identify errors and makes the structure clear."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why should I format my JSON?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Formatted JSON is easier to read, debug, and understand. It helps identify syntax errors quickly and improves collaboration."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my JSON data safe with this tool?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all processing happens in your browser. Your JSON data is never sent to any server and is completely private."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can this tool minify JSON?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This tool primarily focuses on formatting and prettifying JSON. For minification, you would use the reverse process."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does this tool validate JSON?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool validates your JSON syntax and will alert you to any errors found in your code."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul></ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>JSON Formatter & Validator</h1>
+                <p class="tool-description">
+                    Instantly format, validate, and beautify JSON. With syntax highlighting, minification, and error detection.
+                </p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Error Message Display -->
+                        <div class="error-msg"></div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputJSON">JSON Input</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="inputJSON" 
+                                            data-line-numbers
+                                            placeholder='Paste your JSON here...&#10;&#10;Example:&#10;{"name":"John","age":30}'
+                                            rows="12"
+                                            spellcheck="false"
+                                            autofocus></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Paste valid JSON. Maximum 50,000 characters.
+                                    </div>
+                                    <div class="tool-actions-horizontal" style="margin-top: 12px;">
+                                        <button class="action-btn primary" id="formatBtn">
+                                            <span>Format</span>
+                                        </button>
+                                        <button class="action-btn" id="minifyBtn">
+                                            <span>Minify</span>
+                                        </button>
+                                        <button class="action-btn" id="clearBtn">
+                                            <span>Clear</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputJSON">Formatted Output</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputJSON" 
+                                            data-line-numbers
+                                            placeholder='Result will appear here...&#10;&#10;Example output:&#10;{&#10;  "name": "John",&#10;  "age": 30&#10;}'
+                                            rows="12"
+                                            readonly
+                                            spellcheck="false"></textarea>
+                                    </div>
+                                    <div class="output-actions">
+                                        <button class="action-btn success copy-btn" id="copyBtn">
+                                            <span>Copy</span>
+                                            <span>📋</span>
+                                        </button>
+                                        <button class="action-btn" id="downloadBtn">
+                                            <span>Download</span>
+                                            <span>⤓</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Use Cases Section -->
+                        <div class="use-cases">
+                            <h3>Use Cases</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🔍</span>
+                                    <h5>Validate JSON</h5>
+                                    <p>Check if your JSON is syntactically correct</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">✨</span>
+                                    <h5>Beautify</h5>
+                                    <p>Format messy JSON for better readability</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">⊖</span>
+                                    <h5>Minify</h5>
+                                    <p>Reduce file size by removing whitespace</p>
+                                </div>
+                                <div class="use-case-item">
+                                    <span class="use-case-icon">🔀</span>
+                                    <h5>Sort Keys</h5>
+                                    <p>Organize JSON objects alphabetically</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use Section -->
+                        <div class="instructions">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Paste your JSON data into the input field</li>
+                                <li>Click Format to validate and beautify the JSON</li>
+                                <li>Review the formatted output</li>
+                                <li>Copy the JSON or download it as a file</li>
+                            </ol>
+                        </div>
+
+                        <!-- How It Works Section -->
+                        <div class="formatting-guide">
+                            <h3>How It Works</h3>
+                            <ul>
+                                <li><strong>Validation:</strong> Checks if your JSON follows proper syntax rules</li>
+                                <li><strong>Formatting:</strong> Adds proper indentation for readability</li>
+                                <li><strong>Minification:</strong> Removes all unnecessary whitespace to reduce file size</li>
+                                <li><strong>Key Sorting:</strong> Organizes object keys alphabetically</li>
+                                <li><strong>Error Detection:</strong> Identifies and displays syntax errors with details</li>
+                                <li><strong>Pretty Print:</strong> Formatted output with consistent indentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/json-to-xml/">JSON to XML Converter</a></li>
+                            <li><a href="/tools/xml-to-json/">XML to JSON Converter</a></li>
+                            <li><a href="/tools/json-to-yaml/">JSON to YAML Converter</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>JSON Rules</h4>
+                        <ul>
+                            <li>Must start with { or [</li>
+                            <li>All keys in double quotes</li>
+                            <li>Strings use double quotes</li>
+                            <li>No trailing commas</li>
+                            <li>Proper nesting required</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Formatting Tips</h4>
+                        <ul>
+                            <li>Use 2-space indent for readability</li>
+                            <li>Sort keys for consistency</li>
+                            <li>Minify for production use</li>
+                            <li>Validate before sending to APIs</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+    <script defer src="tool.js"></script>
+</body>
+</html>
+
+
+
+
+

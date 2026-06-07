@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Micro Tools - Free Online Utilities for Developers & Writers</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online micro tools to convert text, clean Excel data, generate passwords, and more. Fast, simple, and no signup required.">
+    <meta name="keywords" content="online tools, text converter, password generator, developer tools, free utilities">
+    <meta property="og:title" content="Micro Tools - Free Online Utilities for Developers & Writers">
+    <meta property="og:description" content="Collection of free, no-login required browser tools for text manipulation, data cleaning, and content creation.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Micro Tools">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    
+    
+    <!-- OPTIMIZATION: Load only critical CSS synchronously -->
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    
+    <!-- OPTIMIZATION: Lazy load non-critical CSS files -->
+    <link rel="preload" href="/assets/css/homepage.css?v=202602021216" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/css/hub.css?v=202602021216" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="/assets/css/homepage.css?v=202602021216">
+        <link rel="stylesheet" href="/assets/css/hub.css?v=202602021216">
+    </noscript>
+    
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- OPTIMIZATION: Inline critical dark mode logic to prevent white flash -->
+    <!-- This prevents render blocking while preventing FOUC (Flash of Unstyled Content) -->
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Micro Tools",
+        "description": "Free online micro tools for developers and content creators",
+        "url": "https://microtools.github.io",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://microtools.github.io/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/" class="active">Home</a></li>
+                        <li><a href="#text-content">Text & Content</a></li>
+                        <li><a href="#math-calculators">Math & Calculators</a></li>
+                        <li><a href="#data-tools">Data Tools</a></li>
+                        <li><a href="#developer-tools">Developer Tools</a></li>
+                        <li><a href="#finance-tools">Finance Tools</a></li>
+                        <li><a href="#office-time">Office & Time</a></li>
+                        <li><a href="#utilities">Utilities</a></li>
+                    </ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="homepage-main">
+        <section class="hero">
+            <div class="container">
+                <h2>Free Online Micro Tools</h2>
+                <p class="hero-subtitle">No login required • 100% browser-based • Instant results</p>
+                
+                <div class="search-box">
+                    <input type="text" 
+                           id="toolSearch" 
+                           placeholder="Search tools (e.g., 'text converter', 'password')"
+                           aria-label="Search for tools">
+                    <button type="button" id="searchBtn" aria-label="Search">🔍</button>
+                </div>
+                
+                <div class="quick-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="toolCountStat">0</span>
+                        <span class="stat-label">Tools Available</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Free</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">0s</span>
+                        <span class="stat-label">Load Time</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEXT & CONTENT TOOLS -->
+        <section class="tools-section" id="text-content">
+            <div class="container">
+                <h3>Text & Content Tools</h3>
+                <div class="tools-grid">
+                    <!-- Text Uppercase -->
+                    <a href="/tools/text-uppercase/" class="tool-card">
+                        <div class="tool-icon">T↑</div>
+                        <h4>Text Uppercase Converter</h4>
+                        <p>Convert text to uppercase instantly. Perfect for headings and emphasis.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Text Lowercase -->
+                    <a href="/tools/text-lowercase/" class="tool-card">
+                        <div class="tool-icon">T↓</div>
+                        <h4>Text Lowercase Converter</h4>
+                        <p>Convert text to lowercase. Useful for formatting and standardization.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Title Case Converter -->
+                    <a href="/tools/title-case-converter/" class="tool-card">
+                        <div class="tool-icon">Tt</div>
+                        <h4>Title Case Converter</h4>
+                        <p>Convert text to title case with proper capitalization for headings.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Sentence Case Converter -->
+                    <a href="/tools/sentence-case-converter/" class="tool-card">
+                        <div class="tool-icon">Aa.</div>
+                        <h4>Sentence Case Converter</h4>
+                        <p>Convert text to proper sentence case with capital first letter.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Remove Extra Spaces -->
+                    <a href="/tools/remove-extra-spaces/" class="tool-card">
+                        <div class="tool-icon">␣</div>
+                        <h4>Remove Extra Spaces</h4>
+                        <p>Clean up text by removing extra spaces, tabs, and line breaks.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Word & Character Counter -->
+                    <a href="/tools/word-character-counter/" class="tool-card">
+                        <div class="tool-icon">#️⃣</div>
+                        <h4>Word & Character Counter</h4>
+                        <p>Count words, characters, sentences, and paragraphs instantly.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Reading Time Calculator -->
+                    <a href="/tools/reading-time-calculator/" class="tool-card">
+                        <div class="tool-icon">⏱️</div>
+                        <h4>Reading Time Calculator</h4>
+                        <p>Calculate estimated reading time for any text or article.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Text Compare & Diff (removed) -->
+
+                    <!-- Duplicate Line Remover -->
+                    <a href="/tools/duplicate-line-remover/" class="tool-card">
+                        <div class="tool-icon">🔁</div>
+                        <h4>Duplicate Line Remover</h4>
+                        <p>Remove duplicate lines from text while preserving order.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- String Case Converter -->
+                    <a href="/tools/string-case-converter/" class="tool-card">
+                        <div class="tool-icon">🔤</div>
+                        <h4>String Case Converter</h4>
+                        <p>Convert between camelCase, snake_case, PascalCase, kebab-case, and more.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Text Summarizer -->
+                    <a href="/tools/text-summarizer/" class="tool-card">
+                        <div class="tool-icon">📄</div>
+                        <h4>Text Summarizer</h4>
+                        <p>Reduce long text into concise summaries by extracting key sentences.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Line Sorter -->
+                    <a href="/tools/line-sorter/" class="tool-card">
+                        <div class="tool-icon">🔤</div>
+                        <h4>Line Sorter</h4>
+                        <p>Sort text lines alphabetically (A-Z or Z-A) with customizable options.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Line Numbering Tool -->
+                    <a href="/tools/line-numbering/" class="tool-card">
+                        <div class="tool-icon">1️⃣</div>
+                        <h4>Line Numbering Tool</h4>
+                        <p>Add line numbers to text with multiple formatting styles.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Duplicate Word Remover -->
+                    <a href="/tools/duplicate-word-remover/" class="tool-card">
+                        <div class="tool-icon">🔄</div>
+                        <h4>Duplicate Word Remover</h4>
+                        <p>Remove consecutive duplicate words from text with case sensitivity options.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Text Repeater -->
+                    <a href="/tools/text-repeater/" class="tool-card">
+                        <div class="tool-icon">🔁</div>
+                        <h4>Text Repeater</h4>
+                        <p>Repeat text multiple times with custom separators (newlines, tabs, commas).</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Remove Empty Lines -->
+                    <a href="/tools/remove-empty-lines/" class="tool-card">
+                        <div class="tool-icon">🗑️</div>
+                        <h4>Remove Empty Lines</h4>
+                        <p>Remove blank and empty lines from text. Keep only content-filled lines.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Text</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- MATH & CALCULATOR TOOLS -->
+        <section class="tools-section" id="math-calculators">
+            <div class="container">
+                <h3>Math & Calculators</h3>
+                <div class="tools-grid">
+                    <!-- Percentage Calculator -->
+                    <a href="/tools/percentage-calculator/" class="tool-card">
+                        <div class="tool-icon">%</div>
+                        <h4>Percentage Calculator</h4>
+                        <p>Calculate percentage change, increase, and decrease between values.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Math</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Average Calculator -->
+                    <a href="/tools/average-calculator/" class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <h4>Average & Weighted Average Calculator</h4>
+                        <p>Calculate simple average, weighted average, and median values.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Math</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Ratio Calculator -->
+                    <a href="/tools/ratio-calculator/" class="tool-card">
+                        <div class="tool-icon">::</div>
+                        <h4>Ratio Calculator</h4>
+                        <p>Simplify ratios and scale proportions with ease.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Math</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Unit Price Calculator -->
+                    <a href="/tools/unit-price-calculator/" class="tool-card">
+                        <div class="tool-icon">💵</div>
+                        <h4>Unit Price Calculator</h4>
+                        <p>Calculate price per unit to compare product values easily.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Math</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Discount Calculator -->
+                    <a href="/tools/discount-calculator/" class="tool-card">
+                        <div class="tool-icon">🏷️</div>
+                        <h4>Discount Calculator</h4>
+                        <p>Calculate discounted prices with percentage or fixed amount discounts.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Math</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Rounding Calculator -->
+                    <a href="/tools/rounding-calculator/" class="tool-card">
+                        <div class="tool-icon">🔢</div>
+                        <h4>Rounding & Decimal Formatter</h4>
+                        <p>Round numbers with multiple methods and format decimals.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Math</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Working Days Calculator -->
+                    <a href="/tools/working-days-calculator/" class="tool-card">
+                        <div class="tool-icon">📅</div>
+                        <h4>Working Days Calculator</h4>
+                        <p>Calculate business days between dates, excluding weekends.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Math</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATA TOOLS -->
+        <section class="tools-section" id="data-tools">
+            <div class="container">
+                <h3>Data Tools</h3>
+                <div class="tools-grid">
+                    <!-- Excel Column to Comma List -->
+                    <a href="/tools/excel-column-to-comma-list/" class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <h4>Excel Column to Comma List</h4>
+                        <p>Convert Excel column data to comma-separated values with formatting options.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Excel Column to SQL IN List -->
+                    <a href="/tools/excel-column-to-sql-in/" class="tool-card">
+                        <div class="tool-icon">🗄️</div>
+                        <h4>Excel Column to SQL IN List</h4>
+                        <p>Convert Excel columns to SQL IN format for database queries.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Quote & Comma Formatter -->
+                    <a href="/tools/quote-comma-formatter/" class="tool-card">
+                        <div class="tool-icon">"'</div>
+                        <h4>Quote & Comma Formatter</h4>
+                        <p>Add quotes and delimiters to column values for SQL and data formatting.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Comma to Newline -->
+                    <a href="/tools/comma-to-newline/" class="tool-card">
+                        <div class="tool-icon">↓</div>
+                        <h4>Comma to Newline</h4>
+                        <p>Convert comma-separated values to newlines for easy line viewing.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- CSV to JSON -->
+                    <a href="/tools/csv-to-json/" class="tool-card">
+                        <div class="tool-icon">📝</div>
+                        <h4>CSV to JSON</h4>
+                        <p>Convert CSV data to JSON format with proper structure and formatting.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- JSON to CSV -->
+                    <a href="/tools/json-to-csv/" class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <h4>JSON to CSV</h4>
+                        <p>Convert JSON data to CSV format for spreadsheet import.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- JSON to XML -->
+                    <a href="/tools/json-to-xml/" class="tool-card">
+                        <div class="tool-icon">🔄</div>
+                        <h4>JSON to XML</h4>
+                        <p>Convert JSON data to XML format for API integration and data exchange.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- XML to JSON -->
+                    <a href="/tools/xml-to-json/" class="tool-card">
+                        <div class="tool-icon">♻️</div>
+                        <h4>XML to JSON</h4>
+                        <p>Convert XML data to JSON format for modern API usage.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- JSON to YAML -->
+                    <a href="/tools/json-to-yaml/" class="tool-card">
+                        <div class="tool-icon">📋</div>
+                        <h4>JSON to YAML</h4>
+                        <p>Convert JSON to YAML format for configuration files.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Text Compare Tool -->
+                    <a href="/tools/text-compare/" class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <h4>Text Compare Tool</h4>
+                        <p>Compare two texts and highlight added, removed, and modified lines with inline diffs.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Data</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEVELOPER TOOLS -->
+        <section class="tools-section" id="developer-tools">
+            <div class="container">
+                <h3>Developer Tools</h3>
+                <div class="tools-grid">
+                    <!-- JSON Formatter -->
+                    <a href="/tools/json-formatter/" class="tool-card">
+                        <div class="tool-icon">{}</div>
+                        <h4>JSON Formatter & Validator</h4>
+                        <p>Format, validate, minify and beautify JSON with syntax highlighting.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- SQL Formatter -->
+                    <a href="/tools/sql-formatter/" class="tool-card">
+                        <div class="tool-icon">💾</div>
+                        <h4>SQL Formatter</h4>
+                        <p>Format and beautify SQL queries with proper indentation and readability.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- SQL Query Builder -->
+                    <a href="/tools/sql-query-builder/" class="tool-card">
+                        <div class="tool-icon">🛠️</div>
+                        <h4>SQL Query Builder</h4>
+                        <p>Build SQL queries visually. Generate SELECT, INSERT, UPDATE, DELETE queries.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- URL Encoder/Decoder -->
+                    <a href="/tools/url-encoder-decoder/" class="tool-card">
+                        <div class="tool-icon">🔗</div>
+                        <h4>URL Encoder/Decoder</h4>
+                        <p>Encode and decode URLs for safe sharing and data transmission.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Base64 Encoder/Decoder -->
+                    <a href="/tools/base64-encoder-decoder/" class="tool-card">
+                        <div class="tool-icon">🔐</div>
+                        <h4>Base64 Encoder/Decoder</h4>
+                        <p>Encode text and files to Base64 or decode Base64 strings.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- HTML Escape/Unescape -->
+                    <a href="/tools/html-escape-unescape/" class="tool-card">
+                        <div class="tool-icon">&lt;&gt;</div>
+                        <h4>HTML Escape/Unescape</h4>
+                        <p>Escape and unescape HTML entities safely and efficiently.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Regex Tester -->
+                    <a href="/tools/regex-tester/" class="tool-card">
+                        <div class="tool-icon">🔍</div>
+                        <h4>Regex Tester</h4>
+                        <p>Test and validate regular expressions with real-time matching.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- JWT Decoder -->
+                    <a href="/tools/jwt-decoder/" class="tool-card">
+                        <div class="tool-icon">🎫</div>
+                        <h4>JWT Decoder</h4>
+                        <p>Decode and inspect JWT tokens to view claims and payload.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- UUID Generator -->
+                    <a href="/tools/uuid-generator/" class="tool-card">
+                        <div class="tool-icon">🆔</div>
+                        <h4>UUID Generator</h4>
+                        <p>Generate unique UUIDs v4 for databases and applications.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Text to Binary -->
+                    <a href="/tools/text-to-binary/" class="tool-card">
+                        <div class="tool-icon">01</div>
+                        <h4>Text to Binary Converter</h4>
+                        <p>Convert text to binary representation and vice versa.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Image to Base64 -->
+                    <a href="/tools/image-to-base64/" class="tool-card">
+                        <div class="tool-icon">🖼️</div>
+                        <h4>Image to Base64</h4>
+                        <p>Convert images to Base64 for embedding in HTML/CSS.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- HTML/CSS/JS Minifier -->
+                    <a href="/tools/html-css-js-minifier/" class="tool-card">
+                        <div class="tool-icon">🗜️</div>
+                        <h4>HTML/CSS/JS Minifier</h4>
+                        <p>Minify code to reduce file size and improve performance.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Code Beautifier -->
+                    <a href="/tools/code-beautifier/" class="tool-card">
+                        <div class="tool-icon">✨</div>
+                        <h4>Code Beautifier</h4>
+                        <p>Format and beautify code with proper indentation.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- JSON Diff Tool -->
+                    <a href="/tools/json-diff-tool/" class="tool-card">
+                        <div class="tool-icon">🔍</div>
+                        <h4>JSON Diff Tool</h4>
+                        <p>Compare two JSON objects and highlight differences.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- HTTP Status Code Lookup -->
+                    <a href="/tools/http-status-code-lookup/" class="tool-card">
+                        <div class="tool-icon">🔗</div>
+                        <h4>HTTP Status Code Lookup</h4>
+                        <p>Reference guide for all HTTP status codes and meanings.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Developer</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINANCE & INVESTMENT TOOLS -->
+        <section class="tools-section" id="finance-tools">
+            <div class="container">
+                <h3>Finance & Investment Tools</h3>
+                <div class="tools-grid">
+                    <!-- Budget Calculator -->
+                    <a href="/tools/budget-calculator/" class="tool-card">
+                        <div class="tool-icon">💰</div>
+                        <h4>Budget Calculator</h4>
+                        <p>Plan and manage your budget. Track income, expenses, and savings goals.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Savings Goal Calculator -->
+                    <a href="/tools/savings-goal-calculator/" class="tool-card">
+                        <div class="tool-icon">🎯</div>
+                        <h4>Savings Goal Calculator</h4>
+                        <p>Calculate time to reach savings targets with compound interest.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Loan Calculator -->
+                    <a href="/tools/loan-calculator/" class="tool-card">
+                        <div class="tool-icon">🏦</div>
+                        <h4>Loan Calculator</h4>
+                        <p>Calculate loan payments and amortization schedules. Compare different terms.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Debt Payoff Calculator -->
+                    <a href="/tools/debt-payoff-calculator/" class="tool-card">
+                        <div class="tool-icon">📉</div>
+                        <h4>Debt Payoff Calculator</h4>
+                        <p>Compare debt payoff strategies. Snowball vs avalanche methods.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Credit Card Interest Calculator -->
+                    <a href="/tools/credit-card-interest-calculator/" class="tool-card">
+                        <div class="tool-icon">💳</div>
+                        <h4>Credit Card Interest Calculator</h4>
+                        <p>Calculate credit card interest and payment impact. See total payoff time.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Investment Return Calculator -->
+                    <a href="/tools/investment-return-calculator/" class="tool-card">
+                        <div class="tool-icon">📈</div>
+                        <h4>Investment Return Calculator</h4>
+                        <p>Calculate compound interest and investment returns. Project future growth.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Retirement Calculator -->
+                    <a href="/tools/retirement-calculator/" class="tool-card">
+                        <div class="tool-icon">🏖️</div>
+                        <h4>Retirement Calculator</h4>
+                        <p>Plan for retirement. Calculate required savings and withdrawal strategies.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Dollar-Cost Averaging Calculator -->
+                    <a href="/tools/dollar-cost-averaging-calculator/" class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <h4>Dollar-Cost Averaging</h4>
+                        <p>Analyze DCA investment strategy. See long-term benefits of periodic investing.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+
+                    <!-- Daily Balance Interest Calculator -->
+                    <a href="/tools/daily-balance-interest-calculator/" class="tool-card">
+                        <div class="tool-icon">💵</div>
+                        <h4>Daily Balance Interest Calculator</h4>
+                        <p>Calculate monthly interest on savings with daily balance tracking and deposit management.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Finance</span>
+                            <span class="tool-free">FREE</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- OFFICE & TIME SECTION - Main Container -->
+        <section class="tools-section" id="office-time">
+            <div class="container">
+                <h3>Office & Time Tools</h3>
+                
+                <!-- OFFICE & HR SUBSECTION -->
+                <div class="subsection">
+                    <h4>Office & HR Tools</h4>
+                    <div class="tools-grid">
+                        <a href="/tools/overtime-hours-calculator/" class="tool-card">
+                            <div class="tool-icon">⏰</div>
+                            <h4>Overtime Hours Calculator</h4>
+                            <p>Calculate overtime hours and track regular vs overtime earnings.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">HR</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/attendance-percentage-calculator/" class="tool-card">
+                            <div class="tool-icon">✅</div>
+                            <h4>Attendance Calculator</h4>
+                            <p>Calculate attendance percentage and track presence records.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">HR</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/notice-period-calculator/" class="tool-card">
+                            <div class="tool-icon">📝</div>
+                            <h4>Notice Period Calculator</h4>
+                            <p>Calculate notice period end dates for resignations.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">HR</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/probation-end-date-calculator/" class="tool-card">
+                            <div class="tool-icon">📋</div>
+                            <h4>Probation End Date Calculator</h4>
+                            <p>Calculate probation period end dates and confirmation dates.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">HR</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/shift-allowance-calculator/" class="tool-card">
+                            <div class="tool-icon">💵</div>
+                            <h4>Shift Allowance Calculator</h4>
+                            <p>Calculate shift allowance based on shifts and rates.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">HR</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TIME & SHIFT SUBSECTION -->
+                <div class="subsection">
+                    <h4>Time & Shift Tools</h4>
+                    <div class="tools-grid">
+                        <a href="/tools/time-difference-calculator/" class="tool-card">
+                            <div class="tool-icon">⏱️</div>
+                            <h4>Time Difference Calculator</h4>
+                            <p>Calculate time difference between two times in hours and minutes.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Time</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/shift-hours-calculator/" class="tool-card">
+                            <div class="tool-icon">🕒</div>
+                            <h4>Shift Hours Calculator</h4>
+                            <p>Calculate actual working hours by subtracting breaks.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Time</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/weekly-working-hours-calculator/" class="tool-card">
+                            <div class="tool-icon">📊</div>
+                            <h4>Weekly Working Hours</h4>
+                            <p>Calculate total and average working hours per week.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Time</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/multiple-time-adder/" class="tool-card">
+                            <div class="tool-icon">➕</div>
+                            <h4>Multiple Time Adder</h4>
+                            <p>Add multiple time durations together quickly.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Time</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UTILITIES SECTION -->
+        <section class="tools-section" id="utilities">
+            <div class="container">
+                <h3>Utilities</h3>
+                
+                <!-- GENERAL UTILITIES SUBSECTION -->
+                <div class="subsection">
+                    <h4>General Utilities</h4>
+                    <div class="tools-grid">
+                        <!-- QR Code Generator -->
+                        <a href="/tools/qr-code-generator/" class="tool-card">
+                            <div class="tool-icon">📱</div>
+                            <h4>QR Code Generator</h4>
+                            <p>Generate QR codes for URLs, text, and contact information.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Utility</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+
+                        <!-- Unit Converter -->
+                        <a href="/tools/unit-converter/" class="tool-card">
+                            <div class="tool-icon">⚖️</div>
+                            <h4>Unit Converter</h4>
+                            <p>Convert between different units of measurement instantly.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Utility</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+
+                        <!-- Countdown Timer -->
+                        <a href="/tools/countdown-timer/" class="tool-card">
+                            <div class="tool-icon">⏰</div>
+                            <h4>Countdown Timer</h4>
+                            <p>Create customizable countdown timers for productivity.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Utility</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+
+                        <!-- Fake Data Generator -->
+                        <a href="/tools/fake-data-generator/" class="tool-card">
+                            <div class="tool-icon">👤</div>
+                            <h4>Fake Data Generator</h4>
+                            <p>Generate realistic fake data for testing and development.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Utility</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+
+                        <!-- Decision Maker -->
+                        <a href="/tools/decision-maker/" class="tool-card">
+                            <div class="tool-icon">🎲</div>
+                            <h4>Decision Maker</h4>
+                            <p>Get random Yes/No decisions or pick from options.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Utility</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+
+                        <!-- Color Picker -->
+                        <a href="/tools/color-picker/" class="tool-card">
+                            <div class="tool-icon">🎨</div>
+                            <h4>Color Picker</h4>
+                            <p>Pick colors and convert between HEX, RGB, HSL formats. Generate color palettes.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Utility</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+
+                        <!-- Random Charades Generator -->
+                        <a href="/tools/charades-random/" class="tool-card">
+                            <div class="tool-icon">🎭</div>
+                            <h4>Random Charades Generator</h4>
+                            <p>Generate random charades words for parties and game nights.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Games</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+
+                        <!-- Random Team Generator -->
+                        <a href="/tools/random-team-generator/" class="tool-card">
+                            <div class="tool-icon">👥</div>
+                            <h4>Random Team Generator</h4>
+                            <p>Randomly divide people into equal teams for activities.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Games</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- FILE MANAGEMENT SUBSECTION -->
+                <div class="subsection">
+                    <h4>File Management Tools</h4>
+                    <div class="tools-grid">
+                        <a href="/tools/bulk-file-name-generator/" class="tool-card">
+                            <div class="tool-icon">📁</div>
+                            <h4>Bulk File Name Generator</h4>
+                            <p>Generate bulk file names with prefix, suffix, and automatic numbering.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Files</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/remove-special-characters-from-filenames/" class="tool-card">
+                            <div class="tool-icon">🧹</div>
+                            <h4>Remove Special Characters</h4>
+                            <p>Clean file names by removing invalid special characters.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Files</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/file-name-case-converter/" class="tool-card">
+                            <div class="tool-icon">🔄</div>
+                            <h4>File Name Case Converter</h4>
+                            <p>Convert file names to different case formats.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Files</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/date-based-file-name-generator/" class="tool-card">
+                            <div class="tool-icon">📅</div>
+                            <h4>Date-Based File Name Generator</h4>
+                            <p>Add date prefixes or suffixes to file names automatically.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Files</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SECURITY TOOLS SUBSECTION -->
+                <div class="subsection">
+                    <h4>Security Tools</h4>
+                    <div class="tools-grid">
+                        <a href="/tools/password-generator/" class="tool-card">
+                            <div class="tool-icon">🔒</div>
+                            <h4>Password Generator</h4>
+                            <p>Create strong, secure passwords with customizable options.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Security</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/password-strength-checker/" class="tool-card">
+                            <div class="tool-icon">💪</div>
+                            <h4>Password Strength Checker</h4>
+                            <p>Check password strength and get security recommendations.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Security</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/md5-sha-generator/" class="tool-card">
+                            <div class="tool-icon">🔑</div>
+                            <h4>MD5 & SHA Hash Generator</h4>
+                            <p>Generate MD5, SHA1, SHA256 hashes for text and files.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Security</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SOCIAL MEDIA SUBSECTION -->
+                <div class="subsection">
+                    <h4>Social Media Tools</h4>
+                    <div class="tools-grid">
+                        <a href="/tools/whatsapp-text-formatter/" class="tool-card">
+                            <div class="tool-icon">💬</div>
+                            <h4>WhatsApp Text Formatter</h4>
+                            <p>Format text for WhatsApp with bold, italic, and strikethrough.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Social</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/invisible-character-generator/" class="tool-card">
+                            <div class="tool-icon">👻</div>
+                            <h4>Invisible Character Generator</h4>
+                            <p>Generate invisible Unicode characters for various uses.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Social</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/caption-line-break-formatter/" class="tool-card">
+                            <div class="tool-icon">📱</div>
+                            <h4>Caption Line Break Formatter</h4>
+                            <p>Add line breaks to captions for better social media readability.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Social</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                        <a href="/tools/hashtag-formatter/" class="tool-card">
+                            <div class="tool-icon">#️⃣</div>
+                            <h4>Hashtag Formatter</h4>
+                            <p>Format and organize hashtags for social media posts.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Social</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ENGAGEMENT SUBSECTION -->
+                <div class="subsection">
+                    <h4>Engagement Tools</h4>
+                    <div class="tools-grid">
+                        <a href="/tools/random-icebreaker-generator/" class="tool-card">
+                            <div class="tool-icon">🎯</div>
+                            <h4>Random Icebreaker Generator</h4>
+                            <p>Generate random icebreaker questions for team building and events.</p>
+                            <div class="tool-meta">
+                                <span class="tool-category">Engagement</span>
+                                <span class="tool-free">FREE</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="container">
+                <h3>Why Choose Micro Tools?</h3>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Instant Results</h4>
+                        <p>All tools work instantly in your browser. No waiting, no processing delays.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔒</div>
+                        <h4>Privacy First</h4>
+                        <p>No data sent to servers. Everything processes locally in your browser.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📱</div>
+                        <h4>Mobile Friendly</h4>
+                        <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <h4>No Login Required</h4>
+                        <p>Use all tools immediately without any registration or login.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORY HUBS -->
+        <section class="tools-section" style="background-color: var(--surface-color);">
+            <div class="container">
+                <h3>Browse by Category</h3>
+                <p style="color: var(--text-light); margin-bottom: 2rem; max-width: 600px;">Explore tools organized by category. Each hub page contains all tools in that category with detailed descriptions and keyword optimization.</p>
+                <div class="tools-grid">
+                    <!-- Text Case Tools Hub -->
+                    <a href="/tools/hub/text-case-tools/" class="tool-card">
+                        <div class="tool-icon">📝</div>
+                        <h4>Text Case Tools</h4>
+                        <p>Convert text between different case formats. Title case, sentence case, uppercase, lowercase, and more.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Text Analysis Tools Hub -->
+                    <a href="/tools/hub/text-analysis/" class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <h4>Text Analysis Tools</h4>
+                        <p>Analyze and get insights from your text. Word counts, character analysis, reading time calculations.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Text Formatting Tools Hub -->
+                    <a href="/tools/hub/text-formatting/" class="tool-card">
+                        <div class="tool-icon">✏️</div>
+                        <h4>Text Formatting Tools</h4>
+                        <p>Format and clean your text. Remove duplicates, extra spaces, compare texts, and more.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Encoding Tools Hub -->
+                    <a href="/tools/hub/encoding-tools/" class="tool-card">
+                        <div class="tool-icon">🔐</div>
+                        <h4>Encoding Tools</h4>
+                        <p>Encode, decode, and encrypt data. Base64, URL, HTML encoding and more.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- JSON Tools Hub -->
+                    <a href="/tools/hub/json-tools/" class="tool-card">
+                        <div class="tool-icon">{}</div>
+                        <h4>JSON Tools</h4>
+                        <p>Work with JSON data. Format, validate, minify, convert to YAML and more.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Data Format Converters Hub -->
+                    <a href="/tools/hub/data-converters/" class="tool-card">
+                        <div class="tool-icon">📈</div>
+                        <h4>Data Format Converters</h4>
+                        <p>Convert between data formats. CSV, JSON, XML, YAML conversions and more.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- SQL Tools Hub -->
+                    <a href="/tools/hub/sql-tools/" class="tool-card">
+                        <div class="tool-icon">🔍</div>
+                        <h4>SQL Tools</h4>
+                        <p>SQL formatting and query building. Format queries, build SQL statements visually.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Conversion Tools Hub -->
+                    <a href="/tools/hub/conversion-tools/" class="tool-card">
+                        <div class="tool-icon">🔄</div>
+                        <h4>Conversion Tools</h4>
+                        <p>Convert units, colors, and formats. QR codes, unit conversions, color picking.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Password Tools Hub -->
+                    <a href="/tools/hub/password-tools/" class="tool-card">
+                        <div class="tool-icon">🔑</div>
+                        <h4>Password Tools</h4>
+                        <p>Password generation and security checking. Create strong passwords, check strength.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Random Generators Hub -->
+                    <a href="/tools/hub/random-generators/" class="tool-card">
+                        <div class="tool-icon">🎲</div>
+                        <h4>Random Generators</h4>
+                        <p>Generate random values and decisions. Team generators, charades, decision makers.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Testing Tools Hub -->
+                    <a href="/tools/hub/testing-tools/" class="tool-card">
+                        <div class="tool-icon">🧪</div>
+                        <h4>Testing Tools</h4>
+                        <p>Tools for developers and testers. Regex testing, JWT decoding, UUID generation.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Hash Generators Hub -->
+                    <a href="/tools/hub/hash-generators/" class="tool-card">
+                        <div class="tool-icon">#</div>
+                        <h4>Hash Generators</h4>
+                        <p>Generate hashes and checksums. MD5, SHA1, SHA256 hash generation.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Time Tools Hub -->
+                    <a href="/tools/hub/time-tools/" class="tool-card">
+                        <div class="tool-icon">⏱️</div>
+                        <h4>Time Tools</h4>
+                        <p>Time tracking and countdown tools. Timers, countdowns, time calculations.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+
+                    <!-- Finance Tools Hub -->
+                    <a href="/tools/hub/finance-tools/" class="tool-card">
+                        <div class="tool-icon">💰</div>
+                        <h4>Finance & Investment Tools</h4>
+                        <p>Calculate and plan personal finances, investments, and debt payoff.</p>
+                        <div class="tool-meta">
+                            <span class="tool-category">Hub</span>
+                            <span class="tool-free">Hub</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <!-- OPTIMIZATION: Load full dark mode script asynchronously after page renders -->
+    <script src="/assets/js/dark-mode.js" defer></script>
+
+    <!-- Shared Utilities for all tools -->
+    <script src="/assets/js/shared-utilities.js" defer></script>
+    
+    <!-- Footer Injector -->
+    <script src="/assets/js/footer-injector.js" defer></script>
+    
+    <!-- OPTIMIZATION: Load non-critical scripts with defer attribute -->
+    <!-- Performance Monitoring (deferred, non-critical for render) -->
+    <script src="/assets/js/performance-monitor.js" defer></script>
+    
+    <!-- Accessibility Audit & Fixes (deferred, not needed for initial render) -->
+    <script src="/assets/js/accessibility-audit.js" defer></script>
+    <script src="/assets/js/accessibility-fixes.js" defer></script>
+    
+    <!-- Analytics Placeholder -->
+    <script defer>
+        // Placeholder for analytics (GDPR-friendly)
+        window.addEventListener('load', function() {
+            // Your analytics code here (e.g., Google Analytics, Plausible, etc.)
+            console.log('Analytics ready - implement your tracking here');
+        });
+    </script>
+
+    <script src="/assets/js/utils.js" defer></script>
+    
+    <!-- Navigation Injector - With defer -->
+    <script src="/assets/js/nav-injector.js" defer></script>
+    
+    <!-- Tools Registry - With defer -->
+    <script src="/tools-registry.js" defer></script>
+    
+    <!-- Hub Page JavaScript - With defer -->
+    <script src="/assets/js/hub.js" defer></script>
+    
+    <!-- Homepage JavaScript - With defer -->
+    <script src="/assets/js/homepage.js" defer></script>
+</body>
+</html>

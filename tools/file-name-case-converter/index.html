@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert file names to different cases: lowercase, UPPERCASE, Title Case, and more.">
+    <meta name="keywords" content="file name case converter, rename files, case converter, file naming">
+    <title>File Name Case Converter - Free Online Tool | Micro Tools</title>
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/tool-standard.css?v=202602021216">
+    <script>
+    (function() {
+        const storageKey = 'micro-tools-dark-mode';
+        const darkModeClass = 'dark-mode';
+        const savedMode = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedMode ? savedMode === 'true' : prefersDark;
+        if (shouldBeDark) {
+            document.documentElement.classList.add(darkModeClass);
+        }
+    })();
+    </script>
+    <script src="/assets/js/dark-mode.js" defer></script>
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "WebApplication",
+        "name": "File Name Case Converter",
+        "description": "Convert file names to different case formats",
+        "url": "https://microtools.github.io/tools/file-name-case-converter/",
+        "applicationCategory": "UtilityApplication"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What are different file naming case formats?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Common formats: lowercase, UPPERCASE, Title Case, camelCase, snake_case, kebab-case."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why does file name casing matter?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Some systems are case-sensitive; standardized naming improves organization."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I convert multiple files at once?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, enter multiple file names and the tool converts them all at once."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data stored?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, all processing is done locally in your browser."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What's the most common file naming format?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "lowercase with hyphens (kebab-case) is popular for web files and URLs."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav"><ul></ul></nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="tool-page">
+        <div class="container">
+            <header class="tool-header">
+                <h1>File Name Case Converter</h1>
+                <p class="tool-description">Convert file names to different cases while preserving extensions</p>
+            </header>
+
+            <div class="tool-layout">
+                <div class="tool-main">
+                    <div class="tool-container">
+                        <!-- Conversion Options -->
+                        <div class="tool-options">
+                            <h3 class="section-title">Case Format</h3>
+                            <div class="option-group">
+                                <label for="caseType">Convert To:</label>
+                                <select id="caseType">
+                                    <option value="lowercase">lowercase</option>
+                                    <option value="UPPERCASE">UPPERCASE</option>
+                                    <option value="Title Case">Title Case</option>
+                                    <option value="camelCase">camelCase</option>
+                                    <option value="snake_case">snake_case</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Two-Column Layout for Input and Output -->
+                        <div class="tool-content-columns">
+                            <!-- Input Column -->
+                            <section class="tool-section input-column">
+                                <div class="input-group">
+                                    <label for="inputNames">File Names (one per line):</label>
+                                    <div class="input-area">
+                                        <textarea 
+                                            id="inputNames" 
+                                            placeholder="MyDocument.txt&#10;Report_2024.pdf&#10;image file.jpg"
+                                            rows="12"
+                                            autofocus
+                                        ></textarea>
+                                    </div>
+                                    <div class="hint">
+                                        Enter one file name per line. Extensions will be preserved.
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn primary" id="convertBtn">Convert</button>
+                                    <button class="action-btn" id="clearBtn">
+                                        <span>Clear</span>
+                                        <span>×</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- Output Column -->
+                            <section class="tool-section output-column">
+                                <div class="output-group">
+                                    <label for="outputNames">Converted Names:</label>
+                                    <div class="output-area">
+                                        <textarea 
+                                            id="outputNames" 
+                                            placeholder="Converted file names will appear here..."
+                                            rows="12"
+                                            readonly
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="tool-actions">
+                                    <button class="action-btn success" id="copyBtn">Copy Output</button>
+                                    <button class="action-btn success" id="downloadBtn">Download</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="tool-sidebar">
+                    <div class="related-tools">
+                        <h4>Related Tools</h4>
+                        <ul>
+                            <li><a href="/tools/bulk-file-name-generator/">Bulk File Name Generator</a></li>
+                            <li><a href="/tools/remove-special-characters-from-filenames/">Remove Special Characters</a></li>
+                            <li><a href="/tools/date-based-file-name-generator/">Date-Based File Name Generator</a></li>
+                            <li><a href="/">All File Tools</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-tips">
+                        <h4>Case Conversion Tips</h4>
+                        <ul>
+                            <li>Lowercase is standard for web URLs and file paths</li>
+                            <li>Title case improves readability for document names</li>
+                            <li>Consistent naming helps organize file collections</li>
+                            <li>Extensions are always preserved unchanged</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="use-cases">
+                <h4>Use Cases</h4>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <span class="use-case-icon">📝</span>
+                        <h5>Standardize File Naming</h5>
+                        <p>Convert all files to consistent case format.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔗</span>
+                        <h5>Web URL Preparation</h5>
+                        <p>Convert files to lowercase for web URLs.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">💼</span>
+                        <h5>Professional Organization</h5>
+                        <p>Apply title case for professional documents.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <span class="use-case-icon">🔤</span>
+                        <h5>Case Correction</h5>
+                        <p>Fix inconsistent naming across file collections.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li><strong>Enter Filenames:</strong> Paste one filename per line</li>
+                    <li><strong>Select Case Style:</strong> Choose lowercase, uppercase, title case, or sentence case</li>
+                    <li><strong>Review Results:</strong> See before/after comparison instantly</li>
+                    <li><strong>Copy and Apply:</strong> Copy converted names to use in your system</li>
+                </ol>
+            </div>
+
+            <div class="formatting-guide">
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Lowercase Conversion:</strong> All characters to lowercase (myfile.txt)</li>
+                    <li><strong>Uppercase Conversion:</strong> All characters to uppercase (MYFILE.TXT)</li>
+                    <li><strong>Title Case:</strong> First letter of each word capitalized (My_File.txt)</li>
+                    <li><strong>Extension Preservation:</strong> File extensions always preserved correctly</li>
+                    <li><strong>Batch Processing:</strong> Convert multiple filenames at once</li>
+                    <li><strong>Real-time Preview:</strong> Instant conversion display</li>
+                </ul>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <h4>Will my file extensions be changed?</h4>
+                    <p>No, extensions are always preserved in their original form.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Does this modify my actual files?</h4>
+                    <p>No, the tool only generates new names; you apply them manually.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What's the difference between Title Case and Sentence Case?</h4>
+                    <p>Title Case capitalizes first letter of each word; Sentence Case only first letter.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I process many files at once?</h4>
+                    <p>Yes, paste as many filenames as needed, one per line.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my data private?</h4>
+                    <p>Yes, all processing happens in your browser; no data is stored.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content"></div>
+            <div class="footer-bottom"></div>
+        </div>
+    </footer>
+
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    <script defer src="/assets/js/utils.js"></script>
+    <script defer src="/assets/js/nav-injector.js"></script>
+    <script defer src="/assets/js/footer-injector.js"></script>
+    <script defer src="/tools-registry.js"></script>
+    <script defer src="/assets/js/tool-hub-links.js"></script>
+    <script defer src="tool.js"></script>
+    <script defer src="/assets/js/line-numbers.js?v=202602031400"></script>
+</body>
+</html>

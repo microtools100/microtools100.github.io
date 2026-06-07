@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preload" href="/assets/js/shared-utilities.js" as="script" defer>
+    <link rel="prefetch" href="/tools/json-formatter/">
+
+    <meta charset="UTF-8">
+    <title>Hub Page - Micro Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tools and utilities. No login required, instant results.">
+    <meta name="keywords" content="online tools, utilities, free tools">
+    <meta property="og:title" content="Micro Tools - Hub">
+    <meta property="og:description" content="Free online tools and utilities.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Micro Tools">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Micro Tools - Hub">
+    <meta name="twitter:description" content="Free online tools and utilities.">
+    
+    <link rel="stylesheet" href="/assets/css/core.css?v=202602021216">
+    <link rel="stylesheet" href="/assets/css/hub.css?v=202602021216">
+    <link rel="icon" href="/assets/icons/favicon.png" type="image/png">
+    
+    <!-- Dark Mode Script - Must load early to prevent white flash -->
+    <script defer src="/assets/js/dark-mode.js"></script>
+    
+    <!-- Structured Data for SEO (will be updated by hub.js) -->
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Micro Tools",
+        "description": "Free online tools for developers and content creators",
+        "url": "https://microtools.github.io"
+    }}
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <h1>Micro Tools</h1>
+                    <span class="tagline">Free Online Utilities</span>
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#text-content">Text & Content</a></li>
+                        <li><a href="/#math-calculators">Math & Calculators</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#finance-tools">Finance Tools</a></li>
+                        <li><a href="/#office-time">Office & Time</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                    </ul>
+                </nav>
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="hub-main">
+        <!-- Content will be dynamically rendered by hub.js -->
+        <div class="loading" style="text-align: center; padding: 3rem;">Loading...</div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Micro Tools</h4>
+                    <p>Free online utilities for developers, writers, and content creators.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/#text-content">Text & Content</a></li>
+                        <li><a href="/#math-calculators">Math & Calculators</a></li>
+                        <li><a href="/#data-tools">Data Tools</a></li>
+                        <li><a href="/#developer-tools">Developer Tools</a></li>
+                        <li><a href="/#finance-tools">Finance Tools</a></li>
+                        <li><a href="/#office-time">Office & Time</a></li>
+                        <li><a href="/#utilities">Utilities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/tools/text-uppercase/">Uppercase Converter</a></li>
+                        <li><a href="/tools/json-formatter/">JSON Formatter</a></li>
+                        <li><a href="/tools/password-generator/">Password Generator</a></li>
+                        <li><a href="/tools/url-encoder-decoder/">URL Encoder/Decoder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Micro Tools. All tools are free to use.</p>
+                <p class="footer-note">This site uses only frontend JavaScript. No data is sent to any server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shared Utilities for all tools -->
+    <script defer src="/assets/js/shared-utilities.js"></script>
+    
+    <!-- Performance Monitoring -->
+    <script defer src="/assets/js/performance-monitor.js"></script>
+    
+    <!-- Accessibility Audit & Fixes -->
+    <script defer src="/assets/js/accessibility-audit.js"></script>
+    <script defer src="/assets/js/accessibility-fixes.js"></script>
+    
+    <script defer src="/assets/js/utils.js"></script>
+    
+    <!-- Tools Registry - Must load before hub.js -->
+    <script defer src="/tools-registry.js"></script>
+    
+    <!-- Hub Page JavaScript -->
+    <script defer src="/assets/js/hub.js"></script>
+</body>
+</html>
